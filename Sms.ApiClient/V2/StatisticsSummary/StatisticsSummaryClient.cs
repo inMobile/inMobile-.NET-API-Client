@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Sms.ApiClient.V2.StatisticsSummary
 {
-	public class StatisticsSummaryClient : IStatisticsSummaryClient
+	internal class StatisticsSummaryClient : IStatisticsSummaryClient
 	{
 		private static readonly string CodeStamp = "Official StatisticsSummary Client " + ClientUtils.VersionNumber;
 

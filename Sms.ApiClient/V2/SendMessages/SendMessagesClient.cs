@@ -8,7 +8,7 @@ using System.Xml.XPath;
 
 namespace Sms.ApiClient.V2.SendMessages
 {
-	public class SendMessagesClient : ISendMessagesClient
+	internal class SendMessagesClient : ISendMessagesClient
 	{
 		public static readonly string CodeStamp = "Official SendMessages Client " + ClientUtils.VersionNumber;
 

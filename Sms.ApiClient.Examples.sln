@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sms.ApiClient", "Sms.ApiClient\Sms.ApiClient.csproj", "{BBE9E581-2F99-44A1-B12C-7D402AD6415F}"
 EndProject
@@ -17,10 +17,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BBE9E581-2F99-44A1-B12C-7D402AD6415F}.Debug|Any CPU.ActiveCfg = Prod|Any CPU
-		{BBE9E581-2F99-44A1-B12C-7D402AD6415F}.Debug|Any CPU.Build.0 = Prod|Any CPU
-		{BBE9E581-2F99-44A1-B12C-7D402AD6415F}.Release|Any CPU.ActiveCfg = Prod|Any CPU
-		{BBE9E581-2F99-44A1-B12C-7D402AD6415F}.Release|Any CPU.Build.0 = Prod|Any CPU
+		{BBE9E581-2F99-44A1-B12C-7D402AD6415F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBE9E581-2F99-44A1-B12C-7D402AD6415F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBE9E581-2F99-44A1-B12C-7D402AD6415F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBE9E581-2F99-44A1-B12C-7D402AD6415F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{20BFE14C-EDE7-4AE7-8D03-15022340565D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{20BFE14C-EDE7-4AE7-8D03-15022340565D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{20BFE14C-EDE7-4AE7-8D03-15022340565D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -37,22 +37,7 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 5
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://s02.tfshosted.com/tfs/inmobile
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = Sms.ApiClient\\Sms.ApiClient.csproj
-		SccProjectName1 = Sms.ApiClient
-		SccLocalPath1 = Sms.ApiClient
-		SccProjectUniqueName2 = Sms.ApiClient.Examples\\Sms.ApiClient.Examples.csproj
-		SccProjectName2 = Sms.ApiClient.Examples
-		SccLocalPath2 = Sms.ApiClient.Examples
-		SccProjectUniqueName3 = Sms.ApiClient.Test\\Sms.ApiClient.Test.csproj
-		SccProjectName3 = Sms.ApiClient.Test
-		SccLocalPath3 = Sms.ApiClient.Test
-		SccProjectUniqueName4 = Sms.ApiClient.AdHoc\\Sms.ApiClient.AdHoc.csproj
-		SccProjectName4 = Sms.ApiClient.AdHoc
-		SccLocalPath4 = Sms.ApiClient.AdHoc
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F5663F6D-66CD-4FF9-976C-24DC9781ED3E}
 	EndGlobalSection
 EndGlobal

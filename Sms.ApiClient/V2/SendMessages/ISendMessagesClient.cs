@@ -2,7 +2,7 @@
 
 namespace Sms.ApiClient.V2.SendMessages
 {
-	public interface ISendMessagesClient
+	internal interface ISendMessagesClient
 	{
 		SendMessagesResponse SendMessages(List<ISmsMessage> messages, string messageStatusCallbackUrl);
 	}

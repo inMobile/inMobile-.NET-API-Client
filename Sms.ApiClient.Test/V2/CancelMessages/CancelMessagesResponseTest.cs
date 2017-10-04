@@ -23,7 +23,7 @@ namespace Sms.ApiClient.Test.V2.CancelMessages
 				CancelMessagesResponse.ParseResponse("Error: Invalid unittest error");
 				Assert.Fail("Expected CancelMessagesException");
 			}
-			catch (CancelMessagesException ex)
+			catch (CancelMessagesException)
 			{
 			}
 		}

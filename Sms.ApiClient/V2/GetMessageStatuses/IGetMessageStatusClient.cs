@@ -1,6 +1,6 @@
 ﻿namespace Sms.ApiClient.V2.GetMessageStatuses
 {
-	public interface IGetMessageStatusClient
+	internal interface IGetMessageStatusClient
 	{
 		GetMessageStatusesResponse GetMessageStatus();
 	}

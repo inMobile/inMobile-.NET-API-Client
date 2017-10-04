@@ -2,7 +2,7 @@
 
 namespace Sms.ApiClient.V2.CancelMessages
 {
-	public interface ICancelMessagesClient
+	internal interface ICancelMessagesClient
 	{
 		CancelMessagesResponse CancelMessage(List<string> messageIds);
 	}

@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Sms.ApiClient.V2.GetMessageStatuses
 {
-	public class GetMessageStatusClient : IGetMessageStatusClient
+	internal class GetMessageStatusClient : IGetMessageStatusClient
 	{
 		private static readonly string CodeStamp = "Official GetMessageStatus Client " + ClientUtils.VersionNumber;
 

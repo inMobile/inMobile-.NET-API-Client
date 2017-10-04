@@ -7,11 +7,7 @@ using System.Collections.Generic;
 
 namespace Sms.ApiClient.V2
 {
-	public interface IFacadeSmsClient : IGetMessageStatusClient, ISendMessagesClient, IStatisticsSummaryClient, ICancelMessagesClient
-	{
-	}
-
-	public class FacadeSmsClient : IFacadeSmsClient
+	public class FacadeSmsClient
 	{
 		private readonly ISendMessagesClient _sendClient;
 		private readonly IGetMessageStatusClient _statusClient;

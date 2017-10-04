@@ -4,7 +4,7 @@ using System.Web;
 
 namespace Sms.ApiClient.V2.CancelMessages
 {
-	public class CancelMessagesClient : ICancelMessagesClient
+	internal class CancelMessagesClient : ICancelMessagesClient
 	{
 		private static readonly string CodeStamp = "Official CancelMessages Client " + ClientUtils.VersionNumber;
 

@@ -1,6 +1,7 @@
 ﻿using Sms.ApiClient.V2;
 using Sms.ApiClient.V2.SendMessages;
 using System.Collections.Generic;
+using Sms.ApiClient.V2.CancelMessages;
 
 namespace Sms.ApiClient.AdHoc
 {
