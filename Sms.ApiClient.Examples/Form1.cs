@@ -1,12 +1,12 @@
-﻿using System;
+﻿using Sms.ApiClient.V2;
+using Sms.ApiClient.V2.GetMessageStatuses;
+using Sms.ApiClient.V2.SendMessages;
+using Sms.ApiClient.V2.StatisticsSummary;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Sms.ApiClient.V2;
-using Sms.ApiClient.V2.GetMessageStatuses;
-using Sms.ApiClient.V2.SendMessages;
-using Sms.ApiClient.V2.StatisticsSummary;
 
 namespace Sms.ApiClient.Examples
 {
@@ -73,11 +73,11 @@ namespace Sms.ApiClient.Examples
 			var message = new SmsMessage(msisdn: txtMsisdn.Text, text: "This is an overcharged text message sent from the demo app.", senderName: "TestApp", encoding: SmsEncoding.Gsm7);
 
 			// Specify 1,50 DKK overcharged message
-			message.OverchargeInfo = new OverchargeInfo(overchargePrice:150, // 150 øre
-														shortCodeCountryCode:"45",
-														shortCodeNumber:"1245",
-														overchargeType:OverchargeType.MobilePayment,
-														invoiceDescription:"");
+			message.OverchargeInfo = new OverchargeInfo(overchargePrice: 150, // 150 øre
+														shortCodeCountryCode: "45",
+														shortCodeNumber: "1245",
+														overchargeType: OverchargeType.MobilePayment,
+														invoiceDescription: "");
 
 			messagesToSend.Add(message);
 			try

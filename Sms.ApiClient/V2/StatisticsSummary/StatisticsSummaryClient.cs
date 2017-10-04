@@ -11,6 +11,7 @@ namespace Sms.ApiClient.V2.StatisticsSummary
 
 		private readonly string _apiKey;
 		private readonly string _statisticsSummaryUrl;
+
 		public StatisticsSummaryClient(string apiKey, string statisticsSummaryUrl)
 		{
 			_apiKey = apiKey;

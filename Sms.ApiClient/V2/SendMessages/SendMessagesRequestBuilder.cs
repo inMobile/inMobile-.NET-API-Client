@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Xml.Linq;
 using System.Xml.XPath;
 
@@ -43,10 +41,10 @@ namespace Sms.ApiClient.V2.SendMessages
 			{
 				var standardAndOverchargeMessages = messages.OfType<SmsMessage>().ToList();
 				var elements = BuildSmsElements(standardAndOverchargeMessages);
-				foreach(var e in elements)
+				foreach (var e in elements)
 					dataElement.Add(e);
 			}
-			
+
 			// Refundings
 			{
 				var refundMessages = messages.OfType<RefundMessage>().ToList();

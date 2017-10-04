@@ -10,7 +10,7 @@ namespace Sms.ApiClient.V2.StatisticsSummary
 		public DateTime From { get; set; }
 		public DateTime To { get; set; }
 		public MessagesInfo Messages { get; set; }
-		
+
 		public static StatisticsSummaryResponse Parse(string xml)
 		{
 			var doc = XDocument.Parse(xml);

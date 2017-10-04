@@ -6,6 +6,7 @@ namespace Sms.ApiClient.V2.SendMessages
 	public class SendMessagesResponse
 	{
 		public List<MsisdnAndMessageId> MessageIds;
+
 		public SendMessagesResponse(List<MsisdnAndMessageId> messageIds)
 		{
 			if (messageIds == null)

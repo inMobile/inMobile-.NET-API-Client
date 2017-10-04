@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sms.ApiClient.V2.SendMessages;
+using System;
+using System.Collections.Generic;
 
 namespace Sms.ApiClient.Test.V2.SendMessages
 {
@@ -22,9 +21,9 @@ namespace Sms.ApiClient.Test.V2.SendMessages
 														encoding:SmsEncoding.Utf8)
 									},
 									"apiKey",
-									messageStatusCallbackUrl:null);
+									messageStatusCallbackUrl: null);
 
-			var expectedOutput = 
+			var expectedOutput =
 @"<request source=""Official SendMessages Client 2.2.0.1"">
   <authentication apikey=""apiKey"" />
   <data>
@@ -116,7 +115,7 @@ namespace Sms.ApiClient.Test.V2.SendMessages
 
 			var refund1 = new RefundMessage(messageIdToRefund: "RefundId1", messageText: "Refund & < > text 1", messageId: "MessageId123");
 			var refund2 = new RefundMessage(messageIdToRefund: "RefundId2", messageText: "Refund text 2");
-			
+
 			var result = builder.BuildPostXmlData(new List<ISmsMessage>() { refund1, refund2 }, "apiKey", "http://someUrl.callback.inmobile.dk/unittest/messagestatus");
 
 			var expectedOutput =

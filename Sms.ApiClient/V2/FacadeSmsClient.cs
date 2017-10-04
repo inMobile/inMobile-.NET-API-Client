@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Sms.ApiClient.V2.CancelMessages;
+﻿using Sms.ApiClient.V2.CancelMessages;
 using Sms.ApiClient.V2.GetMessageStatuses;
 using Sms.ApiClient.V2.SendMessages;
 using Sms.ApiClient.V2.StatisticsSummary;
+using System;
+using System.Collections.Generic;
 
 namespace Sms.ApiClient.V2
 {
 	public interface IFacadeSmsClient : IGetMessageStatusClient, ISendMessagesClient, IStatisticsSummaryClient, ICancelMessagesClient
 	{
-		
 	}
 
 	public class FacadeSmsClient : IFacadeSmsClient
@@ -33,7 +30,7 @@ namespace Sms.ApiClient.V2
 				hostRootUrl = hostRootUrl.Substring(0, hostRootUrl.Length - 1);
 			_statisticsClient = new StatisticsSummaryClient(apiKey: apiKey, statisticsSummaryUrl: hostRootUrl + "/Api/V2/Statistics/Summary");
 			_statusClient = new GetMessageStatusClient(apiKey: apiKey, getMessagesGetUrl: hostRootUrl + "/api/v2/GET/getmessagestatus");
-			_sendClient = new SendMessagesClient(apiKey: apiKey, postUrl: hostRootUrl + "/api/v2/sendmessages", requestBuilder:new SendMessagesRequestBuilder());
+			_sendClient = new SendMessagesClient(apiKey: apiKey, postUrl: hostRootUrl + "/api/v2/sendmessages", requestBuilder: new SendMessagesRequestBuilder());
 			_cancelMessagesClient = new CancelMessagesClient(apiKey: apiKey, getUrl: hostRootUrl + "/Api/V2/Get/CancelMessages");
 		}
 

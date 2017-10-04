@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Sms.ApiClient.V2.SendMessages
 {
@@ -12,7 +9,7 @@ namespace Sms.ApiClient.V2.SendMessages
 		public string MessageId { get; set; }
 
 		/// <summary>
-		/// 
+		///
 		/// </summary>
 		/// <param name="messageIdToRefund">The id of the overcharged message which should be refunded.</param>
 		/// <param name="messageText">The text sent to the mobile user with a confirmation of the refund</param>

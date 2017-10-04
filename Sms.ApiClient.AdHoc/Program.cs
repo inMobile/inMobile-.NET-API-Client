@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Sms.ApiClient.V2;
+﻿using Sms.ApiClient.V2;
 using Sms.ApiClient.V2.SendMessages;
+using System.Collections.Generic;
 
 namespace Sms.ApiClient.AdHoc
 {
-	class Program
+	internal class Program
 	{
-		static void Main(string[] args)
+		private static void Main(string[] args)
 		{
 			var apikey = "somekey";
 			var messageidToRefund = "somemessageid";

@@ -1,6 +1,6 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sms.ApiClient.V2.CancelMessages;
+using System;
 
 namespace Sms.ApiClient.Test.V2.CancelMessages
 {
@@ -25,10 +25,9 @@ namespace Sms.ApiClient.Test.V2.CancelMessages
 			}
 			catch (CancelMessagesException ex)
 			{
-				
 			}
 		}
-		
+
 		[TestMethod]
 		public void ParseResponse_UnexpectedException_Test()
 		{

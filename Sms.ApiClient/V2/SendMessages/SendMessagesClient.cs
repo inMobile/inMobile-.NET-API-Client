@@ -25,7 +25,7 @@ namespace Sms.ApiClient.V2.SendMessages
 
 		public SendMessagesResponse SendMessages(List<ISmsMessage> messages, string messageStatusCallbackUrl)
 		{
-			var xml = _requestBuilder.BuildPostXmlData(messages: messages, apiKey:_apiKey, messageStatusCallbackUrl: messageStatusCallbackUrl);
+			var xml = _requestBuilder.BuildPostXmlData(messages: messages, apiKey: _apiKey, messageStatusCallbackUrl: messageStatusCallbackUrl);
 			using (var client = new WebClient())
 			{
 				var responseBytes = client.UploadValues(_postUrl, new NameValueCollection()
@@ -49,7 +49,5 @@ namespace Sms.ApiClient.V2.SendMessages
 				return new SendMessagesResponse(messageIds);
 			}
 		}
-
 	}
-
 }

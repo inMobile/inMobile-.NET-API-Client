@@ -10,6 +10,7 @@ namespace Sms.ApiClient.V2.GetMessageStatuses
 		private static readonly string CodeStamp = "Official GetMessageStatus Client " + ClientUtils.VersionNumber;
 
 		private readonly string _completeUrl;
+
 		public GetMessageStatusClient(string apiKey, string getMessagesGetUrl)
 		{
 			_completeUrl = getMessagesGetUrl + "?apiKey=" + HttpUtility.UrlEncode(apiKey) + "&client=" + CodeStamp;
@@ -25,7 +26,7 @@ namespace Sms.ApiClient.V2.GetMessageStatuses
 
 				if (response.StartsWith("Error:"))
 					throw new GetMessageStatusesException(response);
-				var lines = response.Split(new string[] {"\n"}, StringSplitOptions.RemoveEmptyEntries);
+				var lines = response.Split(new string[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
 				var statuses = new List<MessageStatus>();
 				foreach (var line in lines)
 				{
