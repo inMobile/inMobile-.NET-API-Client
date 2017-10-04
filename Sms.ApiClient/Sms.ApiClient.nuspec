@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package >
+	<metadata>
+		<id>InMobile.NET API Client</id>
+		<version>2.2.0.1</version>
+		<authors>Inmobile</authors>
+		<owners>Inmobile</owners>
+		<projectUrl>https://github.com/inMobile/inMobile-.NET-API-Client</projectUrl>
+		<iconUrl></iconUrl>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<description>InMobile API Client for .NET</description>
+		<releaseNotes>Initial release.</releaseNotes>
+		<copyright>Copyright 2017. Inmobile</copyright>
+		<tags>inmobile api client</tags>
+	</metadata>
+	<files>
+		<file src="Sms.ApiClient\bin\Release" target="lib" />
+	</files>
+</package>
