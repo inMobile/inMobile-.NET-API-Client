@@ -26,7 +26,7 @@ namespace Sms.ApiClient.Examples
 			// SendOverchargedMessage();
 		}
 
-		private IFacadeSmsClient CreateSmsClient()
+		private FacadeSmsClient CreateSmsClient()
 		{
 			var client = new FacadeSmsClient(hostRootUrl: txtApiUrl.Text, apiKey: txtApiKey.Text);
 			return client;
@@ -67,7 +67,7 @@ namespace Sms.ApiClient.Examples
 
 		private void SendOverchargedMessage()
 		{
-			ISendMessagesClient smsClient = CreateSmsClient();
+			var smsClient = CreateSmsClient();
 
 			var messagesToSend = new List<ISmsMessage>();
 			var message = new SmsMessage(msisdn: txtMsisdn.Text, text: "This is an overcharged text message sent from the demo app.", senderName: "TestApp", encoding: SmsEncoding.Gsm7);
@@ -97,7 +97,7 @@ namespace Sms.ApiClient.Examples
 
 		private void btnGetMessageStatus_Click(object sender, EventArgs e)
 		{
-			IGetMessageStatusClient smsClient = CreateSmsClient();
+			var smsClient = CreateSmsClient();
 			try
 			{
 				var response = smsClient.GetMessageStatus();
@@ -113,7 +113,7 @@ namespace Sms.ApiClient.Examples
 		{
 			var today = DateTime.Now.Date.AddDays(1);
 			var oneMonthAgo = today.AddMonths(-1);
-			IStatisticsSummaryClient smsClient = CreateSmsClient();
+			var smsClient = CreateSmsClient();
 			try
 			{
 				var response = smsClient.GetStatistics(@from: oneMonthAgo, to: today);
