@@ -10,7 +10,7 @@ namespace Sms.ApiClient.V2.SendMessages
 {
 	public class SendMessagesClient : ISendMessagesClient
 	{
-		public const string CodeStamp = "Official SendMessages Client " + ClientUtils.VersionNumber;
+		public static readonly string CodeStamp = "Official SendMessages Client " + ClientUtils.VersionNumber;
 
 		private readonly string _apiKey;
 		private readonly string _postUrl;

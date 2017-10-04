@@ -9,6 +9,7 @@
 		/// Build Number
 		/// Revision
 		/// </summary>
-		public const string VersionNumber = "2.2.0.1";
+		private static string _versionNumber = null;
+		public static string VersionNumber => _versionNumber ?? (_versionNumber = typeof(ClientUtils).Assembly.GetName().Version.ToString());
 	}
 }

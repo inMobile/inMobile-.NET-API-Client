@@ -7,7 +7,7 @@ namespace Sms.ApiClient.V2.StatisticsSummary
 {
 	public class StatisticsSummaryClient : IStatisticsSummaryClient
 	{
-		private const string CodeStamp = "Official StatisticsSummary Client " + ClientUtils.VersionNumber;
+		private static readonly string CodeStamp = "Official StatisticsSummary Client " + ClientUtils.VersionNumber;
 
 		private readonly string _apiKey;
 		private readonly string _statisticsSummaryUrl;

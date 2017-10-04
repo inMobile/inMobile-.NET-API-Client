@@ -7,7 +7,7 @@ namespace Sms.ApiClient.V2.GetMessageStatuses
 {
 	public class GetMessageStatusClient : IGetMessageStatusClient
 	{
-		private const string CodeStamp = "Official GetMessageStatus Client " + ClientUtils.VersionNumber;
+		private static readonly string CodeStamp = "Official GetMessageStatus Client " + ClientUtils.VersionNumber;
 
 		private readonly string _completeUrl;
 		public GetMessageStatusClient(string apiKey, string getMessagesGetUrl)

@@ -10,7 +10,7 @@ namespace Sms.ApiClient.V2.CancelMessages
 {
 	public class CancelMessagesClient : ICancelMessagesClient
 	{
-		private const string CodeStamp = "Official CancelMessages Client " + ClientUtils.VersionNumber;
+		private static readonly string CodeStamp = "Official CancelMessages Client " + ClientUtils.VersionNumber;
 
 		private readonly string _apiKey;
 		private readonly string _getUrl;
