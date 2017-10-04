@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{BBE9E581-2F99-44A1-B12C-7D402AD6415F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Sms.ApiClient</RootNamespace>
+    <AssemblyName>Sms.ApiClient</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Test|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Prod|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>inmobile.api.signingkey.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DelaySign>false</DelaySign>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="V2\CancelMessages\CancelMessagesClient.cs" />
+    <Compile Include="V2\CancelMessages\CancelMessagesException.cs" />
+    <Compile Include="V2\CancelMessages\CancelMessagesResponse.cs" />
+    <Compile Include="V2\CancelMessages\ICancelMessagesClient.cs" />
+    <Compile Include="V2\GetMessageStatuses\GetMessageStatusClient.cs" />
+    <Compile Include="V2\GetMessageStatuses\GetMessageStatusesException.cs" />
+    <Compile Include="V2\GetMessageStatuses\GetMessageStatusesResponse.cs" />
+    <Compile Include="V2\GetMessageStatuses\IGetMessageStatusClient.cs" />
+    <Compile Include="V2\GetMessageStatuses\MessageStatus.cs" />
+    <Compile Include="V2\SendMessages\ISmsMessage.cs" />
+    <Compile Include="V2\SendMessages\RefundMessage.cs" />
+    <Compile Include="V2\SendMessages\SendMessageException.cs" />
+    <Compile Include="V2\SendMessages\ISendMessagesClient.cs" />
+    <Compile Include="V2\SendMessages\MsisdnAndMessageId.cs" />
+    <Compile Include="V2\SendMessages\OverchargeInfo.cs" />
+    <Compile Include="V2\SendMessages\OverchargeType.cs" />
+    <Compile Include="V2\SendMessages\SendMessagesClient.cs" />
+    <Compile Include="V2\SendMessages\SendMessagesRequestBuilder.cs" />
+    <Compile Include="V2\SendMessages\SendMessagesResponse.cs" />
+    <Compile Include="V2\SendMessages\SmsEncoding.cs" />
+    <Compile Include="V2\SendMessages\SmsMessage.cs" />
+    <Compile Include="V2\FacadeSmsClient.cs" />
+    <Compile Include="V2\StatisticsSummary\IStatisticsSummaryClient.cs" />
+    <Compile Include="V2\StatisticsSummary\MessagesInfo.cs" />
+    <Compile Include="V2\StatisticsSummary\StatisticsSummaryClient.cs" />
+    <Compile Include="V2\StatisticsSummary\StatisticsSummaryException.cs" />
+    <Compile Include="V2\StatisticsSummary\StatisticsSummaryResponse.cs" />
+    <Compile Include="V2\StatisticsSummary\StatusLine.cs" />
+    <Compile Include="V2\VersionNumber.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="inmobile.api.signingkey.snk" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
