@@ -38,7 +38,6 @@ namespace Sms.ApiClient.V2.SendMessages
 					throw new SendMessageException(errorCode);
 
 				var replyDoc = XDocument.Parse(responseString);
-
 				// Parse response
 				var replyElements = replyDoc.Root.XPathSelectElements("./recipient").ToList();
 				var messageIds = new List<MsisdnAndMessageId>(replyElements.Count);
