@@ -35,10 +35,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>inmobile.api.signingkey.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <DelaySign>false</DelaySign>
@@ -83,9 +84,6 @@
     <Compile Include="V2\StatisticsSummary\StatisticsSummaryResponse.cs" />
     <Compile Include="V2\StatisticsSummary\StatusLine.cs" />
     <Compile Include="V2\VersionNumber.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="inmobile.api.signingkey.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
