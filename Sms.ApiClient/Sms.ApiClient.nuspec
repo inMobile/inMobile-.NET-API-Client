@@ -6,7 +6,7 @@
 		<authors>Inmobile</authors>
 		<owners>Inmobile</owners>
 		<projectUrl>https://github.com/inMobile/inMobile-.NET-API-Client</projectUrl>
-		<iconUrl></iconUrl>
+		<iconUrl>https://go.inmobile.io/content/images/logos/64x64.png</iconUrl>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
 		<description>InMobile API Client for .NET</description>
 		<releaseNotes>Initial release.</releaseNotes>
