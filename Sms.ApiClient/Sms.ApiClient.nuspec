@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <package >
 	<metadata>
-		<id>InMobile.NET.API.Client</id>
+		<id>inMobile.NET.API.Client</id>
 		<version>2.2.0.1</version>
-		<authors>InMobile ApS</authors>
-		<owners>InMobile ApS</owners>
+		<authors>inMobile ApS</authors>
+		<owners>inMobile ApS</owners>
 		<projectUrl>https://github.com/inMobile/inMobile-.NET-API-Client</projectUrl>
 		<iconUrl>https://go.inmobile.io/content/images/logos/64x64.png</iconUrl>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
-		<description>InMobile API Client for .NET</description>
+		<description>Official .NET client for the inMobile API</description>
 		<releaseNotes>Initial release.</releaseNotes>
 		<copyright>Copyright 2017. InMobile ApS</copyright>
 		<tags>inmobile api client</tags>
