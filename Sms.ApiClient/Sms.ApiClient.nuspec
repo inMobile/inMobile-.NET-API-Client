@@ -9,7 +9,6 @@
 		<requireLicenseAcceptance>true</requireLicenseAcceptance>
 		<projectUrl>https://github.com/inMobile/inMobile-.NET-API-Client</projectUrl>
 		<iconUrl>https://go.inmobile.io/content/images/logos/64x64.png</iconUrl>
-		<requireLicenseAcceptance>false</requireLicenseAcceptance>
 		<description>Official .NET client for the inMobile API</description>
 		<releaseNotes>Initial release.</releaseNotes>
 		<copyright>Copyright 2017. InMobile ApS</copyright>
