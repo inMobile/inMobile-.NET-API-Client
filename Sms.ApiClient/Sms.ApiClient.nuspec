@@ -6,7 +6,7 @@
 		<authors>inMobile ApS</authors>
 		<owners>inMobile ApS</owners>
 		<licenseUrl>https://raw.githubusercontent.com/inMobile/inMobile-.NET-API-Client/master/LICENSE</licenseUrl>
-		<requireLicenseAcceptance>True</requireLicenseAcceptance>
+		<requireLicenseAcceptance>true</requireLicenseAcceptance>
 		<projectUrl>https://github.com/inMobile/inMobile-.NET-API-Client</projectUrl>
 		<iconUrl>https://go.inmobile.io/content/images/logos/64x64.png</iconUrl>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
