@@ -130,6 +130,14 @@ namespace Sms.ApiClient.V2.SendMessages
 					messageElement.Add(sendTimeElement);
 				}
 
+				// Set expireinseconds if specified
+				if (firstMessage.ExpireInSeconds.HasValue)
+				{
+					var expireInSecondsElement = new XElement(XName.Get("expireinseconds"));
+					expireInSecondsElement.Value = firstMessage.ExpireInSeconds.Value.ToString();
+					messageElement.Add(expireInSecondsElement);
+				}
+
 				// Handle overcharge
 				if (firstMessage.OverchargeInfo != null)
 				{

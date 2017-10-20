@@ -55,5 +55,11 @@ namespace Sms.ApiClient.V2.SendMessages
 		/// The time for the message to be sent. use NULL to send immediately.
 		/// </summary>
 		public DateTime? SendTime { get; set; }
+
+		/// <summary>
+		/// The amount of seconds the message is valid for. If the seconds pass before the message is sent, the message will not be sent.
+		/// If null, validity period for the message, is not set.
+		/// </summary>
+		public int? ExpireInSeconds { get; set; }
 	}
 }
