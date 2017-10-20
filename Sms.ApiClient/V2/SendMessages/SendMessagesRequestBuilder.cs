@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Xml.Linq;
 using System.Xml.XPath;
@@ -131,10 +133,10 @@ namespace Sms.ApiClient.V2.SendMessages
 				}
 
 				// Set expireinseconds if specified
-				if (firstMessage.ExpireInSeconds.HasValue)
+				if (firstMessage.ExpireIn.HasValue)
 				{
 					var expireInSecondsElement = new XElement(XName.Get("expireinseconds"));
-					expireInSecondsElement.Value = firstMessage.ExpireInSeconds.Value.ToString();
+					expireInSecondsElement.Value = Convert.ToInt32(firstMessage.ExpireIn.Value.TotalSeconds).ToString();
 					messageElement.Add(expireInSecondsElement);
 				}
 
@@ -161,7 +163,7 @@ namespace Sms.ApiClient.V2.SendMessages
 			var key = message.Encoding + "_" + message.SenderName + "_" + message.Text + "_" + message.SendTime;
 			if (message.OverchargeInfo != null)
 			{
-				key += "_" + message.OverchargeInfo.CountryCode + "_" + message.OverchargeInfo.Price + "_" + message.OverchargeInfo.ShortCodeNumber + "_" + message.OverchargeInfo.Type;
+				key += "_" + message.OverchargeInfo.CountryCode + "_" + message.OverchargeInfo.Price + "_" + message.OverchargeInfo.ShortCodeNumber + "_" + message.OverchargeInfo.Type + "_" + message.ExpireIn;
 			}
 			return key;
 		}

@@ -4,7 +4,7 @@ namespace Sms.ApiClient.V2.SendMessages
 {
 	public class SmsMessage : ISmsMessage
 	{
-		public SmsMessage(string msisdn, string text, string senderName, SmsEncoding encoding, string messageId = null, DateTime? sendTime = null, bool flash = false)
+		public SmsMessage(string msisdn, string text, string senderName, SmsEncoding encoding, string messageId = null, DateTime? sendTime = null, bool flash = false, TimeSpan? expireTimeSpan = null)
 		{
 			MessageId = messageId ?? "";
 			Msisdn = msisdn;
@@ -13,6 +13,7 @@ namespace Sms.ApiClient.V2.SendMessages
 			Encoding = encoding;
 			SendTime = sendTime;
 			Flash = flash;
+			ExpireIn = expireTimeSpan;
 		}
 
 		/// <summary>
@@ -57,9 +58,9 @@ namespace Sms.ApiClient.V2.SendMessages
 		public DateTime? SendTime { get; set; }
 
 		/// <summary>
-		/// The amount of seconds the message is valid for. If the seconds pass before the message is sent, the message will not be sent.
+		/// The amount of time the message is valid for. If the time passes before the message is sent, the message will not be sent.
 		/// If null, validity period for the message, is not set.
 		/// </summary>
-		public int? ExpireInSeconds { get; set; }
+		public TimeSpan? ExpireIn { get; set; }
 	}
 }
