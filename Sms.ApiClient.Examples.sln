@@ -11,6 +11,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sms.ApiClient.Test", "Sms.A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sms.ApiClient.AdHoc", "Sms.ApiClient.AdHoc\Sms.ApiClient.AdHoc.csproj", "{C457847E-2A39-43EB-96A0-5FDD73608B07}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildScripts", "BuildScripts", "{B91D020A-42C6-4789-B97B-2022D8653BEC}"
+	ProjectSection(SolutionItems) = preProject
+		build.cake = build.cake
+		build.ps1 = build.ps1
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
