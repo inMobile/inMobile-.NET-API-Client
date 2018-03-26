@@ -36,26 +36,29 @@ Task("UpdateVersion")
 
         ReplaceRegexInFiles(
             globberPattern: assemplyInfoPattern, 
-            rxFindPattern: "(^\s*\[\s*assembly\s*:\s*((System\s*\.)?\s*Reflection\s*\.)?\s*AssemblyFileVersion(Attribute)?\s*\(\s*@?\")(([0-9\*])+\.?)+(\"\s*\)\s*\])", 
+            rxFindPattern: "(?<=AssemblyFileVersion\\(\")(.+?)(?=\"\\))", 
             replaceText: version);
 
 		ReplaceRegexInFiles(
             globberPattern: assemplyInfoPattern, 
-            rxFindPattern: "(^\s*\[\s*assembly\s*:\s*((System\s*\.)?\s*Reflection\s*\.)?\s*AssemblyVersion(Attribute)?\s*\(\s*@?\")(([0-9\*])+\.?)+(\"\s*\)\s*\])", 
+            rxFindPattern: "(?<=AssemblyVersion\\(\")(.+?)(?=\"\\))", 
             replaceText: version);
     });
 
 Task("Build")
-	.IsDependentOn("UpdateVersion")
+	//.IsDependentOn("UpdateVersion")
 	.Does(() => 
 	{
 		Information("Build");
-		MsBuild("./Sms.ApiClient.Examples.sln", new MSBuildSettings {
+
+		var buildSettings = new MSBuildSettings {
 			ToolVersion = MSBuildToolVersion.VS2017,
 			Configuration = "Release",
-			Targets = new HashSet { "Rebuild" },
 			WarningsAsError = true
-		});
+		};
+		buildSettings.Targets.Add("Rebuild");
+
+		MSBuild("./Sms.ApiClient.Examples.sln", buildSettings);
 	});
 
 Task("GitCommitAndPush")
