@@ -46,7 +46,7 @@ Task("UpdateVersion")
     });
 
 Task("Build")
-	//.IsDependentOn("UpdateVersion")
+	.IsDependentOn("UpdateVersion")
 	.Does(() => 
 	{
 		Information("Build");
@@ -66,7 +66,7 @@ Task("GitCommitAndPush")
 	.Does(() => 
 	{
 		Information("GitCommitAndPush");
-		GitCommit("./", "Build Agent", "", "Updated version number");
+		GitCommit("./", "Build Agent", "buildbot@inmobile.dk", "Updated version number");
 		GitPush("./");
 	});
 
