@@ -66,6 +66,7 @@ Task("GitCommitAndPush")
 	.Does(() => 
 	{
 		Information("GitCommitAndPush");
+		GitAddAll("./");
 		GitCommit("./", "Build Agent", "buildbot@inmobile.dk", "Updated version number");
 		GitPush("./");
 	});
