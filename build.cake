@@ -6,9 +6,9 @@
 //////////////////////////////////////////////////////////////////////
 
 var target = Argument("target", "Default");
-var version = Argument("releaseVersion", "1.0.0");
-var githubUser = Argument("githubUser", "buildbot@inmobile.dk");
-var githubPass = Argument("githubPass", "2suLobYQw8fFtjLkXPYRYbViyirkZJ");
+var version = Argument("releaseVersion", "");
+var githubUser = Argument("githubUser", "");
+var githubPass = Argument("githubPass", "");
 
 ///////////////////////////////////////////////////////////////////////////////
 // SETUP / TEARDOWN
@@ -19,6 +19,19 @@ Setup(ctx =>
     // Executed BEFORE the first task.
     var cakeVersion = typeof(ICakeContext).Assembly.GetName().Version.ToString();
     Information($"Running tasks using version {cakeVersion} of Cake ...");
+
+	if (string.IsNullOrWhiteSpace(version)) 
+	{
+		throw new ArgumentException("Cannot be null or empty", nameof(version));
+	}
+	if (string.IsNullOrWhiteSpace(githubUser))
+	{
+		throw new ArgumentException("Cannot be null or empty", nameof(githubUser));
+	}
+	if (string.IsNullOrWhiteSpace(githubPass))
+	{
+		throw new ArgumentException("Cannot be null or empty", nameof(githubPass));
+	}
 });
 
 Teardown(ctx =>
@@ -48,11 +61,9 @@ Task("UpdateVersion")
     });
 
 Task("Build")
-	//.IsDependentOn("UpdateVersion")
+	.IsDependentOn("UpdateVersion")
 	.Does(() => 
 	{
-		Information("Build");
-
 		var buildSettings = new MSBuildSettings {
 			ToolVersion = MSBuildToolVersion.VS2017,
 			Configuration = "Release",
@@ -67,20 +78,15 @@ Task("GitCommitAndPush")
 	.IsDependentOn("Build")
 	.Does(() => 
 	{
-		Information("GitCommitAndPush");
 		GitAddAll("./");
-		Information("1");
 		GitCommit("./", "inMobile BuildBot", "buildbot@inmobile.dk", "Updated version number");
-		Information("2");
 		GitPush("./", githubUser, githubPass);
-		Information("3");
 	});
 
 Task("CreateGitTag")
 	.IsDependentOn("GitCommitAndPush")
 	.Does(() => 
 	{
-		Information("CreateGitTag");
 		GitTag("./", version);
 	});
 
