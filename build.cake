@@ -46,7 +46,7 @@ Task("UpdateVersion")
     });
 
 Task("Build")
-	.IsDependentOn("UpdateVersion")
+	//.IsDependentOn("UpdateVersion")
 	.Does(() => 
 	{
 		Information("Build");
