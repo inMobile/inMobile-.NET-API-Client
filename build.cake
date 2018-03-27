@@ -7,6 +7,8 @@
 
 var target = Argument("target", "Default");
 var version = Argument("releaseVersion", "1.0.0");
+var githubUser = Argument("githubUser", "buildbot@inmobile.dk");
+var githubPass = Argument("githubPass", "2suLobYQw8fFtjLkXPYRYbViyirkZJ");
 
 ///////////////////////////////////////////////////////////////////////////////
 // SETUP / TEARDOWN
@@ -68,9 +70,9 @@ Task("GitCommitAndPush")
 		Information("GitCommitAndPush");
 		GitAddAll("./");
 		Information("1");
-		GitCommit("./", "Build Agent", "buildbot@inmobile.dk", "Updated version number");
+		GitCommit("./", "inMobile BuildBot", "buildbot@inmobile.dk", "Updated version number");
 		Information("2");
-		GitPush("./");
+		GitPush("./", githubUser, githubPass);
 		Information("3");
 	});
 
