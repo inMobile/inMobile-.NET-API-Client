@@ -67,8 +67,11 @@ Task("GitCommitAndPush")
 	{
 		Information("GitCommitAndPush");
 		GitAddAll("./");
+		Information("1");
 		GitCommit("./", "Build Agent", "buildbot@inmobile.dk", "Updated version number");
+		Information("2");
 		GitPush("./");
+		Information("3");
 	});
 
 Task("CreateGitTag")
