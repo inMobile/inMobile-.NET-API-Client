@@ -7,8 +7,16 @@ using System.Collections.Generic;
 
 namespace Sms.ApiClient.V2
 {
-	public class FacadeSmsClient
-	{
+    public interface IFacadeSmsClient
+    {
+        GetMessageStatusesResponse GetMessageStatus();
+        SendMessagesResponse SendMessages(List<ISmsMessage> messages, string messageStatusCallbackUrl);
+        StatisticsSummaryResponse GetStatistics(DateTime @from, DateTime to);
+        CancelMessagesResponse CancelMessage(List<string> messageIds);
+    }
+
+    public class FacadeSmsClient : IFacadeSmsClient
+    {
 		private readonly ISendMessagesClient _sendClient;
 		private readonly IGetMessageStatusClient _statusClient;
 		private readonly IStatisticsSummaryClient _statisticsClient;
@@ -24,6 +32,7 @@ namespace Sms.ApiClient.V2
 			// Ensure url not ending with / to avoid double slashes in concatenation
 			if (hostRootUrl.EndsWith("/"))
 				hostRootUrl = hostRootUrl.Substring(0, hostRootUrl.Length - 1);
+
 			_statisticsClient = new StatisticsSummaryClient(apiKey: apiKey, statisticsSummaryUrl: hostRootUrl + "/Api/V2/Statistics/Summary");
 			_statusClient = new GetMessageStatusClient(apiKey: apiKey, getMessagesGetUrl: hostRootUrl + "/api/v2/GET/getmessagestatus");
 			_sendClient = new SendMessagesClient(apiKey: apiKey, postUrl: hostRootUrl + "/api/v2/sendmessages", requestBuilder: new SendMessagesRequestBuilder());
