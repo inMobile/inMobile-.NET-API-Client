@@ -1,19 +1,11 @@
 ﻿using System;
-using System.Windows.Forms;
 
-namespace Sms.ApiClient.Examples
+namespace Inmobile.ApiClient.Examples
 {
-	internal static class Program
-	{
-		/// <summary>
-		/// The main entry point for the application.
-		/// </summary>
-		[STAThread]
-		private static void Main()
-		{
-			Application.EnableVisualStyles();
-			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new Form1());
-		}
-	}
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+        }
+    }
 }

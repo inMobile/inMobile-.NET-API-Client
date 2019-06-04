@@ -1,98 +1,31 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{BBE9E581-2F99-44A1-B12C-7D402AD6415F}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Sms.ApiClient</RootNamespace>
-    <AssemblyName>Sms.ApiClient</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
-    <TargetFrameworkProfile />
+    <TargetFrameworks>net35;netstandard2.0</TargetFrameworks>
+
+    <FileVersion>2.2.0.1</FileVersion>
+    <AssemblyVersion>2.2.0.1</AssemblyVersion>
+
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>inMobile.NET.API.Client</PackageId>
+    <Authors>inMobile ApS</Authors>
+    <Version>2.2.0.1</Version>
+    <Description>Official .NET client for the inMobile API</Description>
+    <Copyright>Copyright inMobile ApS</Copyright>
+    <PackageProjectUrl>https://github.com/inMobile/inMobile-.NET-API-Client</PackageProjectUrl>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageLicenseExpression>BSD-3-Clause</PackageLicenseExpression>
+    <PackageIconUrl>https://go.inmobile.io/content/images/logos/64x64.png</PackageIconUrl>
+    <PackageTags>inmobile api client</PackageTags>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>none</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
-    <AssemblyOriginatorKeyFile>
-    </AssemblyOriginatorKeyFile>
-  </PropertyGroup>
-  <PropertyGroup>
-    <DelaySign>false</DelaySign>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
+    <Folder Include="V2\" />
+  </ItemGroup>
+
+  <!-- Conditionally obtain references for the .NET Framework 3.5 target -->
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net35' ">
     <Reference Include="System.Web" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="V2\CancelMessages\Internal\CancelMessagesClient.cs" />
-    <Compile Include="V2\CancelMessages\CancelMessagesException.cs" />
-    <Compile Include="V2\CancelMessages\CancelMessagesResponse.cs" />
-    <Compile Include="V2\CancelMessages\Internal\ICancelMessagesClient.cs" />
-    <Compile Include="V2\GetMessageStatuses\Internal\GetMessageStatusClient.cs" />
-    <Compile Include="V2\GetMessageStatuses\GetMessageStatusesException.cs" />
-    <Compile Include="V2\GetMessageStatuses\GetMessageStatusesResponse.cs" />
-    <Compile Include="V2\GetMessageStatuses\Internal\IGetMessageStatusClient.cs" />
-    <Compile Include="V2\GetMessageStatuses\MessageStatus.cs" />
-    <Compile Include="V2\SendMessages\ISmsMessage.cs" />
-    <Compile Include="V2\SendMessages\RefundMessage.cs" />
-    <Compile Include="V2\SendMessages\SendMessageException.cs" />
-    <Compile Include="V2\SendMessages\Internal\ISendMessagesClient.cs" />
-    <Compile Include="V2\SendMessages\MsisdnAndMessageId.cs" />
-    <Compile Include="V2\SendMessages\OverchargeInfo.cs" />
-    <Compile Include="V2\SendMessages\OverchargeType.cs" />
-    <Compile Include="V2\SendMessages\Internal\SendMessagesClient.cs" />
-    <Compile Include="V2\SendMessages\SendMessagesRequestBuilder.cs" />
-    <Compile Include="V2\SendMessages\SendMessagesResponse.cs" />
-    <Compile Include="V2\SendMessages\SmsEncoding.cs" />
-    <Compile Include="V2\SendMessages\SmsMessage.cs" />
-    <Compile Include="V2\FacadeSmsClient.cs" />
-    <Compile Include="V2\StatisticsSummary\Internal\IStatisticsSummaryClient.cs" />
-    <Compile Include="V2\StatisticsSummary\MessagesInfo.cs" />
-    <Compile Include="V2\StatisticsSummary\Internal\StatisticsSummaryClient.cs" />
-    <Compile Include="V2\StatisticsSummary\StatisticsSummaryException.cs" />
-    <Compile Include="V2\StatisticsSummary\StatisticsSummaryResponse.cs" />
-    <Compile Include="V2\StatisticsSummary\StatusLine.cs" />
-    <Compile Include="V2\VersionNumber.cs" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>

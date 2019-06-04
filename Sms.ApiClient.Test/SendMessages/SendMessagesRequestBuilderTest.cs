@@ -1,14 +1,15 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Sms.ApiClient.V2;
 using Sms.ApiClient.V2.SendMessages;
 using System;
 using System.Collections.Generic;
+using System.Xml.Linq;
+using Xunit;
 
 namespace Sms.ApiClient.Test.V2.SendMessages
 {
-    [TestClass]
     public class SendMessagesRequestBuilderTest
     {
-        [TestMethod]
+        [Fact]
         public void Build_Simple_NoMessageId_NoUrlCallback_Test()
         {
             var builder = new SendMessagesRequestBuilder();
@@ -24,7 +25,7 @@ namespace Sms.ApiClient.Test.V2.SendMessages
                                     messageStatusCallbackUrl: null);
 
             var expectedOutput =
-@"<request source=""Official SendMessages Client 2.2.9.1"">
+$@"<request source=""Official SendMessages Client {ClientUtils.VersionNumber}"">
   <authentication apikey=""apiKey"" />
   <data>
     <message>
@@ -40,7 +41,7 @@ namespace Sms.ApiClient.Test.V2.SendMessages
             AssertEqualXml(expectedOutput, result);
         }
 
-        [TestMethod]
+        [Fact]
         public void Build_Simple_WithRespectBlacklistingToFalse_Test()
         {
             var builder = new SendMessagesRequestBuilder();
@@ -57,7 +58,7 @@ namespace Sms.ApiClient.Test.V2.SendMessages
                 messageStatusCallbackUrl: null);
 
             var expectedOutput =
-                @"<request source=""Official SendMessages Client 2.2.9.1"">
+$@"<request source=""Official SendMessages Client {ClientUtils.VersionNumber}"">
   <authentication apikey=""apiKey"" />
   <data>
     <message>
@@ -74,7 +75,7 @@ namespace Sms.ApiClient.Test.V2.SendMessages
             AssertEqualXml(expectedOutput, result);
         }
 
-        [TestMethod]
+        [Fact]
         public void Build_Simple_WithMessageId_Callback_SendTime_Test()
         {
             var builder = new SendMessagesRequestBuilder();
@@ -92,7 +93,7 @@ namespace Sms.ApiClient.Test.V2.SendMessages
                                     "http://someUrl.callback.inmobile.dk/unittest/messagestatus");
 
             var expectedOutput =
-@"<request source=""Official SendMessages Client 2.2.9.1"">
+$@"<request source=""Official SendMessages Client {ClientUtils.VersionNumber}"">
   <authentication apikey=""apiKey"" />
   <data>
     <statuscallbackurl>http://someUrl.callback.inmobile.dk/unittest/messagestatus</statuscallbackurl>
@@ -110,7 +111,7 @@ namespace Sms.ApiClient.Test.V2.SendMessages
             AssertEqualXml(expectedOutput, result);
         }
 
-        [TestMethod]
+        [Fact]
         public void Build_Overcharged_Test()
         {
             var builder = new SendMessagesRequestBuilder();
@@ -124,7 +125,7 @@ namespace Sms.ApiClient.Test.V2.SendMessages
             var result = builder.BuildPostXmlData(new List<ISmsMessage>() { message }, "apiKey", "http://someUrl.callback.inmobile.dk/unittest/messagestatus");
 
             var expectedOutput =
-@"<request source=""Official SendMessages Client 2.2.9.1"">
+$@"<request source=""Official SendMessages Client {ClientUtils.VersionNumber}"">
   <authentication apikey=""apiKey"" />
   <data>
     <statuscallbackurl>http://someUrl.callback.inmobile.dk/unittest/messagestatus</statuscallbackurl>
@@ -142,7 +143,7 @@ namespace Sms.ApiClient.Test.V2.SendMessages
             AssertEqualXml(expectedOutput, result);
         }
 
-        [TestMethod]
+        [Fact]
         public void Build_RefundMessages_Test()
         {
             var builder = new SendMessagesRequestBuilder();
@@ -153,7 +154,7 @@ namespace Sms.ApiClient.Test.V2.SendMessages
             var result = builder.BuildPostXmlData(new List<ISmsMessage>() { refund1, refund2 }, "apiKey", "http://someUrl.callback.inmobile.dk/unittest/messagestatus");
 
             var expectedOutput =
-@"<request source=""Official SendMessages Client 2.2.9.1"">
+$@"<request source=""Official SendMessages Client {ClientUtils.VersionNumber}"">
   <authentication apikey=""apiKey"" />
   <data>
     <statuscallbackurl>http://someUrl.callback.inmobile.dk/unittest/messagestatus</statuscallbackurl>
@@ -169,7 +170,7 @@ namespace Sms.ApiClient.Test.V2.SendMessages
             AssertEqualXml(expectedOutput, result);
         }
 
-        [TestMethod]
+        [Fact]
         public void Build_MultipleMessages_Test()
         {
             var builder = new SendMessagesRequestBuilder();
@@ -193,7 +194,7 @@ namespace Sms.ApiClient.Test.V2.SendMessages
                                     "http://someUrl.callback.inmobile.dk/unittest/messagestatus");
 
             var expectedOutput =
-@"<request source=""Official SendMessages Client 2.2.9.1"">
+$@"<request source=""Official SendMessages Client {ClientUtils.VersionNumber}"">
   <authentication apikey=""apiKey"" />
   <data>
     <statuscallbackurl>http://someUrl.callback.inmobile.dk/unittest/messagestatus</statuscallbackurl>
@@ -220,13 +221,16 @@ namespace Sms.ApiClient.Test.V2.SendMessages
 
         private void AssertEqualXml(string xml1, string xml2)
         {
-            if (false == xml1.Equals(xml2))
+            var elem1 = XElement.Parse(xml1);
+            var elem2 = XElement.Parse(xml2);
+
+            if (false == elem1.ToString().Equals(elem2.ToString()))
             {
                 var indexFirstDiff = GetFirstBreakIndex(xml1, xml2, true);
                 if (indexFirstDiff < xml1.Length && indexFirstDiff < xml2.Length)
-                    throw new Exception("Different from: " + xml2.Substring(indexFirstDiff) + "\n           AND           \n" + xml1.Substring(indexFirstDiff));
+                    throw new Exception($"Different from: {xml2.Substring(indexFirstDiff)}\n           AND           \n{xml1.Substring(indexFirstDiff)}");
                 else
-                    Assert.Equals(xml1, xml2);
+                    Assert.Equal(xml1, xml2);
             }
         }
 
@@ -244,15 +248,15 @@ namespace Sms.ApiClient.Test.V2.SendMessages
         /// </returns>
         public int GetFirstBreakIndex(string a, string b, bool handleLengthDifference)
         {
-            int equalsReturnCode = -1;
+            var equalsReturnCode = -1;
             if (string.IsNullOrEmpty(a) || string.IsNullOrEmpty(b))
             {
                 return handleLengthDifference ? 0 : equalsReturnCode;
             }
 
-            string longest = b.Length > a.Length ? b : a;
-            string shorten = b.Length > a.Length ? a : b;
-            for (int i = 0; i < shorten.Length; i++)
+            var longest = b.Length > a.Length ? b : a;
+            var shorten = b.Length > a.Length ? a : b;
+            for (var i = 0; i < shorten.Length; i++)
             {
                 if (shorten[i] != longest[i])
                 {
