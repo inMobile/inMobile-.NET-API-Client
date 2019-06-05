@@ -3,13 +3,13 @@
   <PropertyGroup>
     <TargetFrameworks>net35;netstandard2.0</TargetFrameworks>
 
-    <FileVersion>2.2.0.1</FileVersion>
-    <AssemblyVersion>2.2.0.1</AssemblyVersion>
+    <FileVersion>2.3.0.1</FileVersion>
+    <AssemblyVersion>2.3.0.1</AssemblyVersion>
 
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>inMobile.NET.API.Client</PackageId>
     <Authors>inMobile ApS</Authors>
-    <Version>2.2.0.1</Version>
+    <Version>2.3.0.1</Version>
     <Description>Official .NET client for the inMobile API</Description>
     <Copyright>Copyright inMobile ApS</Copyright>
     <PackageProjectUrl>https://github.com/inMobile/inMobile-.NET-API-Client</PackageProjectUrl>
