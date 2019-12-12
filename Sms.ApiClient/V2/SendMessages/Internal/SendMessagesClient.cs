@@ -10,7 +10,7 @@ namespace Sms.ApiClient.V2.SendMessages
 {
 	internal class SendMessagesClient : ISendMessagesClient
 	{
-		public static readonly string CodeStamp = "Official SendMessages Client " + ClientUtils.VersionNumber;
+		public static readonly string CodeStamp = $"Official SendMessages Client {ClientUtils.VersionNumber}";
 
 		private readonly string _apiKey;
 		private readonly string _postUrl;
@@ -23,7 +23,7 @@ namespace Sms.ApiClient.V2.SendMessages
 			_requestBuilder = requestBuilder;
 		}
 
-		public SendMessagesResponse SendMessages(List<ISmsMessage> messages, string messageStatusCallbackUrl)
+		public SendMessagesResponse SendMessages(List<ISmsMessage> messages, string messageStatusCallbackUrl = null)
 		{
 			var xml = _requestBuilder.BuildPostXmlData(messages: messages, apiKey: _apiKey, messageStatusCallbackUrl: messageStatusCallbackUrl);
 			using (var client = new WebClient())
@@ -32,9 +32,8 @@ namespace Sms.ApiClient.V2.SendMessages
 				{
 					{"xml", xml}
 				});
-				string responseString = Encoding.UTF8.GetString(responseBytes);
-				int errorCode;
-				if (int.TryParse(responseString, out errorCode))
+				var responseString = Encoding.UTF8.GetString(responseBytes);
+				if (int.TryParse(responseString, out var errorCode))
 					throw new SendMessageException(errorCode);
 
 				var replyDoc = XDocument.Parse(responseString);

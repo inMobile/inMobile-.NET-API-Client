@@ -10,7 +10,7 @@ namespace Sms.ApiClient.V2
     public interface IFacadeSmsClient
     {
         GetMessageStatusesResponse GetMessageStatus();
-        SendMessagesResponse SendMessages(List<ISmsMessage> messages, string messageStatusCallbackUrl);
+        SendMessagesResponse SendMessages(List<ISmsMessage> messages, string messageStatusCallbackUrl = null);
         StatisticsSummaryResponse GetStatistics(DateTime @from, DateTime to);
         CancelMessagesResponse CancelMessage(List<string> messageIds);
     }
