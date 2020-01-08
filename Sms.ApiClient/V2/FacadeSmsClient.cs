@@ -44,7 +44,7 @@ namespace Sms.ApiClient.V2
 			return _statusClient.GetMessageStatus();
 		}
 
-		public SendMessagesResponse SendMessages(List<ISmsMessage> messages, string messageStatusCallbackUrl)
+		public SendMessagesResponse SendMessages(List<ISmsMessage> messages, string messageStatusCallbackUrl = null)
 		{
 			return _sendClient.SendMessages(messages: messages, messageStatusCallbackUrl: messageStatusCallbackUrl);
 		}
