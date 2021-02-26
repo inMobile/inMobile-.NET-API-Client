@@ -1,16 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Company>inMobile ApS</Company>
-    <Product>InMobile.NET.API.Client</Product>
-    <Authors>inMobile ApS</Authors>
-    <PackageId>inMobile.NET.API.Client</PackageId>
-    <Description>Official .NET client for the inMobile API</Description>
-    <Copyright>Copyright inMobile ApS</Copyright>
-    <PackageTags>inmobile api client</PackageTags>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <Version>1.0.0.0</Version>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Authors>inMobile ApS</Authors>
+        <Description>Official .NET client for the inMobile API</Description>
+        <Copyright>Copyright inMobile ApS</Copyright>
+        <PackageProjectUrl>https://github.com/inMobile/inMobile-.NET-API-Client</PackageProjectUrl>
+        <Company>inMobile ApS</Company>
+        <PackageId>inMobile.NET.API.Client</PackageId>
+        <PackageTags>inmobile api client</PackageTags>
+        <PackageLicenseExpression>BSD-3-Clause</PackageLicenseExpression>
+        <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    </PropertyGroup>
 
 </Project>
