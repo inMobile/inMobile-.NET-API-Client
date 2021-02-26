@@ -3,11 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28922.388
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sms.ApiClient.Examples", "Sms.ApiClient.Examples\Sms.ApiClient.Examples.csproj", "{3EEB835B-41A1-48BB-8CC4-160E5FCF740A}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sms.ApiClient.Test", "Sms.ApiClient.Test\Sms.ApiClient.Test.csproj", "{524EFC65-EAC9-4B57-9715-8B561D2EDADD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sms.ApiClient", "Sms.ApiClient\Sms.ApiClient.csproj", "{5C8C3E81-24D2-430B-B953-5D76D1087D36}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sms.ApiClient", "Sms.ApiClient\Sms.ApiClient.csproj", "{5C8C3E81-24D2-430B-B953-5D76D1087D36}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,10 +13,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3EEB835B-41A1-48BB-8CC4-160E5FCF740A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3EEB835B-41A1-48BB-8CC4-160E5FCF740A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3EEB835B-41A1-48BB-8CC4-160E5FCF740A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3EEB835B-41A1-48BB-8CC4-160E5FCF740A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{524EFC65-EAC9-4B57-9715-8B561D2EDADD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{524EFC65-EAC9-4B57-9715-8B561D2EDADD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{524EFC65-EAC9-4B57-9715-8B561D2EDADD}.Release|Any CPU.ActiveCfg = Release|Any CPU
