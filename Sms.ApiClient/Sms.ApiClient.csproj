@@ -2,7 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <Company>inMobile ApS</Company>
+    <Product>InMobile.NET.API.Client</Product>
+    <Authors>inMobile ApS</Authors>
+    <PackageId>inMobile.NET.API.Client</PackageId>
+    <Description>Official .NET client for the inMobile API</Description>
+    <Copyright>Copyright inMobile ApS</Copyright>
+    <PackageTags>inmobile api client</PackageTags>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
 </Project>
