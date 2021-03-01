@@ -35,9 +35,13 @@ message.OverchargeInfo = new OverchargeInfo(
 // Send the messages and evaluate the response
 try
 {
+    var response = smsClient.SendMessages(messages: messagesToSend);
+    /* In case push notifications are wanted, provide an endpoint for us to call with the information.
+       Example:
     var response = smsClient.SendMessages(
         messages: messagesToSend,
         messageStatusCallbackUrl: "http://mywebsite.com/example/messagestatus");
+        */
 }
 catch (SendMessageException smex)
 {
