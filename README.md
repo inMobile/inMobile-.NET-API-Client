@@ -9,13 +9,13 @@ You can always download the latest release as a NuGet package <a href="https://w
 // Instantiate the client to use
 // NOTE: The api key can be found on top of the documentation page
 var smsClient = new FacadeSmsClient(
-	hostRootUrl: "https://mm.inmobile.dk",
+    hostRootUrl: "https://mm.inmobile.dk",
     apiKey: "INSERT APIKEY");
 
 // Create a list of messages to be sent
 var messagesToSend = new List<ISmsMessage>();
 var message = new SmsMessage(
-	msisdn: "4512345678", // The mobile number including country code
+    msisdn: "4512345678", // The mobile number including country code
     text: "This is the text to be sent.",
     senderName: "SendersName", // i.e. 1245 or FancyShop
     encoding: SmsEncoding.Gsm7,
@@ -25,7 +25,7 @@ messagesToSend.Add(message);
 /*
 // Optional: Adding overcharge info to the message
 message.OverchargeInfo = new OverchargeInfo(
-	overchargePrice: 150, // Price in cents, e.g. 150 for 1,50 DKK
+    overchargePrice: 150, // Price in cents, e.g. 150 for 1,50 DKK
     shortCodeCountryCode: "45",
     shortCodeNumber: "1245",
     overchargeType: OverchargeType.Service,
@@ -54,7 +54,7 @@ catch (SendMessageException smex)
 // Instantiate the client to use
 // NOTE: The api key can be found on top of the documentation page
 var smsClient = new FacadeSmsClient(
-	hostRootUrl: "https://mm.inmobile.dk",
+    hostRootUrl: "https://mm.inmobile.dk",
     apiKey: "INSERT APIKEY"); // Can be found on top of the documentation page
 
 // Get all changed message statuses since last call
@@ -72,7 +72,7 @@ var response = smsClient.GetMessageStatus();
 // Instantiate the client to use
 // NOTE: The api key can be found on top of the documentation page
 var smsClient = new FacadeSmsClient(
-	hostRootUrl: "https://mm.inmobile.dk",
+    hostRootUrl: "https://mm.inmobile.dk",
     apiKey: "INSERT APIKEY"); // Can be found on top of the documentation page
 
 // Cancel the messages with id 'MessageId1' and 'MessageId2'
@@ -89,7 +89,7 @@ var response = smsClient.CancelMessage(new List<string>() { "MessageId1", "Messa
 // Instantiate the client to use
 // NOTE: The api key can be found on top of the documentation page
 var smsClient = new FacadeSmsClient(
-	hostRootUrl: "https://mm.inmobile.dk",
+    hostRootUrl: "https://mm.inmobile.dk",
     apiKey: "INSERT APIKEY");
 
 // Create a list of messages to be sent
