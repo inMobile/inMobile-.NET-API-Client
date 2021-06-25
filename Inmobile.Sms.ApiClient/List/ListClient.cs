@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace InMobile.Sms.ApiClient.List
+namespace InMobile.Sms.ApiClient
 {
     public interface IListClient
     {
@@ -21,13 +21,13 @@ namespace InMobile.Sms.ApiClient.List
         void UpdateRecipient();
     }
 
-    public class ListClient : IListClient
+    internal class ListClient : IListClient
     {
-        private readonly InmobileApiKey _apiKey;
+        private readonly IApiRequestHelper _requestHelper;
 
-        public ListClient(InmobileApiKey apiKey)
+        public ListClient(IApiRequestHelper requestHelper)
         {
-            _apiKey = apiKey ?? throw new ArgumentNullException(nameof(apiKey));
+            _requestHelper = requestHelper ?? throw new ArgumentNullException(nameof(requestHelper));
         }
 
         public void CreateList()

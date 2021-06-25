@@ -7,18 +7,16 @@ namespace InMobile.Sms.ApiClient
     public interface IBlacklistClient
     {
         void AddNumberToBlacklist();
-        void GetBlacklistingById(BlacklistingId id);
+        void GetBlacklistingById();
     }
 
-    public class BlacklistingId { }
-
-    public class BlacklistClient : IBlacklistClient
+    internal class BlacklistClient : IBlacklistClient
     {
-        private readonly InmobileApiKey _apiKey;
+        private readonly IApiRequestHelper _requestHelper;
 
-        public BlacklistClient(InmobileApiKey apiKey)
+        public BlacklistClient(IApiRequestHelper requestHelper)
         {
-            _apiKey = apiKey ?? throw new ArgumentNullException(nameof(apiKey));
+            _requestHelper = requestHelper ?? throw new ArgumentNullException(nameof(requestHelper));
         }
 
         public void AddNumberToBlacklist()
@@ -26,7 +24,7 @@ namespace InMobile.Sms.ApiClient
             throw new NotImplementedException();
         }
 
-        public void GetBlacklistingById(BlacklistingId id)
+        public void GetBlacklistingById()
         {
             throw new NotImplementedException();
         }

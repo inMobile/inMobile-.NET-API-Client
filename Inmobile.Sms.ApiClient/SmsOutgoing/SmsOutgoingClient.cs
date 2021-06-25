@@ -7,11 +7,13 @@
         void GetStatusReports();
     }
 
-    public class SmsOutgoingClient : ISmsOutgoingClient
+    internal class SmsOutgoingClient : ISmsOutgoingClient
     {
-        public SmsOutgoingClient(InmobileApiKey inmobileApiKey)
-        {
+        private readonly IApiRequestHelper _requestHelper;
 
+        public SmsOutgoingClient(IApiRequestHelper requestHelper)
+        {
+            _requestHelper = requestHelper ?? throw new System.ArgumentNullException(nameof(requestHelper));
         }
         public void CancelMessages()
         {
