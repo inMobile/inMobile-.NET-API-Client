@@ -1,0 +1,60 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace InMobile.Sms.ApiClient
+{
+    public class RecipientUpdateInfo : IRecipientUpdateInfo
+    {
+        public string RecipientId { get; }
+        public string ListId { get; }
+        /// <summary>
+        /// If not specified, the number is just left intact.
+        /// </summary>
+        public NumberInfo? NumberInfo { get; }
+
+        public Dictionary<string, string> Fields { get; }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="internalConstructor">Used to allow having a constructor overload with same parameter count but with numberInfo not specified.</param>
+        /// <param name="recipientId"></param>
+        /// <param name="listId"></param>
+        /// <param name="numberInfo"></param>
+        /// <param name="fields"></param>
+        private RecipientUpdateInfo(bool internalConstructor, string recipientId, string listId, NumberInfo? numberInfo, Dictionary<string, string> fields)
+        {
+            if (string.IsNullOrEmpty(recipientId))
+            {
+                throw new ArgumentException($"'{nameof(recipientId)}' cannot be null or empty.", nameof(recipientId));
+            }
+
+            if (string.IsNullOrEmpty(listId))
+            {
+                throw new ArgumentException($"'{nameof(listId)}' cannot be null or empty.", nameof(listId));
+            }
+
+            RecipientId = recipientId;
+            ListId = listId;
+            NumberInfo = numberInfo;
+            Fields = fields;
+        }
+
+        public RecipientUpdateInfo(string recipientId, string listId, NumberInfo numberInfo) : this(internalConstructor: true, recipientId: recipientId, listId: listId, numberInfo: numberInfo, fields: new Dictionary<string, string>())
+        {
+            if (numberInfo is null)
+            {
+                throw new ArgumentNullException(nameof(numberInfo));
+            }
+        }
+
+        public RecipientUpdateInfo(string recipientId, string listId, Dictionary<string, string> fields) : this(internalConstructor: true, recipientId: recipientId, listId: listId, numberInfo: null, fields: fields)
+        {
+            
+        }
+
+        public RecipientUpdateInfo(string recipientId, string listId, NumberInfo numberInfo, Dictionary<string, string> fields) : this(internalConstructor: true, recipientId: recipientId, listId: listId, numberInfo: numberInfo, fields)
+        {
+        }
+    }
+}
