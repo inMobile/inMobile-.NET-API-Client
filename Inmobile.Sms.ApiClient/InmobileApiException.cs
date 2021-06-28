@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Text;
+using Newtonsoft.Json;
 using RestSharp;
 
 namespace InMobile.Sms.ApiClient
@@ -12,7 +14,10 @@ namespace InMobile.Sms.ApiClient
 
         private static string FormatMessage(IRestResponse response)
         {
-            throw new NotImplementedException();
+            var responseObject = JsonConvert.DeserializeObject<ErrorResponse>(response.Content, JsonNetSerializer.Settings);
+            if (responseObject == null)
+                throw new Exception($"Exception during deserialization of error message. Raw error message: {response.Content}");
+            return $"{responseObject.ErrorMessage}. {string.Join("; ", responseObject.Details)}";
         }
     }
 }

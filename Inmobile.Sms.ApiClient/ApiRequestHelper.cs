@@ -12,10 +12,17 @@ namespace InMobile.Sms.ApiClient
     internal class ApiRequestHelper : IApiRequestHelper
     {
         private readonly HttpBasicAuthenticator _authenticator;
+        private readonly string _baseUrl;
         private const string UserAgent = "Inmobile .net client";
-        public ApiRequestHelper(InmobileApiKey apiKey)
+        public ApiRequestHelper(InmobileApiKey apiKey, string baseUrl)
         {
+            if (string.IsNullOrEmpty(baseUrl))
+            {
+                throw new ArgumentException($"'{nameof(baseUrl)}' cannot be null or empty.", nameof(baseUrl));
+            }
+
             _authenticator = new HttpBasicAuthenticator(username: "_", password: apiKey.ApiKey);
+            _baseUrl = baseUrl;
         }
 
         public T Execute<T>(Method method, string resource, object? payload)
@@ -33,7 +40,7 @@ namespace InMobile.Sms.ApiClient
 
         private RestClient GetClient()
         {
-            var client = new RestClient(baseUrl: "https://api.inmobile.com");
+            var client = new RestClient(baseUrl: _baseUrl);
             client.UserAgent = UserAgent;
             client.Authenticator = _authenticator;
             return client;

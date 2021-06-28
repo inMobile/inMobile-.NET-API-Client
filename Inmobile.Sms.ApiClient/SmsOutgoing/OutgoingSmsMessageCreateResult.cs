@@ -50,13 +50,13 @@ namespace InMobile.Sms.ApiClient
                 switch (RawEncoding?.ToLower())
                 {
                     case "gsm7":
-                        return MessageEncoding.gms7;
+                        return MessageEncoding.GSM7;
                     case "ucs2":
-                        return MessageEncoding.ucs2;
+                        return MessageEncoding.UCS2;
                     case "auto":
-                        return MessageEncoding.auto;
+                        return MessageEncoding.AUTO;
                     default:
-                        return MessageEncoding.unknown;
+                        return MessageEncoding.Unknown;
                 }
             }
         }

@@ -7,7 +7,7 @@ namespace InMobile.Sms.ApiClient.Demo
     {
         static void Main(string[] args)
         {
-            string apiKey = "[Insert key]";
+            string apiKey = "[INSERT KEY]";
             var client = new InmobileApiClient(apiKey: new InmobileApiKey(apiKey: apiKey));
             var result = client.SmsOutgoing.SendSmsMessages(new List<OutgoingSmsMessageCreateInfo>() {
                 new OutgoingSmsMessageCreateInfo(
@@ -17,7 +17,7 @@ namespace InMobile.Sms.ApiClient.Demo
                     messageId: "demo_message_" + DateTime.Now.Ticks,
                     respectBlacklist: true,
                     flash: false,
-                    encoding: MessageEncoding.ucs2,
+                    encoding: MessageEncoding.UCS2,
                     validityPeriod: TimeSpan.FromMinutes(2) )
             });
 
