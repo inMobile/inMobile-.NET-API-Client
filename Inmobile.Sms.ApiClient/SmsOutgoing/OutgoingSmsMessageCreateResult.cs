@@ -43,25 +43,6 @@ namespace InMobile.Sms.ApiClient
         /// "ucs2"" allows for more non-roman characters to be used along with smileys. When using this encoding, a single message can consist of 70 characters. If the message exceeds 70 characters, the final message is actually split into parts of 67 characters.
         /// </summary>
         /// <example>gsm7</example>
-        public MessageEncoding Encoding
-        {
-            get
-            {
-                switch (RawEncoding?.ToLower())
-                {
-                    case "gsm7":
-                        return MessageEncoding.GSM7;
-                    case "ucs2":
-                        return MessageEncoding.UCS2;
-                    case "auto":
-                        return MessageEncoding.AUTO;
-                    default:
-                        return MessageEncoding.Unknown;
-                }
-            }
-        }
-
-        [JsonProperty("encoding")]
-        public string? RawEncoding { get; set; }
+        public MessageEncoding Encoding { get; set; }
     }
 }

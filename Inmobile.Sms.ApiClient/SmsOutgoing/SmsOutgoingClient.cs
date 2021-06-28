@@ -35,7 +35,7 @@ namespace InMobile.Sms.ApiClient
                 resource: "/v4/sms/outgoing",
                 payload: new
                 {
-                    Entries = messageList,
+                    Messages = messageList,
                     StatusCallback = new
                     {
                         url = statusCallbackUrl

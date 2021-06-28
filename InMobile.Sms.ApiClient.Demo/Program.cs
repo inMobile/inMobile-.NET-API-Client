@@ -7,7 +7,7 @@ namespace InMobile.Sms.ApiClient.Demo
     {
         static void Main(string[] args)
         {
-            string apiKey = "[INSERT KEY]";
+            string apiKey = "[API_KEY]";
             var client = new InmobileApiClient(apiKey: new InmobileApiKey(apiKey: apiKey));
             var result = client.SmsOutgoing.SendSmsMessages(new List<OutgoingSmsMessageCreateInfo>() {
                 new OutgoingSmsMessageCreateInfo(
