@@ -18,9 +18,9 @@ namespace InMobile.Sms.ApiClient
             _authenticator = new HttpBasicAuthenticator(username: "_", password: apiKey.ApiKey);
         }
 
-        public T Execute<T>(Method method, string resource, object payload)
+        public T Execute<T>(Method method, string resource, object? payload)
         {
-            IRestResponse<T> response = GetClient().Execute<T>(request: GetRequest(method: method, resource: resource));
+            IRestResponse<T> response = GetClient().Execute<T>(request: GetRequest(method: method, resource: resource, payload: payload));
             if (response.IsSuccessful)
             {
                 return response.Data;
@@ -33,12 +33,12 @@ namespace InMobile.Sms.ApiClient
 
         private RestClient GetClient()
         {
-            var client = new RestClient(baseUrl: "https://api.inmobile.com/v4");
+            var client = new RestClient(baseUrl: "https://api.inmobile.com");
             client.UserAgent = UserAgent;
             client.Authenticator = _authenticator;
             return client;
         }
-        private RestRequest GetRequest(Method method, string resource)
+        private RestRequest GetRequest(Method method, string resource, object? payload)
         {
             if (string.IsNullOrEmpty(resource))
             {
@@ -48,6 +48,11 @@ namespace InMobile.Sms.ApiClient
             var request = new RestRequest(resource: resource);
             request.AddHeader("content-type", "application/json");
             request.Method = method;
+            request.JsonSerializer = new JsonNetSerializer();
+            if(payload != null)
+            {
+                request.AddJsonBody(payload);
+            }
 
             return request;
         }
