@@ -5,9 +5,9 @@ using RestSharp;
 
 namespace InMobile.Sms.ApiClient
 {
-    public class InmobileApiException : Exception
+    public class InMobileApiException : Exception
     {
-        public InmobileApiException(IRestResponse response) : base(message: FormatMessage(response: response))
+        public InMobileApiException(IRestResponse response) : base(message: FormatMessage(response: response))
         {
 
         }

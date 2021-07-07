@@ -19,4 +19,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Inmobile.Sms.ApiClient\InMobile.Sms.ApiClient.csproj" />
+  </ItemGroup>
+
 </Project>

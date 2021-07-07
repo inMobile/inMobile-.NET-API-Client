@@ -8,9 +8,9 @@ namespace InMobile.Sms.ApiClient.Demo
     {
         static void Main(string[] args)
         {
-            var apiKey = new InmobileApiKey(File.ReadAllText("c:\\temp\\DOTNET_API_CLIENT\\apikey.txt"));
+            var apiKey = new InMobileApiKey(File.ReadAllText("c:\\temp\\DOTNET_API_CLIENT\\apikey.txt"));
             var msisdn = File.ReadAllText("c:\\temp\\DOTNET_API_CLIENT\\msisdn.txt");
-            var client = new InmobileApiClient(apiKey: apiKey);
+            var client = new InMobileApiClient(apiKey: apiKey);
             var result = client.SmsOutgoing.SendSmsMessages(new List<OutgoingSmsMessageCreateInfo>() {
                 new OutgoingSmsMessageCreateInfo(
                     to: msisdn,

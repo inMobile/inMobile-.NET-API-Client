@@ -2,17 +2,17 @@
 
 namespace InMobile.Sms.ApiClient
 {
-    public interface IInmobileApiClient
+    public interface IInMobileApiClient
     {
         
     }
 
-    public class InmobileApiClient : IInmobileApiClient
+    public class InMobileApiClient : IInMobileApiClient
     {
         public ISmsOutgoingClient SmsOutgoing { get; private set; }
         public IBlacklistClient Blacklist { get; private set; }
         public IListClient Lists { get; private set; }
-        public InmobileApiClient(InmobileApiKey apiKey, string baseUrl = "https://api.inmobile.com")
+        public InMobileApiClient(InMobileApiKey apiKey, string baseUrl = "https://api.inmobile.com")
         {
             if (apiKey is null)
             {

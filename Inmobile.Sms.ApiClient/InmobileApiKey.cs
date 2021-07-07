@@ -2,10 +2,10 @@
 
 namespace InMobile.Sms.ApiClient
 {
-    public class InmobileApiKey
+    public class InMobileApiKey
     {
         public string ApiKey { get; }
-        public InmobileApiKey(string apiKey)
+        public InMobileApiKey(string apiKey)
         {
             if (string.IsNullOrWhiteSpace(apiKey))
             {

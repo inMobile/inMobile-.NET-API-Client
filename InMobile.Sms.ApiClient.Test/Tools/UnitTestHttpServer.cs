@@ -7,7 +7,7 @@ using System.Net.Sockets;
 using System.Text;
 using Xunit;
 
-namespace InMobile.Sms.ApiClient.Test.Tools
+namespace InMobile.Sms.ApiClient.Test
 {
     public class UnitTestHttpServer : IDisposable
     {

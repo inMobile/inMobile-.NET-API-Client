@@ -14,7 +14,7 @@ namespace InMobile.Sms.ApiClient
         private readonly HttpBasicAuthenticator _authenticator;
         private readonly string _baseUrl;
         private const string UserAgent = "Inmobile .net client";
-        public ApiRequestHelper(InmobileApiKey apiKey, string baseUrl)
+        public ApiRequestHelper(InMobileApiKey apiKey, string baseUrl)
         {
             if (string.IsNullOrEmpty(baseUrl))
             {
@@ -34,7 +34,7 @@ namespace InMobile.Sms.ApiClient
             }
             else
             {
-                throw new InmobileApiException(response: response);
+                throw new InMobileApiException(response: response);
             }
         }
 
