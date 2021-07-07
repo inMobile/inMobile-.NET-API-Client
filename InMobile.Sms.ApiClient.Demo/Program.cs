@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace InMobile.Sms.ApiClient.Demo
 {
@@ -7,11 +8,12 @@ namespace InMobile.Sms.ApiClient.Demo
     {
         static void Main(string[] args)
         {
-            string apiKey = "[API_KEY]";
-            var client = new InmobileApiClient(apiKey: new InmobileApiKey(apiKey: apiKey));
+            var apiKey = new InmobileApiKey(File.ReadAllText("c:\\temp\\DOTNET_API_CLIENT\\apikey.txt"));
+            var msisdn = File.ReadAllText("c:\\temp\\DOTNET_API_CLIENT\\msisdn.txt");
+            var client = new InmobileApiClient(apiKey: apiKey);
             var result = client.SmsOutgoing.SendSmsMessages(new List<OutgoingSmsMessageCreateInfo>() {
                 new OutgoingSmsMessageCreateInfo(
-                    to: "4528744985",
+                    to: msisdn,
                     from: "1245",
                     text: "Hello world",
                     messageId: "demo_message_" + DateTime.Now.Ticks,
