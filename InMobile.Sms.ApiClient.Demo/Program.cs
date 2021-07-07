@@ -11,8 +11,8 @@ namespace InMobile.Sms.ApiClient.Demo
             var apiKey = new InMobileApiKey(File.ReadAllText("c:\\temp\\DOTNET_API_CLIENT\\apikey.txt"));
             var msisdn = File.ReadAllText("c:\\temp\\DOTNET_API_CLIENT\\msisdn.txt");
             var client = new InMobileApiClient(apiKey: apiKey);
-            var result = client.SmsOutgoing.SendSmsMessages(new List<OutgoingSmsMessageCreateInfo>() {
-                new OutgoingSmsMessageCreateInfo(
+            var result = client.SmsOutgoing.SendSmsMessages(new List<OutgoingSmsMessageCreateRequest>() {
+                new OutgoingSmsMessageCreateRequest(
                     to: msisdn,
                     from: "1245",
                     text: "Hello world",

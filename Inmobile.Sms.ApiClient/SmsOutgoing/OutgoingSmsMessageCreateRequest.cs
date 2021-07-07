@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace InMobile.Sms.ApiClient
 {
-    public class OutgoingSmsMessageCreateInfo
+    public class OutgoingSmsMessageCreateRequest
     {
         /// <summary>
         /// The msisdn (country code and number) to send to. (Remember to include countrycode in all numbers, e.g. 4512345678).
@@ -102,7 +102,7 @@ namespace InMobile.Sms.ApiClient
             }
         }
 
-        public OutgoingSmsMessageCreateInfo(string to, string text, string from, string? messageId = null, bool respectBlacklist = true, bool flash = false, MessageEncoding encoding = MessageEncoding.GSM7, TimeSpan? validityPeriod = null)
+        public OutgoingSmsMessageCreateRequest(string to, string text, string from, string? messageId = null, bool respectBlacklist = true, bool flash = false, MessageEncoding encoding = MessageEncoding.GSM7, TimeSpan? validityPeriod = null)
         {
             if (string.IsNullOrEmpty(to))
             {

@@ -16,7 +16,7 @@ namespace InMobile.Sms.ApiClient.Test
             using (var server = UnitTestHttpServer.StartOnAnyAvailablePort(expectedRequest: expectedRequest, responseToSendBack: responseToSendBack))
             {
                 var client = new TcpClient();
-                client.Connect(new IPEndPoint(server.Address, port: server.Port));
+                client.Connect(server.EndPoint);
                 using (var stream = client.GetStream())
                 {
                     // Send request
@@ -42,7 +42,7 @@ namespace InMobile.Sms.ApiClient.Test
             var server = UnitTestHttpServer.StartOnAnyAvailablePort(expectedRequest: expectedRequest, responseToSendBack: responseToSendBack);
 
             var client = new TcpClient();
-            client.Connect(new IPEndPoint(server.Address, port: server.Port));
+            client.Connect(server.EndPoint);
             using (var stream = client.GetStream())
             {
                 // Send request

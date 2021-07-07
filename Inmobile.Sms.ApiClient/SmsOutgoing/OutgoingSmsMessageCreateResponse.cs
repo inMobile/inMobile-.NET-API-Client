@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace InMobile.Sms.ApiClient
 {
-    public class OutgoingSmsMessageCreateResult
+    public class OutgoingSmsMessageCreateResponse
     {
         /// <summary>
         /// The parsed details about the msisdn provided in the to-field of the request (msisdn is a number with a countrycode e.g. 4512345678)

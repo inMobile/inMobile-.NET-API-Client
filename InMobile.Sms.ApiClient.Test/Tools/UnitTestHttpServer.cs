@@ -11,16 +11,14 @@ namespace InMobile.Sms.ApiClient.Test
 {
     public class UnitTestHttpServer : IDisposable
     {
-        public int Port { get; }
-        public IPAddress Address { get; }
+        public IPEndPoint EndPoint { get; private set; }
         public TcpListener _tcpListener;
         public string ReceivedInput { get; private set; }
 
         private List<IDisposable> Disposables = new List<IDisposable>();
-        private UnitTestHttpServer(IPAddress address, int port, string expectedRequest, string responseToSendBack)
+        private UnitTestHttpServer(IPEndPoint endPoint, string expectedRequest, string responseToSendBack)
         {
-            Address = address ?? throw new ArgumentNullException(nameof(address));
-            Port = port;
+            EndPoint = endPoint ?? throw new ArgumentNullException(nameof(endPoint));
             _expectedRequest = expectedRequest ?? throw new ArgumentNullException(nameof(expectedRequest));
             _responseToSendBack = responseToSendBack ?? throw new ArgumentNullException(nameof(responseToSendBack));
         }
@@ -29,7 +27,7 @@ namespace InMobile.Sms.ApiClient.Test
         {
             if (_tcpListener != null)
                 throw new Exception("Already listening");
-            _tcpListener = new TcpListener(localaddr: Address, port: Port);
+            _tcpListener = new TcpListener(localaddr: EndPoint.Address, port: EndPoint.Port);
             _tcpListener.Start();
             _tcpListener.BeginAcceptSocket(DoAcceptSocketCallback, _tcpListener);
         }
@@ -40,7 +38,9 @@ namespace InMobile.Sms.ApiClient.Test
             {
                 _tcpListener?.Stop();
             }
-            catch { }
+            catch(Exception ex) {
+                ex.ToString();
+            }
 
             foreach (var d in Disposables)
             {
@@ -76,32 +76,38 @@ namespace InMobile.Sms.ApiClient.Test
             socket.Close();
         }
 
+        private static object _syncLock = new object();
         public static UnitTestHttpServer StartOnAnyAvailablePort(string expectedRequest, string responseToSendBack)
         {
-            var server = new UnitTestHttpServer(address: IPAddress.Loopback, port: GetAvailablePort(), expectedRequest: expectedRequest, responseToSendBack: responseToSendBack);
-            server.StartListening();
-            return server;
+            lock (_syncLock) // Ensures no race conditions ending up having multiple test server listening on the same port at the same time
+            {
+                var endPoint = new IPEndPoint(address: IPAddress.Loopback, port: GetAvailablePort());
+                var server = new UnitTestHttpServer(endPoint: endPoint, expectedRequest: expectedRequest, responseToSendBack: responseToSendBack);
+                server.StartListening();
+                return server;
+            }
         }
 
-        private static object _syncLock = new object();
         private readonly string _expectedRequest;
         private readonly string _responseToSendBack;
 
+        private static int _lastUsedPort = 2021;
         private static int GetAvailablePort()
         {
-            lock (_syncLock)
-            {
-                // Gather info about existing ports
-                var portList = new List<int>();
-                var properties = IPGlobalProperties.GetIPGlobalProperties();
-                portList.AddRange(properties.GetActiveTcpConnections().Select(c => c.LocalEndPoint.Port));
-                portList.AddRange(properties.GetActiveTcpListeners().Select(c => c.Port));
-                portList.AddRange(properties.GetActiveUdpListeners().Select(c => c.Port));
-                if (!portList.Any())
-                    return 2000;
+            // Gather info about existing ports
+            var portList = new List<int>();
+            var properties = IPGlobalProperties.GetIPGlobalProperties();
+            portList.AddRange(properties.GetActiveTcpConnections().Select(c => c.LocalEndPoint.Port));
+            portList.AddRange(properties.GetActiveTcpListeners().Select(c => c.Port));
+            portList.AddRange(properties.GetActiveUdpListeners().Select(c => c.Port));
 
-                return Math.Max(portList.Max(), 2000);
+            _lastUsedPort++;
+            while (portList.Contains(_lastUsedPort))
+            {
+                _lastUsedPort++;
             }
+
+            return _lastUsedPort;
         }
 
         public class UnexpectedRequestDataException : Exception
