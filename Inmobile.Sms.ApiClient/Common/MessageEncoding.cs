@@ -1,4 +1,7 @@
-﻿namespace InMobile.Sms.ApiClient
+﻿using System;
+using Newtonsoft.Json;
+
+namespace InMobile.Sms.ApiClient
 {
     public enum MessageEncoding
     {

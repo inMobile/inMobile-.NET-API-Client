@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace InMobile.Sms.ApiClient.SmsOutgoing.Model
+namespace InMobile.Sms.ApiClient
 {
     public class DeliveryInfo
     {
@@ -30,4 +30,6 @@ namespace InMobile.Sms.ApiClient.SmsOutgoing.Model
             ErrorDetails = errorDetails;
         }
     }
+
+    
 }

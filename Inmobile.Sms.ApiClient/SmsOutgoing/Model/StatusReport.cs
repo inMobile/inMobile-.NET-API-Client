@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace InMobile.Sms.ApiClient.SmsOutgoing.Model
+namespace InMobile.Sms.ApiClient
 {
     public class StatusReport
     {

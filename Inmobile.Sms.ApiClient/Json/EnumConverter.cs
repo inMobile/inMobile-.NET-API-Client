@@ -1,27 +1,29 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using Newtonsoft.Json;
 
 namespace InMobile.Sms.ApiClient
 {
-    public class MessageEncodingConverter : JsonConverter
+    public class EnumConverter<T> : JsonConverter where T : struct
     {
         public override bool CanConvert(Type objectType)
         {
-            return (objectType == typeof(MessageEncoding));
+            return (objectType == typeof(T));
         }
 
         public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
         {
             if (reader.Value == null)
                 return null;
-            MessageEncoding result;
-            if(Enum.TryParse< MessageEncoding>(reader.Value as string, out result))
+            T result;
+            if (Enum.TryParse<T>(reader.Value as string, ignoreCase: true, out result))
             {
                 return result;
             }
             else
             {
-                return MessageEncoding.Unknown;
+                return default(T);
             }
         }
 
