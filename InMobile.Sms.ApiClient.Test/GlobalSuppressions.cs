@@ -6,3 +6,6 @@
 using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage("Assertions", "xUnit2004:Do not use equality check to test for boolean conditions", Justification = "<Pending>", Scope = "member", Target = "~M:InMobile.Sms.ApiClient.Test.SmsOutgoing.SendSmsMessages_Integration_Test.SendSmsMessages_Success_Test")]
+[assembly: SuppressMessage("Assertions", "xUnit2004:Do not use equality check to test for boolean conditions", Justification = "<Pending>", Scope = "member", Target = "~M:InMobile.Sms.ApiClient.Test.SmsOutgoing.GetReports_Integration_Test.GetReports_Success_Test")]
+[assembly: SuppressMessage("Assertions", "xUnit2003:Do not use equality check to test for null value", Justification = "<Pending>", Scope = "member", Target = "~M:InMobile.Sms.ApiClient.Test.SmsOutgoing.GetReports_Integration_Test.GetReports_Success_Test")]
+[assembly: SuppressMessage("Assertions", "xUnit2003:Do not use equality check to test for null value", Justification = "<Pending>", Scope = "member", Target = "~M:InMobile.Sms.ApiClient.Test.SmsOutgoing.GetReports_Integration_Test.GetReports_WithDifferentData_Test")]

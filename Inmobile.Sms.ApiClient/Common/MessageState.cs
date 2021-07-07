@@ -7,8 +7,8 @@ namespace InMobile.Sms.ApiClient
     public enum MessageState
     {
         Unknown,
-        DELIVERED,
-        FAILED,
-        CANCELLED
+        Delivered,
+        Failed,
+        Cancelled
     }
 }

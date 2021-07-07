@@ -8,7 +8,7 @@ namespace InMobile.Sms.ApiClient
     {
         ResultsList<OutgoingSmsMessageCreateResponse> SendSmsMessages(List<OutgoingSmsMessageCreateRequest> messageList, string statusCallbackUrl = null);
         void CancelMessages();
-        void GetStatusReports();
+        ReportsList<StatusReport> GetStatusReports();
     }
 
     internal class SmsOutgoingClient : ISmsOutgoingClient
@@ -24,14 +24,18 @@ namespace InMobile.Sms.ApiClient
             throw new System.NotImplementedException();
         }
 
-        public void GetStatusReports()
+        public ReportsList<StatusReport> GetStatusReports()
         {
-            throw new NotImplementedException();
+            return _requestHelper.Execute<ReportsList<StatusReport>>(
+                method: Method.GET,
+                resource: "/v4/sms/outgoing/reports",
+                payload: null
+                );
         }
 
         public ResultsList<OutgoingSmsMessageCreateResponse> SendSmsMessages(List<OutgoingSmsMessageCreateRequest> messageList, string statusCallbackUrl = null)
         {
-            var response = _requestHelper.Execute<ResultsList<OutgoingSmsMessageCreateResponse>>(
+            return _requestHelper.Execute<ResultsList<OutgoingSmsMessageCreateResponse>>(
                 method: Method.POST,
                 resource: "/v4/sms/outgoing",
                 payload: new
@@ -42,7 +46,6 @@ namespace InMobile.Sms.ApiClient
                         url = statusCallbackUrl
                     }
                 });
-            return response;
         }
     }
 }

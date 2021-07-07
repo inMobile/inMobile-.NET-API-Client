@@ -22,13 +22,15 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
         ""phoneNumber"": ""11111111"",
         ""rawMsisdn"": ""+45 11111111"",
         ""isValidMsisdn"": true,
-        ""isAnonymized"": false
+        ""isAnonymized"": false,
+        ""futureFieldToBeIgnored"": false
     },
     ""text"": ""This is a message text to be sent"",
     ""from"": ""PetShop"",
     ""smsCount"": 1,
     ""messageId"": ""someMessageId"",
-    ""encoding"": ""ucs2""
+    ""encoding"": ""ucs2"",
+    ""futureFieldToBeIgnored"": false
 }]
 }";
             var apiKey = new InMobileApiKey("UnitTestKey123");
