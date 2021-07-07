@@ -43,8 +43,10 @@ namespace InMobile.Sms.ApiClient
             var client = new RestClient(baseUrl: _baseUrl);
             client.UserAgent = UserAgent;
             client.Authenticator = _authenticator;
+            client.UseSerializer(() => new JsonNetSerializer());
             return client;
         }
+        
         private RestRequest GetRequest(Method method, string resource, object? payload)
         {
             if (string.IsNullOrEmpty(resource))
@@ -55,7 +57,6 @@ namespace InMobile.Sms.ApiClient
             var request = new RestRequest(resource: resource);
             request.AddHeader("content-type", "application/json");
             request.Method = method;
-            request.JsonSerializer = new JsonNetSerializer();
             if(payload != null)
             {
                 request.AddJsonBody(payload);
