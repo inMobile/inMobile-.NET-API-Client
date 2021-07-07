@@ -68,11 +68,11 @@ namespace InMobile.Sms.ApiClient
             {
                 switch (Encoding)
                 {
-                    case MessageEncoding.GSM7:
+                    case MessageEncoding.Gsm7:
                         return "gsm7";
-                    case MessageEncoding.UCS2:
+                    case MessageEncoding.Ucs2:
                         return "ucs2";
-                    case MessageEncoding.AUTO:
+                    case MessageEncoding.Auto:
                         return "auto";
                     default:
                         throw new Exception($"Invalid MessageEncoding enum value: {Encoding}");
@@ -102,7 +102,7 @@ namespace InMobile.Sms.ApiClient
             }
         }
 
-        public OutgoingSmsMessageCreateRequest(string to, string text, string from, string? messageId = null, bool respectBlacklist = true, bool flash = false, MessageEncoding encoding = MessageEncoding.GSM7, TimeSpan? validityPeriod = null)
+        public OutgoingSmsMessageCreateRequest(string to, string text, string from, string? messageId = null, bool respectBlacklist = true, bool flash = false, MessageEncoding encoding = MessageEncoding.Gsm7, TimeSpan? validityPeriod = null)
         {
             if (string.IsNullOrEmpty(to))
             {

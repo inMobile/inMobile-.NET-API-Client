@@ -19,7 +19,7 @@ namespace InMobile.Sms.ApiClient.Demo
                     messageId: "demo_message_" + DateTime.Now.Ticks,
                     respectBlacklist: true,
                     flash: false,
-                    encoding: MessageEncoding.UCS2,
+                    encoding: MessageEncoding.Ucs2,
                     validityPeriod: TimeSpan.FromMinutes(2) )
             });
 

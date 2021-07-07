@@ -45,7 +45,7 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
                         messageId: "someMessageId",
                         respectBlacklist: true,
                         flash: false,
-                        encoding: MessageEncoding.AUTO,
+                        encoding: MessageEncoding.Auto,
                         validityPeriod: TimeSpan.FromSeconds(55))
                 });
                 Assert.NotNull(response);
@@ -53,7 +53,7 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
                 var singleResult = response.Results.Single();
                 Assert.NotNull(singleResult);
                 Assert.Equal("someMessageId", singleResult.MessageId);
-                Assert.Equal(MessageEncoding.UCS2, singleResult.Encoding);
+                Assert.Equal(MessageEncoding.Ucs2, singleResult.Encoding);
                 Assert.Equal("PetShop", singleResult.From);
                 Assert.Equal("45", singleResult.NumberDetails.CountryCode);
                 Assert.Equal("11111111", singleResult.NumberDetails.PhoneNumber);
@@ -99,7 +99,7 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
                         messageId: "someMessageId",
                         respectBlacklist: true,
                         flash: false,
-                        encoding: MessageEncoding.AUTO,
+                        encoding: MessageEncoding.Auto,
                         validityPeriod: TimeSpan.FromSeconds(55))
                 });
                 Assert.NotNull(response);
