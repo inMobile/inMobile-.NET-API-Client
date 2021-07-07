@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using RestSharp;
 
 namespace InMobile.Sms.ApiClient
 {
     public interface ISmsOutgoingClient
     {
-        List<OutgoingSmsMessageCreateResponse> SendSmsMessages(List<OutgoingSmsMessageCreateRequest> messageList, string statusCallbackUrl = null);
+        ResultsList<OutgoingSmsMessageCreateResponse> SendSmsMessages(List<OutgoingSmsMessageCreateRequest> messageList, string statusCallbackUrl = null);
         void CancelMessages();
         void GetStatusReports();
     }
@@ -25,12 +26,12 @@ namespace InMobile.Sms.ApiClient
 
         public void GetStatusReports()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
-        public List<OutgoingSmsMessageCreateResponse> SendSmsMessages(List<OutgoingSmsMessageCreateRequest> messageList, string statusCallbackUrl = null)
+        public ResultsList<OutgoingSmsMessageCreateResponse> SendSmsMessages(List<OutgoingSmsMessageCreateRequest> messageList, string statusCallbackUrl = null)
         {
-            var response = _requestHelper.Execute<GenericApiListResponse<OutgoingSmsMessageCreateResponse>>(
+            var response = _requestHelper.Execute<ResultsList<OutgoingSmsMessageCreateResponse>>(
                 method: Method.POST,
                 resource: "/v4/sms/outgoing",
                 payload: new
@@ -41,12 +42,7 @@ namespace InMobile.Sms.ApiClient
                         url = statusCallbackUrl
                     }
                 });
-            return response.Results;
+            return response;
         }
-    }
-
-    public class GenericApiListResponse<T>
-    {
-        public List<T> Results { get; set; }
     }
 }

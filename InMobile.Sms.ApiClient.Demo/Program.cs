@@ -13,7 +13,7 @@ namespace InMobile.Sms.ApiClient.Demo
             var client = new InMobileApiClient(apiKey: apiKey);
             var result = client.SmsOutgoing.SendSmsMessages(new List<OutgoingSmsMessageCreateRequest>() {
                 new OutgoingSmsMessageCreateRequest(
-                    to: msisdn,
+                    to: msisdn, // Number including countrycode, e.g. "4511223344"
                     from: "1245",
                     text: "Hello world",
                     messageId: "demo_message_" + DateTime.Now.Ticks,
