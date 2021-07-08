@@ -135,7 +135,7 @@ namespace InMobile.Sms.ApiClient.Test.Blacklist
                             ""countryCode"": ""45"",
                             ""phoneNumber"": ""3333""
                         },
-                        ""comment"": ""Some text provided when created"",
+                        ""comment"": null,
                         ""id"": ""333""
                     },
                     {

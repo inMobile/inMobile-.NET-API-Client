@@ -68,77 +68,95 @@ namespace InMobile.Sms.ApiClient.Test
             var socket = _tcpListener.EndAcceptSocket(ar);
 
             HandleSocket(socket);
+
+            _tcpListener.BeginAcceptSocket(DoAcceptSocketCallback, _tcpListener);
         }
 
         private void HandleSocket(Socket socket)
         {
-            // Read input
-            var request = Receive(socket);
-            var requestTextLines = request.Split("\r\n");
-
-            if (_requestPairsQueue.Count == 0)
+            try
             {
-                _excections.Add(new NoMoreRequestsExceptionException($"Got unexpected request: {request}"));
-                Assert.True(false, $"Got unexpected request: {request}");
-                return;
-            }
-
-            var nextPair = _requestPairsQueue.Dequeue();
-
-            // Find authorization header line
-            var authLine = requestTextLines.SingleOrDefault(line => line.StartsWith("Authorization: Basic "));
-            if (authLine == null)
-            {
-                _excections.Add(new UnexpectedAuthorizationException("No auth line found. Request: " + request));
-            }
-            else
-            {
-                var base64EncodedToken = authLine.Substring("Authorization: Basic ".Length);
-                var tokenBytes = Convert.FromBase64String(base64EncodedToken);
-                var usernameAndPassword = Encoding.ASCII.GetString(tokenBytes);
-                var apiKey = usernameAndPassword.Substring(usernameAndPassword.IndexOf(":") + 1);
-                if (apiKey != nextPair.Request.ApiKey.ApiKey)
+                bool keepRunning = true;
+                while (keepRunning)
                 {
-                    _excections.Add(new UnexpectedAuthorizationException("Expected apikey " + nextPair.Request.ApiKey.ApiKey + " but got " + apiKey));
-                }
-            }
+                    // Read input
+                    var request = Receive(socket);
+                    if (!string.IsNullOrEmpty(request))
+                    {
+                        var requestTextLines = request.Split("\r\n");
 
-            // Ensure expected method
-            if (!request.StartsWith(nextPair.Request.MethodAndPath))
-            {
-                _excections.Add(new UnexpectedMethodAndPathException("Expected request to start with " + nextPair.Request.MethodAndPath + ". Request received: " + request));
-            }
+                        if (_requestPairsQueue.Count == 0)
+                        {
+                            _excections.Add(new NoMoreRequestsExceptionException($"Got unexpected request: {request}"));
+                            Assert.True(false, $"Got unexpected request: {request}");
+                            return;
+                        }
 
-            // Ensure expected json
-            var expectedEndOfRequest = "\r\n\r\n";
-            if (nextPair.Request.JsonOrNull != null)
-            {
-                // Expect no payload
-                expectedEndOfRequest += nextPair.Request.JsonOrNull;
-            }
+                        var nextPair = _requestPairsQueue.Dequeue();
 
-            if (!request.EndsWith(expectedEndOfRequest))
-            {
-                _excections.Add(new UnexpectedPayloadException("Request was expected to end with " + expectedEndOfRequest + " \n\nbut did not. Request: " + request));
-            }
+                        // Find authorization header line
+                        var authLine = requestTextLines.SingleOrDefault(line => line.StartsWith("Authorization: Basic "));
+                        if (authLine == null)
+                        {
+                            _excections.Add(new UnexpectedAuthorizationException("No auth line found. Request: " + request));
+                        }
+                        else
+                        {
+                            var base64EncodedToken = authLine.Substring("Authorization: Basic ".Length);
+                            var tokenBytes = Convert.FromBase64String(base64EncodedToken);
+                            var usernameAndPassword = Encoding.ASCII.GetString(tokenBytes);
+                            var apiKey = usernameAndPassword.Substring(usernameAndPassword.IndexOf(":") + 1);
+                            if (apiKey != nextPair.Request.ApiKey.ApiKey)
+                            {
+                                _excections.Add(new UnexpectedAuthorizationException("Expected apikey " + nextPair.Request.ApiKey.ApiKey + " but got " + apiKey));
+                            }
+                        }
 
-            var response = $@"HTTP/1.1 {nextPair.Response.StatusCodeString}
+                        // Ensure expected method
+                        if (!request.StartsWith(nextPair.Request.MethodAndPath))
+                        {
+                            _excections.Add(new UnexpectedMethodAndPathException("Expected request to start with " + nextPair.Request.MethodAndPath + ". Request received: " + request));
+                        }
+
+                        // Ensure expected json
+                        var expectedEndOfRequest = "\r\n\r\n";
+                        if (nextPair.Request.JsonOrNull != null)
+                        {
+                            // Expect no payload
+                            expectedEndOfRequest += nextPair.Request.JsonOrNull;
+                        }
+
+                        if (!request.EndsWith(expectedEndOfRequest))
+                        {
+                            _excections.Add(new UnexpectedPayloadException("Request was expected to end with " + expectedEndOfRequest + " \n\nbut did not. Request: " + request));
+                        }
+
+                        var response = $@"HTTP/1.1 {nextPair.Response.StatusCodeString}
 Date: Sun, 18 Oct 2012 10:36:20 GMT
 Server: Apache/2.2.14 (Win32)
 Content-Length: {nextPair.Response.JsonOrNull?.Length}
 Content-Type: application/json
 Connection: Closed";
 
-            if (nextPair.Response.JsonOrNull != null)
-            {
-                response += $@"
+                        if (nextPair.Response.JsonOrNull != null)
+                        {
+                            response += $@"
 
 {nextPair.Response.JsonOrNull}";
-            };
+                        };
 
-            Send(socket, response);
-
-            socket.Close();
+                        Send(socket, response);
+                    }
+                    else
+                    {
+                        keepRunning = false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.ToString();
+            }
         }
 
         private static string Receive(Socket socket)
@@ -151,9 +169,8 @@ Connection: Closed";
 
         private static void Send(Socket socket, string data)
         {
-            socket.NoDelay = true; // This will disable the Nagle algorthm and hereby prevent buffering and instead sending right away. https://docs.microsoft.com/en-us/dotnet/api/system.net.sockets.socket.nodelay?view=net-5.0
+            // socket.NoDelay = true; // This will disable the Nagle algorthm and hereby prevent buffering and instead sending right away. https://docs.microsoft.com/en-us/dotnet/api/system.net.sockets.socket.nodelay?view=net-5.0
             socket.Send(Encoding.ASCII.GetBytes(data));
-            socket.Close();
         }
 
         private static object _syncLock = new object();

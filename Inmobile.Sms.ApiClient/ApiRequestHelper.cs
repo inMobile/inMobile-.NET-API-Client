@@ -37,7 +37,7 @@ namespace InMobile.Sms.ApiClient
             {
                 currentResult = Execute<PagedResult<T>>(method: Method.GET, resource: nextResource);
                 allEntries.AddRange(currentResult.Entries);
-                resource = currentResult._links.Next;
+                nextResource = currentResult._links.Next;
             } while (!currentResult._links.IsLastPage);
             return allEntries;
         }
