@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using RestSharp;
 
 namespace InMobile.Sms.ApiClient
 {
     public interface IBlacklistClient
     {
+        BlacklistEntry GetById(string id);
         List<BlacklistEntry> GetAll();
         void GetBlacklistingById();
     }
@@ -16,6 +18,11 @@ namespace InMobile.Sms.ApiClient
         public BlacklistClient(IApiRequestHelper requestHelper)
         {
             _requestHelper = requestHelper ?? throw new ArgumentNullException(nameof(requestHelper));
+        }
+
+        public BlacklistEntry GetById(string id)
+        {
+            return _requestHelper.Execute<BlacklistEntry>(method: Method.GET, resource: $"v4/blacklist/{id}");
         }
 
         /// <summary>

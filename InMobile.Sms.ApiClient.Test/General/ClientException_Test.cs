@@ -25,6 +25,7 @@ namespace InMobile.Sms.ApiClient.Test.General
         [Theory]
         [InlineData("400 BadRequest")]
         [InlineData("401 Forbidden")]
+        [InlineData("409 Conflict")]
         [InlineData("500 InternalServerError")]
         public void InMobileApiErrorReturned_Test(string statusCodeString)
         {
