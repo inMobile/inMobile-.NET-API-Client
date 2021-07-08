@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using RestSharp;
 using RestSharp.Authenticators;
 
@@ -7,6 +8,7 @@ namespace InMobile.Sms.ApiClient
     public interface IApiRequestHelper
     {
         T Execute<T>(Method method, string resource, object? payload = null);
+        List<T> ExecuteGetAndIteratePagedResult<T>(string resource);
     }
 
     internal class ApiRequestHelper : IApiRequestHelper
@@ -23,6 +25,20 @@ namespace InMobile.Sms.ApiClient
 
             _authenticator = new HttpBasicAuthenticator(username: "_", password: apiKey.ApiKey);
             _baseUrl = baseUrl;
+        }
+
+        public List<T> ExecuteGetAndIteratePagedResult<T>(string resource)
+        {
+            List<T> allEntries = new List<T>();
+            bool lastPage;
+            do
+            {
+                var pagedResult = Execute<PagedResult<T>>(method: Method.GET, resource: resource);
+                allEntries.AddRange(pagedResult.Entries);
+                resource = pagedResult._links.Next;
+                lastPage = pagedResult._links.IsLastPage;
+            } while (!lastPage);
+            return allEntries;
         }
 
         public T Execute<T>(Method method, string resource, object? payload = null)

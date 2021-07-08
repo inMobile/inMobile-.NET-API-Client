@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace InMobile.Sms.ApiClient
 {
     public interface IBlacklistClient
     {
-        void AddNumberToBlacklist();
+        List<BlacklistEntry> GetAll();
         void GetBlacklistingById();
     }
 
@@ -17,9 +18,14 @@ namespace InMobile.Sms.ApiClient
             _requestHelper = requestHelper ?? throw new ArgumentNullException(nameof(requestHelper));
         }
 
-        public void AddNumberToBlacklist()
+        /// <summary>
+        /// Gets all blacklist entries. This call is using a paged api and will do the api calls during the iteration of the returned enumerable.
+        /// This allowes for client to not allocate memory for holding the entire list of entries.
+        /// </summary>
+        /// <returns></returns>
+        public List<BlacklistEntry> GetAll()
         {
-            throw new NotImplementedException();
+            return _requestHelper.ExecuteGetAndIteratePagedResult<BlacklistEntry>(resource: "v4/blacklist?pageLimit=250");
         }
 
         public void GetBlacklistingById()
