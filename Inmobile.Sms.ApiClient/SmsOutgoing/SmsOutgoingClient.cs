@@ -7,7 +7,7 @@ namespace InMobile.Sms.ApiClient
     public interface ISmsOutgoingClient
     {
         ResultsList<OutgoingSmsMessageCreateResponse> SendSmsMessages(List<OutgoingSmsMessageCreateRequest> messageList, string statusCallbackUrl = null);
-        void CancelMessages();
+        ResultsList<MessageCancelResult> CancelMessages(List<string> messageIds);
         ReportsList<StatusReport> GetStatusReports();
     }
 
@@ -20,22 +20,37 @@ namespace InMobile.Sms.ApiClient
             _requestHelper = requestHelper ?? throw new System.ArgumentNullException(nameof(requestHelper));
         }
 
-        public void CancelMessages()
+        public ResultsList<MessageCancelResult> CancelMessages(List<string> messageIds)
         {
-            throw new NotImplementedException();
+            if (messageIds is null)
+            {
+                throw new ArgumentNullException(nameof(messageIds));
+            }
+
+            return _requestHelper.Execute<ResultsList<MessageCancelResult>>(
+                method: Method.POST,
+                resource: "/v4/sms/outgoing/cancel",
+                payload: new
+                {
+                    MessageIds = messageIds
+                });
         }
 
         public ReportsList<StatusReport> GetStatusReports()
         {
             return _requestHelper.Execute<ReportsList<StatusReport>>(
                 method: Method.GET,
-                resource: "/v4/sms/outgoing/reports",
-                payload: null
+                resource: "/v4/sms/outgoing/reports"
                 );
         }
 
         public ResultsList<OutgoingSmsMessageCreateResponse> SendSmsMessages(List<OutgoingSmsMessageCreateRequest> messageList, string statusCallbackUrl = null)
         {
+            if (messageList is null)
+            {
+                throw new ArgumentNullException(nameof(messageList));
+            }
+
             return _requestHelper.Execute<ResultsList<OutgoingSmsMessageCreateResponse>>(
                 method: Method.POST,
                 resource: "/v4/sms/outgoing",

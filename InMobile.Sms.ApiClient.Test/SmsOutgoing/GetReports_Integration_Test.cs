@@ -119,54 +119,6 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
                 Assert.Equal("45-TDC", report.ChargeInfo.Network);
             }
         }
-
-        [Fact]
-        public void SendSmsMessages_EnsureNotBreakingOfFutureEncodingsAreReceived_Test()
-        {
-            var expectedRequestJson = @"{""Messages"":[{""To"":""+45 11111111"",""Text"":""Hello world"",""From"":""PetShop"",""MessageId"":""someMessageId"",""RespectBlacklist"":true,""Flash"":false,""encoding"":""auto"",""ValidityPeriodInSeconds"":55}],""StatusCallback"":{""url"":null}}";
-
-            var responseJson = @"{
-""results"": [
-{
-    ""numberDetails"": {
-        ""countryCode"": ""45"",
-        ""phoneNumber"": ""11111111"",
-        ""rawMsisdn"": ""+45 11111111"",
-        ""isValidMsisdn"": true,
-        ""isAnonymized"": false
-    },
-    ""text"": ""This is a message text to be sent"",
-    ""from"": ""PetShop"",
-    ""smsCount"": 1,
-    ""messageId"": ""someMessageId"",
-    ""encoding"": ""FutureValue""
-}]
-}";
-            var apiKey = new InMobileApiKey("UnitTestKey123");
-            var expectedRequest = new UnitTestRequestInfo(apiKey: apiKey, methodAndPath: "POST /v4/sms/outgoing", jsonOrNull: expectedRequestJson);
-            var responseToSendback = new UnitTestResponseInfo(jsonOrNull: responseJson);
-            using (var server = UnitTestHttpServer.StartOnAnyAvailablePort(expectedRequest: expectedRequest, response: responseToSendback))
-            {
-                var client = new InMobileApiClient(apiKey, baseUrl: $"http://{server.EndPoint.Address}:{server.EndPoint.Port}");
-                var response = client.SmsOutgoing.SendSmsMessages(new List<OutgoingSmsMessageCreateRequest>() {
-                    new OutgoingSmsMessageCreateRequest(
-                        to: "4511111111",
-                        text: "Hello world",
-                        from: "1245",
-                        messageId: "someMessageId",
-                        respectBlacklist: true,
-                        flash: false,
-                        encoding: MessageEncoding.Auto,
-                        validityPeriod: TimeSpan.FromSeconds(55))
-                });
-                Assert.NotNull(response);
-                Assert.Single(response.Results);
-                var singleResult = response.Results.Single();
-                Assert.NotNull(singleResult);
-                
-                Assert.Equal(MessageEncoding.Unknown, singleResult.Encoding);
-            }
-        }
     }
 }
 

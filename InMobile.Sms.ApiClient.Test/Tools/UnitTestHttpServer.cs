@@ -106,9 +106,18 @@ namespace InMobile.Sms.ApiClient.Test
                 _excections.Add(new UnexpectedMethodAndPathException("Expected request to start with " + _expectedRequest.MethodAndPath + ". Request received: " + request));
             }
 
-            
-
             // Ensure expected json
+            var expectedEndOfRequest = "\r\n\r\n";
+            if(_expectedRequest.JsonOrNull != null)
+            {
+                // Expect no payload
+                expectedEndOfRequest += _expectedRequest.JsonOrNull;
+            }
+
+            if (!request.EndsWith(expectedEndOfRequest))
+            {
+                _excections.Add(new UnexpectedPayloadException("Request was expected to end with " + expectedEndOfRequest + " \n\nbut did not. Request: " + request));
+            }
 
             var response = $@"HTTP/1.1 200 Ok
 Date: Sun, 18 Oct 2012 10:36:20 GMT
@@ -170,6 +179,13 @@ Connection: Closed";
         public class UnexpectedMethodAndPathException : Exception
         {
             public UnexpectedMethodAndPathException(string message) : base(message)
+            {
+            }
+        }
+
+        public class UnexpectedPayloadException : Exception
+        {
+            public UnexpectedPayloadException(string message) : base(message)
             {
             }
         }

@@ -3,6 +3,8 @@
     public class MessageCancelResult
     {
         public string? MessageId { get; set; }
+        public CancelResultCode ResultCode { get; set; }
+        public string? ResultDescription { get; set; }
     }
 
     public enum CancelResultCode : int

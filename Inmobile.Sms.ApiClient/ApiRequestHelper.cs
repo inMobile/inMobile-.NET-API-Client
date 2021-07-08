@@ -6,7 +6,7 @@ namespace InMobile.Sms.ApiClient
 {
     public interface IApiRequestHelper
     {
-        T Execute<T>(Method method, string resource, object payload);
+        T Execute<T>(Method method, string resource, object? payload = null);
     }
 
     internal class ApiRequestHelper : IApiRequestHelper
@@ -25,7 +25,7 @@ namespace InMobile.Sms.ApiClient
             _baseUrl = baseUrl;
         }
 
-        public T Execute<T>(Method method, string resource, object? payload)
+        public T Execute<T>(Method method, string resource, object? payload = null)
         {
             IRestResponse<T> response = GetClient().Execute<T>(request: GetRequest(method: method, resource: resource, payload: payload));
             if (response.IsSuccessful)

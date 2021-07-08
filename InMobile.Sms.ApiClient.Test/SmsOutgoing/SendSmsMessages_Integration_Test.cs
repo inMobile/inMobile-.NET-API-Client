@@ -12,7 +12,7 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
         [Fact]
         public void SendSmsMessages_Success_Test()
         {
-            var expectedRequestJson = @"{""Messages"":[{""To"":""+45 11111111"",""Text"":""Hello world"",""From"":""PetShop"",""MessageId"":""someMessageId"",""RespectBlacklist"":true,""Flash"":false,""encoding"":""auto"",""ValidityPeriodInSeconds"":55}],""StatusCallback"":{""url"":null}}";
+            var expectedRequestJson = @"{""Messages"":[{""To"":""4511111111"",""Text"":""Hello world"",""From"":""1245"",""MessageId"":""someMessageId"",""RespectBlacklist"":true,""Flash"":false,""encoding"":""auto"",""ValidityPeriodInSeconds"":55}],""StatusCallback"":{""url"":null}}";
 
             var responseJson = @"{
 ""results"": [
@@ -68,7 +68,7 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
         [Fact]
         public void SendSmsMessages_EnsureNotBreakingOfFutureEncodingsAreReceived_Test()
         {
-            var expectedRequestJson = @"{""Messages"":[{""To"":""+45 11111111"",""Text"":""Hello world"",""From"":""PetShop"",""MessageId"":""someMessageId"",""RespectBlacklist"":true,""Flash"":false,""encoding"":""auto"",""ValidityPeriodInSeconds"":55}],""StatusCallback"":{""url"":null}}";
+            var expectedRequestJson = @"{""Messages"":[{""To"":""+45 11111111"",""Text"":""Hello world"",""From"":""1245"",""MessageId"":""someMessageId"",""RespectBlacklist"":true,""Flash"":false,""encoding"":""auto"",""ValidityPeriodInSeconds"":55}],""StatusCallback"":{""url"":null}}";
 
             var responseJson = @"{
 ""results"": [
@@ -95,7 +95,7 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
                 var client = new InMobileApiClient(apiKey, baseUrl: $"http://{server.EndPoint.Address}:{server.EndPoint.Port}");
                 var response = client.SmsOutgoing.SendSmsMessages(new List<OutgoingSmsMessageCreateRequest>() {
                     new OutgoingSmsMessageCreateRequest(
-                        to: "4511111111",
+                        to: "+45 11111111",
                         text: "Hello world",
                         from: "1245",
                         messageId: "someMessageId",
