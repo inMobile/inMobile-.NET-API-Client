@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
+using static InMobile.Sms.ApiClient.Test.UnitTestHttpServer;
 
 namespace InMobile.Sms.ApiClient.Test.Blacklist
 {
@@ -40,7 +41,7 @@ namespace InMobile.Sms.ApiClient.Test.Blacklist
             var apiKey = new InMobileApiKey("UnitTestKey123");
             var expectedRequest = new UnitTestRequestInfo(apiKey: apiKey, methodAndPath: "GET /v4/blacklist?pageLimit=250", jsonOrNull: null);
             var responseToSendback = new UnitTestResponseInfo(jsonOrNull: responseJson);
-            using (var server = UnitTestHttpServer.StartOnAnyAvailablePort(expectedRequest: expectedRequest, response: responseToSendback))
+            using (var server = UnitTestHttpServer.StartOnAnyAvailablePort(new UnitTestRequestAndResponse(request: expectedRequest, response: responseToSendback)))
             {
                 var client = new InMobileApiClient(apiKey, baseUrl: $"http://{server.EndPoint.Address}:{server.EndPoint.Port}");
                 var allEntries = client.Blacklist.GetAll();
@@ -77,7 +78,7 @@ namespace InMobile.Sms.ApiClient.Test.Blacklist
             var apiKey = new InMobileApiKey("UnitTestKey123");
             var expectedRequest = new UnitTestRequestInfo(apiKey: apiKey, methodAndPath: "GET /v4/blacklist?pageLimit=250", jsonOrNull: null);
             var responseToSendback = new UnitTestResponseInfo(jsonOrNull: responseJson);
-            using (var server = UnitTestHttpServer.StartOnAnyAvailablePort(expectedRequest: expectedRequest, response: responseToSendback))
+            using (var server = UnitTestHttpServer.StartOnAnyAvailablePort(new UnitTestRequestAndResponse(request: expectedRequest, response: responseToSendback)))
             {
                 var client = new InMobileApiClient(apiKey, baseUrl: $"http://{server.EndPoint.Address}:{server.EndPoint.Port}");
                 var allEntries = client.Blacklist.GetAll();

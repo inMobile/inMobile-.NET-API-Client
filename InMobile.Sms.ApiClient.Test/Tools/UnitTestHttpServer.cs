@@ -152,17 +152,28 @@ Connection: Closed";
         }
 
         private static object _syncLock = new object();
-        public static UnitTestHttpServer StartOnAnyAvailablePort(UnitTestRequestInfo expectedRequest, UnitTestResponseInfo response)
+        public static UnitTestHttpServer StartOnAnyAvailablePort(params UnitTestRequestAndResponse[] requests)
         {
             lock (_syncLock) // Ensures no race conditions ending up having multiple test server listening on the same port at the same time
             {
                 var endPoint = new IPEndPoint(address: IPAddress.Loopback, port: LocalPortUtils.GetAvailablePort());
-                var server = new UnitTestHttpServer(endPoint: endPoint, expectedRequest: expectedRequest, response: response);
+                var server = new UnitTestHttpServer(endPoint: endPoint, expectedRequest: requests.Single().Request, response: requests.Single().Response);
                 server.StartListening();
                 return server;
             }
         }
 
+        public class UnitTestRequestAndResponse
+        {
+            public UnitTestRequestInfo Request { get; }
+            public UnitTestResponseInfo Response { get; }
+
+            public UnitTestRequestAndResponse(UnitTestRequestInfo request, UnitTestResponseInfo response)
+            {
+                Request = request ?? throw new ArgumentNullException(nameof(request));
+                Response = response ?? throw new ArgumentNullException(nameof(response));
+            }
+        }
 
         public class UnexpectedRequestDataException : Exception
         {
