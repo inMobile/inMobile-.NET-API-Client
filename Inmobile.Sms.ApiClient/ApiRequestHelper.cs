@@ -31,13 +31,12 @@ namespace InMobile.Sms.ApiClient
         {
             List<T> allEntries = new List<T>();
             bool lastPage;
+            PagedResult<T> currentResult;
             do
             {
-                var pagedResult = Execute<PagedResult<T>>(method: Method.GET, resource: resource);
-                allEntries.AddRange(pagedResult.Entries);
-                resource = pagedResult._links.Next;
-                lastPage = pagedResult._links.IsLastPage;
-            } while (!lastPage);
+                currentResult = Execute<PagedResult<T>>(method: Method.GET, resource: resource);
+                allEntries.AddRange(currentResult.Entries);
+            } while (!currentResult._links.IsLastPage);
             return allEntries;
         }
 

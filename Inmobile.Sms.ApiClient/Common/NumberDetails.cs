@@ -4,18 +4,8 @@ using System.Text;
 
 namespace InMobile.Sms.ApiClient
 {
-    public class NumberDetails
+    public class NumberDetails : NumberInfo
     {
-        /// <summary>
-        /// The country code part of the msisdn, e.g. 45.
-        /// </summary>
-        /// <example>"45"</example>
-        public string? CountryCode { get; set; }
-        /// <summary>
-        /// The phone number part of the msisdn, e.g. 12345678.
-        /// </summary>
-        /// <example>"12345678"</example>
-        public string? PhoneNumber { get; set; }
         /// <summary>
         /// The input msisdn in its unaltered format. This is the value provided when sending the text message.
         /// </summary>

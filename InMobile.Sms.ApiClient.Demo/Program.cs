@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Threading;
 
 namespace InMobile.Sms.ApiClient.Demo
 {
@@ -8,24 +10,31 @@ namespace InMobile.Sms.ApiClient.Demo
     {
         static void Main(string[] args)
         {
-            var apiKey = new InMobileApiKey(File.ReadAllText("c:\\temp\\DOTNET_API_CLIENT\\apikey.txt"));
-            var msisdn = File.ReadAllText("c:\\temp\\DOTNET_API_CLIENT\\msisdn.txt");
-            var client = new InMobileApiClient(apiKey: apiKey);
-            var result = client.SmsOutgoing.SendSmsMessages(new List<OutgoingSmsMessageCreateRequest>() {
-                new OutgoingSmsMessageCreateRequest(
-                    to: msisdn, // Number including countrycode, e.g. "4511223344"
-                    from: "1245",
-                    text: "Hello world",
-                    messageId: "demo_message_" + DateTime.Now.Ticks,
-                    respectBlacklist: true,
-                    flash: false,
-                    encoding: MessageEncoding.Ucs2,
-                    validityPeriod: TimeSpan.FromMinutes(2) )
-            });
+            while (true)
+            {
+                var apiKey = new InMobileApiKey(File.ReadAllText("c:\\temp\\DOTNET_API_CLIENT\\apikey.txt"));
+                var msisdn = File.ReadAllText("c:\\temp\\DOTNET_API_CLIENT\\msisdn.txt");
+                var client = new InMobileApiClient(apiKey: apiKey);
+                var start = DateTime.Now;
+                var result = client.Blacklist.GetAll().ToList();
+                var elapsed = DateTime.Now.Subtract(start);
 
-            result.ToString();
+                Console.WriteLine(elapsed);
+                Console.WriteLine(result.Count);
+                Thread.Sleep(TimeSpan.FromSeconds(1));
+            }
+            
             Console.WriteLine("Done");
             Console.Read();
+        }
+
+        private static IEnumerable<int> GetEnumerable()
+        {
+            for(var i = 0; i < 3; i++)
+            {
+                Console.WriteLine("Actually creating the number " + i);
+                yield return i;
+            }
         }
     }
 }
