@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using InMobile.Sms.ApiClient.List.Lists;
+using RestSharp;
 
 namespace InMobile.Sms.ApiClient
 {
     public interface IListClient
     {
         List<ListApiModel> GetAllLists();
-        void CreateList();
+        ListApiModel CreateList(string name);
         void GetList();
         void DeleteList();
         void UpdateList();
@@ -30,9 +31,15 @@ namespace InMobile.Sms.ApiClient
             _requestHelper = requestHelper ?? throw new ArgumentNullException(nameof(requestHelper));
         }
 
-        public void CreateList()
+        public ListApiModel CreateList(string name)
         {
-            throw new NotImplementedException();
+            return _requestHelper.Execute<ListApiModel>(
+                        method: Method.POST,
+                        resource: "/v4/lists",
+                        payload: new
+                        {
+                            name = name
+                        });
         }
 
         public void CreateRecipient()
