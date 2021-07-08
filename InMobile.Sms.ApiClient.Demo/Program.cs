@@ -14,8 +14,6 @@ namespace InMobile.Sms.ApiClient.Demo
             var msisdn = File.ReadAllText("c:\\temp\\DOTNET_API_CLIENT\\msisdn.txt");
 
             var client = new InMobileApiClient(apiKey: apiKey);
-            var result = client.Lists.CreateList(name: "ApiV4TestList3");
-            Console.WriteLine(result.Id + " name: " + result.Name);
             foreach (var list in client.Lists.GetAllLists())
             {
                 Console.WriteLine(list.Id + ": " + list.Name);

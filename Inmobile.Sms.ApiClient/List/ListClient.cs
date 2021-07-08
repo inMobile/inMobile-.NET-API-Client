@@ -9,7 +9,7 @@ namespace InMobile.Sms.ApiClient
     {
         List<ListApiModel> GetAllLists();
         ListApiModel CreateList(string name);
-        void GetList();
+        ListApiModel GetListById(string listId);
         void DeleteList();
         void UpdateList();
 
@@ -77,9 +77,9 @@ namespace InMobile.Sms.ApiClient
             throw new NotImplementedException();
         }
 
-        public void GetList()
+        public ListApiModel GetListById(string listId)
         {
-            throw new NotImplementedException();
+            return _requestHelper.Execute<ListApiModel>(method: Method.GET, resource: $"/v4/lists/{listId}");
         }
 
         public void GetRecipient()
