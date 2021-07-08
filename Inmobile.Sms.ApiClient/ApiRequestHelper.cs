@@ -32,10 +32,12 @@ namespace InMobile.Sms.ApiClient
             List<T> allEntries = new List<T>();
             bool lastPage;
             PagedResult<T> currentResult;
+            var nextResource = resource;
             do
             {
-                currentResult = Execute<PagedResult<T>>(method: Method.GET, resource: resource);
+                currentResult = Execute<PagedResult<T>>(method: Method.GET, resource: nextResource);
                 allEntries.AddRange(currentResult.Entries);
+                resource = currentResult._links.Next;
             } while (!currentResult._links.IsLastPage);
             return allEntries;
         }
@@ -47,10 +49,18 @@ namespace InMobile.Sms.ApiClient
             {
                 return response.Data;
             }
-            else
+
+            if (response.ErrorException != null)
             {
-                throw new InMobileApiException(response: response);
+                throw response.ErrorException;
             }
+
+            if (InMobileApiException.TryParse(response, out var apiException))
+            {
+                throw apiException;
+            }
+
+            throw new Exception($"Unexpected exception but new exceptions found on IRestResponse, nor could it be deserialized as an InMobileApiException. Raw content: {response.Content}");
         }
 
         private RestClient GetClient()
@@ -61,7 +71,7 @@ namespace InMobile.Sms.ApiClient
             client.UseSerializer(() => new JsonNetSerializer());
             return client;
         }
-        
+
         private RestRequest GetRequest(Method method, string resource, object? payload)
         {
             if (string.IsNullOrEmpty(resource))
@@ -72,7 +82,7 @@ namespace InMobile.Sms.ApiClient
             var request = new RestRequest(resource: resource);
             request.AddHeader("content-type", "application/json");
             request.Method = method;
-            if(payload != null)
+            if (payload != null)
             {
                 request.AddJsonBody(payload);
             }

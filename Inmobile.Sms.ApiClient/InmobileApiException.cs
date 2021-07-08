@@ -7,17 +7,28 @@ namespace InMobile.Sms.ApiClient
 {
     public class InMobileApiException : Exception
     {
-        public InMobileApiException(IRestResponse response) : base(message: FormatMessage(response: response))
+        public InMobileApiException(string message) : base(message)
         {
 
         }
 
-        private static string FormatMessage(IRestResponse response)
+        public static bool TryParse(IRestResponse response, out InMobileApiException? exception)
         {
+            exception = null;
+            if (response.StatusCode == 0)
+                return false;
             var responseObject = JsonConvert.DeserializeObject<ErrorResponse>(response.Content, JsonNetSerializer.Settings);
             if (responseObject == null)
-                throw new Exception($"Exception during deserialization of error message. Raw error message: {response.Content}");
-            return $"{responseObject.ErrorMessage}. {string.Join("; ", responseObject.Details)}";
+                return false;
+            StringBuilder sb = new StringBuilder();
+            sb.Append($"{responseObject.ErrorMessage}.");
+            if(responseObject.Details != null)
+            {
+                sb.Append($" {string.Join("; ", responseObject.Details)}");
+            }
+
+            exception = new InMobileApiException(sb.ToString());
+            return true;
         }
     }
 }

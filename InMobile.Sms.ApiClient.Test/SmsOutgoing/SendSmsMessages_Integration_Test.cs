@@ -37,7 +37,7 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
             var apiKey = new InMobileApiKey("UnitTestKey123");
             var expectedRequest = new UnitTestRequestInfo(apiKey: apiKey, methodAndPath: "POST /v4/sms/outgoing", jsonOrNull: expectedRequestJson);
             var responseToSendback = new UnitTestResponseInfo(jsonOrNull: responseJson);
-            using (var server = UnitTestHttpServer.StartOnAnyAvailablePort(new UnitTestRequestAndResponse(request: expectedRequest, response: responseToSendback)))
+            using (var server = UnitTestHttpServer.StartOnAnyAvailablePort(new RequestResponsePair(request: expectedRequest, response: responseToSendback)))
             {
                 var client = new InMobileApiClient(apiKey, baseUrl: $"http://{server.EndPoint.Address}:{server.EndPoint.Port}");
                 var response = client.SmsOutgoing.SendSmsMessages(new List<OutgoingSmsMessageCreateRequest>() {
@@ -91,7 +91,7 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
             var apiKey = new InMobileApiKey("UnitTestKey123");
             var expectedRequest = new UnitTestRequestInfo(apiKey: apiKey, methodAndPath: "POST /v4/sms/outgoing", jsonOrNull: expectedRequestJson);
             var responseToSendback = new UnitTestResponseInfo(jsonOrNull: responseJson);
-            using (var server = UnitTestHttpServer.StartOnAnyAvailablePort(new UnitTestRequestAndResponse(request: expectedRequest, response: responseToSendback)))
+            using (var server = UnitTestHttpServer.StartOnAnyAvailablePort(new RequestResponsePair(request: expectedRequest, response: responseToSendback)))
             {
                 var client = new InMobileApiClient(apiKey, baseUrl: $"http://{server.EndPoint.Address}:{server.EndPoint.Port}");
                 var response = client.SmsOutgoing.SendSmsMessages(new List<OutgoingSmsMessageCreateRequest>() {

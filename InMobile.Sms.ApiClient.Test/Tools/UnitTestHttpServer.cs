@@ -13,19 +13,17 @@ namespace InMobile.Sms.ApiClient.Test
     {
         public IPEndPoint EndPoint { get; private set; }
         public TcpListener _tcpListener;
-        
-        private List<IDisposable> Disposables = new List<IDisposable>();
 
-        private UnitTestRequestInfo _expectedRequest;
-        private UnitTestResponseInfo _response;
+        private List<IDisposable> Disposables = new List<IDisposable>();
 
         private List<Exception> _excections = new List<Exception>();
         public string Host => $"{EndPoint.Address}:{EndPoint.Port}";
-        private UnitTestHttpServer(IPEndPoint endPoint, UnitTestRequestInfo expectedRequest, UnitTestResponseInfo response)
+        private Queue<RequestResponsePair> _requestPairsQueue;
+
+        private UnitTestHttpServer(IPEndPoint endPoint, RequestResponsePair[] requests)
         {
             EndPoint = endPoint ?? throw new ArgumentNullException(nameof(endPoint));
-            _expectedRequest = expectedRequest ?? throw new ArgumentNullException(nameof(expectedRequest));
-            _response = response ?? throw new ArgumentNullException(nameof(response));
+            _requestPairsQueue = new Queue<RequestResponsePair>(requests);
         }
 
         private void StartListening()
@@ -69,11 +67,7 @@ namespace InMobile.Sms.ApiClient.Test
             // the console.
             var socket = _tcpListener.EndAcceptSocket(ar);
 
-            // Stop listener after first connect
-            _tcpListener.Stop();
-
             HandleSocket(socket);
-
         }
 
         private void HandleSocket(Socket socket)
@@ -81,6 +75,15 @@ namespace InMobile.Sms.ApiClient.Test
             // Read input
             var request = Receive(socket);
             var requestTextLines = request.Split("\r\n");
+
+            if (_requestPairsQueue.Count == 0)
+            {
+                _excections.Add(new NoMoreRequestsExceptionException($"Got unexpected request: {request}"));
+                Assert.True(false, $"Got unexpected request: {request}");
+                return;
+            }
+
+            var nextPair = _requestPairsQueue.Dequeue();
 
             // Find authorization header line
             var authLine = requestTextLines.SingleOrDefault(line => line.StartsWith("Authorization: Basic "));
@@ -94,24 +97,24 @@ namespace InMobile.Sms.ApiClient.Test
                 var tokenBytes = Convert.FromBase64String(base64EncodedToken);
                 var usernameAndPassword = Encoding.ASCII.GetString(tokenBytes);
                 var apiKey = usernameAndPassword.Substring(usernameAndPassword.IndexOf(":") + 1);
-                if (apiKey != _expectedRequest.ApiKey.ApiKey)
+                if (apiKey != nextPair.Request.ApiKey.ApiKey)
                 {
-                    _excections.Add(new UnexpectedAuthorizationException("Expected apikey " + _expectedRequest.ApiKey.ApiKey + " but got " + apiKey));
+                    _excections.Add(new UnexpectedAuthorizationException("Expected apikey " + nextPair.Request.ApiKey.ApiKey + " but got " + apiKey));
                 }
             }
 
             // Ensure expected method
-            if (!request.StartsWith(_expectedRequest.MethodAndPath))
+            if (!request.StartsWith(nextPair.Request.MethodAndPath))
             {
-                _excections.Add(new UnexpectedMethodAndPathException("Expected request to start with " + _expectedRequest.MethodAndPath + ". Request received: " + request));
+                _excections.Add(new UnexpectedMethodAndPathException("Expected request to start with " + nextPair.Request.MethodAndPath + ". Request received: " + request));
             }
 
             // Ensure expected json
             var expectedEndOfRequest = "\r\n\r\n";
-            if(_expectedRequest.JsonOrNull != null)
+            if (nextPair.Request.JsonOrNull != null)
             {
                 // Expect no payload
-                expectedEndOfRequest += _expectedRequest.JsonOrNull;
+                expectedEndOfRequest += nextPair.Request.JsonOrNull;
             }
 
             if (!request.EndsWith(expectedEndOfRequest))
@@ -119,21 +122,23 @@ namespace InMobile.Sms.ApiClient.Test
                 _excections.Add(new UnexpectedPayloadException("Request was expected to end with " + expectedEndOfRequest + " \n\nbut did not. Request: " + request));
             }
 
-            var response = $@"HTTP/1.1 200 Ok
+            var response = $@"HTTP/1.1 {nextPair.Response.StatusCodeString}
 Date: Sun, 18 Oct 2012 10:36:20 GMT
 Server: Apache/2.2.14 (Win32)
-Content-Length: {_response.JsonOrNull?.Length}
+Content-Length: {nextPair.Response.JsonOrNull?.Length}
 Content-Type: application/json
 Connection: Closed";
 
-            if(_response.JsonOrNull != null)
+            if (nextPair.Response.JsonOrNull != null)
             {
                 response += $@"
 
-{_response.JsonOrNull}";
+{nextPair.Response.JsonOrNull}";
             };
 
             Send(socket, response);
+
+            socket.Close();
         }
 
         private static string Receive(Socket socket)
@@ -152,23 +157,23 @@ Connection: Closed";
         }
 
         private static object _syncLock = new object();
-        public static UnitTestHttpServer StartOnAnyAvailablePort(params UnitTestRequestAndResponse[] requests)
+        public static UnitTestHttpServer StartOnAnyAvailablePort(params RequestResponsePair[] requests)
         {
             lock (_syncLock) // Ensures no race conditions ending up having multiple test server listening on the same port at the same time
             {
-                var endPoint = new IPEndPoint(address: IPAddress.Loopback, port: LocalPortUtils.GetAvailablePort());
-                var server = new UnitTestHttpServer(endPoint: endPoint, expectedRequest: requests.Single().Request, response: requests.Single().Response);
+                var endPoint = new IPEndPoint(address: IPAddress.Loopback, port: LocalPortUtils.GetAndReserverAvailablePort());
+                var server = new UnitTestHttpServer(endPoint: endPoint, requests: requests);
                 server.StartListening();
                 return server;
             }
         }
 
-        public class UnitTestRequestAndResponse
+        public class RequestResponsePair
         {
             public UnitTestRequestInfo Request { get; }
             public UnitTestResponseInfo Response { get; }
 
-            public UnitTestRequestAndResponse(UnitTestRequestInfo request, UnitTestResponseInfo response)
+            public RequestResponsePair(UnitTestRequestInfo request, UnitTestResponseInfo response)
             {
                 Request = request ?? throw new ArgumentNullException(nameof(request));
                 Response = response ?? throw new ArgumentNullException(nameof(response));
@@ -183,6 +188,13 @@ Connection: Closed";
         public class UnexpectedAuthorizationException : Exception
         {
             public UnexpectedAuthorizationException(string message) : base(message)
+            {
+            }
+        }
+
+        public class NoMoreRequestsExceptionException : Exception
+        {
+            public NoMoreRequestsExceptionException(string message) : base(message)
             {
             }
         }

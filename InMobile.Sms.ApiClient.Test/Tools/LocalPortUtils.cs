@@ -10,7 +10,7 @@ namespace InMobile.Sms.ApiClient.Test.Tools
     public static class LocalPortUtils
     {
         private static int _lastUsedPort = 2021;
-        public static int GetAvailablePort()
+        public static int GetAndReserverAvailablePort()
         {
             // Gather info about existing ports
             var portList = new List<int>();
