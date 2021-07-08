@@ -5,8 +5,11 @@
         public string? MessageId { get; set; }
     }
 
-    public enum CancelResultCode
+    public enum CancelResultCode : int
     {
-        Unknown = 0
+        Unknown = 0,
+        Success = 1,
+        NotCancelled = -1,
+        MessageNotFound = -2
     }
 }
