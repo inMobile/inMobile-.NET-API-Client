@@ -8,6 +8,7 @@ namespace InMobile.Sms.ApiClient
     public interface IApiRequestHelper
     {
         T Execute<T>(Method method, string resource, object? payload = null);
+        void ExecuteWithNoContent(Method method, string resource, object? payload = null);
         List<T> ExecuteGetAndIteratePagedResult<T>(string resource);
     }
 
@@ -42,12 +43,24 @@ namespace InMobile.Sms.ApiClient
             return allEntries;
         }
 
+        public void ExecuteWithNoContent(Method method, string resource, object? payload = null)
+        {
+            var response = GetClient().Execute(request: GetRequest(method: method, resource: resource, payload: payload));
+            ThrowIfNotSuccessful(response);
+        }
+
         public T Execute<T>(Method method, string resource, object? payload = null)
         {
             IRestResponse<T> response = GetClient().Execute<T>(request: GetRequest(method: method, resource: resource, payload: payload));
+            ThrowIfNotSuccessful(response);
+            return response.Data;
+        }
+
+        private void ThrowIfNotSuccessful(IRestResponse response)
+        {
             if (response.IsSuccessful)
             {
-                return response.Data;
+                return;
             }
 
             if (response.ErrorException != null)

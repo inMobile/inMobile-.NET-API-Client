@@ -136,13 +136,13 @@ Date: Sun, 18 Oct 2012 10:36:20 GMT
 Server: Apache/2.2.14 (Win32)
 Content-Length: {nextPair.Response.JsonOrNull?.Length}
 Content-Type: application/json
-Connection: Closed";
+Connection: Closed
+
+";
 
                         if (nextPair.Response.JsonOrNull != null)
                         {
-                            response += $@"
-
-{nextPair.Response.JsonOrNull}";
+                            response += $@"{nextPair.Response.JsonOrNull}";
                         };
 
                         Send(socket, response);
@@ -169,7 +169,7 @@ Connection: Closed";
 
         private static void Send(Socket socket, string data)
         {
-            // socket.NoDelay = true; // This will disable the Nagle algorthm and hereby prevent buffering and instead sending right away. https://docs.microsoft.com/en-us/dotnet/api/system.net.sockets.socket.nodelay?view=net-5.0
+            socket.NoDelay = true; // This will disable the Nagle algorthm and hereby prevent buffering and instead sending right away. https://docs.microsoft.com/en-us/dotnet/api/system.net.sockets.socket.nodelay?view=net-5.0
             socket.Send(Encoding.ASCII.GetBytes(data));
         }
 

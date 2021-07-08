@@ -7,8 +7,8 @@ namespace InMobile.Sms.ApiClient
     public interface IBlacklistClient
     {
         BlacklistEntry GetById(string id);
+        void RemoveById(string id);
         List<BlacklistEntry> GetAll();
-        void GetBlacklistingById();
         BlacklistEntry Add(string countryCode, string number, string comment);
     }
 
@@ -36,11 +36,6 @@ namespace InMobile.Sms.ApiClient
             return _requestHelper.ExecuteGetAndIteratePagedResult<BlacklistEntry>(resource: "/v4/blacklist?pageLimit=250");
         }
 
-        public void GetBlacklistingById()
-        {
-            throw new NotImplementedException();
-        }
-
         public BlacklistEntry Add(string countryCode, string phoneNumber, string comment)
         {
             return _requestHelper.Execute<BlacklistEntry>(
@@ -55,6 +50,11 @@ namespace InMobile.Sms.ApiClient
                                         },
                                         comment = comment
                                     });
+        }
+
+        public void RemoveById(string id)
+        {
+            _requestHelper.ExecuteWithNoContent(method: Method.DELETE, resource: $"/v4/blacklist/{id}");
         }
     }
 }
