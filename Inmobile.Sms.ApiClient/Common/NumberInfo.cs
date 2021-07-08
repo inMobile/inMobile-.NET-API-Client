@@ -12,5 +12,16 @@
         /// </summary>
         /// <example>"12345678"</example>
         public string? PhoneNumber { get; set; }
+
+        public NumberInfo(string? countryCode, string? phoneNumber)
+        {
+            CountryCode = countryCode;
+            PhoneNumber = phoneNumber;
+        }
+
+        // NOTE: This constructor must exist for serialization
+        public NumberInfo()
+        {
+        }
     }
 }

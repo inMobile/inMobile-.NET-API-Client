@@ -9,6 +9,7 @@ namespace InMobile.Sms.ApiClient
         BlacklistEntry GetById(string id);
         List<BlacklistEntry> GetAll();
         void GetBlacklistingById();
+        BlacklistEntry Add(string countryCode, string number, string comment);
     }
 
     internal class BlacklistClient : IBlacklistClient
@@ -22,7 +23,7 @@ namespace InMobile.Sms.ApiClient
 
         public BlacklistEntry GetById(string id)
         {
-            return _requestHelper.Execute<BlacklistEntry>(method: Method.GET, resource: $"v4/blacklist/{id}");
+            return _requestHelper.Execute<BlacklistEntry>(method: Method.GET, resource: $"/v4/blacklist/{id}");
         }
 
         /// <summary>
@@ -32,12 +33,28 @@ namespace InMobile.Sms.ApiClient
         /// <returns></returns>
         public List<BlacklistEntry> GetAll()
         {
-            return _requestHelper.ExecuteGetAndIteratePagedResult<BlacklistEntry>(resource: "v4/blacklist?pageLimit=250");
+            return _requestHelper.ExecuteGetAndIteratePagedResult<BlacklistEntry>(resource: "/v4/blacklist?pageLimit=250");
         }
 
         public void GetBlacklistingById()
         {
             throw new NotImplementedException();
+        }
+
+        public BlacklistEntry Add(string countryCode, string phoneNumber, string comment)
+        {
+            return _requestHelper.Execute<BlacklistEntry>(
+                                    method: Method.POST,
+                                    resource: "/v4/blacklist",
+                                    payload: new
+                                    {
+                                        numberInfo = new
+                                        {
+                                            countryCode = countryCode,
+                                            phoneNumber = phoneNumber
+                                        },
+                                        comment = comment
+                                    });
         }
     }
 }
