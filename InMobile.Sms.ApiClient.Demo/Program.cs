@@ -10,18 +10,15 @@ namespace InMobile.Sms.ApiClient.Demo
     {
         static void Main(string[] args)
         {
-            while (true)
+            var apiKey = new InMobileApiKey(File.ReadAllText("c:\\temp\\DOTNET_API_CLIENT\\apikey.txt"));
+            var msisdn = File.ReadAllText("c:\\temp\\DOTNET_API_CLIENT\\msisdn.txt");
+
+            var client = new InMobileApiClient(apiKey: apiKey);
+            foreach (var list in client.Lists.GetAllLists())
             {
-                var apiKey = new InMobileApiKey(File.ReadAllText("c:\\temp\\DOTNET_API_CLIENT\\apikey.txt"));
-                var msisdn = File.ReadAllText("c:\\temp\\DOTNET_API_CLIENT\\msisdn.txt");
+                Console.WriteLine(list.Id + ": " + list.Name);
+            };
 
-                var client = new InMobileApiClient(apiKey: apiKey);
-                var result = client.Blacklist.GetAll().ToList();
-
-                Console.WriteLine(result.Count);
-                Thread.Sleep(TimeSpan.FromSeconds(1));
-            }
-            
             Console.WriteLine("Done");
             Console.Read();
         }

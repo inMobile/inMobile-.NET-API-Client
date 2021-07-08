@@ -27,4 +27,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="RestSharp" Version="106.11.7" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="List\Recipients\" />
+  </ItemGroup>
 </Project>

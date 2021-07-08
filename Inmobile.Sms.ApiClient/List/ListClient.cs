@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using InMobile.Sms.ApiClient.List.Lists;
 
 namespace InMobile.Sms.ApiClient
 {
     public interface IListClient
     {
-        void GetAllLists();
+        List<ListApiModel> GetAllLists();
         void CreateList();
         void GetList();
         void DeleteList();
@@ -58,9 +60,9 @@ namespace InMobile.Sms.ApiClient
             throw new NotImplementedException();
         }
 
-        public void GetAllLists()
+        public List<ListApiModel> GetAllLists()
         {
-            throw new NotImplementedException();
+            return _requestHelper.ExecuteGetAndIteratePagedResult<ListApiModel>(resource: "/v4/lists?pageLimit=250");
         }
 
         public void GetAllRecipientsInList()
