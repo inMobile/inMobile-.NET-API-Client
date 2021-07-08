@@ -19,9 +19,10 @@ namespace InMobile.Sms.ApiClient
         {
             _requestHelper = requestHelper ?? throw new System.ArgumentNullException(nameof(requestHelper));
         }
+
         public void CancelMessages()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public ReportsList<StatusReport> GetStatusReports()

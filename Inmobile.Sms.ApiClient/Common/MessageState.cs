@@ -4,11 +4,11 @@ using System.Text;
 
 namespace InMobile.Sms.ApiClient
 {
-    public enum MessageState
+    public enum MessageStateCode
     {
-        Unknown,
-        Delivered,
-        Failed,
-        Cancelled
+        Unknown = 0,
+        Delivered = 1,
+        Failed = -1,
+        Cancelled = -2
     }
 }

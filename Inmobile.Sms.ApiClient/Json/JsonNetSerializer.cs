@@ -20,7 +20,6 @@ namespace InMobile.Sms.ApiClient
         public JsonNetSerializer()
         {
             Settings.Converters.Add(new EnumConverter<MessageEncoding>());
-            Settings.Converters.Add(new EnumConverter<MessageState>());
         }
         public string[] SupportedContentTypes { get; } =
         {

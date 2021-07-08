@@ -25,9 +25,10 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
                             ""futureFieldToBeIgnored"": false
                             },
                         ""deliveryInfo"": {
-                            ""state"": ""FAILED"",
+                            ""stateCode"": -1,
+                            ""stateDescription"": ""Failed"",
                             ""errorCode"": -1,
-                            ""errorDetails"": ""Undeliverable message"",
+                            ""errorDescription"": ""Undeliverable message"",
                             ""futureFieldToBeIgnored"": false
                             },
                         ""chargeInfo"": {
@@ -58,9 +59,10 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
                 Assert.Equal(true, report.NumberDetails.IsValidMsisdn);
                 Assert.Equal(false, report.NumberDetails.IsAnonymized);
 
-                Assert.Equal(MessageState.Failed, report.DeliveryInfo.State);
+                Assert.Equal(MessageStateCode.Failed, report.DeliveryInfo.StateCode);
+                Assert.Equal("Failed", report.DeliveryInfo.StateDescription);
                 Assert.Equal(-1, report.DeliveryInfo.ErrorCode);
-                Assert.Equal("Undeliverable message", report.DeliveryInfo.ErrorDetails);
+                Assert.Equal("Undeliverable message", report.DeliveryInfo.ErrorDescription);
 
                 Assert.Equal(MessageEncoding.Gsm7, report.ChargeInfo.Encoding);
                 Assert.Equal(true, report.ChargeInfo.IsCharged);
@@ -85,7 +87,8 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
                             ""futureFieldToBeIgnored"": false
                             },
                         ""deliveryInfo"": {
-                            ""state"": ""FutureValue"",
+                            ""stateCode"": 8,
+                            ""stateDescription"": ""FutureState"",
                             ""futureFieldToBeIgnored"": false
                             },
                         ""chargeInfo"": {
@@ -109,9 +112,9 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
                 Assert.Single(response.Reports);
                 var report = response.Reports.Single();
                 Assert.NotNull(report);
-                Assert.Equal(MessageState.Unknown, report.DeliveryInfo.State);
+                Assert.Equal(8, (int)report.DeliveryInfo.StateCode);
                 Assert.Equal(null, report.DeliveryInfo.ErrorCode);
-                Assert.Equal(null, report.DeliveryInfo.ErrorDetails);
+                Assert.Equal(null, report.DeliveryInfo.ErrorDescription);
                 Assert.Equal(MessageEncoding.Unknown, report.ChargeInfo.Encoding);
                 Assert.Equal("45-TDC", report.ChargeInfo.Network);
             }
