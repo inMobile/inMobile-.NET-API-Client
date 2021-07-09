@@ -185,6 +185,10 @@ Connection: Closed
             }
         }
 
+        public void AssertNoAwaitingRequestsLeft()
+        {
+            Assert.Empty(_requestPairsQueue);
+        }
         public class RequestResponsePair
         {
             public UnitTestRequestInfo Request { get; }

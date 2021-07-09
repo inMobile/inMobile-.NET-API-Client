@@ -20,6 +20,8 @@ namespace InMobile.Sms.ApiClient.Test.Blacklist
             {
                 var client = new InMobileApiClient(apiKey, baseUrl: $"http://{server.EndPoint.Address}:{server.EndPoint.Port}");
                 client.Lists.DeleteListById(listId: "some_list_id");
+
+                server.AssertNoAwaitingRequestsLeft();
             }
         }
     }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using InMobile.Sms.ApiClient.List.Lists;
 using RestSharp;
 
 namespace InMobile.Sms.ApiClient
@@ -21,6 +20,7 @@ namespace InMobile.Sms.ApiClient
         void FindRecipient(); // TODO in api
         void UpdateRecipient();
         Recipient GetRecipientById(string listId, string recipientId);
+        void DeleteRecipient(string listId, string recipientId);
     }
 
     internal class ListClient : IListClient
@@ -61,6 +61,11 @@ namespace InMobile.Sms.ApiClient
         public void DeleteRecipient()
         {
             throw new NotImplementedException();
+        }
+
+        public void DeleteRecipient(string listId, string recipientId)
+        {
+            _requestHelper.ExecuteWithNoContent(method: Method.DELETE, resource: $"/v4/lists/{listId}/recipients/{recipientId}");
         }
 
         public void FindRecipient()
