@@ -20,6 +20,7 @@ namespace InMobile.Sms.ApiClient
         void DeleteRecipient();
         void FindRecipient(); // TODO in api
         void UpdateRecipient();
+        Recipient GetRecipientById(string listId, string recipientId);
     }
 
     internal class ListClient : IListClient
@@ -85,6 +86,11 @@ namespace InMobile.Sms.ApiClient
         public void GetRecipient()
         {
             throw new NotImplementedException();
+        }
+
+        public Recipient GetRecipientById(string listId, string recipientId)
+        {
+            return _requestHelper.Execute<Recipient>(method: Method.GET, resource: $"/v4/lists/{listId}/recipients/{recipientId}");
         }
 
         public void UpdateList()
