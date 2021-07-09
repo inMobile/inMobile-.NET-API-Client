@@ -7,13 +7,13 @@ namespace InMobile.Sms.ApiClient
 {
     public interface IListClient
     {
-        List<ListApiModel> GetAllLists();
-        ListApiModel CreateList(string name);
-        ListApiModel GetListById(string listId);
+        List<ListEntry> GetAllLists();
+        ListEntry CreateList(string name);
+        ListEntry GetListById(string listId);
         void DeleteListById(string listId);
         void UpdateList();
 
-        void GetAllRecipientsInList();
+        List<Recipient> GetAllRecipientsInList(string listId);
         void CreateRecipient();
         void DeleteAllRecipientsInList();
         void GetRecipient();
@@ -31,9 +31,9 @@ namespace InMobile.Sms.ApiClient
             _requestHelper = requestHelper ?? throw new ArgumentNullException(nameof(requestHelper));
         }
 
-        public ListApiModel CreateList(string name)
+        public ListEntry CreateList(string name)
         {
-            return _requestHelper.Execute<ListApiModel>(
+            return _requestHelper.Execute<ListEntry>(
                         method: Method.POST,
                         resource: "/v4/lists",
                         payload: new
@@ -67,19 +67,19 @@ namespace InMobile.Sms.ApiClient
             throw new NotImplementedException();
         }
 
-        public List<ListApiModel> GetAllLists()
+        public List<ListEntry> GetAllLists()
         {
-            return _requestHelper.ExecuteGetAndIteratePagedResult<ListApiModel>(resource: "/v4/lists?pageLimit=250");
+            return _requestHelper.ExecuteGetAndIteratePagedResult<ListEntry>(resource: "/v4/lists?pageLimit=250");
         }
 
-        public void GetAllRecipientsInList()
+        public List<Recipient> GetAllRecipientsInList(string listId)
         {
-            throw new NotImplementedException();
+            return _requestHelper.ExecuteGetAndIteratePagedResult<Recipient>(resource: $"/v4/lists/{listId}/recipients?pageLimit=250");
         }
 
-        public ListApiModel GetListById(string listId)
+        public ListEntry GetListById(string listId)
         {
-            return _requestHelper.Execute<ListApiModel>(method: Method.GET, resource: $"/v4/lists/{listId}");
+            return _requestHelper.Execute<ListEntry>(method: Method.GET, resource: $"/v4/lists/{listId}");
         }
 
         public void GetRecipient()
