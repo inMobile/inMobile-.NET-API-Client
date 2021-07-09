@@ -14,7 +14,7 @@ namespace InMobile.Sms.ApiClient.Test.Blacklist
         public void DeleteListById_Test()
         {
             var apiKey = new InMobileApiKey("UnitTestKey123");
-            var expectedRequest = new UnitTestRequestInfo(apiKey: apiKey, methodAndPath: "DELETE /v4/lists/some_list_id/recipient/recId1", jsonOrNull: null);
+            var expectedRequest = new UnitTestRequestInfo(apiKey: apiKey, methodAndPath: "DELETE /v4/lists/some_list_id/recipients/recId1", jsonOrNull: null);
             var responseToSendback = new UnitTestResponseInfo(jsonOrNull: null, statusCodeString: "204 NoContent");
             using (var server = UnitTestHttpServer.StartOnAnyAvailablePort(new RequestResponsePair(request: expectedRequest, response: responseToSendback)))
             {
