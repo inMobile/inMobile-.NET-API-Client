@@ -10,7 +10,7 @@ namespace InMobile.Sms.ApiClient
         List<ListApiModel> GetAllLists();
         ListApiModel CreateList(string name);
         ListApiModel GetListById(string listId);
-        void DeleteList();
+        void DeleteListById(string listId);
         void UpdateList();
 
         void GetAllRecipientsInList();
@@ -52,9 +52,9 @@ namespace InMobile.Sms.ApiClient
             throw new NotImplementedException();
         }
 
-        public void DeleteList()
+        public void DeleteListById(string listId)
         {
-            throw new NotImplementedException();
+            _requestHelper.ExecuteWithNoContent(method: Method.DELETE, resource: $"/v4/lists/{listId}");
         }
 
         public void DeleteRecipient()
