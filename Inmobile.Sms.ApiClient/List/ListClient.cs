@@ -15,8 +15,6 @@ namespace InMobile.Sms.ApiClient
         List<Recipient> GetAllRecipientsInList(string listId);
         void CreateRecipient();
         void DeleteAllRecipientsInList();
-        void GetRecipient();
-        void DeleteRecipient();
         void FindRecipient(); // TODO in api
         void UpdateRecipient();
         Recipient GetRecipientById(string listId, string recipientId);
@@ -58,11 +56,6 @@ namespace InMobile.Sms.ApiClient
             _requestHelper.ExecuteWithNoContent(method: Method.DELETE, resource: $"/v4/lists/{listId}");
         }
 
-        public void DeleteRecipient()
-        {
-            throw new NotImplementedException();
-        }
-
         public void DeleteRecipient(string listId, string recipientId)
         {
             _requestHelper.ExecuteWithNoContent(method: Method.DELETE, resource: $"/v4/lists/{listId}/recipients/{recipientId}");
@@ -86,11 +79,6 @@ namespace InMobile.Sms.ApiClient
         public ListEntry GetListById(string listId)
         {
             return _requestHelper.Execute<ListEntry>(method: Method.GET, resource: $"/v4/lists/{listId}");
-        }
-
-        public void GetRecipient()
-        {
-            throw new NotImplementedException();
         }
 
         public Recipient GetRecipientById(string listId, string recipientId)
