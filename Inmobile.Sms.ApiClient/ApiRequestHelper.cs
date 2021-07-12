@@ -16,7 +16,7 @@ namespace InMobile.Sms.ApiClient
     {
         private readonly HttpBasicAuthenticator _authenticator;
         private readonly string _baseUrl;
-        private const string UserAgent = "Inmobile .net client";
+        private readonly string _inmobileClientVersion;
         public ApiRequestHelper(InMobileApiKey apiKey, string baseUrl)
         {
             if (string.IsNullOrEmpty(baseUrl))
@@ -26,6 +26,7 @@ namespace InMobile.Sms.ApiClient
 
             _authenticator = new HttpBasicAuthenticator(username: "_", password: apiKey.ApiKey);
             _baseUrl = baseUrl;
+            _inmobileClientVersion = $"Inmobile .Net Client v{GetType().Assembly.GetName().Version}";
         }
 
         public List<T> ExecuteGetAndIteratePagedResult<T>(string resource)
@@ -79,7 +80,8 @@ namespace InMobile.Sms.ApiClient
         private RestClient GetClient()
         {
             var client = new RestClient(baseUrl: _baseUrl);
-            client.UserAgent = UserAgent;
+            client.AddDefaultHeader("X-InmobileClientVersion", _inmobileClientVersion);
+            client.UserAgent = _inmobileClientVersion;
             client.Authenticator = _authenticator;
             client.UseSerializer(() => new JsonNetSerializer());
             return client;
