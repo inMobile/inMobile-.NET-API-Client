@@ -23,11 +23,12 @@ namespace InMobile.Sms.ApiClient.Test.General
         }
 
         [Theory]
-        [InlineData("400 BadRequest")]
-        [InlineData("401 Forbidden")]
-        [InlineData("409 Conflict")]
-        [InlineData("500 InternalServerError")]
-        public void InMobileApiErrorReturned_Test(string statusCodeString)
+        [InlineData("400 BadRequest", 400)]
+        [InlineData("401 Forbidden", 401)]
+        [InlineData("404 NotFound", 404)]
+        [InlineData("409 Conflict", 409)]
+        [InlineData("500 InternalServerError", 500)]
+        public void InMobileApiErrorReturned_Test(string statusCodeString, int expectedStatusCode)
         {
             var responseJson = @"{
 ""errorMessage"": ""Forbidden thing"",
@@ -42,8 +43,9 @@ namespace InMobile.Sms.ApiClient.Test.General
             using (var server = UnitTestHttpServer.StartOnAnyAvailablePort(new RequestResponsePair(request: expectedRequest, response: responseToSendback)))
             {
                 var client = new InMobileApiClient(apiKey, baseUrl: $"http://{server.EndPoint.Address}:{server.EndPoint.Port}");
-                var apiException = Assert.Throws<InMobileApiException>(() => client.SmsOutgoing.GetStatusReports());
-                Assert.Equal("Forbidden thing. You shall not pass; Go away", apiException.Message);
+                var exceptionThrown = Assert.Throws<InMobileApiException>(() => client.SmsOutgoing.GetStatusReports());
+                Assert.Equal(expectedStatusCode, (int)exceptionThrown.StatusCode);
+                Assert.Equal("Forbidden thing. You shall not pass; Go away", exceptionThrown.Message);
             }
         }
     }

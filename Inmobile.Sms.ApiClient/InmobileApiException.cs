@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Text;
 using Newtonsoft.Json;
 using RestSharp;
@@ -7,9 +8,10 @@ namespace InMobile.Sms.ApiClient
 {
     public class InMobileApiException : Exception
     {
-        public InMobileApiException(string message) : base(message)
+        public HttpStatusCode StatusCode { get; }
+        public InMobileApiException(HttpStatusCode statusCode, string message) : base(message)
         {
-
+            StatusCode = statusCode;
         }
 
         public static bool TryParse(IRestResponse response, out InMobileApiException? exception)
@@ -27,7 +29,7 @@ namespace InMobile.Sms.ApiClient
                 sb.Append($" {string.Join("; ", responseObject.Details)}");
             }
 
-            exception = new InMobileApiException(sb.ToString());
+            exception = new InMobileApiException(response.StatusCode, sb.ToString());
             return true;
         }
     }

@@ -18,10 +18,7 @@ namespace InMobile.Sms.ApiClient.Demo
             foreach(var list in allLists)
             {
                 var allRecipients = client.Lists.GetAllRecipientsInList(listId: list.Id);
-                if(allRecipients.Count > 2)
-                {
-                    1.ToString();
-                }
+                
                 Console.WriteLine(list.Name + ": " + allRecipients.Count);
                 Console.ReadLine();
             }
