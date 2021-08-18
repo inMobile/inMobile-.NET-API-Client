@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace InMobile.Sms.ApiClient
 {
 
     public class Recipient : IRecipientUpdateInfo
     {
-        public string RecipientId { get; set; }
+        public string Id { get; set; }
         public string ListId { get; set; }
         public NumberInfo NumberInfo { get; set; }
         public Dictionary<string, string> Fields { get; set; } = new Dictionary<string, string>();

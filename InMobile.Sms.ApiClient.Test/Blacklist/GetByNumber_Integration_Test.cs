@@ -28,7 +28,7 @@ namespace InMobile.Sms.ApiClient.Test.Blacklist
             using (var server = UnitTestHttpServer.StartOnAnyAvailablePort(new RequestResponsePair(request: expectedRequest, response: responseToSendback)))
             {
                 var client = new InMobileApiClient(apiKey, baseUrl: $"http://{server.EndPoint.Address}:{server.EndPoint.Port}");
-                var entry = client.Blacklist.GetByNumber(countryCode: "47", phoneNumber: "11223344");
+                var entry = client.Blacklist.GetByNumber(new NumberInfo(countryCode: "47", phoneNumber: "11223344"));
                 Assert.Equal("45", entry.NumberInfo.CountryCode);
                 Assert.Equal("12345678", entry.NumberInfo.PhoneNumber);
                 Assert.Equal("Some text provided when created", entry.Comment);

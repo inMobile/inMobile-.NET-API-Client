@@ -2,7 +2,7 @@
 {
     public interface IRecipientListUpdateInfo
     {
-        string ListId { get; }
+        string Id { get; }
         string Name { get; }
     }
 }

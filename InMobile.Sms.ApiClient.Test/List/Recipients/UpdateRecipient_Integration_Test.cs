@@ -44,7 +44,7 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
                 var client = new InMobileApiClient(apiKey, baseUrl: $"http://{server.EndPoint.Address}:{server.EndPoint.Port}");
 
                 var recipient = new Recipient() {
-                    RecipientId = "recId1",
+                    Id = "recId1",
                     ListId = "some_list_id",
                     Fields = new Dictionary<string, string>() {
                         { "Email", "some@email.com" }
@@ -57,7 +57,7 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
                 Assert.Null(resultRecipient.Fields["firstname"]);
                 Assert.Equal("33", resultRecipient.NumberInfo.CountryCode);
                 Assert.Equal("111111", resultRecipient.NumberInfo.PhoneNumber);
-                Assert.Equal("some_new_id", resultRecipient.RecipientId);
+                Assert.Equal("some_new_id", resultRecipient.Id);
                 Assert.Equal("some_list_id", resultRecipient.ListId);
                 server.AssertNoAwaitingRequestsLeft();
             }
@@ -104,7 +104,7 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
                 Assert.Null(resultRecipient.Fields["firstname"]);
                 Assert.Equal("33", resultRecipient.NumberInfo.CountryCode);
                 Assert.Equal("111111", resultRecipient.NumberInfo.PhoneNumber);
-                Assert.Equal("some_new_id", resultRecipient.RecipientId);
+                Assert.Equal("some_new_id", resultRecipient.Id);
                 Assert.Equal("some_list_id", resultRecipient.ListId);
                 server.AssertNoAwaitingRequestsLeft();
             }

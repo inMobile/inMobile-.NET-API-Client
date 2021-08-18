@@ -6,7 +6,7 @@ namespace InMobile.Sms.ApiClient
 {
     public class RecipientUpdateInfo : IRecipientUpdateInfo
     {
-        public string RecipientId { get; }
+        public string Id { get; }
         public string ListId { get; }
         /// <summary>
         /// If not specified, the number is just left intact.
@@ -34,7 +34,7 @@ namespace InMobile.Sms.ApiClient
                 throw new ArgumentException($"'{nameof(listId)}' cannot be null or empty.", nameof(listId));
             }
 
-            RecipientId = recipientId;
+            Id = recipientId;
             ListId = listId;
             NumberInfo = numberInfo;
             Fields = fields;

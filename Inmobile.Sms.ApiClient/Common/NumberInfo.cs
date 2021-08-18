@@ -13,8 +13,18 @@
         /// <example>"12345678"</example>
         public string? PhoneNumber { get; set; }
 
-        public NumberInfo(string? countryCode, string? phoneNumber)
+        public NumberInfo(string countryCode, string phoneNumber)
         {
+            if (string.IsNullOrEmpty(countryCode))
+            {
+                throw new System.ArgumentException($"'{nameof(countryCode)}' cannot be null or empty.", nameof(countryCode));
+            }
+
+            if (string.IsNullOrEmpty(phoneNumber))
+            {
+                throw new System.ArgumentException($"'{nameof(phoneNumber)}' cannot be null or empty.", nameof(phoneNumber));
+            }
+
             CountryCode = countryCode;
             PhoneNumber = phoneNumber;
         }

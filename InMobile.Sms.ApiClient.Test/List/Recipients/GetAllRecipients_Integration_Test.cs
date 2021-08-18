@@ -79,7 +79,7 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
 
                 {
                     var entry1 = allEntries[0];
-                    Assert.Equal("recId1", entry1.RecipientId);
+                    Assert.Equal("recId1", entry1.Id);
                     Assert.Equal("45", entry1.NumberInfo.CountryCode);
                     Assert.Equal("1111", entry1.NumberInfo.PhoneNumber);
                     Assert.Equal("some_list_id", entry1.ListId);
@@ -87,7 +87,7 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
                     Assert.Equal("Anderson", entry1.Fields["lastname"]);
                 }
 
-                Assert.Equal("recId2", allEntries[1].RecipientId);
+                Assert.Equal("recId2", allEntries[1].Id);
             }
         }
 
@@ -184,7 +184,7 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
 
                 {
                     var entry1 = allEntries[0];
-                    Assert.Equal("recId1", entry1.RecipientId);
+                    Assert.Equal("recId1", entry1.Id);
                     Assert.Equal("45", entry1.NumberInfo.CountryCode);
                     Assert.Equal("1111", entry1.NumberInfo.PhoneNumber);
                     Assert.Equal("some_list_id", entry1.ListId);
@@ -192,9 +192,9 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
                     Assert.Equal("Anderson", entry1.Fields["lastname"]);
                 }
 
-                Assert.Equal("recId2", allEntries[1].RecipientId);
-                Assert.Equal("recId3", allEntries[2].RecipientId);
-                Assert.Equal("recId4", allEntries[3].RecipientId);
+                Assert.Equal("recId2", allEntries[1].Id);
+                Assert.Equal("recId3", allEntries[2].Id);
+                Assert.Equal("recId4", allEntries[3].Id);
             }
         }
     }

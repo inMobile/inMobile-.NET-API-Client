@@ -51,7 +51,7 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
                 Assert.Null(resultRecipient.Fields["firstname"]);
                 Assert.Equal("33", resultRecipient.NumberInfo.CountryCode);
                 Assert.Equal("111111", resultRecipient.NumberInfo.PhoneNumber);
-                Assert.Equal("some_new_id", resultRecipient.RecipientId);
+                Assert.Equal("some_new_id", resultRecipient.Id);
                 Assert.Equal("some_list_id", resultRecipient.ListId);
                 server.AssertNoAwaitingRequestsLeft();
             }

@@ -4,7 +4,7 @@ namespace InMobile.Sms.ApiClient
 {
     public class RecipientListUpdateInfo : IRecipientListUpdateInfo
     {
-        public string ListId { get; set; }
+        public string Id { get; set; }
         public string Name { get; set; }
 
         public RecipientListUpdateInfo(string listId, string name)
@@ -19,7 +19,7 @@ namespace InMobile.Sms.ApiClient
                 throw new ArgumentException($"'{nameof(name)}' cannot be null or whitespace.", nameof(name));
             }
 
-            ListId = listId;
+            Id = listId;
             Name = name;
         }
     }

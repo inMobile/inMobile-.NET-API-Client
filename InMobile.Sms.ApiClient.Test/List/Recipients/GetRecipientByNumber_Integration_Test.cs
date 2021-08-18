@@ -33,7 +33,7 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
             {
                 var client = new InMobileApiClient(apiKey, baseUrl: $"http://{server.EndPoint.Address}:{server.EndPoint.Port}");
                 var recipient = client.Lists.GetRecipientByNumber(listId: "some_list_id", countryCode: "45", phoneNumber: "1111");
-                Assert.Equal("recId1", recipient.RecipientId);
+                Assert.Equal("recId1", recipient.Id);
                 Assert.Equal("45", recipient.NumberInfo.CountryCode);
                 Assert.Equal("1111", recipient.NumberInfo.PhoneNumber);
                 Assert.Equal("some_list_id", recipient.ListId);

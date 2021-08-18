@@ -70,7 +70,7 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
         [Fact]
         public void SendSmsMessages_EnsureNotBreakingOfFutureEncodingsAreReceived_Test()
         {
-            var expectedRequestJson = @"{""Messages"":[{""To"":""+45 11111111"",""Text"":""Hello world"",""From"":""1245"",""MessageId"":""someMessageId"",""RespectBlacklist"":true,""Flash"":false,""encoding"":""auto"",""ValidityPeriodInSeconds"":55,""StatusCallbackUrl"":null,""SendTime"":null}]}";
+            var expectedRequestJson = @"{""Messages"":[{""To"":""+45 11111111"",""Text"":""Hello world"",""From"":""1245"",""MessageId"":""someMessageId"",""RespectBlacklist"":true,""Flash"":false,""Encoding"":""auto"",""ValidityPeriodInSeconds"":55,""StatusCallbackUrl"":null,""SendTime"":null}]}";
 
             var responseJson = @"{
 ""results"": [

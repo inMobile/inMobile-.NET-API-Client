@@ -6,11 +6,11 @@ namespace InMobile.Sms.ApiClient
 {
     public interface IBlacklistApiMethods
     {
-        BlacklistEntry Add(string countryCode, string number, string? comment = null);
+        BlacklistEntry Add(NumberInfo numberInfo, string? comment = null);
         BlacklistEntry GetById(string blacklistEntryId);
-        BlacklistEntry GetByNumber(string countryCode, string phoneNumber);
+        BlacklistEntry GetByNumber(NumberInfo numberInfo);
         void RemoveById(string blacklistEntryId);
-        void RemoveByNumber(string countryCode, string phoneNumber);
+        void RemoveByNumber(NumberInfo numberInfo);
         List<BlacklistEntry> GetAll();
     }
 
@@ -23,21 +23,20 @@ namespace InMobile.Sms.ApiClient
             _requestHelper = requestHelper ?? throw new ArgumentNullException(nameof(requestHelper));
         }
 
-        public BlacklistEntry Add(string countryCode, string phoneNumber, string? comment = null)
+        public BlacklistEntry Add(NumberInfo numberInfo, string? comment = null)
         {
-            EnsureNonEmptyOrThrow(parameterName: nameof(countryCode), value: countryCode);
-            EnsureNonEmptyOrThrow(parameterName: nameof(phoneNumber), value: phoneNumber);
+            if (numberInfo is null)
+            {
+                throw new ArgumentNullException(nameof(numberInfo));
+            }
+
             return _requestHelper.Execute<BlacklistEntry>(
                                     method: Method.POST,
                                     resource: "/v4/blacklist",
                                     payload: new
                                     {
-                                        numberInfo = new
-                                        {
-                                            countryCode = countryCode,
-                                            phoneNumber = phoneNumber
-                                        },
-                                        comment = comment
+                                        NumberInfo = numberInfo,
+                                        Comment = comment
                                     });
         }
 
@@ -57,11 +56,14 @@ namespace InMobile.Sms.ApiClient
             return _requestHelper.Execute<BlacklistEntry>(method: Method.GET, resource: $"/v4/blacklist/{blacklistEntryId}");
         }
 
-        public BlacklistEntry GetByNumber(string countryCode, string phoneNumber)
+        public BlacklistEntry GetByNumber(NumberInfo numberInfo)
         {
-            EnsureNonEmptyOrThrow(parameterName: nameof(countryCode), value: countryCode);
-            EnsureNonEmptyOrThrow(parameterName: nameof(phoneNumber), value: phoneNumber);
-            return _requestHelper.Execute<BlacklistEntry>(method: Method.GET, resource: $"/v4/blacklist/bynumber?countryCode={countryCode}&phoneNumber={phoneNumber}");
+            if (numberInfo is null)
+            {
+                throw new ArgumentNullException(nameof(numberInfo));
+            }
+
+            return _requestHelper.Execute<BlacklistEntry>(method: Method.GET, resource: $"/v4/blacklist/bynumber?countryCode={numberInfo.CountryCode}&phoneNumber={numberInfo.PhoneNumber}");
         }
 
         public void RemoveById(string blacklistEntryId)
@@ -70,11 +72,14 @@ namespace InMobile.Sms.ApiClient
             _requestHelper.ExecuteWithNoContent(method: Method.DELETE, resource: $"/v4/blacklist/{blacklistEntryId}");
         }
 
-        public void RemoveByNumber(string countryCode, string phoneNumber)
+        public void RemoveByNumber(NumberInfo numberInfo)
         {
-            EnsureNonEmptyOrThrow(parameterName: nameof(countryCode), value: countryCode);
-            EnsureNonEmptyOrThrow(parameterName: nameof(phoneNumber), value: phoneNumber);
-            _requestHelper.ExecuteWithNoContent(method: Method.DELETE, resource: $"/v4/blacklist/bynumber?countryCode={countryCode}&phoneNumber={phoneNumber}");
+            if (numberInfo is null)
+            {
+                throw new ArgumentNullException(nameof(numberInfo));
+            }
+
+            _requestHelper.ExecuteWithNoContent(method: Method.DELETE, resource: $"/v4/blacklist/bynumber?countryCode={numberInfo.CountryCode}&phoneNumber={numberInfo.PhoneNumber}");
         }
 
 

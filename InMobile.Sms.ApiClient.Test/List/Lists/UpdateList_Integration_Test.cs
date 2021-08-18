@@ -20,9 +20,9 @@ namespace InMobile.Sms.ApiClient.Test.Blacklist
             using (var server = UnitTestHttpServer.StartOnAnyAvailablePort(new RequestResponsePair(request: expectedRequest, response: responseToSendback)))
             {
                 var client = new InMobileApiClient(apiKey, baseUrl: $"http://{server.EndPoint.Address}:{server.EndPoint.Port}");
-                var entry = client.Lists.UpdateList(list: new RecipientList() { Name = "New name", ListId = "some_list_id" });
+                var entry = client.Lists.UpdateList(list: new RecipientList() { Name = "New name", Id = "some_list_id" });
                 Assert.Equal("New name", entry.Name);
-                Assert.Equal("some_list_id", entry.ListId);
+                Assert.Equal("some_list_id", entry.Id);
             }
         }
     }

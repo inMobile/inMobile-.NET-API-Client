@@ -35,8 +35,8 @@ namespace InMobile.Sms.ApiClient.Demo
 
             var countBefore = client.Blacklist.GetAll().Count;
             Log("Adding some entries");
-            client.Blacklist.Add(countryCode: "45", number: "111111");
-            client.Blacklist.Add(countryCode: "47", number: "222222");
+            client.Blacklist.Add(new NumberInfo(countryCode: "45", phoneNumber: "111111"));
+            client.Blacklist.Add(new NumberInfo(countryCode: "47", phoneNumber: "222222"));
             Log("Checking new entry count");
             var entries = client.Blacklist.GetAll();
             var countAfter = entries.Count;
@@ -65,7 +65,7 @@ namespace InMobile.Sms.ApiClient.Demo
 
             Log("deleting the other entry by number");
             {
-                client.Blacklist.RemoveByNumber(countryCode: "45", phoneNumber: "111111");
+                client.Blacklist.RemoveByNumber(new NumberInfo(countryCode: "45", phoneNumber: "111111"));
             }
 
             Log("Verifying deleted");
@@ -95,46 +95,46 @@ namespace InMobile.Sms.ApiClient.Demo
                 Log("List: Update with list object");
                 client.Lists.UpdateList(list);
                 Log("List: GetById");
-                list = client.Lists.GetListById(list.ListId);
+                list = client.Lists.GetListById(list.Id);
                 AssertEquals(newName, list.Name);
             }
 
             {
                 Log("List: Update with ListUpdateObject");
                 var newName = "Auto-create-list_" + Guid.NewGuid();
-                client.Lists.UpdateList(new RecipientListUpdateInfo(listId: list.ListId, name: newName));
-                var oldId = list.ListId;
-                list = client.Lists.GetListById(list.ListId);
+                client.Lists.UpdateList(new RecipientListUpdateInfo(listId: list.Id, name: newName));
+                var oldId = list.Id;
+                list = client.Lists.GetListById(list.Id);
                 AssertEquals(newName, list.Name);
-                AssertEquals(oldId, list.ListId); // Ensure ID not changed
+                AssertEquals(oldId, list.Id); // Ensure ID not changed
             }
 
             // Ensure no new list was created during the updates
             AssertEquals(listCountAfterCreate, client.Lists.GetAllLists().Count);
 
             // Recipient: Create
-            var rec1CreateInfo = new RecipientCreateInfo(listId: list.ListId, new NumberInfo(countryCode: "45", phoneNumber: "111111"));
+            var rec1CreateInfo = new RecipientCreateInfo(listId: list.Id, new NumberInfo(countryCode: "45", phoneNumber: "111111"));
             rec1CreateInfo.Fields.Add("firstname", "initial firstname");
             rec1CreateInfo.Fields.Add("lastname", "initial lastname");
             Log("Create recipient");
             var rec1 = client.Lists.CreateRecipient(rec1CreateInfo);
-            if (string.IsNullOrWhiteSpace(rec1.RecipientId))
+            if (string.IsNullOrWhiteSpace(rec1.Id))
                 throw new Exception("No id on recipient");
             if (string.IsNullOrWhiteSpace(rec1.ListId))
                 throw new Exception("No listId recipient");
             Log("Create recipient");
-            var rec2 = client.Lists.CreateRecipient(new RecipientCreateInfo(listId: list.ListId, new NumberInfo(countryCode: "45", phoneNumber: "222222")));
+            var rec2 = client.Lists.CreateRecipient(new RecipientCreateInfo(listId: list.Id, new NumberInfo(countryCode: "45", phoneNumber: "222222")));
             Log("Create recipient");
-            var rec3 = client.Lists.CreateRecipient(new RecipientCreateInfo(listId: list.ListId, new NumberInfo(countryCode: "45", phoneNumber: "333333")));
+            var rec3 = client.Lists.CreateRecipient(new RecipientCreateInfo(listId: list.Id, new NumberInfo(countryCode: "45", phoneNumber: "333333")));
             Log("Create recipient");
 
             var rec4CreatedStart = DateTime.Now;
-            var rec4 = client.Lists.CreateRecipient(new RecipientCreateInfo(listId: list.ListId, new NumberInfo(countryCode: "45", phoneNumber: "444444")));
+            var rec4 = client.Lists.CreateRecipient(new RecipientCreateInfo(listId: list.Id, new NumberInfo(countryCode: "45", phoneNumber: "444444")));
             // Ensure creating another entry gives a 409 conclift
             try
             {
                 Log("Create recipient");
-                client.Lists.CreateRecipient(new RecipientCreateInfo(listId: list.ListId, new NumberInfo(countryCode: "45", phoneNumber: "111111")));
+                client.Lists.CreateRecipient(new RecipientCreateInfo(listId: list.Id, new NumberInfo(countryCode: "45", phoneNumber: "111111")));
                 throw new Exception("Expected exception here");
             }
             catch (InMobileApiException ex) when (ex.ErrorHttpStatusCode == System.Net.HttpStatusCode.Conflict)
@@ -149,18 +149,18 @@ namespace InMobile.Sms.ApiClient.Demo
 
             // Rcipient: Update (number on recipient)
             Log("Recipient.Update");
-            client.Lists.UpdateRecipient(new RecipientUpdateInfo(recipientId: rec1.RecipientId, listId: rec1.ListId, numberInfo: new NumberInfo(countryCode: "47", phoneNumber: "99887766")));
+            client.Lists.UpdateRecipient(new RecipientUpdateInfo(recipientId: rec1.Id, listId: rec1.ListId, numberInfo: new NumberInfo(countryCode: "47", phoneNumber: "99887766")));
             Log("Recipient.Load");
-            rec1 = client.Lists.GetRecipientById(listId: list.ListId, rec1.RecipientId);
+            rec1 = client.Lists.GetRecipientById(listId: list.Id, rec1.Id);
             AssertEquals(rec1.NumberInfo.CountryCode, "47");
             AssertEquals(rec1.NumberInfo.PhoneNumber, "99887766");
             AssertEquals(rec1.Fields["lastname"], "initial lastname");
 
             // Update fields on another recipient (fields only)
             Log("Recipient.Update");
-            client.Lists.UpdateRecipient(new RecipientUpdateInfo(recipientId: rec2.RecipientId, listId: rec2.ListId, fields: new Dictionary<string, string>() { { "lastname", "Smith" }, { "Custom1", "Val1" } }));
+            client.Lists.UpdateRecipient(new RecipientUpdateInfo(recipientId: rec2.Id, listId: rec2.ListId, fields: new Dictionary<string, string>() { { "lastname", "Smith" }, { "Custom1", "Val1" } }));
             Log("Recipient.Load");
-            rec2 = client.Lists.GetRecipientById(listId: list.ListId, recipientId: rec2.RecipientId);
+            rec2 = client.Lists.GetRecipientById(listId: list.Id, recipientId: rec2.Id);
             AssertEquals(rec2.Fields["firstname"], null);
             AssertEquals(rec2.Fields["lastname"], "Smith");
             AssertEquals(rec2.Fields["custom1"], "Val1");
@@ -169,9 +169,9 @@ namespace InMobile.Sms.ApiClient.Demo
 
             // Recipient: Update both fields and number
             Log("Recipient.Update");
-            client.Lists.UpdateRecipient(new RecipientUpdateInfo(recipientId: rec3.RecipientId, listId: rec3.ListId, numberInfo: new NumberInfo("33", "999999"), fields: new Dictionary<string, string>() { { "firstname", "Bill" }, { "Custom2", "Val2" } }));
+            client.Lists.UpdateRecipient(new RecipientUpdateInfo(recipientId: rec3.Id, listId: rec3.ListId, numberInfo: new NumberInfo("33", "999999"), fields: new Dictionary<string, string>() { { "firstname", "Bill" }, { "Custom2", "Val2" } }));
             Log("Recipient.Load");
-            rec3 = client.Lists.GetRecipientById(listId: rec3.ListId, recipientId: rec3.RecipientId);
+            rec3 = client.Lists.GetRecipientById(listId: rec3.ListId, recipientId: rec3.Id);
             AssertEquals(rec3.NumberInfo.CountryCode, "33");
             AssertEquals(rec3.NumberInfo.PhoneNumber, "999999");
             AssertEquals(rec3.Fields["firstname"], "Bill");
@@ -185,25 +185,25 @@ namespace InMobile.Sms.ApiClient.Demo
             Log("Recipient.Update");
             client.Lists.UpdateRecipient(rec4);
             Log("Recipient.Load");
-            rec4 = client.Lists.GetRecipientById(listId: rec4.ListId, recipientId: rec4.RecipientId);
+            rec4 = client.Lists.GetRecipientById(listId: rec4.ListId, recipientId: rec4.Id);
             AssertEquals(rec4.NumberInfo.CountryCode, "46");
             AssertEquals(rec4.NumberInfo.PhoneNumber, "404040");
             AssertEquals(rec4.Fields["firstname"], "Linus");
             AssertEquals(rec4.Fields["lastname"], null);
 
             Log("Load and verify all recipients in test list");
-            var allRecipientsInList = client.Lists.GetAllRecipientsInList(listId: list.ListId);
+            var allRecipientsInList = client.Lists.GetAllRecipientsInList(listId: list.Id);
             if (allRecipientsInList.Count != 4)
                 throw new Exception($"Unexpected recipient count: {allRecipientsInList.Count} expected 2");
 
             Log("Delete recipient");
-            client.Lists.DeleteRecipientByNumber(listId: list.ListId, countryCode: "47", phoneNumber: "99887766");
-            AssertEquals(3, client.Lists.GetAllRecipientsInList(listId: list.ListId).Count);
+            client.Lists.DeleteRecipientByNumber(listId: list.Id, countryCode: "47", phoneNumber: "99887766");
+            AssertEquals(3, client.Lists.GetAllRecipientsInList(listId: list.Id).Count);
 
             try
             {
                 Log("Delete but not found test");
-                client.Lists.DeleteRecipientByNumber(listId: list.ListId, countryCode: "45", phoneNumber: "111111");
+                client.Lists.DeleteRecipientByNumber(listId: list.Id, countryCode: "45", phoneNumber: "111111");
             }
             catch (InMobileApiException ex) when (ex.ErrorHttpStatusCode == System.Net.HttpStatusCode.NotFound)
             {
@@ -211,16 +211,16 @@ namespace InMobile.Sms.ApiClient.Demo
             };
 
             Log("Delete all recipients");
-            client.Lists.DeleteAllRecipientsInList(listId: list.ListId);
+            client.Lists.DeleteAllRecipientsInList(listId: list.Id);
 
-            AssertEquals(0, client.Lists.GetAllRecipientsInList(listId: list.ListId).Count);
+            AssertEquals(0, client.Lists.GetAllRecipientsInList(listId: list.Id).Count);
             Log("Delete list");
-            client.Lists.DeleteListById(listId: list.ListId);
+            client.Lists.DeleteListById(listId: list.Id);
 
             Log("Verify lists is gone");
             try
             {
-                client.Lists.GetAllRecipientsInList(listId: list.ListId);
+                client.Lists.GetAllRecipientsInList(listId: list.Id);
                 throw new Exception("Expected NotFound");
             }
             catch (InMobileApiException ex) when (ex.ErrorHttpStatusCode == System.Net.HttpStatusCode.NotFound)

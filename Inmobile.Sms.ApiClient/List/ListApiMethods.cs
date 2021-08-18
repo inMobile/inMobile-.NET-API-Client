@@ -65,7 +65,7 @@ namespace InMobile.Sms.ApiClient
 
         public RecipientList UpdateList(IRecipientListUpdateInfo list)
         {
-            return UpdateListInternal(listId: list.ListId, updateObject: new { name = list.Name });
+            return UpdateListInternal(listId: list.Id, updateObject: new { name = list.Name });
         }
         private RecipientList UpdateListInternal(string listId, object updateObject)
         {
@@ -107,7 +107,7 @@ namespace InMobile.Sms.ApiClient
 
         public Recipient UpdateRecipient(IRecipientUpdateInfo recipient)
         {
-            return UpdateRecipientInternal(listId: recipient.ListId, recipientId: recipient.RecipientId, updateObject: new {
+            return UpdateRecipientInternal(listId: recipient.ListId, recipientId: recipient.Id, updateObject: new {
                 NumberInfo = recipient.NumberInfo,
                 Fields = recipient.Fields
             });
