@@ -8,7 +8,7 @@ namespace InMobile.Sms.ApiClient
     {
         RecipientList CreateList(string name);
         List<RecipientList> GetAllLists();
-        RecipientList GetListById(string listId);
+        RecipientList GetListById(RecipientListId listId);
         /// <summary>
         /// Updates the given list. This call both allows for the client to retrieve a listEntry, update it and pass it to UpdateList. It also allows for updating a list without retrieving it first simply by calling UpdateList(myListId, new { Name = "New list name" });
         /// </summary>
@@ -17,18 +17,18 @@ namespace InMobile.Sms.ApiClient
         /// </param>
         /// <returns></returns>
         RecipientList UpdateList(IRecipientListUpdateInfo list);
-        void DeleteListById(string listId);
+        void DeleteListById(RecipientListId listId);
 
         Recipient CreateRecipient(RecipientCreateInfo recipient);
-        List<Recipient> GetAllRecipientsInList(string listId);
-        Recipient GetRecipientById(string listId, string recipientId);
-        Recipient GetRecipientByNumber(string listId, string countryCode, string phoneNumber);
+        List<Recipient> GetAllRecipientsInList(RecipientListId listId);
+        Recipient GetRecipientById(RecipientListId listId, RecipientId recipientId);
+        Recipient GetRecipientByNumber(RecipientListId listId, NumberInfo numberInfo);
 
         Recipient UpdateRecipient(IRecipientUpdateInfo recipient);
         
-        void DeleteRecipientById(string listId, string recipientId);
-        void DeleteRecipientByNumber(string listId, string countryCode, string phoneNumber);
-        void DeleteAllRecipientsInList(string listId);
+        void DeleteRecipientById(RecipientListId listId, RecipientId recipientId);
+        void DeleteRecipientByNumber(RecipientListId listId, NumberInfo numberInfo);
+        void DeleteAllRecipientsInList(RecipientListId listId);
     }
 
     internal class ListApiMethods : IListApiMethods
@@ -57,7 +57,7 @@ namespace InMobile.Sms.ApiClient
             return _requestHelper.ExecuteGetAndIteratePagedResult<RecipientList>(resource: "/v4/lists?pageLimit=250");
         }
 
-        public RecipientList GetListById(string listId)
+        public RecipientList GetListById(RecipientListId listId)
         {
             EnsureNonEmptyOrThrow(parameterName: nameof(listId), value: listId);
             return _requestHelper.Execute<RecipientList>(method: Method.GET, resource: $"/v4/lists/{listId}");
@@ -65,15 +65,16 @@ namespace InMobile.Sms.ApiClient
 
         public RecipientList UpdateList(IRecipientListUpdateInfo list)
         {
+            EnsureNonEmptyOrThrow(parameterName: nameof(list), value: list);
             return UpdateListInternal(listId: list.Id, updateObject: new { name = list.Name });
         }
-        private RecipientList UpdateListInternal(string listId, object updateObject)
+        private RecipientList UpdateListInternal(RecipientListId listId, object updateObject)
         {
             EnsureNonEmptyOrThrow(parameterName: nameof(listId), value: listId);
             return _requestHelper.Execute<RecipientList>(method: Method.PUT, resource: $"/v4/lists/{listId}", payload: updateObject);
         }
 
-        public void DeleteListById(string listId)
+        public void DeleteListById(RecipientListId listId)
         {
             EnsureNonEmptyOrThrow(parameterName: nameof(listId), value: listId);
             _requestHelper.ExecuteWithNoContent(method: Method.DELETE, resource: $"/v4/lists/{listId}");
@@ -81,79 +82,71 @@ namespace InMobile.Sms.ApiClient
 
         public Recipient CreateRecipient(RecipientCreateInfo recipient)
         {
+            EnsureNonEmptyOrThrow(parameterName: nameof(RecipientCreateInfo), value: recipient);
             return _requestHelper.Execute<Recipient>(method: Method.POST, resource: $"/v4/lists/{recipient.ListId}/recipients", payload: new { NumberInfo = recipient.NumberInfo, Fields = recipient.Fields });
         }
 
-        public List<Recipient> GetAllRecipientsInList(string listId)
+        public List<Recipient> GetAllRecipientsInList(RecipientListId listId)
         {
             EnsureNonEmptyOrThrow(parameterName: nameof(listId), value: listId);
             return _requestHelper.ExecuteGetAndIteratePagedResult<Recipient>(resource: $"/v4/lists/{listId}/recipients?pageLimit=250");
         }
 
-        public Recipient GetRecipientById(string listId, string recipientId)
+        public Recipient GetRecipientById(RecipientListId listId, RecipientId recipientId)
         {
             EnsureNonEmptyOrThrow(parameterName: nameof(listId), value: listId);
             EnsureNonEmptyOrThrow(parameterName: nameof(recipientId), value: recipientId);
             return _requestHelper.Execute<Recipient>(method: Method.GET, resource: $"/v4/lists/{listId}/recipients/{recipientId}");
         }
 
-        public Recipient GetRecipientByNumber(string listId, string countryCode, string phoneNumber)
+        public Recipient GetRecipientByNumber(RecipientListId listId, NumberInfo numberInfo)
         {
             EnsureNonEmptyOrThrow(parameterName: nameof(listId), value: listId);
-            EnsureNonEmptyOrThrow(parameterName: nameof(countryCode), value: countryCode);
-            EnsureNonEmptyOrThrow(parameterName: nameof(phoneNumber), value: phoneNumber);
-            return _requestHelper.Execute<Recipient>(method: Method.GET, resource: $"/v4/lists/{listId}/recipients/bynumber?countryCode={countryCode}&phoneNumber={phoneNumber}");
+            EnsureNonEmptyOrThrow(parameterName: nameof(numberInfo), value: numberInfo);
+            return _requestHelper.Execute<Recipient>(method: Method.GET, resource: $"/v4/lists/{listId}/recipients/bynumber?countryCode={numberInfo.CountryCode}&phoneNumber={numberInfo.PhoneNumber}");
         }
 
         public Recipient UpdateRecipient(IRecipientUpdateInfo recipient)
         {
+            EnsureNonEmptyOrThrow(parameterName: nameof(recipient), value: recipient);
             return UpdateRecipientInternal(listId: recipient.ListId, recipientId: recipient.Id, updateObject: new {
                 NumberInfo = recipient.NumberInfo,
                 Fields = recipient.Fields
             });
         }
 
-        private Recipient UpdateRecipientInternal(string listId, string recipientId, object updateObject)
+        private Recipient UpdateRecipientInternal(RecipientListId listId, RecipientId recipientId, object updateObject)
         {
-            if (updateObject is null)
-            {
-                throw new ArgumentNullException(nameof(updateObject));
-            }
-
             EnsureNonEmptyOrThrow(parameterName: nameof(listId), value: listId);
             EnsureNonEmptyOrThrow(parameterName: nameof(recipientId), value: recipientId);
+            EnsureNonEmptyOrThrow(parameterName: nameof(updateObject), value: updateObject);
             return _requestHelper.Execute<Recipient>(method: Method.PUT, resource: $"/v4/lists/{listId}/recipients/{recipientId}", payload: updateObject);
         }
 
-        public void DeleteAllRecipientsInList(string listId)
+        public void DeleteAllRecipientsInList(RecipientListId listId)
         {
             EnsureNonEmptyOrThrow(parameterName: nameof(listId), value: listId);
             _requestHelper.ExecuteWithNoContent(method: Method.DELETE, resource: $"/v4/lists/{listId}/recipients/all");
         }
 
-        public void DeleteRecipientById(string listId, string recipientId)
+        public void DeleteRecipientById(RecipientListId listId, RecipientId recipientId)
         {
             EnsureNonEmptyOrThrow(parameterName: nameof(listId), value: listId);
             EnsureNonEmptyOrThrow(parameterName: nameof(recipientId), value: recipientId);
             _requestHelper.ExecuteWithNoContent(method: Method.DELETE, resource: $"/v4/lists/{listId}/recipients/{recipientId}");
         }
 
-        public void DeleteRecipientByNumber(string listId, string countryCode, string phoneNumber)
+        public void DeleteRecipientByNumber(RecipientListId listId, NumberInfo numberInfo)
         {
             EnsureNonEmptyOrThrow(parameterName: nameof(listId), value: listId);
-            EnsureNonEmptyOrThrow(parameterName: nameof(countryCode), value: countryCode);
-            EnsureNonEmptyOrThrow(parameterName: nameof(phoneNumber), value: phoneNumber);
-            _requestHelper.ExecuteWithNoContent(method: Method.DELETE, resource: $"/v4/lists/{listId}/recipients/bynumber?countryCode={countryCode}&phoneNumber={phoneNumber}");
+            EnsureNonEmptyOrThrow(parameterName: nameof(numberInfo), value: numberInfo);
+            _requestHelper.ExecuteWithNoContent(method: Method.DELETE, resource: $"/v4/lists/{listId}/recipients/bynumber?countryCode={numberInfo.CountryCode}&phoneNumber={numberInfo.PhoneNumber}");
         }
 
-        
-
-        private void EnsureNonEmptyOrThrow(string parameterName, string value)
+        private void EnsureNonEmptyOrThrow(string parameterName, object? value)
         {
-            if (string.IsNullOrEmpty(value))
-            {
-                throw new ArgumentException($"'{parameterName}' cannot be null or empty.", nameof(value));
-            }
+            if(value == null)
+                throw new ArgumentException($"'{parameterName}' cannot be null.", nameof(value));
         }
     }
 }

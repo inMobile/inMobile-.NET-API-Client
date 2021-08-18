@@ -33,7 +33,7 @@ namespace InMobile.Sms.ApiClient.Test.Blacklist
                 Assert.Equal("45", entry.NumberInfo.CountryCode);
                 Assert.Equal("12345678", entry.NumberInfo.PhoneNumber);
                 Assert.Equal("Sometextprovidedwhencreated", entry.Comment);
-                Assert.Equal("some_blacklist_id", entry.Id);
+                Assert.Equal("some_blacklist_id", entry.Id.Value);
             }
         }
     }

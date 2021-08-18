@@ -35,7 +35,7 @@ namespace InMobile.Sms.ApiClient
         /// (In case a previous message has been deleted according to GDPR deletion rules setup on the specific account, the messageId is allowed to be reused)
         /// </summary>
         /// <example>PetShop</example>
-        public string? MessageId { get; set; }
+        public OutgoingMessageId? MessageId { get; set; }
 
         /// <summary>
         /// The encoding of the message. Can be either "gsm7" or "ucs2". In case the message was submitted with encoding "auto", this report will reveal the final encoding based on the characters in the message text.

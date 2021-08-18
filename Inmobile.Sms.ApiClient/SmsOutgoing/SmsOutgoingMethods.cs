@@ -7,7 +7,7 @@ namespace InMobile.Sms.ApiClient
     public interface ISmsOutgoingApiMethod
     {
         ResultsList<OutgoingSmsMessageCreateResult> SendSmsMessages(List<OutgoingSmsMessageCreateInfo> messageList);
-        ResultsList<CancelMessageResult> CancelMessages(List<string> messageIds);
+        ResultsList<CancelMessageResult> CancelMessages(List<OutgoingMessageId> messageIds);
         ReportsList<StatusReport> GetStatusReports();
     }
 
@@ -20,7 +20,7 @@ namespace InMobile.Sms.ApiClient
             _requestHelper = requestHelper ?? throw new System.ArgumentNullException(nameof(requestHelper));
         }
 
-        public ResultsList<CancelMessageResult> CancelMessages(List<string> messageIds)
+        public ResultsList<CancelMessageResult> CancelMessages(List<OutgoingMessageId> messageIds)
         {
             if (messageIds is null)
             {

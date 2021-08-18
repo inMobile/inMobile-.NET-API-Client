@@ -70,7 +70,7 @@ namespace InMobile.Sms.ApiClient.Test.Blacklist
                 Assert.Equal(2, allEntries.Count);
                 {
                     var entry1 = allEntries[0];
-                    Assert.Equal("111", entry1.Id);
+                    Assert.Equal("111", entry1.Id.Value);
                     Assert.Equal("Some text provided when created", entry1.Comment);
                     Assert.Equal("45", entry1.NumberInfo.CountryCode);
                     Assert.Equal("1111", entry1.NumberInfo.PhoneNumber);
@@ -78,7 +78,7 @@ namespace InMobile.Sms.ApiClient.Test.Blacklist
 
                 {
                     var entry2 = allEntries[1];
-                    Assert.Equal("222", entry2.Id);
+                    Assert.Equal("222", entry2.Id.Value);
                     Assert.Equal(null, entry2.Comment);
                     Assert.Equal("45", entry2.NumberInfo.CountryCode);
                     Assert.Equal("2222", entry2.NumberInfo.PhoneNumber);
@@ -160,7 +160,7 @@ namespace InMobile.Sms.ApiClient.Test.Blacklist
                 Assert.Equal(4, allEntries.Count);
                 {
                     var entry1 = allEntries[0];
-                    Assert.Equal("111", entry1.Id);
+                    Assert.Equal("111", entry1.Id.Value);
                     Assert.Equal("Some text provided when created", entry1.Comment);
                     Assert.Equal("45", entry1.NumberInfo.CountryCode);
                     Assert.Equal("1111", entry1.NumberInfo.PhoneNumber);
@@ -168,7 +168,7 @@ namespace InMobile.Sms.ApiClient.Test.Blacklist
 
                 {
                     var entry2 = allEntries[1];
-                    Assert.Equal("222", entry2.Id);
+                    Assert.Equal("222", entry2.Id.Value);
                     Assert.Equal(null, entry2.Comment);
                     Assert.Equal("45", entry2.NumberInfo.CountryCode);
                     Assert.Equal("2222", entry2.NumberInfo.PhoneNumber);
@@ -176,7 +176,7 @@ namespace InMobile.Sms.ApiClient.Test.Blacklist
 
                 {
                     var entry3 = allEntries[2];
-                    Assert.Equal("333", entry3.Id);
+                    Assert.Equal("333", entry3.Id.Value);
                     Assert.Equal(null, entry3.Comment);
                     Assert.Equal("45", entry3.NumberInfo.CountryCode);
                     Assert.Equal("3333", entry3.NumberInfo.PhoneNumber);
@@ -184,7 +184,7 @@ namespace InMobile.Sms.ApiClient.Test.Blacklist
 
                 {
                     var entry4 = allEntries[3];
-                    Assert.Equal("444", entry4.Id);
+                    Assert.Equal("444", entry4.Id.Value);
                     Assert.Equal(null, entry4.Comment);
                     Assert.Equal("45", entry4.NumberInfo.CountryCode);
                     Assert.Equal("4444", entry4.NumberInfo.PhoneNumber);

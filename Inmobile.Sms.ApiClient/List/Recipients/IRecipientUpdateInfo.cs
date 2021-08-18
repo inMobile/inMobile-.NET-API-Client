@@ -4,8 +4,8 @@ namespace InMobile.Sms.ApiClient
 {
     public interface IRecipientUpdateInfo
     {
-        string Id { get; }
-        string ListId { get; }
+        RecipientId Id { get; }
+        RecipientListId ListId { get; }
         /// <summary>
         /// Optional. If not specified, the number is just ignored on the API side.
         /// </summary>

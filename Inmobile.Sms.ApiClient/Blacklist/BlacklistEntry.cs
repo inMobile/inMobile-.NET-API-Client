@@ -8,6 +8,6 @@ namespace InMobile.Sms.ApiClient
     {
         public NumberInfo? NumberInfo { get; set; }
         public string Comment { get; set; }
-        public string Id { get; set; }
+        public BlacklistEntryId Id { get; set; }
     }
 }

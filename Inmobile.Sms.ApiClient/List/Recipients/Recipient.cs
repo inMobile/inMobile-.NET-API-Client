@@ -8,8 +8,8 @@ namespace InMobile.Sms.ApiClient
 
     public class Recipient : IRecipientUpdateInfo
     {
-        public string Id { get; set; }
-        public string ListId { get; set; }
+        public RecipientId Id { get; set; }
+        public RecipientListId ListId { get; set; }
         public NumberInfo NumberInfo { get; set; }
         public Dictionary<string, string> Fields { get; set; } = new Dictionary<string, string>();
 

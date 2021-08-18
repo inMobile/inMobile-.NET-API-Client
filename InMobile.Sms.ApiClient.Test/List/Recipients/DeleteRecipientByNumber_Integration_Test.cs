@@ -19,7 +19,7 @@ namespace InMobile.Sms.ApiClient.Test.Blacklist
             using (var server = UnitTestHttpServer.StartOnAnyAvailablePort(new RequestResponsePair(request: expectedRequest, response: responseToSendback)))
             {
                 var client = new InMobileApiClient(apiKey, baseUrl: $"http://{server.EndPoint.Address}:{server.EndPoint.Port}");
-                client.Lists.DeleteRecipientByNumber(listId: "some_list_id", countryCode: "47", phoneNumber: "11223344");
+                client.Lists.DeleteRecipientByNumber(listId: new RecipientListId("some_list_id"), numberInfo: new NumberInfo(countryCode: "47", phoneNumber: "11223344"));
 
                 server.AssertNoAwaitingRequestsLeft();
             }

@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 
 namespace InMobile.Sms.ApiClient
 {
+
     public class OutgoingSmsMessageCreateInfo
     {
         /// <summary>
@@ -35,7 +36,7 @@ namespace InMobile.Sms.ApiClient
         /// Max length: 50
         /// </summary>
         /// <example>PetShop</example>
-        public string? MessageId { get; }
+        public OutgoingMessageId? MessageId { get; }
 
         /// <summary>
         /// If true, this message will be blocked from sending if the target number is on the account's blacklist. If false, the message will be sent no matter blacklist settings.
@@ -91,7 +92,7 @@ namespace InMobile.Sms.ApiClient
 
         public string? SendTime { get; set; }
 
-        public OutgoingSmsMessageCreateInfo(string to, string text, string from, string? messageId = null, bool respectBlacklist = true, bool flash = false, MessageEncoding encoding = MessageEncoding.Gsm7, TimeSpan? validityPeriod = null, string statusCallbackUrl = null, DateTime? sendTime = null)
+        public OutgoingSmsMessageCreateInfo(string to, string text, string from, OutgoingMessageId? messageId = null, bool respectBlacklist = true, bool flash = false, MessageEncoding encoding = MessageEncoding.Gsm7, TimeSpan? validityPeriod = null, string statusCallbackUrl = null, DateTime? sendTime = null)
         {
             if (string.IsNullOrEmpty(to))
             {

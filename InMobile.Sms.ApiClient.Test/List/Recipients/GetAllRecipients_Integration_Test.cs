@@ -27,7 +27,7 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
             using (var server = UnitTestHttpServer.StartOnAnyAvailablePort(new RequestResponsePair(request: expectedRequest, response: responseToSendback)))
             {
                 var client = new InMobileApiClient(apiKey, baseUrl: $"http://{server.EndPoint.Address}:{server.EndPoint.Port}");
-                var allEntries = client.Lists.GetAllRecipientsInList(listId: "some_list_id");
+                var allEntries = client.Lists.GetAllRecipientsInList(listId: new RecipientListId("some_list_id"));
                 Assert.Empty(allEntries);
             }
         }
@@ -74,20 +74,20 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
             using (var server = UnitTestHttpServer.StartOnAnyAvailablePort(new RequestResponsePair(request: expectedRequest, response: responseToSendback)))
             {
                 var client = new InMobileApiClient(apiKey, baseUrl: $"http://{server.EndPoint.Address}:{server.EndPoint.Port}");
-                var allEntries = client.Lists.GetAllRecipientsInList(listId: "some_LIST_id"); ;
+                var allEntries = client.Lists.GetAllRecipientsInList(listId: new RecipientListId("some_LIST_id"));
                 Assert.Equal(2, allEntries.Count);
 
                 {
                     var entry1 = allEntries[0];
-                    Assert.Equal("recId1", entry1.Id);
+                    Assert.Equal("recId1", entry1.Id.Value);
                     Assert.Equal("45", entry1.NumberInfo.CountryCode);
                     Assert.Equal("1111", entry1.NumberInfo.PhoneNumber);
-                    Assert.Equal("some_list_id", entry1.ListId);
+                    Assert.Equal("some_list_id", entry1.ListId.Value);
                     Assert.Equal("Mr", entry1.Fields["firstname"]);
                     Assert.Equal("Anderson", entry1.Fields["lastname"]);
                 }
 
-                Assert.Equal("recId2", allEntries[1].Id);
+                Assert.Equal("recId2", allEntries[1].Id.Value);
             }
         }
 
@@ -179,22 +179,22 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
             using (var server = UnitTestHttpServer.StartOnAnyAvailablePort(pair1, pair2, pair3))
             {
                 var client = new InMobileApiClient(apiKey, baseUrl: $"http://{server.EndPoint.Address}:{server.EndPoint.Port}");
-                var allEntries = client.Lists.GetAllRecipientsInList(listId: "some_LIST_id");
+                var allEntries = client.Lists.GetAllRecipientsInList(listId: new RecipientListId("some_LIST_id"));
                 Assert.Equal(4, allEntries.Count);
 
                 {
                     var entry1 = allEntries[0];
-                    Assert.Equal("recId1", entry1.Id);
+                    Assert.Equal("recId1", entry1.Id.Value);
                     Assert.Equal("45", entry1.NumberInfo.CountryCode);
                     Assert.Equal("1111", entry1.NumberInfo.PhoneNumber);
-                    Assert.Equal("some_list_id", entry1.ListId);
+                    Assert.Equal("some_list_id", entry1.ListId.Value);
                     Assert.Equal("Mr", entry1.Fields["firstname"]);
                     Assert.Equal("Anderson", entry1.Fields["lastname"]);
                 }
 
-                Assert.Equal("recId2", allEntries[1].Id);
-                Assert.Equal("recId3", allEntries[2].Id);
-                Assert.Equal("recId4", allEntries[3].Id);
+                Assert.Equal("recId2", allEntries[1].Id.Value);
+                Assert.Equal("recId3", allEntries[2].Id.Value);
+                Assert.Equal("recId4", allEntries[3].Id.Value);
             }
         }
     }

@@ -41,7 +41,7 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
             using (var server = UnitTestHttpServer.StartOnAnyAvailablePort(new RequestResponsePair(request: expectedRequest, response: responseToSendback)))
             {
                 var client = new InMobileApiClient(apiKey, baseUrl: $"http://{server.EndPoint.Address}:{server.EndPoint.Port}");
-                var response = client.SmsOutgoing.CancelMessages(messageIds: new List<string>() { "id1", "id2", "id3" });
+                var response = client.SmsOutgoing.CancelMessages(messageIds: new List<OutgoingMessageId>() { new OutgoingMessageId("id1"), new OutgoingMessageId("id2"), new OutgoingMessageId("id3") });
                 Assert.NotNull(response);
                 Assert.Equal(3, response.Results.Count);
 

@@ -9,12 +9,12 @@ namespace InMobile.Sms.ApiClient.Demo
     {
         static void Main(string[] args)
         {
-            var apiKey = new InMobileApiKey(File.ReadAllText("c:\\temp\\DOTNET_API_CLIENT\\apikey.txt"));
-            var client = new InMobileApiClient(apiKey: apiKey);
+            //var apiKey = new InMobileApiKey(File.ReadAllText("c:\\temp\\DOTNET_API_CLIENT\\apikey.txt"));
+            //var client = new InMobileApiClient(apiKey: apiKey);
 
-            RunRealWorldTest_SendSms(client: client, msisdn: "45...");
-            RunRealWorldTest_Lists(client: client);
-            RunRealWorldTest_Blacklist(client: client);
+            //RunRealWorldTest_SendSms(client: client, msisdn: "45...");
+            //RunRealWorldTest_Lists(client: client);
+            //RunRealWorldTest_Blacklist(client: client);
 
             Console.WriteLine("Done");
             Console.Read();
@@ -54,7 +54,7 @@ namespace InMobile.Sms.ApiClient.Demo
             Log("testing deletion of invalid id");
             try
             {
-                client.Blacklist.RemoveById(blacklistEntryId: "487c1687-eef3-4175-ac3c-725166bf6f07");
+                client.Blacklist.RemoveById(blacklistEntryId: new BlacklistEntryId("487c1687-eef3-4175-ac3c-725166bf6f07"));
                 throw new Exception("Expected exception here");
             }
             catch (InMobileApiException ex) when (ex.ErrorHttpStatusCode == System.Net.HttpStatusCode.NotFound)
@@ -118,9 +118,9 @@ namespace InMobile.Sms.ApiClient.Demo
             rec1CreateInfo.Fields.Add("lastname", "initial lastname");
             Log("Create recipient");
             var rec1 = client.Lists.CreateRecipient(rec1CreateInfo);
-            if (string.IsNullOrWhiteSpace(rec1.Id))
+            if (rec1.Id == null)
                 throw new Exception("No id on recipient");
-            if (string.IsNullOrWhiteSpace(rec1.ListId))
+            if (rec1.Id == null)
                 throw new Exception("No listId recipient");
             Log("Create recipient");
             var rec2 = client.Lists.CreateRecipient(new RecipientCreateInfo(listId: list.Id, new NumberInfo(countryCode: "45", phoneNumber: "222222")));
@@ -141,11 +141,6 @@ namespace InMobile.Sms.ApiClient.Demo
             {
                 // Expected
             };
-
-            client.Lists.UpdateRecipient(new RecipientUpdateInfo(
-                        recipientId: "d317de6f-234c-401d-9bd8-6eaa3b5f3b35",
-                        listId: "6e076753-3d8e-4603-8ff8-66b6b6d8ff82",
-                        numberInfo: new NumberInfo(countryCode: "45", phoneNumber: "99998888")));
 
             // Rcipient: Update (number on recipient)
             Log("Recipient.Update");
@@ -197,13 +192,13 @@ namespace InMobile.Sms.ApiClient.Demo
                 throw new Exception($"Unexpected recipient count: {allRecipientsInList.Count} expected 2");
 
             Log("Delete recipient");
-            client.Lists.DeleteRecipientByNumber(listId: list.Id, countryCode: "47", phoneNumber: "99887766");
+            client.Lists.DeleteRecipientByNumber(listId: list.Id, numberInfo: new NumberInfo(countryCode: "47", phoneNumber: "99887766"));
             AssertEquals(3, client.Lists.GetAllRecipientsInList(listId: list.Id).Count);
 
             try
             {
                 Log("Delete but not found test");
-                client.Lists.DeleteRecipientByNumber(listId: list.Id, countryCode: "45", phoneNumber: "111111");
+                client.Lists.DeleteRecipientByNumber(listId: list.Id, numberInfo: new NumberInfo(countryCode: "45", phoneNumber: "111111"));
             }
             catch (InMobileApiException ex) when (ex.ErrorHttpStatusCode == System.Net.HttpStatusCode.NotFound)
             {

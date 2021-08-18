@@ -7,9 +7,9 @@ namespace InMobile.Sms.ApiClient
     public interface IBlacklistApiMethods
     {
         BlacklistEntry Add(NumberInfo numberInfo, string? comment = null);
-        BlacklistEntry GetById(string blacklistEntryId);
+        BlacklistEntry GetById(BlacklistEntryId blacklistEntryId);
         BlacklistEntry GetByNumber(NumberInfo numberInfo);
-        void RemoveById(string blacklistEntryId);
+        void RemoveById(BlacklistEntryId blacklistEntryId);
         void RemoveByNumber(NumberInfo numberInfo);
         List<BlacklistEntry> GetAll();
     }
@@ -25,11 +25,7 @@ namespace InMobile.Sms.ApiClient
 
         public BlacklistEntry Add(NumberInfo numberInfo, string? comment = null)
         {
-            if (numberInfo is null)
-            {
-                throw new ArgumentNullException(nameof(numberInfo));
-            }
-
+            EnsureNonEmptyOrThrow(parameterName: nameof(numberInfo), value: numberInfo);
             return _requestHelper.Execute<BlacklistEntry>(
                                     method: Method.POST,
                                     resource: "/v4/blacklist",
@@ -50,7 +46,7 @@ namespace InMobile.Sms.ApiClient
             return _requestHelper.ExecuteGetAndIteratePagedResult<BlacklistEntry>(resource: "/v4/blacklist?pageLimit=250");
         }
 
-        public BlacklistEntry GetById(string blacklistEntryId)
+        public BlacklistEntry GetById(BlacklistEntryId blacklistEntryId)
         {
             EnsureNonEmptyOrThrow(parameterName: nameof(blacklistEntryId), value: blacklistEntryId);
             return _requestHelper.Execute<BlacklistEntry>(method: Method.GET, resource: $"/v4/blacklist/{blacklistEntryId}");
@@ -58,15 +54,11 @@ namespace InMobile.Sms.ApiClient
 
         public BlacklistEntry GetByNumber(NumberInfo numberInfo)
         {
-            if (numberInfo is null)
-            {
-                throw new ArgumentNullException(nameof(numberInfo));
-            }
-
+            EnsureNonEmptyOrThrow(parameterName: nameof(numberInfo), value: numberInfo);
             return _requestHelper.Execute<BlacklistEntry>(method: Method.GET, resource: $"/v4/blacklist/bynumber?countryCode={numberInfo.CountryCode}&phoneNumber={numberInfo.PhoneNumber}");
         }
 
-        public void RemoveById(string blacklistEntryId)
+        public void RemoveById(BlacklistEntryId blacklistEntryId)
         {
             EnsureNonEmptyOrThrow(parameterName: nameof(blacklistEntryId), value: blacklistEntryId);
             _requestHelper.ExecuteWithNoContent(method: Method.DELETE, resource: $"/v4/blacklist/{blacklistEntryId}");
@@ -74,23 +66,14 @@ namespace InMobile.Sms.ApiClient
 
         public void RemoveByNumber(NumberInfo numberInfo)
         {
-            if (numberInfo is null)
-            {
-                throw new ArgumentNullException(nameof(numberInfo));
-            }
-
+            EnsureNonEmptyOrThrow(parameterName: nameof(numberInfo), value: numberInfo);
             _requestHelper.ExecuteWithNoContent(method: Method.DELETE, resource: $"/v4/blacklist/bynumber?countryCode={numberInfo.CountryCode}&phoneNumber={numberInfo.PhoneNumber}");
         }
 
-
-        private void EnsureNonEmptyOrThrow(string parameterName, string value)
+        private void EnsureNonEmptyOrThrow(string parameterName, object? value)
         {
-            if (string.IsNullOrEmpty(value))
-            {
-                throw new ArgumentException($"'{parameterName}' cannot be null or empty.", nameof(value));
-            }
+            if (value == null)
+                throw new ArgumentException($"'{parameterName}' cannot be null.", nameof(value));
         }
-
-
     }
 }

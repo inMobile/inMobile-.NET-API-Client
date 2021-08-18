@@ -29,11 +29,11 @@ namespace InMobile.Sms.ApiClient.Test.Blacklist
             using (var server = UnitTestHttpServer.StartOnAnyAvailablePort(new RequestResponsePair(request: expectedRequest, response: responseToSendback)))
             {
                 var client = new InMobileApiClient(apiKey, baseUrl: $"http://{server.EndPoint.Address}:{server.EndPoint.Port}");
-                var entry = client.Blacklist.GetById(blacklistEntryId: "some_blacklist_id");
+                var entry = client.Blacklist.GetById(blacklistEntryId: new BlacklistEntryId("some_blacklist_id"));
                 Assert.Equal("45", entry.NumberInfo.CountryCode);
                 Assert.Equal("12345678", entry.NumberInfo.PhoneNumber);
                 Assert.Equal("Some text provided when created", entry.Comment);
-                Assert.Equal("some_blacklist_id", entry.Id);
+                Assert.Equal("some_blacklist_id", entry.Id.Value);
             }
         }
     }

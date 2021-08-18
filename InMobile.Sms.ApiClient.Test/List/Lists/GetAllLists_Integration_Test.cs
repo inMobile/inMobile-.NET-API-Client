@@ -62,13 +62,13 @@ namespace InMobile.Sms.ApiClient.Test.Lists
                 Assert.Equal(2, allEntries.Count);
                 {
                     var entry1 = allEntries[0];
-                    Assert.Equal("id1", entry1.Id);
+                    Assert.Equal("id1", entry1.Id.Value);
                     Assert.Equal("name1", entry1.Name);
                 }
 
                 {
                     var entry2 = allEntries[1];
-                    Assert.Equal("id2", entry2.Id);
+                    Assert.Equal("id2", entry2.Id.Value);
                     Assert.Equal("name2", entry2.Name);
                 }
             }
@@ -132,25 +132,25 @@ namespace InMobile.Sms.ApiClient.Test.Lists
                 Assert.Equal(4, allEntries.Count);
                 {
                     var entry1 = allEntries[0];
-                    Assert.Equal("id1", entry1.Id);
+                    Assert.Equal("id1", entry1.Id.Value);
                     Assert.Equal("name1", entry1.Name);
                 }
 
                 {
                     var entry2 = allEntries[1];
-                    Assert.Equal("id2", entry2.Id);
+                    Assert.Equal("id2", entry2.Id.Value);
                     Assert.Equal("name2", entry2.Name);
                 }
 
                 {
                     var entry3 = allEntries[2];
-                    Assert.Equal("id3", entry3.Id);
+                    Assert.Equal("id3", entry3.Id.Value);
                     Assert.Equal("name3", entry3.Name);
                 }
 
                 {
                     var entry4 = allEntries[3];
-                    Assert.Equal("id4", entry4.Id);
+                    Assert.Equal("id4", entry4.Id.Value);
                     Assert.Equal("name4", entry4.Name);
                 }
             }

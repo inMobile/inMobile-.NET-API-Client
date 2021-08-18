@@ -25,9 +25,9 @@ namespace InMobile.Sms.ApiClient.Test.List
             using (var server = UnitTestHttpServer.StartOnAnyAvailablePort(new RequestResponsePair(request: expectedRequest, response: responseToSendback)))
             {
                 var client = new InMobileApiClient(apiKey, baseUrl: $"http://{server.EndPoint.Address}:{server.EndPoint.Port}");
-                var entry = client.Lists.GetListById(listId: "some_list_id");
+                var entry = client.Lists.GetListById(listId: new RecipientListId("some_list_id"));
                 Assert.Equal("Some list name", entry.Name);
-                Assert.Equal("some_list_id", entry.Id);
+                Assert.Equal("some_list_id", entry.Id.Value);
             }
         }
     }
