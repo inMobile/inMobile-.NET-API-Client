@@ -127,6 +127,8 @@ namespace InMobile.Sms.ApiClient.Demo
             Log("Create recipient");
             var rec3 = client.Lists.CreateRecipient(new RecipientCreateInfo(listId: list.ListId, new NumberInfo(countryCode: "45", phoneNumber: "333333")));
             Log("Create recipient");
+
+            var rec4CreatedStart = DateTime.Now;
             var rec4 = client.Lists.CreateRecipient(new RecipientCreateInfo(listId: list.ListId, new NumberInfo(countryCode: "45", phoneNumber: "444444")));
             // Ensure creating another entry gives a 409 conclift
             try
@@ -139,6 +141,16 @@ namespace InMobile.Sms.ApiClient.Demo
             {
                 // Expected
             };
+
+            // Do some externalCreatedDate assertions
+            AssertEquals(null, rec4.ExternalCreated);
+            if (rec4.Created < startTime)
+                throw new Exception("Unexpected created: " + rec4.Created + " startTime: " + startTime);
+            var now = DateTime.Now;
+            if (rec4.Created > now)
+                throw new Exception("Unexpected created: " + rec4.Created + " now: " + now);
+
+            AssertEquals(null, rec4.Created);
 
             client.Lists.UpdateRecipient(new RecipientUpdateInfo(
                         recipientId: "d317de6f-234c-401d-9bd8-6eaa3b5f3b35",

@@ -99,7 +99,7 @@ var list = client.Lists.GetListById(listId: "af20c37d-c9d2-4343-8c46-8c8fbc5c5b1
 
 ```c#
 var updatedList = client.Lists.UpdateList(new RecipientListUpdateInfo(
-                        id: "ff5d0e4f-02a3-4930-8bb8-11da43bd7ab8",
+                        listId: "ff5d0e4f-02a3-4930-8bb8-11da43bd7ab8",
                         name: "New list name"));
 ```
 
@@ -178,9 +178,7 @@ recipient.NumberInfo = new NumberInfo(countryCode: "45", phoneNumber: "99998888"
 recipient.Fields["email"] = "some_new_email@mydomain.com";
 
 // Perform update call
-client.Lists.UpdateRecipient(listId: "6e076753-3d8e-4603-8ff8-66b6b6d8ff82",
-                             recipientId: "d317de6f-234c-401d-9bd8-6eaa3b5f3b35",
-                             updateObject: recipient);
+client.Lists.UpdateRecipient(recipient: recipient);
 ```
 
 There could be a risk of lost updates, if multiple sources manipulate the recipients at the same time.
