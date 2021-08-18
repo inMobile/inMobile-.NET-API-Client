@@ -12,7 +12,7 @@ namespace InMobile.Sms.ApiClient.Demo
             var apiKey = new InMobileApiKey(File.ReadAllText("c:\\temp\\DOTNET_API_CLIENT\\apikey.txt"));
             var client = new InMobileApiClient(apiKey: apiKey);
 
-            RunRealWorldTest_SendSms(client: client);
+            RunRealWorldTest_SendSms(client: client, msisdn: "45...");
             RunRealWorldTest_Lists(client: client);
             RunRealWorldTest_Blacklist(client: client);
 
@@ -20,11 +20,11 @@ namespace InMobile.Sms.ApiClient.Demo
             Console.Read();
         }
 
-        private static void RunRealWorldTest_SendSms(InMobileApiClient client)
+        private static void RunRealWorldTest_SendSms(InMobileApiClient client, string msisdn)
         {
             Log("::: SEND SMS :::");
             client.SmsOutgoing.SendSmsMessages(new List<OutgoingSmsMessageCreateInfo>() {
-                    new OutgoingSmsMessageCreateInfo(to: "45...", text: "test", from: "1245", statusCallbackUrl: "http://technical.fail", validityPeriod: TimeSpan.FromMinutes(10), sendTime: DateTime.Now.AddMinutes(1))
+                    new OutgoingSmsMessageCreateInfo(to: msisdn, text: "test", from: "1245", statusCallbackUrl: "http://technical.fail", validityPeriod: TimeSpan.FromMinutes(10), sendTime: DateTime.Now.AddMinutes(1))
                 });
         }
 
@@ -141,16 +141,6 @@ namespace InMobile.Sms.ApiClient.Demo
             {
                 // Expected
             };
-
-            // Do some externalCreatedDate assertions
-            AssertEquals(null, rec4.ExternalCreated);
-            if (rec4.Created < startTime)
-                throw new Exception("Unexpected created: " + rec4.Created + " startTime: " + startTime);
-            var now = DateTime.Now;
-            if (rec4.Created > now)
-                throw new Exception("Unexpected created: " + rec4.Created + " now: " + now);
-
-            AssertEquals(null, rec4.Created);
 
             client.Lists.UpdateRecipient(new RecipientUpdateInfo(
                         recipientId: "d317de6f-234c-401d-9bd8-6eaa3b5f3b35",
