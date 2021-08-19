@@ -43,18 +43,30 @@ namespace InMobile.Sms.ApiClient.Demo
             }
 
             Log("Adding some entries");
-            var blacklistId1 = client.Blacklist.Create(new BlacklistEntryCreateInfo(new NumberInfo(countryCode: "45", phoneNumber: "111111"))).Id;
+            var blacklistId1 = client.Blacklist.Create(new BlacklistEntryCreateInfo(new NumberInfo(countryCode: "45", phoneNumber: "111111"), comment: "Some comment 1")).Id;
             var blacklistId2 = client.Blacklist.Create(new BlacklistEntryCreateInfo(new NumberInfo(countryCode: "47", phoneNumber: "222222"))).Id;
             Log("Checking new entry count");
             var entries = client.Blacklist.GetAll();
             
             AssertEquals(2, entries.Count);
 
-            Log("Get by id");
-            var reload1 = client.Blacklist.GetById(blacklistId1);
-            AssertEquals(blacklistId1, reload1.Id);
-            AssertEquals("45", reload1.NumberInfo.CountryCode);
-            AssertEquals("111111", reload1.NumberInfo.PhoneNumber);
+            {
+                Log("Get by id");
+                var reload = client.Blacklist.GetById(blacklistId1);
+                AssertEquals(blacklistId1, reload.Id);
+                AssertEquals("45", reload.NumberInfo.CountryCode);
+                AssertEquals("111111", reload.NumberInfo.PhoneNumber);
+                AssertEquals("Some comment 1", reload.Comment);
+            }
+
+            {
+                Log("Get by id");
+                var reload = client.Blacklist.GetById(blacklistId2);
+                AssertEquals(blacklistId2, reload.Id);
+                AssertEquals("47", reload.NumberInfo.CountryCode);
+                AssertEquals("222222", reload.NumberInfo.PhoneNumber);
+                AssertEquals(null, reload.Comment);
+            }
 
             Log("Get by id (not found)");
             AssertThrows(HttpStatusCode.NotFound, () => client.Blacklist.GetById(new BlacklistEntryId("37f3bb8c-d609-4c61-b0ed-5446651f1986")));
@@ -108,7 +120,7 @@ namespace InMobile.Sms.ApiClient.Demo
             var testListName = "Auto-test-list_" + Guid.NewGuid();
             var listCountBeforeCreate = client.Lists.GetAllLists().Count;
             Log("List: Create");
-            var list = client.Lists.CreateList(name: testListName);
+            var list = client.Lists.CreateList(new RecipientListCreateInfo(name: testListName));
             Log("List: GetAll");
             var listCountAfterCreate = client.Lists.GetAllLists().Count;
             if (listCountBeforeCreate != listCountAfterCreate - 1)

@@ -25,7 +25,7 @@ namespace InMobile.Sms.ApiClient.Test.Blacklist
             using (var server = UnitTestHttpServer.StartOnAnyAvailablePort(new RequestResponsePair(request: expectedRequest, response: responseToSendback)))
             {
                 var client = new InMobileApiClient(apiKey, baseUrl: $"http://{server.EndPoint.Address}:{server.EndPoint.Port}");
-                var entry = client.Lists.CreateList(name: "New list name");
+                var entry = client.Lists.CreateList(new RecipientListCreateInfo(name: "New list name"));
                 Assert.Equal("New list name", entry.Name);
                 Assert.Equal("SomeId123", entry.Id.Value);
             }

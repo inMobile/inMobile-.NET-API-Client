@@ -8,10 +8,10 @@ using static InMobile.Sms.ApiClient.Test.UnitTestHttpServer;
 
 namespace InMobile.Sms.ApiClient.Test.Blacklist
 {
-    public class RemoveById_Integration_Test
+    public class DeleteById_Integration_Test
     {
         [Fact]
-        public void RemoveById_Test()
+        public void DeleteById_Test()
         {
             var apiKey = new InMobileApiKey("UnitTestKey123");
             var expectedRequest = new UnitTestRequestInfo(apiKey: apiKey, methodAndPath: "DELETE /v4/blacklist/some_blacklist_id", jsonOrNull: null);

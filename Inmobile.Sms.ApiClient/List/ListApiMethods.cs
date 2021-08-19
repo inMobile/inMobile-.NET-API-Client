@@ -6,7 +6,7 @@ namespace InMobile.Sms.ApiClient
 {
     public interface IListApiMethods
     {
-        RecipientList CreateList(string name);
+        RecipientList CreateList(RecipientListCreateInfo createInfo);
         List<RecipientList> GetAllLists();
         RecipientList GetListById(RecipientListId listId);
         /// <summary>
@@ -40,17 +40,18 @@ namespace InMobile.Sms.ApiClient
             _requestHelper = requestHelper ?? throw new ArgumentNullException(nameof(requestHelper));
         }
 
-        public RecipientList CreateList(string name)
+        public RecipientList CreateList(RecipientListCreateInfo createInfo)
         {
+            if (createInfo is null)
+            {
+                throw new ArgumentNullException(nameof(createInfo));
+            }
+
             return _requestHelper.Execute<RecipientList>(
                         method: Method.POST,
                         resource: "/v4/lists",
-                        payload: new
-                        {
-                            name = name
-                        });
+                        payload: createInfo);
         }
-
 
         public List<RecipientList> GetAllLists()
         {

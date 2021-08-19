@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using InMobile.Sms.ApiClient.Blacklist;
-using Xunit;
+﻿using Xunit;
 using static InMobile.Sms.ApiClient.Test.UnitTestHttpServer;
 
 namespace InMobile.Sms.ApiClient.Test.Blacklist
 {
-    public class Add_Integration_Test
+    public class Create_Integration_Test
     {
         [Fact]
-        public void Add_Test()
+        public void Create_Test()
         {
             var requestJson = @"{""NumberInfo"":{""CountryCode"":""45"",""PhoneNumber"":""12345678""},""Comment"":""Sometextprovidedwhencreated""}";
             var responseJson = @"{                
