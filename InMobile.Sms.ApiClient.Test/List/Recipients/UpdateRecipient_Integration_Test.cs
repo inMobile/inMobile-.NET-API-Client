@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Xunit;
 using static InMobile.Sms.ApiClient.Test.UnitTestHttpServer;
 
@@ -43,16 +44,26 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
             {
                 var client = new InMobileApiClient(apiKey, baseUrl: $"http://{server.EndPoint.Address}:{server.EndPoint.Port}");
 
-                var recipient = new Recipient() {
-                    Id = new RecipientId("recId1"),
-                    ListId = new RecipientListId("some_list_id"),
-                    Fields = new Dictionary<string, string>() {
-                        { "Email", "some@email.com" }
-                    },
-                    NumberInfo = new NumberInfo("33", "111111")
-                };
+                // Use JsonConvert to instantiate the object as its constructor is empty. This is the least ugly solution compared to using reflection.
+                var recipient = JsonConvert.DeserializeObject<Recipient>(value: @"{
+                        ""Id"":""recId1"",
+                        ""ListId"":""some_list_id"",
+                        ""Fields"":{ ""Email"": ""some@email.com"" },
+                        ""NumberInfo"":{""CountryCode"":""33"", ""PhoneNumber"":""111111""}
+                    }
+                ");
+                // Sanity check the object prior to sending it
+                Assert.Equal("recId1", recipient.Id.Value);
+                Assert.Equal("some_list_id", recipient.ListId.Value);
+                Assert.Single(recipient.Fields);
+                Assert.Equal("some@email.com", recipient.Fields["Email"]);
+                Assert.Equal("33", recipient.NumberInfo.CountryCode);
+                Assert.Equal("111111", recipient.NumberInfo.PhoneNumber);
 
+                // Execute
                 var resultRecipient = client.Lists.UpdateRecipient(recipient: recipient);
+
+                // Assert
                 Assert.Equal("some@email.com", resultRecipient.Fields["email"]);
                 Assert.Null(resultRecipient.Fields["firstname"]);
                 Assert.Equal("33", resultRecipient.NumberInfo.CountryCode);

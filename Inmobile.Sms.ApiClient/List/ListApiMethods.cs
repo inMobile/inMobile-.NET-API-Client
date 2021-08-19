@@ -110,7 +110,8 @@ namespace InMobile.Sms.ApiClient
         public Recipient UpdateRecipient(IRecipientUpdateInfo recipient)
         {
             EnsureNonEmptyOrThrow(parameterName: nameof(recipient), value: recipient);
-            return UpdateRecipientInternal(listId: recipient.ListId, recipientId: recipient.Id, updateObject: new {
+            return UpdateRecipientInternal(listId: recipient.ListId, recipientId: recipient.Id, updateObject: new
+            {
                 NumberInfo = recipient.NumberInfo,
                 Fields = recipient.Fields
             });

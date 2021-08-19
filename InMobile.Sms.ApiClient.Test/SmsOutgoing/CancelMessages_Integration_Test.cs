@@ -46,19 +46,19 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
                 Assert.Equal(3, response.Results.Count);
 
                 {
-                    Assert.Equal("id1", response.Results[0].MessageId);
+                    Assert.Equal("id1", response.Results[0].MessageId.Value);
                     Assert.Equal(CancelResultCode.Success, response.Results[0].ResultCode);
                     Assert.Equal("Success", response.Results[0].ResultDescription);
                 }
 
                 {
-                    Assert.Equal("id2", response.Results[1].MessageId);
+                    Assert.Equal("id2", response.Results[1].MessageId.Value);
                     Assert.Equal(CancelResultCode.NotCancelled, response.Results[1].ResultCode);
                     Assert.Equal("Not cancelled", response.Results[1].ResultDescription);
                 }
 
                 {
-                    Assert.Equal("id3", response.Results[2].MessageId);
+                    Assert.Equal("id3", response.Results[2].MessageId.Value);
                     Assert.Equal(CancelResultCode.MessageNotFound, response.Results[2].ResultCode);
                     Assert.Equal("Message not found", response.Results[2].ResultDescription);
                 }

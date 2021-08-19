@@ -36,7 +36,7 @@ namespace InMobile.Sms.ApiClient.Demo
 
             Log("Get all");
             var all = client.Blacklist.GetAll();
-            foreach(var entry in all)
+            foreach (var entry in all)
             {
                 Log("Delete by id");
                 client.Blacklist.DeleteById(blacklistEntryId: entry.Id);
@@ -47,7 +47,7 @@ namespace InMobile.Sms.ApiClient.Demo
             var blacklistId2 = client.Blacklist.Create(new BlacklistEntryCreateInfo(new NumberInfo(countryCode: "47", phoneNumber: "222222"))).Id;
             Log("Checking new entry count");
             var entries = client.Blacklist.GetAll();
-            
+
             AssertEquals(2, entries.Count);
 
             {

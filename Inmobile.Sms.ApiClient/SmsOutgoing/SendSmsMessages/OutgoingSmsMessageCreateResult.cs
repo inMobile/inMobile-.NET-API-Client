@@ -10,24 +10,28 @@ namespace InMobile.Sms.ApiClient
         /// <summary>
         /// The parsed details about the msisdn provided in the to-field of the request (msisdn is a number with a countrycode e.g. 4512345678)
         /// </summary>
-        public NumberDetails? NumberDetails { get; set; }
+        [JsonProperty]
+        public NumberDetails NumberDetails { get; private set; }
         /// <summary>
         /// The text message
         /// </summary>
         /// <example>"This is a message text to be sent"</example>
-        public string? Text { get; set; }
+        [JsonProperty]
+        public string Text { get; private set; }
 
         /// <summary>
         /// The sender.
         /// </summary>
         /// <example>PetShop</example>
-        public string? From { get; set; }
+        [JsonProperty]
+        public string From { get; private set; }
 
         /// <summary>
         /// The number of sms messages this message will be split into when sent to the operator. Charging will also be done according to this number.
         /// </summary>
         /// <example>1</example>
-        public int SmsCount { get; set; }
+        [JsonProperty]
+        public int SmsCount { get; private set; }
 
         /// <summary>
         /// An optional message id used to identify the message.
@@ -35,7 +39,8 @@ namespace InMobile.Sms.ApiClient
         /// (In case a previous message has been deleted according to GDPR deletion rules setup on the specific account, the messageId is allowed to be reused)
         /// </summary>
         /// <example>PetShop</example>
-        public OutgoingMessageId? MessageId { get; set; }
+        [JsonProperty]
+        public OutgoingMessageId MessageId { get; private set; }
 
         /// <summary>
         /// The encoding of the message. Can be either "gsm7" or "ucs2". In case the message was submitted with encoding "auto", this report will reveal the final encoding based on the characters in the message text.
@@ -43,6 +48,14 @@ namespace InMobile.Sms.ApiClient
         /// "ucs2"" allows for more non-roman characters to be used along with smileys. When using this encoding, a single message can consist of 70 characters. If the message exceeds 70 characters, the final message is actually split into parts of 67 characters.
         /// </summary>
         /// <example>gsm7</example>
-        public MessageEncoding Encoding { get; set; }
+        [JsonProperty]
+        public MessageEncoding Encoding { get; private set; }
+
+        [JsonConstructor]
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        private OutgoingSmsMessageCreateResult()
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        {
+        }
     }
 }

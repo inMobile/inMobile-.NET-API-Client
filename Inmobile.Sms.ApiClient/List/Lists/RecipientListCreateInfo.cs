@@ -2,7 +2,7 @@
 {
     public class RecipientListCreateInfo
     {
-        public string Name { get; }
+        public string Name { get; set; }
 
         public RecipientListCreateInfo(string name)
         {
