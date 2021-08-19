@@ -26,7 +26,7 @@ namespace InMobile.Sms.ApiClient
         {
             Id = recipientId;
             ListId = listId;
-            NumberInfo = numberInfo ?? throw new ArgumentNullException(nameof(numberInfo));
+            NumberInfo = numberInfo;
             Fields = fields ?? throw new ArgumentNullException(nameof(fields));
         }
 

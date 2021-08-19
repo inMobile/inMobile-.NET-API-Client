@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 
 namespace InMobile.Sms.ApiClient.Demo
 {
@@ -9,12 +10,12 @@ namespace InMobile.Sms.ApiClient.Demo
     {
         static void Main(string[] args)
         {
-            //var apiKey = new InMobileApiKey(File.ReadAllText("c:\\temp\\DOTNET_API_CLIENT\\apikey.txt"));
-            //var client = new InMobileApiClient(apiKey: apiKey);
+            var apiKey = new InMobileApiKey(File.ReadAllText("c:\\temp\\DOTNET_API_CLIENT\\apikey.txt"));
+            var client = new InMobileApiClient(apiKey: apiKey);
 
             //RunRealWorldTest_SendSms(client: client, msisdn: "45...");
-            //RunRealWorldTest_Lists(client: client);
-            //RunRealWorldTest_Blacklist(client: client);
+            RunRealWorldTest_Lists(client: client);
+            RunRealWorldTest_Blacklist(client: client);
 
             Console.WriteLine("Done");
             Console.Read();
@@ -33,23 +34,48 @@ namespace InMobile.Sms.ApiClient.Demo
             Log("::: BLACKLIST :::");
             var startTime = DateTime.Now;
 
-            var countBefore = client.Blacklist.GetAll().Count;
-            Log("Adding some entries");
-            client.Blacklist.Add(new NumberInfo(countryCode: "45", phoneNumber: "111111"));
-            client.Blacklist.Add(new NumberInfo(countryCode: "47", phoneNumber: "222222"));
-            Log("Checking new entry count");
-            var entries = client.Blacklist.GetAll();
-            var countAfter = entries.Count;
-            AssertEquals(countBefore + 2, countAfter);
-
-            Log("deleting an entry");
+            Log("Get all");
+            var all = client.Blacklist.GetAll();
+            foreach(var entry in all)
             {
-                var entryToDelete = client.Blacklist.GetAll().Single(e => e.NumberInfo.CountryCode == "47" && e.NumberInfo.PhoneNumber == "222222");
-                client.Blacklist.RemoveById(blacklistEntryId: entryToDelete.Id);
+                Log("Delete by id");
+                client.Blacklist.RemoveById(blacklistEntryId: entry.Id);
             }
 
+            Log("Adding some entries");
+            var blacklistId1 = client.Blacklist.Add(new NumberInfo(countryCode: "45", phoneNumber: "111111")).Id;
+            var blacklistId2 = client.Blacklist.Add(new NumberInfo(countryCode: "47", phoneNumber: "222222")).Id;
+            Log("Checking new entry count");
+            var entries = client.Blacklist.GetAll();
+            
+            AssertEquals(2, entries.Count);
+
+            Log("Get by id");
+            var reload1 = client.Blacklist.GetById(blacklistId1);
+            AssertEquals(blacklistId1, reload1.Id);
+            AssertEquals("45", reload1.NumberInfo.CountryCode);
+            AssertEquals("111111", reload1.NumberInfo.PhoneNumber);
+
+            Log("Get by id (not found)");
+            AssertThrows(HttpStatusCode.NotFound, () => client.Blacklist.GetById(new BlacklistEntryId("37f3bb8c-d609-4c61-b0ed-5446651f1986")));
+
+            Log("Get by number");
+            var reload2 = client.Blacklist.GetByNumber(new NumberInfo("47", "222222"));
+            AssertEquals(blacklistId2, reload2.Id);
+            AssertEquals("47", reload2.NumberInfo.CountryCode);
+            AssertEquals("222222", reload2.NumberInfo.PhoneNumber);
+
+            Log("Get by number (not found)");
+            AssertThrows(HttpStatusCode.NotFound, () => client.Blacklist.GetByNumber(new NumberInfo("47", "9999")));
+
+            Log("Get all and pinpoint target entry");
+            var entryToDelete = client.Blacklist.GetAll().Single(e => e.NumberInfo.CountryCode == "47" && e.NumberInfo.PhoneNumber == "222222");
+
+            Log("deleting an entry");
+            client.Blacklist.RemoveById(blacklistEntryId: entryToDelete.Id);
+
             Log("ensure deleted");
-            AssertEquals(countBefore + 1, client.Blacklist.GetAll().Count);
+            AssertEquals(1, client.Blacklist.GetAll().Count);
 
             Log("testing deletion of invalid id");
             try
@@ -69,7 +95,7 @@ namespace InMobile.Sms.ApiClient.Demo
             }
 
             Log("Verifying deleted");
-            AssertEquals(countBefore, client.Blacklist.GetAll().Count);
+            AssertEquals(0, client.Blacklist.GetAll().Count);
             Log($"Done in {DateTime.Now.Subtract(startTime).TotalSeconds} seconds");
         }
 
@@ -126,21 +152,13 @@ namespace InMobile.Sms.ApiClient.Demo
             var rec2 = client.Lists.CreateRecipient(new RecipientCreateInfo(listId: list.Id, new NumberInfo(countryCode: "45", phoneNumber: "222222")));
             Log("Create recipient");
             var rec3 = client.Lists.CreateRecipient(new RecipientCreateInfo(listId: list.Id, new NumberInfo(countryCode: "45", phoneNumber: "333333")));
-            Log("Create recipient");
 
+            Log("Create recipient");
             var rec4CreatedStart = DateTime.Now;
             var rec4 = client.Lists.CreateRecipient(new RecipientCreateInfo(listId: list.Id, new NumberInfo(countryCode: "45", phoneNumber: "444444")));
             // Ensure creating another entry gives a 409 conclift
-            try
-            {
-                Log("Create recipient");
-                client.Lists.CreateRecipient(new RecipientCreateInfo(listId: list.Id, new NumberInfo(countryCode: "45", phoneNumber: "111111")));
-                throw new Exception("Expected exception here");
-            }
-            catch (InMobileApiException ex) when (ex.ErrorHttpStatusCode == System.Net.HttpStatusCode.Conflict)
-            {
-                // Expected
-            };
+            Log("Create recipient (conflict)");
+            AssertThrows(HttpStatusCode.Conflict, () => client.Lists.CreateRecipient(new RecipientCreateInfo(listId: list.Id, new NumberInfo(countryCode: "45", phoneNumber: "111111"))));
 
             // Rcipient: Update (number on recipient)
             Log("Recipient.Update");
@@ -180,7 +198,7 @@ namespace InMobile.Sms.ApiClient.Demo
             Log("Recipient.Update");
             client.Lists.UpdateRecipient(rec4);
             Log("Recipient.Load");
-            rec4 = client.Lists.GetRecipientById(listId: rec4.ListId, recipientId: rec4.Id);
+            rec4 = client.Lists.GetRecipientByNumber(listId: rec4.ListId, numberInfo: new NumberInfo("46", "404040"));
             AssertEquals(rec4.NumberInfo.CountryCode, "46");
             AssertEquals(rec4.NumberInfo.PhoneNumber, "404040");
             AssertEquals(rec4.Fields["firstname"], "Linus");
@@ -191,19 +209,19 @@ namespace InMobile.Sms.ApiClient.Demo
             if (allRecipientsInList.Count != 4)
                 throw new Exception($"Unexpected recipient count: {allRecipientsInList.Count} expected 2");
 
-            Log("Delete recipient");
+            Log("Delete recipient by number");
             client.Lists.DeleteRecipientByNumber(listId: list.Id, numberInfo: new NumberInfo(countryCode: "47", phoneNumber: "99887766"));
-            AssertEquals(3, client.Lists.GetAllRecipientsInList(listId: list.Id).Count);
 
-            try
-            {
-                Log("Delete but not found test");
-                client.Lists.DeleteRecipientByNumber(listId: list.Id, numberInfo: new NumberInfo(countryCode: "45", phoneNumber: "111111"));
-            }
-            catch (InMobileApiException ex) when (ex.ErrorHttpStatusCode == System.Net.HttpStatusCode.NotFound)
-            {
-                Log("Success");
-            };
+            Log("Delete recipient by number (not found)");
+            AssertThrows(HttpStatusCode.NotFound, () => client.Lists.DeleteRecipientByNumber(listId: list.Id, numberInfo: new NumberInfo(countryCode: "45", phoneNumber: "111111")));
+
+            Log("Delete recipient by id");
+            client.Lists.DeleteRecipientById(rec2.ListId, rec2.Id);
+
+            Log("Delete recipient by id (not found)");
+            AssertThrows(HttpStatusCode.NotFound, () => client.Lists.DeleteRecipientById(rec2.ListId, rec2.Id));
+
+            AssertEquals(2, client.Lists.GetAllRecipientsInList(listId: list.Id).Count);
 
             Log("Delete all recipients");
             client.Lists.DeleteAllRecipientsInList(listId: list.Id);
@@ -213,17 +231,26 @@ namespace InMobile.Sms.ApiClient.Demo
             client.Lists.DeleteListById(listId: list.Id);
 
             Log("Verify lists is gone");
-            try
-            {
-                client.Lists.GetAllRecipientsInList(listId: list.Id);
-                throw new Exception("Expected NotFound");
-            }
-            catch (InMobileApiException ex) when (ex.ErrorHttpStatusCode == System.Net.HttpStatusCode.NotFound)
-            {
-                // Expected
-            }
+            AssertThrows(HttpStatusCode.NotFound, () => client.Lists.GetAllRecipientsInList(listId: list.Id));
 
             Log($"Done in {DateTime.Now.Subtract(startTime).TotalSeconds} seconds");
+        }
+
+        private static void AssertThrows(HttpStatusCode expectedStatusCode, Action action)
+        {
+            bool thrown = false;
+            try
+            {
+                action();
+            }
+            catch (InMobileApiException ex) when (ex.ErrorHttpStatusCode == expectedStatusCode)
+            {
+                thrown = true;
+            }
+            if (!thrown)
+            {
+                throw new Exception("No exception was thrown");
+            }
         }
 
         private static void AssertEquals(object o1, object o2)
