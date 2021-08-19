@@ -13,9 +13,9 @@ namespace InMobile.Sms.ApiClient.Test.Blacklist
         [Fact]
         public void CreateList_Test()
         {
-            var requestJson = @"{""name"":""New list name""}";
+            var requestJson = @"{""Name"":""New list name""}";
             var responseJson = @"{                
-                ""name"": ""New list name"",
+                ""Name"": ""New list name"",
                 ""Id"": ""SomeId123""
             }";
 
