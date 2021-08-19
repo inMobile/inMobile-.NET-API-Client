@@ -39,12 +39,12 @@ namespace InMobile.Sms.ApiClient.Demo
             foreach(var entry in all)
             {
                 Log("Delete by id");
-                client.Blacklist.RemoveById(blacklistEntryId: entry.Id);
+                client.Blacklist.DeleteById(blacklistEntryId: entry.Id);
             }
 
             Log("Adding some entries");
-            var blacklistId1 = client.Blacklist.Add(new NumberInfo(countryCode: "45", phoneNumber: "111111")).Id;
-            var blacklistId2 = client.Blacklist.Add(new NumberInfo(countryCode: "47", phoneNumber: "222222")).Id;
+            var blacklistId1 = client.Blacklist.Create(new BlacklistEntryCreateInfo(new NumberInfo(countryCode: "45", phoneNumber: "111111"))).Id;
+            var blacklistId2 = client.Blacklist.Create(new BlacklistEntryCreateInfo(new NumberInfo(countryCode: "47", phoneNumber: "222222"))).Id;
             Log("Checking new entry count");
             var entries = client.Blacklist.GetAll();
             
@@ -72,7 +72,7 @@ namespace InMobile.Sms.ApiClient.Demo
             var entryToDelete = client.Blacklist.GetAll().Single(e => e.NumberInfo.CountryCode == "47" && e.NumberInfo.PhoneNumber == "222222");
 
             Log("deleting an entry");
-            client.Blacklist.RemoveById(blacklistEntryId: entryToDelete.Id);
+            client.Blacklist.DeleteById(blacklistEntryId: entryToDelete.Id);
 
             Log("ensure deleted");
             AssertEquals(1, client.Blacklist.GetAll().Count);
@@ -80,7 +80,7 @@ namespace InMobile.Sms.ApiClient.Demo
             Log("testing deletion of invalid id");
             try
             {
-                client.Blacklist.RemoveById(blacklistEntryId: new BlacklistEntryId("487c1687-eef3-4175-ac3c-725166bf6f07"));
+                client.Blacklist.DeleteById(blacklistEntryId: new BlacklistEntryId("487c1687-eef3-4175-ac3c-725166bf6f07"));
                 throw new Exception("Expected exception here");
             }
             catch (InMobileApiException ex) when (ex.ErrorHttpStatusCode == System.Net.HttpStatusCode.NotFound)
@@ -91,7 +91,7 @@ namespace InMobile.Sms.ApiClient.Demo
 
             Log("deleting the other entry by number");
             {
-                client.Blacklist.RemoveByNumber(new NumberInfo(countryCode: "45", phoneNumber: "111111"));
+                client.Blacklist.DeleteByNumber(new NumberInfo(countryCode: "45", phoneNumber: "111111"));
             }
 
             Log("Verifying deleted");

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using InMobile.Sms.ApiClient.Blacklist;
 using Xunit;
 using static InMobile.Sms.ApiClient.Test.UnitTestHttpServer;
 
@@ -29,7 +30,7 @@ namespace InMobile.Sms.ApiClient.Test.Blacklist
             using (var server = UnitTestHttpServer.StartOnAnyAvailablePort(new RequestResponsePair(request: expectedRequest, response: responseToSendback)))
             {
                 var client = new InMobileApiClient(apiKey, baseUrl: $"http://{server.EndPoint.Address}:{server.EndPoint.Port}");
-                var entry = client.Blacklist.Add(new NumberInfo(countryCode: "45", phoneNumber: "12345678"), comment: "Sometextprovidedwhencreated");
+                var entry = client.Blacklist.Create(new BlacklistEntryCreateInfo(new NumberInfo(countryCode: "45", phoneNumber: "12345678"), comment: "Sometextprovidedwhencreated"));
                 Assert.Equal("45", entry.NumberInfo.CountryCode);
                 Assert.Equal("12345678", entry.NumberInfo.PhoneNumber);
                 Assert.Equal("Sometextprovidedwhencreated", entry.Comment);
