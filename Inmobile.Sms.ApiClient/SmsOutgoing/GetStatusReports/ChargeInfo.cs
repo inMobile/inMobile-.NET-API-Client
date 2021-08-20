@@ -17,7 +17,7 @@
         public int SmsCount { get; set; }
 
         /// <summary>
-        /// The network of which the message belongs. This is only specified if the charged price was an operator specific price.
+        /// The network of which the message belongs.
         /// </summary>
         public string? Network { get; set; }
 
