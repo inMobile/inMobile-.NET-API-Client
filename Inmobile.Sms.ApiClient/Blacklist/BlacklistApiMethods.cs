@@ -4,13 +4,43 @@ using RestSharp;
 
 namespace InMobile.Sms.ApiClient
 {
+    /// <summary>
+    /// Blacklist specific operations.
+    /// </summary>
     public interface IBlacklistApiMethods
     {
+        /// <summary>
+        /// Create new entry in the blacklist.
+        /// </summary>
+        /// <param name="createInfo"></param>
+        /// <returns></returns>
         BlacklistEntry Create(BlacklistEntryCreateInfo createInfo);
+        /// <summary>
+        /// Get a blacklist entry by its id.
+        /// </summary>
+        /// <param name="blacklistEntryId"></param>
+        /// <returns></returns>
         BlacklistEntry GetById(BlacklistEntryId blacklistEntryId);
+        /// <summary>
+        /// Get a blacklist entry by its number.
+        /// </summary>
+        /// <param name="numberInfo"></param>
+        /// <returns></returns>
         BlacklistEntry GetByNumber(NumberInfo numberInfo);
+        /// <summary>
+        /// Delete a blacklist entry by its id.
+        /// </summary>
+        /// <param name="blacklistEntryId"></param>
         void DeleteById(BlacklistEntryId blacklistEntryId);
+        /// <summary>
+        /// Delete a blacklist entry by its number.
+        /// </summary>
+        /// <param name="numberInfo"></param>
         void DeleteByNumber(NumberInfo numberInfo);
+        /// <summary>
+        /// Gets all blacklist entries.
+        /// </summary>
+        /// <returns></returns>
         List<BlacklistEntry> GetAll();
     }
 

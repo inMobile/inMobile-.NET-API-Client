@@ -12,7 +12,7 @@ namespace InMobile.Sms.ApiClient.Demo
         {
             var apiKey = new InMobileApiKey(File.ReadAllText("c:\\temp\\DOTNET_API_CLIENT\\apikey.txt"));
             var client = new InMobileApiClient(apiKey: apiKey);
-
+            
             //RunRealWorldTest_SendSms(client: client, msisdn: "45...");
             RunRealWorldTest_Lists(client: client);
             RunRealWorldTest_Blacklist(client: client);

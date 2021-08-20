@@ -13,14 +13,15 @@ namespace InMobile.Sms.ApiClient
         [JsonProperty]
         public NumberDetails NumberDetails { get; private set; }
         /// <summary>
-        /// The text message
+        /// The text message.
+        /// If the max length is exceeded (10,000 chars), the message text is truncated and sent.
         /// </summary>
-        /// <example>"This is a message text to be sent"</example>
         [JsonProperty]
         public string Text { get; private set; }
 
         /// <summary>
-        /// The sender.
+        /// The sender. This can either be a 3-11 chars text sender or an up to 14 digit long sender number.
+        /// If the max length is exceeded, the string is truncated.
         /// </summary>
         /// <example>PetShop</example>
         [JsonProperty]
@@ -35,17 +36,14 @@ namespace InMobile.Sms.ApiClient
 
         /// <summary>
         /// An optional message id used to identify the message.
-        /// If no message id is provided, a new message id is generated and assigned to the message. This id must be unique across all messages created on the same account.
-        /// (In case a previous message has been deleted according to GDPR deletion rules setup on the specific account, the messageId is allowed to be reused)
+        /// If no message id was provided when sending the message, a new message id has been generated and assigned to the message. This id is unique across all messages created on the same account.
         /// </summary>
         /// <example>PetShop</example>
         [JsonProperty]
         public OutgoingMessageId MessageId { get; private set; }
 
         /// <summary>
-        /// The encoding of the message. Can be either "gsm7" or "ucs2". In case the message was submitted with encoding "auto", this report will reveal the final encoding based on the characters in the message text.
-        /// "gsm7" is the default alfabet for text messages and when using gsm7, a single sms message can contain 160 characters. If the length exceeeds 160 characters, the message is actually split up into parts of 153 characters and charged according to this. Please note, that a few, specific characters fill up 2 bytes and count for 2 letters. Ref: https://en.wikipedia.org/wiki/GSM_03.38
-        /// "ucs2"" allows for more non-roman characters to be used along with smileys. When using this encoding, a single message can consist of 70 characters. If the message exceeds 70 characters, the final message is actually split into parts of 67 characters.
+        /// The encoding of the message. Can be either "gsm7", "ucs2" or "auto".
         /// </summary>
         /// <example>gsm7</example>
         [JsonProperty]

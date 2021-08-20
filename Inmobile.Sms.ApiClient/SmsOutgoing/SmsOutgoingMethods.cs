@@ -4,6 +4,9 @@ using RestSharp;
 
 namespace InMobile.Sms.ApiClient
 {
+    /// <summary>
+    /// Outgoing message specific operations.
+    /// </summary>
     public interface ISmsOutgoingApiMethod
     {
         ResultsList<OutgoingSmsMessageCreateResult> SendSmsMessages(List<OutgoingSmsMessageCreateInfo> messageList);

@@ -4,11 +4,20 @@ using Newtonsoft.Json;
 
 namespace InMobile.Sms.ApiClient
 {
+    /// <summary>
+    /// Info about a list
+    /// </summary>
     public class RecipientList : IRecipientListUpdateInfo
     {
+        /// <summary>
+        /// The id of the list
+        /// </summary>
         [JsonProperty(Required = Required.Always)]
         public RecipientListId Id { get; private set; }
 
+        /// <summary>
+        /// The name of the list
+        /// </summary>
         [JsonProperty]
         public string Name { get; set; }
 

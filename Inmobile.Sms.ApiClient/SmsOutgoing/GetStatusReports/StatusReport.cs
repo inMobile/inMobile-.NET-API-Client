@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json;
 
 namespace InMobile.Sms.ApiClient
 {
@@ -8,9 +9,31 @@ namespace InMobile.Sms.ApiClient
         /// The id of the message.
         /// </summary>
         /// <example>id1</example>
-        public string? MessageId { get; set; }
-        public NumberDetails? NumberDetails { get; set; }
-        public DeliveryInfo? DeliveryInfo { get; set; }
-        public ChargeInfo? ChargeInfo { get; set; }
+        [JsonProperty]
+        public OutgoingMessageId MessageId { get; private set; }
+
+        /// <summary>
+        /// The detailed number information.
+        /// </summary>
+        [JsonProperty]
+        public NumberDetails NumberDetails { get; private set; }
+
+        /// <summary>
+        /// Information about the delivery state of the outgoing message.
+        /// </summary>
+        [JsonProperty]
+        public DeliveryInfo DeliveryInfo { get; private set; }
+
+        /// <summary>
+        /// Charging info about the outgoing message.
+        /// </summary>
+        [JsonProperty]
+        public ChargeInfo ChargeInfo { get; private set; }
+
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        private StatusReport()
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        {
+        }
     }
 }

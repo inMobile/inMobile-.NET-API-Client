@@ -1,5 +1,8 @@
 ﻿namespace InMobile.Sms.ApiClient
 {
+    /// <summary>
+    /// Information related to charging of an outgoing message.
+    /// </summary>
     public class ChargeInfo
     {
         /// <summary>
@@ -13,6 +16,9 @@
         /// <example>2</example>
         public int SmsCount { get; set; }
 
+        /// <summary>
+        /// The network of which the message belongs. This is only specified if the charged price was an operator specific price.
+        /// </summary>
         public string? Network { get; set; }
 
         /// <summary>

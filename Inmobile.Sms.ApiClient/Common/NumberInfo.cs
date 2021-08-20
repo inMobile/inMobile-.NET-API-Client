@@ -1,4 +1,6 @@
-﻿namespace InMobile.Sms.ApiClient
+﻿using Newtonsoft.Json;
+
+namespace InMobile.Sms.ApiClient
 {
     public class NumberInfo
     {
@@ -12,7 +14,11 @@
         /// </summary>
         /// <example>"12345678"</example>
         public string? PhoneNumber { get; set; }
-
+        /// <summary>
+        /// Create a new NumberInfo object
+        /// </summary>
+        /// <param name="countryCode">The country code part of the msisdn, e.g. 45.</param>
+        /// <param name="phoneNumber">The phone number part of the msisdn, e.g. 12345678.</param>
         public NumberInfo(string countryCode, string phoneNumber)
         {
             if (string.IsNullOrEmpty(countryCode))
@@ -30,7 +36,10 @@
         }
 
         // NOTE: This constructor must exist for serialization
-        public NumberInfo()
+        [JsonConstructor]
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        protected NumberInfo()
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         {
         }
     }

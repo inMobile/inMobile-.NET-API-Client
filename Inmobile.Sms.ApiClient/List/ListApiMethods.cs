@@ -4,30 +4,90 @@ using RestSharp;
 
 namespace InMobile.Sms.ApiClient
 {
+    /// <summary>
+    /// A collection of list- and recipient-specific api endpoints.
+    /// </summary>
     public interface IListApiMethods
     {
-        RecipientList CreateList(RecipientListCreateInfo createInfo);
-        List<RecipientList> GetAllLists();
-        RecipientList GetListById(RecipientListId listId);
         /// <summary>
-        /// Updates the given list. This call both allows for the client to retrieve a listEntry, update it and pass it to UpdateList. It also allows for updating a list without retrieving it first simply by calling UpdateList(myListId, new { Name = "New list name" });
+        /// Create a new list.
+        /// </summary>
+        /// <param name="createInfo"></param>
+        /// <returns></returns>
+        RecipientList CreateList(RecipientListCreateInfo createInfo);
+        /// <summary>
+        /// Get all existing list on account.
+        /// </summary>
+        /// <returns></returns>
+        List<RecipientList> GetAllLists();
+        /// <summary>
+        /// Get a specific list by its id.
         /// </summary>
         /// <param name="listId"></param>
-        /// <param name="updateObject">
-        /// </param>
+        /// <returns></returns>
+        RecipientList GetListById(RecipientListId listId);
+
+        /// <summary>
+        /// Updates the given list. This call both allows for the client to retrieve a listEntry, update it and pass it to UpdateList. It also allows for updating a list without retrieving it first simply by calling UpdateList(new RecipientListUpdateInfo(...) });
+        /// </summary>
+        /// <param name="list"></param>
         /// <returns></returns>
         RecipientList UpdateList(IRecipientListUpdateInfo list);
+        /// <summary>
+        /// Deletes a list including all of its recipients.
+        /// </summary>
+        /// <param name="listId"></param>
         void DeleteListById(RecipientListId listId);
 
+        /// <summary>
+        /// Create a new recipient in a given list.
+        /// </summary>
+        /// <param name="recipient"></param>
+        /// <returns></returns>
         Recipient CreateRecipient(RecipientCreateInfo recipient);
+        /// <summary>
+        /// Get all recipients in a given list.
+        /// </summary>
+        /// <param name="listId">The id of the list of which all recipients should be returned.</param>
+        /// <returns></returns>
         List<Recipient> GetAllRecipientsInList(RecipientListId listId);
+        /// <summary>
+        /// Get a recipient by its id.
+        /// </summary>
+        /// <param name="listId">The id of the list.</param>
+        /// <param name="recipientId">The id of the recipient.</param>
+        /// <returns></returns>
         Recipient GetRecipientById(RecipientListId listId, RecipientId recipientId);
+        /// <summary>
+        /// Get a recipient by its number.
+        /// </summary>
+        /// <param name="listId">The id of the list.</param>
+        /// <param name="numberInfo">The number information.</param>
+        /// <returns></returns>
         Recipient GetRecipientByNumber(RecipientListId listId, NumberInfo numberInfo);
 
+        /// <summary>
+        /// Update a recipient. It is possible to return a previously fetched recipient object here or make an update without loading the recipient first by calling UpdateRecipient(new RecipientUpdateInfo(...))
+        /// </summary>
+        /// <param name="recipient"></param>
+        /// <returns></returns>
         Recipient UpdateRecipient(IRecipientUpdateInfo recipient);
-        
+        /// <summary>
+        /// Delet a recipient by its id.
+        /// </summary>
+        /// <param name="listId">The id of the list in which the recipient belongs.</param>
+        /// <param name="recipientId"></param>
         void DeleteRecipientById(RecipientListId listId, RecipientId recipientId);
+        /// <summary>
+        /// Deletes a recipient by its number information.
+        /// </summary>
+        /// <param name="listId">The id of the list in which the recipient belongs.</param>
+        /// <param name="numberInfo">The number information.</param>
         void DeleteRecipientByNumber(RecipientListId listId, NumberInfo numberInfo);
+        /// <summary>
+        /// Deletes all recipients in a given list.
+        /// </summary>
+        /// <param name="listId"></param>
         void DeleteAllRecipientsInList(RecipientListId listId);
     }
 

@@ -52,7 +52,7 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
                 Assert.Single(response.Reports);
                 var report = response.Reports.Single();
                 Assert.NotNull(report);
-                Assert.Equal("id1", report.MessageId);
+                Assert.Equal(new OutgoingMessageId("id1"), report.MessageId);
 
                 Assert.Equal("45", report.NumberDetails.CountryCode);
                 Assert.Equal("12345678", report.NumberDetails.PhoneNumber);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace InMobile.Sms.ApiClient
 {
@@ -10,16 +11,26 @@ namespace InMobile.Sms.ApiClient
         /// The input msisdn in its unaltered format. This is the value provided when sending the text message.
         /// </summary>
         /// <example>"45 12 34 56 78"</example>
-        public string? RawMsisdn { get; set; }
+        [JsonProperty]
+        public string RawMsisdn { get; private set; }
         /// <summary>
         /// True if the input msisdn was valid.
         /// </summary>
         /// <example>true</example>
-        public bool IsValidMsisdn { get; set; }
+        [JsonProperty]
+        public bool IsValidMsisdn { get; private set; }
         /// <summary>
         /// Specifies whether the message has been anonymized or not.
         /// </summary>
         /// <example>false</example>
-        public bool IsAnonymized { get; set; }
+        [JsonProperty]
+        public bool IsAnonymized { get; private set; }
+
+        [JsonConstructor]
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        public NumberDetails()
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        {
+        }
     }
 }

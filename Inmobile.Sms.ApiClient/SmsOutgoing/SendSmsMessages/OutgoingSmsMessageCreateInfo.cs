@@ -88,11 +88,31 @@ namespace InMobile.Sms.ApiClient
         /// <example>90</example>
         public int? ValidityPeriodInSeconds { get; }
         
-        public string StatusCallbackUrl { get; set; }
+        /// <summary>
+        /// An optional callback url. If specified, this url is called with a status report when the message has reached its final status (either delivered, failed or cancelled).
+        /// NOTE: Callbacks happen in bulks.Reports for message with identical callback urls can happen to be grouped in single callbacks.
+        /// </summary>
+        public string? StatusCallbackUrl { get;  }
 
-        public string? SendTime { get; set; }
+        /// <summary>
+        /// If specified, this represents the future send time of the message.
+        /// </summary>
+        public string? SendTime { get; }
 
-        public OutgoingSmsMessageCreateInfo(string to, string text, string from, OutgoingMessageId? messageId = null, bool respectBlacklist = true, bool flash = false, MessageEncoding encoding = MessageEncoding.Gsm7, TimeSpan? validityPeriod = null, string statusCallbackUrl = null, DateTime? sendTime = null)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="to">The msisdn (country code and number) to send to. (Remember to include countrycode in all numbers, e.g. 4512345678). If max length is exceeded, the entire api call will fail.</param>
+        /// <param name="text">The text message. If the max length is exceeded (10,000 chars), the message text is truncated and sent.</param>
+        /// <param name="from">The sender. This can either be a 3-11 chars text sender or an up to 14 digit long sender number. If the max length is exceeded, the string is truncated.</param>
+        /// <param name="messageId">/// An optional message id used to identify the message. If no message id is provided, a new message id is generated and assigned to the message. This id must be unique across all messages created on the same account.         (In case a previous message has been deleted according to GDPR deletion rules setup on the specific account, the messageId is allowed to be reused). If max length is exceeded, the entire api call will fail. Max length: 50</param>
+        /// <param name="respectBlacklist">If true, this message will be blocked from sending if the target number is on the account's blacklist. If false, the message will be sent no matter blacklist settings.</param>
+        /// <param name="flash">If true, the message will be shown as a flash message (also known as a class0 message) on the target phone. If false, it will be received as a standard text message.</param>
+        /// <param name="encoding">The encoding of the message.</param>
+        /// <param name="validityPeriod">The validity period. If the message cannot be delivered within this time frame it is dropped an concidered failed. Minimum is 60 seconds and maximum is 172800 (48 hours). If not specified, the messages is attempted to be delivered in 48 hours.</param>
+        /// <param name="statusCallbackUrl">An optional callback url. If specified, this url is called with a status report when the message has reached its final status (either delivered, failed or cancelled).</param>
+        /// <param name="sendTime">If specified, this message will be sent at the specified time in the future.</param>
+        public OutgoingSmsMessageCreateInfo(string to, string text, string from, OutgoingMessageId? messageId = null, bool respectBlacklist = true, bool flash = false, MessageEncoding encoding = MessageEncoding.Gsm7, TimeSpan? validityPeriod = null, string? statusCallbackUrl = null, DateTime? sendTime = null)
         {
             if (string.IsNullOrEmpty(to))
             {

@@ -4,15 +4,37 @@ using Newtonsoft.Json;
 
 namespace InMobile.Sms.ApiClient
 {
+    /// <summary>
+    /// A recipient
+    /// </summary>
     public class Recipient : IRecipientUpdateInfo
     {
+        /// <summary>
+        /// The external created date. If specified, this value represents the date of which the recipient was created in a given source outside of inMobiles system.
+        /// </summary>
         public DateTime? ExternalCreatedDate { get; private set; }
+
+        /// <summary>
+        /// The id of the recipient.
+        /// </summary>
         [JsonProperty(Required = Required.Always)]
         public RecipientId Id { get; private set; }
+
+        /// <summary>
+        /// The id of the list of which the recipient belongs.
+        /// </summary>
         [JsonProperty(Required = Required.Always)]
         public RecipientListId ListId { get; private set; }
+
+        /// <summary>
+        /// The number information.
+        /// </summary>
         [JsonProperty(Required = Required.Always)]
         public NumberInfo NumberInfo { get; private set; }
+
+        /// <summary>
+        /// Additional fields.
+        /// </summary>
         [JsonProperty]
         public Dictionary<string, string> Fields { get; private set; } = new Dictionary<string, string>();
 
