@@ -4,8 +4,8 @@ namespace InMobile.Sms.ApiClient
 {
     public class RecipientListUpdateInfo : IRecipientListUpdateInfo
     {
-        public RecipientListId Id { get; set; }
-        public string Name { get; set; }
+        public RecipientListId Id { get; }
+        public string Name { get; }
 
         public RecipientListUpdateInfo(RecipientListId listId, string name)
         {

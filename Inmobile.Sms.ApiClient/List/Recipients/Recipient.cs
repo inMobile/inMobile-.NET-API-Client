@@ -7,11 +7,11 @@ namespace InMobile.Sms.ApiClient
     public class Recipient : IRecipientUpdateInfo
     {
         public DateTime? ExternalCreatedDate { get; private set; }
-        [JsonProperty]
+        [JsonProperty(Required = Required.Always)]
         public RecipientId Id { get; private set; }
-        [JsonProperty]
+        [JsonProperty(Required = Required.Always)]
         public RecipientListId ListId { get; private set; }
-        [JsonProperty]
+        [JsonProperty(Required = Required.Always)]
         public NumberInfo NumberInfo { get; private set; }
         [JsonProperty]
         public Dictionary<string, string> Fields { get; private set; } = new Dictionary<string, string>();

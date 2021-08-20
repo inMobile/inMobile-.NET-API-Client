@@ -6,7 +6,7 @@ namespace InMobile.Sms.ApiClient
 {
     public class RecipientList : IRecipientListUpdateInfo
     {
-        [JsonProperty]
+        [JsonProperty(Required = Required.Always)]
         public RecipientListId Id { get; private set; }
 
         [JsonProperty]

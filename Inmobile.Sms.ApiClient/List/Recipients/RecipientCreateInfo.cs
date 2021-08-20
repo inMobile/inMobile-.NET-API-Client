@@ -11,7 +11,7 @@ namespace InMobile.Sms.ApiClient
 
         public RecipientCreateInfo(RecipientListId listId, NumberInfo numberInfo, Dictionary<string, string> fields)
         {
-            ListId = listId;
+            ListId = listId ?? throw new ArgumentNullException(nameof(listId));
             NumberInfo = numberInfo ?? throw new ArgumentNullException(nameof(numberInfo));
             Fields = fields ?? throw new ArgumentNullException(nameof(fields));
         }

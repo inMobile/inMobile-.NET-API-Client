@@ -6,8 +6,8 @@ namespace InMobile.Sms.ApiClient
 {
     public class BlacklistEntryCreateInfo
     {
-        public NumberInfo NumberInfo { get; private set; }
-        public string? Comment { get; private set; }
+        public NumberInfo NumberInfo { get; }
+        public string? Comment { get; }
 
         public BlacklistEntryCreateInfo(NumberInfo numberInfo, string? comment = null)
         {
