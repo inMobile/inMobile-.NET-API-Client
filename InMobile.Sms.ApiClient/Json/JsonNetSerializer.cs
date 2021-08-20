@@ -11,7 +11,7 @@ namespace InMobile.Sms.ApiClient
     /// Serializer created by https://gist.github.com/alexeyzimarev
     /// Repo: https://gist.github.com/alexeyzimarev/c00b79c11c8cce6f6208454f7933ad24
     /// </summary>
-    public class JsonNetSerializer : IRestSerializer
+    internal class JsonNetSerializer : IRestSerializer
     {
         /// <summary>
         /// Used to avoid having the client setting up his/her own serializer and then accidentially affecting how this client works.

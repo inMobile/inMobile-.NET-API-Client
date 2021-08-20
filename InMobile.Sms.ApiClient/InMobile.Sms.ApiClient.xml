@@ -55,6 +55,11 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:InMobile.Sms.ApiClient.BlacklistEntry">
+            <summary>
+            Represents and entry in the blacklist
+            </summary>
+        </member>
         <member name="P:InMobile.Sms.ApiClient.BlacklistEntry.Id">
             <summary>
             The id of the blacklist entry
@@ -68,6 +73,11 @@
         <member name="P:InMobile.Sms.ApiClient.BlacklistEntry.Comment">
             <summary>
             An optional comment
+            </summary>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.BlacklistEntryCreateInfo">
+            <summary>
+            Represents info for creating a blacklist entry
             </summary>
         </member>
         <member name="P:InMobile.Sms.ApiClient.BlacklistEntryCreateInfo.NumberInfo">
@@ -87,6 +97,17 @@
             <param name="numberInfo">The number information</param>
             <param name="comment">An optional comment</param>
         </member>
+        <member name="T:InMobile.Sms.ApiClient.BlacklistEntryId">
+            <summary>
+            The id type of a blacklist entry
+            </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.BlacklistEntryId.#ctor(System.String)">
+            <summary>
+            Creates a new BlacklistId
+            </summary>
+            <param name="value"></param>
+        </member>
         <member name="M:InMobile.Sms.ApiClient.CustomDataTypeBase`2.#ctor(`0)">
             <summary>
             
@@ -104,6 +125,16 @@
             The entries in the list.
             </summary>
         </member>
+        <member name="T:InMobile.Sms.ApiClient.MessageEncoding">
+            <summary>
+            Outgoing message encoding.
+            </summary>
+        </member>
+        <member name="F:InMobile.Sms.ApiClient.MessageEncoding.Unknown">
+            <summary>
+            Unknown encoding
+            </summary>
+        </member>
         <member name="F:InMobile.Sms.ApiClient.MessageEncoding.Gsm7">
             <summary>
             "gsm7" is the default alfabet for text messages and when using gsm7, a single sms message can contain 160 characters. If the length exceeeds 160 characters, the message is actually split up into parts of 153 characters and charged according to this. Please note, that a few, specific characters fill up 2 bytes and count for 2 letters. Ref: https://en.wikipedia.org/wiki/GSM_03.38
@@ -119,6 +150,16 @@
             "auto" can be used in case the sender wishes to support non-roman characters but wants to save the expenses on all the trafic that only contains gsm characters anyway.
             </summary>
         </member>
+        <member name="T:InMobile.Sms.ApiClient.MessageStateCode">
+            <summary>
+            Message state code
+            </summary>
+        </member>
+        <member name="F:InMobile.Sms.ApiClient.MessageStateCode.Unknown">
+            <summary>
+            Unknown
+            </summary>
+        </member>
         <member name="F:InMobile.Sms.ApiClient.MessageStateCode.Delivered">
             <summary>
             The sms message was delivered to the device.
@@ -132,6 +173,11 @@
         <member name="F:InMobile.Sms.ApiClient.MessageStateCode.Cancelled">
             <summary>
             The message was cancelled before sent to the device.
+            </summary>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.NumberDetails">
+            <summary>
+            Number details
             </summary>
         </member>
         <member name="P:InMobile.Sms.ApiClient.NumberDetails.RawMsisdn">
@@ -151,6 +197,11 @@
             Specifies whether the message has been anonymized or not.
             </summary>
             <example>false</example>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.NumberInfo">
+            <summary>
+            Number info
+            </summary>
         </member>
         <member name="P:InMobile.Sms.ApiClient.NumberInfo.CountryCode">
             <summary>
@@ -193,6 +244,11 @@
             The results in the list
             </summary>
         </member>
+        <member name="T:InMobile.Sms.ApiClient.InMobileApiClient">
+            <summary>
+            Official InMobile API client
+            </summary>
+        </member>
         <member name="P:InMobile.Sms.ApiClient.InMobileApiClient.SmsOutgoing">
             <summary>
             Outgoing message specific operations.
@@ -214,6 +270,32 @@
             </summary>
             <param name="apiKey">The api key to be used.</param>
             <param name="baseUrl">The base url of the api. This can be changed in case an internal proxy is in use.</param>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.InMobileApiException">
+            <summary>
+            Exception based on an AIP error
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.InMobileApiException.ErrorHttpStatusCode">
+            <summary>
+            The http status code
+            </summary>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.InMobileApiKey">
+            <summary>
+            InMobile account api key
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.InMobileApiKey.ApiKey">
+            <summary>
+            The key value
+            </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.InMobileApiKey.#ctor(System.String)">
+            <summary>
+            Create a new api key
+            </summary>
+            <param name="apiKey"></param>
         </member>
         <member name="T:InMobile.Sms.ApiClient.InMobileJsonSerializerSettings">
             <summary>
@@ -383,6 +465,17 @@
             </summary>
             <param name="name">The desired name of the list.</param>
         </member>
+        <member name="T:InMobile.Sms.ApiClient.RecipientListId">
+            <summary>
+            The id type for a recipient list
+            </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.RecipientListId.#ctor(System.String)">
+            <summary>
+            Create a new recipient list id
+            </summary>
+            <param name="value"></param>
+        </member>
         <member name="T:InMobile.Sms.ApiClient.RecipientListUpdateInfo">
             <summary>
             Information required to update a recipient.
@@ -423,6 +516,11 @@
         <member name="P:InMobile.Sms.ApiClient.IRecipientUpdateInfo.NumberInfo">
             <summary>
             Optional. If not specified, the number is just ignored on the API side.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.IRecipientUpdateInfo.Fields">
+            <summary>
+            Additional fields on the recipient.
             </summary>
         </member>
         <member name="T:InMobile.Sms.ApiClient.Recipient">
@@ -490,9 +588,40 @@
             <param name="listId">The id which the new recipient should be created in.</param>
             <param name="numberInfo">The number information.</param>
         </member>
+        <member name="T:InMobile.Sms.ApiClient.RecipientId">
+            <summary>
+            The id type for a recipient
+            </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.RecipientId.#ctor(System.String)">
+            <summary>
+            Create a new recipient id
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.RecipientUpdateInfo">
+            <summary>
+            Value holder for updates performed without retrieving a recipient object from the API first.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.RecipientUpdateInfo.Id">
+            <summary>
+            The id of the recipient.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.RecipientUpdateInfo.ListId">
+            <summary>
+            The id of the list
+            </summary>
+        </member>
         <member name="P:InMobile.Sms.ApiClient.RecipientUpdateInfo.NumberInfo">
             <summary>
             If not specified, the number is just left intact.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.RecipientUpdateInfo.Fields">
+            <summary>
+            Additional fields to update. Fields not included here are not overwridden, just ignored.
             </summary>
         </member>
         <member name="M:InMobile.Sms.ApiClient.RecipientUpdateInfo.#ctor(System.Boolean,InMobile.Sms.ApiClient.RecipientId,InMobile.Sms.ApiClient.RecipientListId,InMobile.Sms.ApiClient.NumberInfo,System.Collections.Generic.Dictionary{System.String,System.String})">
@@ -566,6 +695,16 @@
             A readable description of the result.
             </summary>
         </member>
+        <member name="T:InMobile.Sms.ApiClient.CancelResultCode">
+            <summary>
+            Cancel result code
+            </summary>
+        </member>
+        <member name="F:InMobile.Sms.ApiClient.CancelResultCode.Unknown">
+            <summary>
+            Unknown
+            </summary>
+        </member>
         <member name="F:InMobile.Sms.ApiClient.CancelResultCode.Success">
             <summary>
             The message was successfully cancelled.
@@ -626,11 +765,21 @@
             A human readable description of the state.
             </summary>
         </member>
+        <member name="P:InMobile.Sms.ApiClient.DeliveryInfo.ErrorCode">
+            <summary>
+            A code  describing the type of error.
+            </summary>
+        </member>
         <member name="P:InMobile.Sms.ApiClient.DeliveryInfo.ErrorDescription">
             <summary>
             A description describing the error if the state is not "DELIVERED". This property will be absent in case the state is "DELIVERED".
             </summary>
             <example>Undeliverable message</example>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.StatusReport">
+            <summary>
+            A status report for an outgoing message.
+            </summary>
         </member>
         <member name="P:InMobile.Sms.ApiClient.StatusReport.MessageId">
             <summary>
@@ -651,6 +800,11 @@
         <member name="P:InMobile.Sms.ApiClient.StatusReport.ChargeInfo">
             <summary>
             Charging info about the outgoing message.
+            </summary>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.OutgoingSmsMessageCreateInfo">
+            <summary>
+            Information for creating a new outgoing message.
             </summary>
         </member>
         <member name="P:InMobile.Sms.ApiClient.OutgoingSmsMessageCreateInfo.To">
@@ -707,6 +861,11 @@
             </summary>
             <example>gsm7</example>
         </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingSmsMessageCreateInfo.RawEncoding">
+            <summary>
+            The actual string value of the encoding that will be sent over the API.
+            </summary>
+        </member>
         <member name="P:InMobile.Sms.ApiClient.OutgoingSmsMessageCreateInfo.ValidityPeriodInSeconds">
             <summary>
             The validity period in seconds. Minimum is 60 seconds and maximum is 172800 (48 hours).
@@ -739,6 +898,11 @@
             <param name="validityPeriod">The validity period. If the message cannot be delivered within this time frame it is dropped an concidered failed. Minimum is 60 seconds and maximum is 172800 (48 hours). If not specified, the messages is attempted to be delivered in 48 hours.</param>
             <param name="statusCallbackUrl">An optional callback url. If specified, this url is called with a status report when the message has reached its final status (either delivered, failed or cancelled).</param>
             <param name="sendTime">If specified, this message will be sent at the specified time in the future.</param>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.OutgoingSmsMessageCreateResult">
+            <summary>
+            Result info for a created outgoing message.
+            </summary>
         </member>
         <member name="P:InMobile.Sms.ApiClient.OutgoingSmsMessageCreateResult.NumberDetails">
             <summary>
@@ -777,10 +941,41 @@
             </summary>
             <example>gsm7</example>
         </member>
+        <member name="T:InMobile.Sms.ApiClient.OutgoingMessageId">
+            <summary>
+            The id type used for outgoing messages.
+            </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.OutgoingMessageId.#ctor(System.String)">
+            <summary>
+            Create a new outgoing message id.
+            </summary>
+            <param name="value"></param>
+        </member>
         <member name="T:InMobile.Sms.ApiClient.ISmsOutgoingApiMethod">
             <summary>
             Outgoing message specific operations.
             </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.ISmsOutgoingApiMethod.SendSmsMessages(System.Collections.Generic.List{InMobile.Sms.ApiClient.OutgoingSmsMessageCreateInfo})">
+            <summary>
+            Send sms messages to one or more recipients.
+            </summary>
+            <param name="messageList"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.ISmsOutgoingApiMethod.CancelMessages(System.Collections.Generic.List{InMobile.Sms.ApiClient.OutgoingMessageId})">
+            <summary>
+            Cancel future scheduled messages.
+            </summary>
+            <param name="messageIds"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.ISmsOutgoingApiMethod.GetStatusReports">
+            <summary>
+            Get 1 or more pending status reports awaiting to be fetched. After calling this method, the returned reports will never be flagged as processed and never returned again.
+            </summary>
+            <returns></returns>
         </member>
     </members>
 </doc>

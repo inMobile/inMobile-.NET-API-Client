@@ -6,7 +6,7 @@ using RestSharp.Authenticators;
 
 namespace InMobile.Sms.ApiClient
 {
-    public interface IApiRequestHelper
+    internal interface IApiRequestHelper
     {
         T Execute<T>(Method method, string resource, object? payload = null) where T : class;
         void ExecuteWithNoContent(Method method, string resource, object? payload = null);
@@ -35,12 +35,13 @@ namespace InMobile.Sms.ApiClient
         public List<T> ExecuteGetAndIteratePagedResult<T>(string resource)
         {
             List<T> allEntries = new List<T>();
-            bool lastPage;
             PagedResult<T> currentResult;
             var nextResource = resource;
             do
             {
+#pragma warning disable CS8604 // Possible null reference argument. - This is never NULL as .Next is always a string when IsLastPage is false. But the compiler hos chance if knowing this.
                 currentResult = Execute<PagedResult<T>>(method: Method.GET, resource: nextResource);
+#pragma warning restore CS8604 // Possible null reference argument.
                 allEntries.AddRange(currentResult.Entries);
                 nextResource = currentResult._links.Next;
             } while (!currentResult._links.IsLastPage);
@@ -93,7 +94,7 @@ namespace InMobile.Sms.ApiClient
             client.AddDefaultHeader("X-InmobileClientVersion", _inmobileClientVersion);
             client.UserAgent = _inmobileClientVersion;
             client.Authenticator = _authenticator;
-            client.UseSerializer(new JsonNetSerializer());
+            client.UseSerializer(() => new JsonNetSerializer());
             return client;
         }
 

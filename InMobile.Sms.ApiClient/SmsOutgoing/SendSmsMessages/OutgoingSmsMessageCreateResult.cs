@@ -5,6 +5,9 @@ using Newtonsoft.Json;
 
 namespace InMobile.Sms.ApiClient
 {
+    /// <summary>
+    /// Result info for a created outgoing message.
+    /// </summary>
     public class OutgoingSmsMessageCreateResult
     {
         /// <summary>

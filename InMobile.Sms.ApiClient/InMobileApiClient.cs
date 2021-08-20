@@ -2,12 +2,10 @@
 
 namespace InMobile.Sms.ApiClient
 {
-    public interface IInMobileApiClient
-    {
-        
-    }
-
-    public class InMobileApiClient : IInMobileApiClient
+    /// <summary>
+    /// Official InMobile API client
+    /// </summary>
+    public class InMobileApiClient
     {
         /// <summary>
         /// Outgoing message specific operations.

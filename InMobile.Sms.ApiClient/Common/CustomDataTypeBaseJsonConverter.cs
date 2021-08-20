@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 
 namespace InMobile.Sms.ApiClient
 {
+    #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public class CustomDataTypeBaseJsonConverter : JsonConverter
     {
         public override bool CanConvert(Type objectType)
@@ -33,7 +34,8 @@ namespace InMobile.Sms.ApiClient
             return false;
         }
 
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        #pragma warning disable CS8765 // Nullability of type of parameter doesn't match overridden member (possibly because of nullability attributes).
+        public override object? ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             if (CanConvert(objectType) == false)
                 throw new ArgumentException("Cant deserialize object type " + objectType.FullName);
@@ -87,12 +89,14 @@ namespace InMobile.Sms.ApiClient
             {
                 writer.WriteValue((object?)null);
             }
+            else
+            {
+                // Extract VALUE
+                var valueProperty = customerBaseType.GetType().GetProperty(name: "Value");
+                var innerValue = valueProperty.GetValue(customerBaseType);
 
-            // Extract VALUE
-            var valueProperty = customerBaseType.GetType().GetProperty(name: "Value");
-            var innerValue = valueProperty.GetValue(customerBaseType);
-
-            writer.WriteValue(innerValue);
+                writer.WriteValue(innerValue);
+            }
         }
 
         // https://stackoverflow.com/questions/457676/check-if-a-class-is-derived-from-a-generic-class

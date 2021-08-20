@@ -4,8 +4,14 @@ using System.Text;
 
 namespace InMobile.Sms.ApiClient
 {
+    /// <summary>
+    /// Message state code
+    /// </summary>
     public enum MessageStateCode
     {
+        /// <summary>
+        /// Unknown
+        /// </summary>
         Unknown = 0,
         /// <summary>
         /// The sms message was delivered to the device.

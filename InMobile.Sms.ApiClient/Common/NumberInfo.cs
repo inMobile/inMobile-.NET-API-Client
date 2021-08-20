@@ -2,6 +2,9 @@
 
 namespace InMobile.Sms.ApiClient
 {
+    /// <summary>
+    /// Number info
+    /// </summary>
     public class NumberInfo
     {
         /// <summary>
@@ -38,7 +41,7 @@ namespace InMobile.Sms.ApiClient
         // NOTE: This constructor must exist for serialization
         [JsonConstructor]
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-        protected NumberInfo()
+        internal NumberInfo()
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         {
         }

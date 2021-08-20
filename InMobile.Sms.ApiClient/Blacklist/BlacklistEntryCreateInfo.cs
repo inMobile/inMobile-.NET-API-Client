@@ -4,6 +4,9 @@ using System.Text;
 
 namespace InMobile.Sms.ApiClient
 {
+    /// <summary>
+    /// Represents info for creating a blacklist entry
+    /// </summary>
     public class BlacklistEntryCreateInfo
     {
         /// <summary>

@@ -18,6 +18,10 @@ namespace InMobile.Sms.ApiClient
         /// </summary>
         [JsonProperty]
         public string StateDescription { get; private set; }
+
+        /// <summary>
+        /// A code  describing the type of error.
+        /// </summary>
         [JsonProperty]
         public int? ErrorCode { get; private set; }
 

@@ -5,7 +5,9 @@ using Newtonsoft.Json;
 
 namespace InMobile.Sms.ApiClient
 {
-
+    /// <summary>
+    /// Information for creating a new outgoing message.
+    /// </summary>
     public class OutgoingSmsMessageCreateInfo
     {
         /// <summary>
@@ -62,6 +64,9 @@ namespace InMobile.Sms.ApiClient
         [JsonIgnore]
         public MessageEncoding Encoding { get; set; }
 
+        /// <summary>
+        /// The actual string value of the encoding that will be sent over the API.
+        /// </summary>
         [JsonProperty("Encoding")]
         public string RawEncoding
         {

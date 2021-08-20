@@ -1,4 +1,5 @@
-﻿using System;
+﻿#pragma warning disable xUnit2003 // Do not use equality check to test for null value
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -170,6 +171,7 @@ namespace InMobile.Sms.ApiClient.Test.Blacklist
                 {
                     var entry2 = allEntries[1];
                     Assert.Equal("222", entry2.Id.Value);
+
                     Assert.Equal(null, entry2.Comment);
                     Assert.Equal("45", entry2.NumberInfo.CountryCode);
                     Assert.Equal("2222", entry2.NumberInfo.PhoneNumber);

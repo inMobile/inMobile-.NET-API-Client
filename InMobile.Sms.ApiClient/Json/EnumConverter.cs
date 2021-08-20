@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace InMobile.Sms.ApiClient
 {
-    public class EnumConverter<T> : JsonConverter where T : struct
+    internal class EnumConverter<T> : JsonConverter where T : struct
     {
         public override bool CanConvert(Type objectType)
         {

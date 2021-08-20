@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace InMobile.Sms.ApiClient
 {
-    public class PagedResult<T>
+    internal class PagedResult<T>
     {
         [JsonProperty(Required = Required.Always)]
         public List<T> Entries { get; set; }
@@ -19,7 +19,7 @@ namespace InMobile.Sms.ApiClient
         }
     }
 
-    public class LinkSection
+    internal class LinkSection
     {
         public string? Next { get; set; }
         [JsonProperty(Required = Required.Always)]

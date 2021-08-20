@@ -19,6 +19,9 @@ namespace InMobile.Sms.ApiClient
         /// Optional. If not specified, the number is just ignored on the API side.
         /// </summary>
         NumberInfo? NumberInfo { get; }
+        /// <summary>
+        /// Additional fields on the recipient.
+        /// </summary>
         Dictionary<string, string> Fields { get; }
     }
 }

@@ -6,15 +6,21 @@ using RestSharp;
 
 namespace InMobile.Sms.ApiClient
 {
+    /// <summary>
+    /// Exception based on an AIP error
+    /// </summary>
     public class InMobileApiException : Exception
     {
+        /// <summary>
+        /// The http status code
+        /// </summary>
         public HttpStatusCode ErrorHttpStatusCode { get; }
-        public InMobileApiException(HttpStatusCode errorHttpStatusCode, string message) : base(message)
+        internal InMobileApiException(HttpStatusCode errorHttpStatusCode, string message) : base(message)
         {
             ErrorHttpStatusCode = errorHttpStatusCode;
         }
 
-        public static bool TryParse(IRestResponse response, out InMobileApiException? exception)
+        internal static bool TryParse(IRestResponse response, out InMobileApiException? exception)
         {
             exception = null;
             if (response.StatusCode == 0)

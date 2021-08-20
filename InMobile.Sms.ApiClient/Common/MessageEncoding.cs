@@ -3,9 +3,14 @@ using Newtonsoft.Json;
 
 namespace InMobile.Sms.ApiClient
 {
+    /// <summary>
+    /// Outgoing message encoding.
+    /// </summary>
     public enum MessageEncoding
     {
-
+        /// <summary>
+        /// Unknown encoding
+        /// </summary>
         Unknown,
         /// <summary>
         /// "gsm7" is the default alfabet for text messages and when using gsm7, a single sms message can contain 160 characters. If the length exceeeds 160 characters, the message is actually split up into parts of 153 characters and charged according to this. Please note, that a few, specific characters fill up 2 bytes and count for 2 letters. Ref: https://en.wikipedia.org/wiki/GSM_03.38

@@ -1,10 +1,12 @@
-﻿using System;
+﻿#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Newtonsoft.Json;
 
 namespace InMobile.Sms.ApiClient
 {
+   
     [JsonConverter(typeof(CustomDataTypeBaseJsonConverter))]
     public abstract class CustomDataTypeBase<TValueType, TOwnType> : IEquatable<CustomDataTypeBase<TValueType, TOwnType>>, IComparable<TOwnType>
             where TOwnType : CustomDataTypeBase<TValueType, TOwnType>
@@ -69,7 +71,7 @@ namespace InMobile.Sms.ApiClient
 
         public int CompareTo(TOwnType other)
         {
-            if (other == null)
+            if (object.ReferenceEquals(other, null))
                 return 1;
             return Value.CompareTo(other.Value);
         }
@@ -85,3 +87,4 @@ namespace InMobile.Sms.ApiClient
         public UnsupportedValueTypeException(string msg) : base(msg) { }
     }
 }
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

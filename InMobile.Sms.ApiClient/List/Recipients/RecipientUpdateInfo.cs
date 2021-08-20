@@ -4,15 +4,26 @@ using System.Text;
 
 namespace InMobile.Sms.ApiClient
 {
+    /// <summary>
+    /// Value holder for updates performed without retrieving a recipient object from the API first.
+    /// </summary>
     public class RecipientUpdateInfo : IRecipientUpdateInfo
     {
+        /// <summary>
+        /// The id of the recipient.
+        /// </summary>
         public RecipientId Id { get; }
+        /// <summary>
+        /// The id of the list
+        /// </summary>
         public RecipientListId ListId { get; }
         /// <summary>
         /// If not specified, the number is just left intact.
         /// </summary>
         public NumberInfo? NumberInfo { get; }
-
+        /// <summary>
+        /// Additional fields to update. Fields not included here are not overwridden, just ignored.
+        /// </summary>
         public Dictionary<string, string> Fields { get; }
         /// <summary>
         /// 
