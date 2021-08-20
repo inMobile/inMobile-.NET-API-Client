@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using RestSharp;
 using RestSharp.Authenticators;
 
@@ -7,7 +8,7 @@ namespace InMobile.Sms.ApiClient
 {
     public interface IApiRequestHelper
     {
-        T Execute<T>(Method method, string resource, object? payload = null);
+        T Execute<T>(Method method, string resource, object? payload = null) where T : class;
         void ExecuteWithNoContent(Method method, string resource, object? payload = null);
         List<T> ExecuteGetAndIteratePagedResult<T>(string resource);
     }
@@ -17,6 +18,7 @@ namespace InMobile.Sms.ApiClient
         private readonly HttpBasicAuthenticator _authenticator;
         private readonly string _baseUrl;
         private readonly string _inmobileClientVersion;
+        private readonly InMobileJsonSerializerSettings _serializerSettings;
         public ApiRequestHelper(InMobileApiKey apiKey, string baseUrl)
         {
             if (string.IsNullOrEmpty(baseUrl))
@@ -27,6 +29,7 @@ namespace InMobile.Sms.ApiClient
             _authenticator = new HttpBasicAuthenticator(username: "_", password: apiKey.ApiKey);
             _baseUrl = baseUrl;
             _inmobileClientVersion = $"Inmobile .Net Client v{GetType().Assembly.GetName().Version}";
+            _serializerSettings = new InMobileJsonSerializerSettings();
         }
 
         public List<T> ExecuteGetAndIteratePagedResult<T>(string resource)
@@ -50,11 +53,16 @@ namespace InMobile.Sms.ApiClient
             ThrowIfNotSuccessful(response);
         }
 
-        public T Execute<T>(Method method, string resource, object? payload = null)
+        public T Execute<T>(Method method, string resource, object? payload = null) where T : class
         {
-            IRestResponse<T> response = GetClient().Execute<T>(request: GetRequest(method: method, resource: resource, payload: payload));
+            // By design, we dont use the <T> overload of Execute request because that would trigger a deserialization before verifying that the request was successful and hence before ensuring the content is deserializable.
+            IRestResponse response = GetClient().Execute(request: GetRequest(method: method, resource: resource, payload: payload));
             ThrowIfNotSuccessful(response);
-            return response.Data;
+            string json = response.Content;
+            T? obj = JsonConvert.DeserializeObject<T>(json, _serializerSettings);
+            if (obj == null)
+                throw new Exception("Unexpected exception. Deserializing [" + json + "] returned NULL.");
+            return (T)obj;
         }
 
         private void ThrowIfNotSuccessful(IRestResponse response)
@@ -85,7 +93,7 @@ namespace InMobile.Sms.ApiClient
             client.AddDefaultHeader("X-InmobileClientVersion", _inmobileClientVersion);
             client.UserAgent = _inmobileClientVersion;
             client.Authenticator = _authenticator;
-            client.UseSerializer(() => new JsonNetSerializer());
+            client.UseSerializer(new JsonNetSerializer());
             return client;
         }
 

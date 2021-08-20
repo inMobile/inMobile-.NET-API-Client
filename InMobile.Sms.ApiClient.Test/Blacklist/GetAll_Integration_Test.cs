@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
@@ -189,6 +190,88 @@ namespace InMobile.Sms.ApiClient.Test.Blacklist
                     Assert.Equal("45", entry4.NumberInfo.CountryCode);
                     Assert.Equal("4444", entry4.NumberInfo.PhoneNumber);
                 }
+            }
+        }
+
+        [Fact]
+        public void GetFirstPage_ApiError_Test()
+        {
+            var responseJson = @"{
+""errorMessage"": ""Forbidden thing"",
+""details"": [
+""You shall not pass"",
+""Go away""
+]
+}";
+
+            var apiKey = new InMobileApiKey("UnitTestKey123");
+            var expectedRequest = new UnitTestRequestInfo(apiKey: apiKey, methodAndPath: "GET /v4/blacklist?pageLimit=250", jsonOrNull: null);
+            var responseToSendback = new UnitTestResponseInfo(jsonOrNull: responseJson, statusCodeString: "500 ServerError");
+            using (var server = UnitTestHttpServer.StartOnAnyAvailablePort(new RequestResponsePair(request: expectedRequest, response: responseToSendback)))
+            {
+                var client = new InMobileApiClient(apiKey, baseUrl: $"http://{server.EndPoint.Address}:{server.EndPoint.Port}");
+                var ex = Assert.Throws<InMobileApiException>(() => client.Blacklist.GetAll());
+
+                Assert.Equal(HttpStatusCode.InternalServerError, ex.ErrorHttpStatusCode);
+            }
+        }
+
+        [Fact]
+        public void MultiPage_ApiError_Test()
+        {
+            var apiKey = new InMobileApiKey("UnitTestKey123");
+            var pair1 = new RequestResponsePair(new UnitTestRequestInfo(apiKey: apiKey, methodAndPath: "GET /v4/blacklist?pageLimit=250", jsonOrNull: null),
+                        new UnitTestResponseInfo(@"{
+                            ""entries"": [
+                                {
+                                    ""numberInfo"": {
+                                        ""countryCode"": ""45"",
+                                        ""phoneNumber"": ""1111""
+                                    },
+                                    ""comment"": ""Some text provided when created"",
+                                    ""id"": ""111""
+                                },
+                                {
+                                    ""numberInfo"": {
+                                        ""countryCode"": ""45"",
+                                        ""phoneNumber"": ""2222""
+                                    },
+                                    ""comment"": null,
+                                    ""id"": ""222""
+                                }
+                            ],
+                            ""_links"": {
+                                ""next"": ""/v4/blacklist/page/token_page_2"",
+                                ""isLastPage"": false
+                            }
+                        }"));
+
+            // Testing an empty result in the middle of the flow
+            var pair2 = new RequestResponsePair(new UnitTestRequestInfo(apiKey: apiKey, methodAndPath: "GET /v4/blacklist/page/token_page_2", jsonOrNull: null),
+                            new UnitTestResponseInfo(@"{
+                                ""entries"": [
+                                ],
+                                ""_links"": {
+                                    ""next"": ""/v4/blacklist/page/token_page_3"",
+                                    ""isLastPage"": false
+                                }
+                            }"));
+
+            var pair3 = new RequestResponsePair(new UnitTestRequestInfo(apiKey: apiKey, methodAndPath: "GET /v4/blacklist/page/token_page_3", jsonOrNull: null),
+             new UnitTestResponseInfo(@"{
+""errorMessage"": ""Forbidden thing"",
+""details"": [
+""You shall not pass"",
+""Go away""
+]
+}", statusCodeString: "500 ServerError"));
+
+            using (var server = UnitTestHttpServer.StartOnAnyAvailablePort(pair1, pair2, pair3))
+            {
+                var client = new InMobileApiClient(apiKey, baseUrl: $"http://{server.EndPoint.Address}:{server.EndPoint.Port}");
+                var ex = Assert.Throws<InMobileApiException>(() => client.Blacklist.GetAll());
+
+                Assert.Equal(HttpStatusCode.InternalServerError, ex.ErrorHttpStatusCode);
             }
         }
     }

@@ -17,7 +17,7 @@ namespace InMobile.Sms.ApiClient
     internal class SmsOutgoingMethods : ISmsOutgoingApiMethod
     {
         private readonly IApiRequestHelper _requestHelper;
-
+        private const string _v4_sms_outgoing = "/v4/sms/outgoing";
         public SmsOutgoingMethods(IApiRequestHelper requestHelper)
         {
             _requestHelper = requestHelper ?? throw new System.ArgumentNullException(nameof(requestHelper));
@@ -32,7 +32,7 @@ namespace InMobile.Sms.ApiClient
 
             return _requestHelper.Execute<ResultsList<CancelMessageResult>>(
                 method: Method.POST,
-                resource: "/v4/sms/outgoing/cancel",
+                resource: $"{_v4_sms_outgoing}/cancel",
                 payload: new
                 {
                     MessageIds = messageIds
@@ -43,7 +43,7 @@ namespace InMobile.Sms.ApiClient
         {
             return _requestHelper.Execute<ReportsList<StatusReport>>(
                 method: Method.GET,
-                resource: "/v4/sms/outgoing/reports"
+                resource: $"{_v4_sms_outgoing}/reports"
                 );
         }
 
@@ -56,7 +56,7 @@ namespace InMobile.Sms.ApiClient
 
             return _requestHelper.Execute<ResultsList<OutgoingSmsMessageCreateResult>>(
                 method: Method.POST,
-                resource: "/v4/sms/outgoing",
+                resource: $"{_v4_sms_outgoing}",
                 payload: new
                 {
                     Messages = messageList

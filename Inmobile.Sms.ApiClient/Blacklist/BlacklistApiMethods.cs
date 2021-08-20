@@ -47,7 +47,7 @@ namespace InMobile.Sms.ApiClient
     internal class BlacklistApiMethods : IBlacklistApiMethods
     {
         private readonly IApiRequestHelper _requestHelper;
-
+        private const string _v4_blacklist = "/v4/blacklist";
         public BlacklistApiMethods(IApiRequestHelper requestHelper)
         {
             _requestHelper = requestHelper ?? throw new ArgumentNullException(nameof(requestHelper));
@@ -58,7 +58,7 @@ namespace InMobile.Sms.ApiClient
             EnsureNotNullOrThrow(parameterName: nameof(createInfo), value: createInfo);
             return _requestHelper.Execute<BlacklistEntry>(
                                     method: Method.POST,
-                                    resource: "/v4/blacklist",
+                                    resource: $"{_v4_blacklist}",
                                     payload: new
                                     {
                                         NumberInfo = createInfo.NumberInfo,
@@ -73,31 +73,31 @@ namespace InMobile.Sms.ApiClient
         /// <returns></returns>
         public List<BlacklistEntry> GetAll()
         {
-            return _requestHelper.ExecuteGetAndIteratePagedResult<BlacklistEntry>(resource: "/v4/blacklist?pageLimit=250");
+            return _requestHelper.ExecuteGetAndIteratePagedResult<BlacklistEntry>(resource: $"{_v4_blacklist}?pageLimit=250");
         }
 
         public BlacklistEntry GetById(BlacklistEntryId blacklistEntryId)
         {
             EnsureNotNullOrThrow(parameterName: nameof(blacklistEntryId), value: blacklistEntryId);
-            return _requestHelper.Execute<BlacklistEntry>(method: Method.GET, resource: $"/v4/blacklist/{blacklistEntryId}");
+            return _requestHelper.Execute<BlacklistEntry>(method: Method.GET, resource: $"{_v4_blacklist}/{blacklistEntryId}");
         }
 
         public BlacklistEntry GetByNumber(NumberInfo numberInfo)
         {
             EnsureNotNullOrThrow(parameterName: nameof(numberInfo), value: numberInfo);
-            return _requestHelper.Execute<BlacklistEntry>(method: Method.GET, resource: $"/v4/blacklist/bynumber?countryCode={numberInfo.CountryCode}&phoneNumber={numberInfo.PhoneNumber}");
+            return _requestHelper.Execute<BlacklistEntry>(method: Method.GET, resource: $"{_v4_blacklist}/bynumber?countryCode={numberInfo.CountryCode}&phoneNumber={numberInfo.PhoneNumber}");
         }
 
         public void DeleteById(BlacklistEntryId blacklistEntryId)
         {
             EnsureNotNullOrThrow(parameterName: nameof(blacklistEntryId), value: blacklistEntryId);
-            _requestHelper.ExecuteWithNoContent(method: Method.DELETE, resource: $"/v4/blacklist/{blacklistEntryId}");
+            _requestHelper.ExecuteWithNoContent(method: Method.DELETE, resource: $"{_v4_blacklist}/{blacklistEntryId}");
         }
 
         public void DeleteByNumber(NumberInfo numberInfo)
         {
             EnsureNotNullOrThrow(parameterName: nameof(numberInfo), value: numberInfo);
-            _requestHelper.ExecuteWithNoContent(method: Method.DELETE, resource: $"/v4/blacklist/bynumber?countryCode={numberInfo.CountryCode}&phoneNumber={numberInfo.PhoneNumber}");
+            _requestHelper.ExecuteWithNoContent(method: Method.DELETE, resource: $"{_v4_blacklist}/bynumber?countryCode={numberInfo.CountryCode}&phoneNumber={numberInfo.PhoneNumber}");
         }
 
         private void EnsureNotNullOrThrow(string parameterName, object? value)

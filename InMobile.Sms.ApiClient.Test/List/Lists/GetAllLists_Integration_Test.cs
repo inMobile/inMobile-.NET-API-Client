@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
@@ -153,6 +154,80 @@ namespace InMobile.Sms.ApiClient.Test.Lists
                     Assert.Equal("id4", entry4.Id.Value);
                     Assert.Equal("name4", entry4.Name);
                 }
+            }
+        }
+
+        [Fact]
+        public void GetAll_ApiError_FirstPage_Test()
+        {
+            var responseJson = @"{
+""errorMessage"": ""Forbidden thing"",
+""details"": [
+""You shall not pass"",
+""Go away""
+]
+}";
+
+            var apiKey = new InMobileApiKey("UnitTestKey123");
+            var expectedRequest = new UnitTestRequestInfo(apiKey: apiKey, methodAndPath: "GET /v4/lists?pageLimit=250", jsonOrNull: null);
+            var responseToSendback = new UnitTestResponseInfo(jsonOrNull: responseJson, statusCodeString: "500 ServerError");
+            using (var server = UnitTestHttpServer.StartOnAnyAvailablePort(new RequestResponsePair(request: expectedRequest, response: responseToSendback)))
+            {
+                var client = new InMobileApiClient(apiKey, baseUrl: $"http://{server.EndPoint.Address}:{server.EndPoint.Port}");
+                var ex = Assert.Throws<InMobileApiException>(() => client.Lists.GetAllLists());
+
+                Assert.Equal(HttpStatusCode.InternalServerError, ex.ErrorHttpStatusCode);
+            }
+        }
+
+        [Fact]
+        public void GetAll_ApiError_MultiPage_Test()
+        {
+            var apiKey = new InMobileApiKey("UnitTestKey123");
+            var pair1 = new RequestResponsePair(new UnitTestRequestInfo(apiKey: apiKey, methodAndPath: "GET /v4/lists?pageLimit=250", jsonOrNull: null),
+                        new UnitTestResponseInfo(@"{
+                            ""entries"": [
+                                {
+                                ""id"":""id1"",
+                                ""name"": ""name1""
+                            },
+                            {
+                                ""id"":""id2"",
+                                ""name"": ""name2""
+                            }
+                            ],
+                            ""_links"": {
+                                ""next"": ""/v4/lists/page/token_page_2"",
+                                ""isLastPage"": false
+                            }
+                        }"));
+
+            // Testing an empty result in the middle of the flow
+            var pair2 = new RequestResponsePair(new UnitTestRequestInfo(apiKey: apiKey, methodAndPath: "GET /v4/lists/page/token_page_2", jsonOrNull: null),
+                            new UnitTestResponseInfo(@"{
+                                ""entries"": [
+                                ],
+                                ""_links"": {
+                                    ""next"": ""/v4/lists/page/token_page_3"",
+                                    ""isLastPage"": false
+                                }
+                            }"));
+
+            var pair3 = new RequestResponsePair(new UnitTestRequestInfo(apiKey: apiKey, methodAndPath: "GET /v4/lists/page/token_page_3", jsonOrNull: null),
+             new UnitTestResponseInfo(@"{
+""errorMessage"": ""Forbidden thing"",
+""details"": [
+""You shall not pass"",
+""Go away""
+]
+}", statusCodeString: "500 ServerError"));
+
+            using (var server = UnitTestHttpServer.StartOnAnyAvailablePort(pair1, pair2, pair3))
+            {
+                var client = new InMobileApiClient(apiKey, baseUrl: $"http://{server.EndPoint.Address}:{server.EndPoint.Port}");
+                var ex = Assert.Throws<InMobileApiException>(() => client.Lists.GetAllLists());
+
+                Assert.Equal(HttpStatusCode.InternalServerError, ex.ErrorHttpStatusCode);
             }
         }
     }

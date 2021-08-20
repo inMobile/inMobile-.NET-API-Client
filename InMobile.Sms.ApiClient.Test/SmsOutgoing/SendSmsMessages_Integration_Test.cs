@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
@@ -112,6 +113,40 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
                 Assert.NotNull(singleResult);
                 
                 Assert.Equal(MessageEncoding.Unknown, singleResult.Encoding);
+            }
+        }
+
+        [Fact]
+        public void SendSmsMessages_ApiError_Test()
+        {
+            var expectedRequestJson = @"{""Messages"":[{""To"":""4511111111"",""Text"":""Hello world"",""From"":""1245"",""MessageId"":""someMessageId"",""RespectBlacklist"":true,""Flash"":false,""Encoding"":""auto"",""ValidityPeriodInSeconds"":55,""StatusCallbackUrl"":null,""SendTime"":""2001-02-03T13:05:06Z""}]}";
+
+            var responseJson = @"{
+""errorMessage"": ""Forbidden thing"",
+""details"": [
+""You shall not pass"",
+""Go away""
+]
+}";
+            var apiKey = new InMobileApiKey("UnitTestKey123");
+            var expectedRequest = new UnitTestRequestInfo(apiKey: apiKey, methodAndPath: "POST /v4/sms/outgoing", jsonOrNull: expectedRequestJson);
+            var responseToSendback = new UnitTestResponseInfo(jsonOrNull: responseJson, statusCodeString: "500 ServerError");
+            using (var server = UnitTestHttpServer.StartOnAnyAvailablePort(new RequestResponsePair(request: expectedRequest, response: responseToSendback)))
+            {
+                var client = new InMobileApiClient(apiKey, baseUrl: $"http://{server.EndPoint.Address}:{server.EndPoint.Port}");
+                var ex = Assert.Throws<InMobileApiException>(() => client.SmsOutgoing.SendSmsMessages(new List<OutgoingSmsMessageCreateInfo>() {
+                    new OutgoingSmsMessageCreateInfo(
+                        to: "4511111111",
+                        text: "Hello world",
+                        from: "1245",
+                        messageId: new OutgoingMessageId("someMessageId"),
+                        respectBlacklist: true,
+                        flash: false,
+                        encoding: MessageEncoding.Auto,
+                        validityPeriod: TimeSpan.FromSeconds(55),
+                        sendTime: new DateTime(2001,02,03,14,05,06))
+                }));
+                Assert.Equal(HttpStatusCode.InternalServerError, ex.ErrorHttpStatusCode);
             }
         }
     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
@@ -42,5 +43,29 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
                 Assert.Equal("Anderson", recipient.Fields["lastname"]);
             }
         }
+
+        [Fact]
+        public void GetRecipientById_ApiError_Test()
+        {
+            var responseJson = @"{
+""errorMessage"": ""Forbidden thing"",
+""details"": [
+""You shall not pass"",
+""Go away""
+]
+}";
+
+            var apiKey = new InMobileApiKey("UnitTestKey123");
+            var expectedRequest = new UnitTestRequestInfo(apiKey: apiKey, methodAndPath: "GET /v4/lists/some_list_id/recipients/rec_id", jsonOrNull: null);
+            var responseToSendback = new UnitTestResponseInfo(jsonOrNull: responseJson, statusCodeString: "500 ServerError");
+            using (var server = UnitTestHttpServer.StartOnAnyAvailablePort(new RequestResponsePair(request: expectedRequest, response: responseToSendback)))
+            {
+                var client = new InMobileApiClient(apiKey, baseUrl: $"http://{server.EndPoint.Address}:{server.EndPoint.Port}");
+
+                var ex = Assert.Throws<InMobileApiException>(() => client.Lists.GetRecipientById(listId: new RecipientListId("some_list_id"), recipientId: new RecipientId("rec_id")));
+                Assert.Equal(HttpStatusCode.InternalServerError, ex.ErrorHttpStatusCode);
+            }
+        }
     }
+
 }

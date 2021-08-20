@@ -16,11 +16,8 @@ namespace InMobile.Sms.ApiClient
         /// <summary>
         /// Used to avoid having the client setting up his/her own serializer and then accidentially affecting how this client works.
         /// </summary>
-        public static JsonSerializerSettings Settings { get; } = new JsonSerializerSettings();
-        public JsonNetSerializer()
-        {
-            Settings.Converters.Add(new EnumConverter<MessageEncoding>());
-        }
+        public static InMobileJsonSerializerSettings Settings { get; } = new InMobileJsonSerializerSettings();
+        
         public string[] SupportedContentTypes { get; } =
         {
             "application/json", "text/json", "text/x-json", "text/javascript", "*+json"

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
@@ -62,6 +63,30 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
                     Assert.Equal(CancelResultCode.MessageNotFound, response.Results[2].ResultCode);
                     Assert.Equal("Message not found", response.Results[2].ResultDescription);
                 }
+            }
+        }
+
+        [Fact]
+        public void CancelMessages_ApiError_Test()
+        {
+            var expectedRequestJson = @"{""MessageIds"":[""id1"",""id2"",""id3""]}";
+            var responseJson = @"{
+""errorMessage"": ""Forbidden thing"",
+""details"": [
+""You shall not pass"",
+""Go away""
+]
+}";
+
+            var apiKey = new InMobileApiKey("UnitTestKey123");
+            var expectedRequest = new UnitTestRequestInfo(apiKey: apiKey, methodAndPath: "POST /v4/sms/outgoing/cancel", jsonOrNull: expectedRequestJson);
+            var responseToSendback = new UnitTestResponseInfo(jsonOrNull: responseJson, statusCodeString: "500 ServerError");
+            using (var server = UnitTestHttpServer.StartOnAnyAvailablePort(new RequestResponsePair(request: expectedRequest, response: responseToSendback)))
+            {
+                var client = new InMobileApiClient(apiKey, baseUrl: $"http://{server.EndPoint.Address}:{server.EndPoint.Port}");
+
+                var ex = Assert.Throws<InMobileApiException>(() => client.SmsOutgoing.CancelMessages(messageIds: new List<OutgoingMessageId>() { new OutgoingMessageId("id1"), new OutgoingMessageId("id2"), new OutgoingMessageId("id3") }));
+                Assert.Equal(HttpStatusCode.InternalServerError, ex.ErrorHttpStatusCode);
             }
         }
 

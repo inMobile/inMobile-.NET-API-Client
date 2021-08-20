@@ -19,7 +19,7 @@ namespace InMobile.Sms.ApiClient
             exception = null;
             if (response.StatusCode == 0)
                 return false;
-            var responseObject = JsonConvert.DeserializeObject<ErrorResponse>(response.Content, JsonNetSerializer.Settings);
+            var responseObject = JsonConvert.DeserializeObject<ErrorResponse>(response.Content, new InMobileJsonSerializerSettings());
             if (responseObject == null)
                 return false;
             StringBuilder sb = new StringBuilder();

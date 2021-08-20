@@ -22,6 +22,7 @@ namespace InMobile.Sms.ApiClient
     public class LinkSection
     {
         public string? Next { get; set; }
+        [JsonProperty(Required = Required.Always)]
         public bool IsLastPage { get; set; }
     }
 }
