@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace InMobile.Sms.ApiClient
+﻿namespace InMobile.Sms.ApiClient
 {
     /// <summary>
     /// The id type for a recipient list

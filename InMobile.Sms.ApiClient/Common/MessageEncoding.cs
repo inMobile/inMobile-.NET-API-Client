@@ -1,7 +1,4 @@
-﻿using System;
-using Newtonsoft.Json;
-
-namespace InMobile.Sms.ApiClient
+﻿namespace InMobile.Sms.ApiClient
 {
     /// <summary>
     /// Outgoing message encoding.

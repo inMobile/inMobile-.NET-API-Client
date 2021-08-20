@@ -1,12 +1,10 @@
 ﻿#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Newtonsoft.Json;
 
 namespace InMobile.Sms.ApiClient
 {
-   
+
     [JsonConverter(typeof(CustomDataTypeBaseJsonConverter))]
     public abstract class CustomDataTypeBase<TValueType, TOwnType> : IEquatable<CustomDataTypeBase<TValueType, TOwnType>>, IComparable<TOwnType>
             where TOwnType : CustomDataTypeBase<TValueType, TOwnType>

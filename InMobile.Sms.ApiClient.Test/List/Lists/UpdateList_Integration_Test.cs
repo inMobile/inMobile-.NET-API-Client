@@ -1,5 +1,4 @@
-﻿using System;
-using System.Net;
+﻿using System.Net;
 using Newtonsoft.Json;
 using Xunit;
 using static InMobile.Sms.ApiClient.Test.UnitTestHttpServer;

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace InMobile.Sms.ApiClient
+﻿namespace InMobile.Sms.ApiClient
 {
     /// <summary>
     /// Information needed to cancel an outgoing text message.
