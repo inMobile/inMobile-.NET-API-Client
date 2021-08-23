@@ -14,7 +14,9 @@ namespace Sms.ApiClient.V2
         StatisticsSummaryResponse GetStatistics(DateTime @from, DateTime to);
         CancelMessagesResponse CancelMessage(List<string> messageIds);
     }
-
+	/// <summary>
+	/// The client to use for communicating the the inMobile API V2
+	/// </summary>
     public class FacadeSmsClient : IFacadeSmsClient
     {
 		private readonly ISendMessagesClient _sendClient;
