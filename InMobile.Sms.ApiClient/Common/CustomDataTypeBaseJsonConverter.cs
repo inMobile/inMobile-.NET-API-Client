@@ -85,18 +85,11 @@ namespace InMobile.Sms.ApiClient
             if (CanConvert(customerBaseType.GetType()) == false)
                 throw new ArgumentException($"Cant serialize object type {customerBaseType.GetType().FullName}");
 
-            if (customerBaseType == null)
-            {
-                writer.WriteValue((object?)null);
-            }
-            else
-            {
-                // Extract VALUE
-                var valueProperty = customerBaseType.GetType().GetProperty(name: "Value");
-                var innerValue = valueProperty.GetValue(customerBaseType);
+            // Extract VALUE
+            var valueProperty = customerBaseType.GetType().GetProperty(name: "Value");
+            var innerValue = valueProperty.GetValue(customerBaseType);
 
-                writer.WriteValue(innerValue);
-            }
+            writer.WriteValue(innerValue);
         }
 
         // https://stackoverflow.com/questions/457676/check-if-a-class-is-derived-from-a-generic-class
