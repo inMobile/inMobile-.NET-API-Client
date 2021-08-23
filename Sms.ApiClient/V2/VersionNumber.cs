@@ -1,5 +1,8 @@
 ﻿namespace Sms.ApiClient.V2
 {
+	/// <summary>
+	/// Util method for getting the current version.
+	/// </summary>
 	public static class ClientUtils
 	{
 		private static string _versionNumber = null;
