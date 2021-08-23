@@ -5,6 +5,8 @@
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <Version>1.0.0.0</Version>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <DebugType>Embedded</DebugType>
+        <EmbedAllSources>True</EmbedAllSources>
         <Authors>inMobile ApS</Authors>
         <Description>Official .NET client for the inMobile API</Description>
         <Copyright>Copyright inMobile ApS</Copyright>
