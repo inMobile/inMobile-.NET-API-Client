@@ -12,7 +12,9 @@ namespace InMobile.Sms.ApiClient
         void ExecuteWithNoContent(Method method, string resource, object? payload = null);
         List<T> ExecuteGetAndIteratePagedResult<T>(string resource);
     }
-
+    /// <summary>
+    /// A general help for rest requests
+    /// </summary>
     internal class ApiRequestHelper : IApiRequestHelper
     {
         private readonly HttpBasicAuthenticator _authenticator;
