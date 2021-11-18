@@ -4,14 +4,13 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using InMobile.Sms.ApiClient.Test.Tools;
 using Xunit;
 
 namespace InMobile.Sms.ApiClient.Test
 {
     public class UnitTestHttpServer : IDisposable
     {
-        public IPEndPoint EndPoint { get; private set; }
+        public IPEndPoint EndPoint => ((IPEndPoint) _tcpListener.LocalEndpoint);
         public TcpListener _tcpListener;
 
         private List<IDisposable> Disposables = new List<IDisposable>();
@@ -20,9 +19,8 @@ namespace InMobile.Sms.ApiClient.Test
         public string Host => $"{EndPoint.Address}:{EndPoint.Port}";
         private Queue<RequestResponsePair> _requestPairsQueue;
 
-        private UnitTestHttpServer(IPEndPoint endPoint, RequestResponsePair[] requests)
+        private UnitTestHttpServer(RequestResponsePair[] requests)
         {
-            EndPoint = endPoint ?? throw new ArgumentNullException(nameof(endPoint));
             _requestPairsQueue = new Queue<RequestResponsePair>(requests);
         }
 
@@ -30,7 +28,7 @@ namespace InMobile.Sms.ApiClient.Test
         {
             if (_tcpListener != null)
                 throw new Exception("Already listening");
-            _tcpListener = new TcpListener(localaddr: EndPoint.Address, port: EndPoint.Port);
+            _tcpListener = new TcpListener(localaddr: IPAddress.Loopback, port: 0);
             _tcpListener.Start();
             _tcpListener.BeginAcceptSocket(DoAcceptSocketCallback, _tcpListener);
         }
@@ -63,13 +61,20 @@ namespace InMobile.Sms.ApiClient.Test
         // Process the client connection.
         public void DoAcceptSocketCallback(IAsyncResult ar)
         {
-            // End the operation and display the received data on
-            // the console.
-            var socket = _tcpListener.EndAcceptSocket(ar);
+            try
+            {
+                // End the operation and display the received data on
+                // the console.
+                var socket = _tcpListener.EndAcceptSocket(ar);
 
-            HandleSocket(socket);
+                HandleSocket(socket);
 
-            _tcpListener.BeginAcceptSocket(DoAcceptSocketCallback, _tcpListener);
+                _tcpListener.BeginAcceptSocket(DoAcceptSocketCallback, _tcpListener);
+            }
+            catch (ObjectDisposedException)
+            {
+
+            }
         }
 
         private void HandleSocket(Socket socket)
@@ -178,8 +183,7 @@ Connection: Closed
         {
             lock (_syncLock) // Ensures no race conditions ending up having multiple test server listening on the same port at the same time
             {
-                var endPoint = new IPEndPoint(address: IPAddress.Loopback, port: LocalPortUtils.GetAndReserverAvailablePort());
-                var server = new UnitTestHttpServer(endPoint: endPoint, requests: requests);
+                var server = new UnitTestHttpServer(requests: requests);
                 server.StartListening();
                 return server;
             }

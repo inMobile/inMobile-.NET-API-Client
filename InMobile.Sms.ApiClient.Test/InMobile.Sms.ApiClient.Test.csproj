@@ -25,4 +25,6 @@
     <ProjectReference Include="..\Inmobile.Sms.ApiClient\InMobile.Sms.ApiClient.csproj" />
   </ItemGroup>
 
+  <ProjectExtensions><VisualStudio><UserProperties xunit_1runner_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
+
 </Project>

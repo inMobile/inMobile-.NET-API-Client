@@ -1,5 +1,4 @@
 ﻿using System.Net;
-using InMobile.Sms.ApiClient.Test.Tools;
 using Xunit;
 using static InMobile.Sms.ApiClient.Test.UnitTestHttpServer;
 
@@ -10,10 +9,7 @@ namespace InMobile.Sms.ApiClient.Test.General
         [Fact]
         public void EnsureNetworkExceptionsAreVisible_Test()
         {
-            // Get a port that nothing is listening on
-            var unusedPort = LocalPortUtils.GetAndReserverAvailablePort();
-
-            var client = new InMobileApiClient(new InMobileApiKey("Some_Key"), baseUrl: $"http://localhost:{unusedPort}");
+            var client = new InMobileApiClient(new InMobileApiKey("Some_Key"), baseUrl: $"http://localhost:{50000}");
             Assert.Throws<WebException>(() => client.SmsOutgoing.GetStatusReports());
         }
 
