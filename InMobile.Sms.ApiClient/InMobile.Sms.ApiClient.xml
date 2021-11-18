@@ -4,6 +4,11 @@
         <name>InMobile.Sms.ApiClient</name>
     </assembly>
     <members>
+        <member name="T:InMobile.Sms.ApiClient.ApiRequestHelper">
+            <summary>
+            A general help for rest requests
+            </summary>
+        </member>
         <member name="T:InMobile.Sms.ApiClient.IBlacklistApiMethods">
             <summary>
             Blacklist specific operations.
