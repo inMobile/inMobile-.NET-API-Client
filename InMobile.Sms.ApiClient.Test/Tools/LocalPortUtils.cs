@@ -8,6 +8,7 @@ namespace InMobile.Sms.ApiClient.Test.Tools
     {
         private static int _lastUsedPort = 2021;
         private static object _syncLock = new object();
+        private static HashSet<int> _usedPorts = new HashSet<int>();
         public static int GetAndReserverAvailablePort()
         {
             lock (_syncLock)
@@ -27,6 +28,11 @@ namespace InMobile.Sms.ApiClient.Test.Tools
 
                 var portToUse = _lastUsedPort;
                 _lastUsedPort++;
+
+                if(_usedPorts.Contains(portToUse))
+                    throw new System.Exception("Port already used: " + portToUse);
+                _usedPorts.Add(portToUse);
+
                 return portToUse;
             }
         }
