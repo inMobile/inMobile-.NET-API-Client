@@ -22,7 +22,9 @@ namespace InMobile.Sms.ApiClient.Test.Tools
                 _lastUsedPort++;
             }
 
-            return _lastUsedPort;
+            var portToUse = _lastUsedPort;
+            _lastUsedPort++;
+            return portToUse;
         }
 
     }
