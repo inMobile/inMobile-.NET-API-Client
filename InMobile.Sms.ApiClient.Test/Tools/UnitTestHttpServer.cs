@@ -70,10 +70,10 @@ namespace InMobile.Sms.ApiClient.Test
                 HandleSocket(socket);
 
                 _tcpListener.BeginAcceptSocket(DoAcceptSocketCallback, _tcpListener);
-            }
-            catch (ObjectDisposedException)
+            }catch(Exception ex)
             {
-
+                // A vast amount of different exception can occur here as a result of tests disposing before this accept call is actually done. Of this reason, any exceptions here are ignored.
+                ex.ToString();
             }
         }
 
