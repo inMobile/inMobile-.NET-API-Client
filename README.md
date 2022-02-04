@@ -28,7 +28,7 @@ catch (InMobileApiException ex)
 Note that this is the PULL version of getting statuses.
 
 ```c#
-var reports = client.SmsOutgoing.GetStatusReports();
+var reports = client.SmsOutgoing.GetStatusReports(limit: 10); // Limit must be between 1 and 250.
 ```
 
 

@@ -24,8 +24,9 @@ namespace InMobile.Sms.ApiClient
         /// <summary>
         /// Get 1 or more pending status reports awaiting to be fetched. After calling this method, the returned reports will never be flagged as processed and never returned again.
         /// </summary>
+        /// <param name="limit">The maximum amount of reports to receive. Limit bust be between 1 and 250.</param>
         /// <returns></returns>
-        ReportsList<StatusReport> GetStatusReports();
+        ReportsList<StatusReport> GetStatusReports(int limit);
     }
 
     internal class SmsOutgoingMethods : ISmsOutgoingApiMethod
@@ -52,12 +53,15 @@ namespace InMobile.Sms.ApiClient
                     MessageIds = messageIds
                 });
         }
-
-        public ReportsList<StatusReport> GetStatusReports()
+        
+        public ReportsList<StatusReport> GetStatusReports(int limit)
         {
+            if (limit <= 0 || limit > 250)
+                throw new ArgumentException($"Invalid limit value: {limit}. Value must be between 1 and 250.");
+
             return _requestHelper.Execute<ReportsList<StatusReport>>(
                 method: Method.GET,
-                resource: $"{_v4_sms_outgoing}/reports"
+                resource: $"{_v4_sms_outgoing}/reports?limit={limit}"
                 );
         }
 

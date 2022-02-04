@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Net;
 using Xunit;
 using static InMobile.Sms.ApiClient.Test.UnitTestHttpServer;
@@ -39,12 +40,12 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
                     }
                     ]}";
             var apiKey = new InMobileApiKey("UnitTestKey123");
-            var expectedRequest = new UnitTestRequestInfo(apiKey: apiKey, methodAndPath: "GET /v4/sms/outgoing/reports", jsonOrNull: null);
+            var expectedRequest = new UnitTestRequestInfo(apiKey: apiKey, methodAndPath: "GET /v4/sms/outgoing/reports?limit=8", jsonOrNull: null);
             var responseToSendback = new UnitTestResponseInfo(jsonOrNull: responseJson);
             using (var server = UnitTestHttpServer.StartOnAnyAvailablePort(new RequestResponsePair(request: expectedRequest, response: responseToSendback)))
             {
                 var client = new InMobileApiClient(apiKey, baseUrl: $"http://{server.EndPoint.Address}:{server.EndPoint.Port}");
-                var response = client.SmsOutgoing.GetStatusReports();
+                var response = client.SmsOutgoing.GetStatusReports(limit: 8);
                 Assert.NotNull(response);
                 Assert.Single(response.Reports);
                 var report = response.Reports.Single();
@@ -100,12 +101,12 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
                     }
                     ]}";
             var apiKey = new InMobileApiKey("UnitTestKey123");
-            var expectedRequest = new UnitTestRequestInfo(apiKey: apiKey, methodAndPath: "GET /v4/sms/outgoing/reports", jsonOrNull: null);
+            var expectedRequest = new UnitTestRequestInfo(apiKey: apiKey, methodAndPath: "GET /v4/sms/outgoing/reports?limit=250", jsonOrNull: null);
             var responseToSendback = new UnitTestResponseInfo(jsonOrNull: responseJson);
             using (var server = UnitTestHttpServer.StartOnAnyAvailablePort(new RequestResponsePair(request: expectedRequest, response: responseToSendback)))
             {
                 var client = new InMobileApiClient(apiKey, baseUrl: $"http://{server.EndPoint.Address}:{server.EndPoint.Port}");
-                var response = client.SmsOutgoing.GetStatusReports();
+                var response = client.SmsOutgoing.GetStatusReports(limit: 250);
                 Assert.NotNull(response);
                 Assert.Single(response.Reports);
                 var report = response.Reports.Single();
@@ -130,14 +131,49 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
 }";
 
             var apiKey = new InMobileApiKey("UnitTestKey123");
-            var expectedRequest = new UnitTestRequestInfo(apiKey: apiKey, methodAndPath: "GET /v4/sms/outgoing/reports", jsonOrNull: null);
+            var expectedRequest = new UnitTestRequestInfo(apiKey: apiKey, methodAndPath: "GET /v4/sms/outgoing/reports?limit=1", jsonOrNull: null);
             var responseToSendback = new UnitTestResponseInfo(jsonOrNull: responseJson, statusCodeString: "500 ServerError");
             using (var server = UnitTestHttpServer.StartOnAnyAvailablePort(new RequestResponsePair(request: expectedRequest, response: responseToSendback)))
             {
                 var client = new InMobileApiClient(apiKey, baseUrl: $"http://{server.EndPoint.Address}:{server.EndPoint.Port}");
-                var ex = Assert.Throws<InMobileApiException>(() => client.SmsOutgoing.GetStatusReports());
+                var ex = Assert.Throws<InMobileApiException>(() => client.SmsOutgoing.GetStatusReports(limit: 1));
 
                 Assert.Equal(HttpStatusCode.InternalServerError, ex.ErrorHttpStatusCode);
+            }
+        }
+
+
+        [Theory]
+        [InlineData(-1000, false)]
+        [InlineData(-1, false)]
+        [InlineData(0, false)]
+        [InlineData(1, true)]
+        [InlineData(10, true)]
+        [InlineData(249, true)]
+        [InlineData(250, true)]
+        [InlineData(251, false)]
+        [InlineData(1000, false)]
+        public void GetReports_Limit_Test(int limit, bool expectApiCalled)
+        {
+            var emptyResponseJson = @"{
+                    ""reports"": [
+                    ]}";
+
+            var apiKey = new InMobileApiKey("UnitTestKey123");
+            var expectedRequest = new UnitTestRequestInfo(apiKey: apiKey, methodAndPath: $"GET /v4/sms/outgoing/reports?limit={limit}", jsonOrNull: null);
+            var responseToSendback = new UnitTestResponseInfo(jsonOrNull: emptyResponseJson);
+            using (var server = UnitTestHttpServer.StartOnAnyAvailablePort(new RequestResponsePair(request: expectedRequest, response: responseToSendback)))
+            {
+                var client = new InMobileApiClient(apiKey, baseUrl: $"http://{server.EndPoint.Address}:{server.EndPoint.Port}");
+                if (expectApiCalled)
+                {
+                    var reports = client.SmsOutgoing.GetStatusReports(limit: limit);
+                    Assert.Empty(reports.Reports);
+                }
+                else
+                {
+                    var ex = Assert.Throws<ArgumentException>(() => client.SmsOutgoing.GetStatusReports(limit: limit));
+                }
             }
         }
 

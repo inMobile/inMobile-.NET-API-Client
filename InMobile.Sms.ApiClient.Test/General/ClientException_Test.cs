@@ -1,4 +1,6 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
+using System.Net.Sockets;
 using Xunit;
 using static InMobile.Sms.ApiClient.Test.UnitTestHttpServer;
 
@@ -10,7 +12,7 @@ namespace InMobile.Sms.ApiClient.Test.General
         public void EnsureNetworkExceptionsAreVisible_Test()
         {
             var client = new InMobileApiClient(new InMobileApiKey("Some_Key"), baseUrl: $"http://localhost:{50000}");
-            Assert.Throws<WebException>(() => client.SmsOutgoing.GetStatusReports());
+            Assert.Throws<WebException>(() => client.SmsOutgoing.GetStatusReports(limit: 10));
         }
 
         [Theory]
@@ -29,12 +31,12 @@ namespace InMobile.Sms.ApiClient.Test.General
 ]
 }";
             var apiKey = new InMobileApiKey("UnitTestKey123");
-            var expectedRequest = new UnitTestRequestInfo(apiKey: apiKey, methodAndPath: "GET /v4/sms/outgoing/reports", jsonOrNull: null);
+            var expectedRequest = new UnitTestRequestInfo(apiKey: apiKey, methodAndPath: "GET /v4/sms/outgoing/reports?limit=12", jsonOrNull: null);
             var responseToSendback = new UnitTestResponseInfo(jsonOrNull: responseJson, statusCodeString: statusCodeString);
             using (var server = UnitTestHttpServer.StartOnAnyAvailablePort(new RequestResponsePair(request: expectedRequest, response: responseToSendback)))
             {
                 var client = new InMobileApiClient(apiKey, baseUrl: $"http://{server.EndPoint.Address}:{server.EndPoint.Port}");
-                var exceptionThrown = Assert.Throws<InMobileApiException>(() => client.SmsOutgoing.GetStatusReports());
+                var exceptionThrown = Assert.Throws<InMobileApiException>(() => client.SmsOutgoing.GetStatusReports(limit: 12));
                 Assert.Equal(expectedStatusCode, (int)exceptionThrown.ErrorHttpStatusCode);
                 Assert.Equal($"{statusCodeString}: Forbidden thing. You shall not pass; Go away", exceptionThrown.Message);
             }

@@ -13,7 +13,7 @@ namespace InMobile.Sms.ApiClient.Demo
             var apiKey = new InMobileApiKey(File.ReadAllText("c:\\temp\\DOTNET_API_CLIENT\\apikey.txt"));
             var client = new InMobileApiClient(apiKey: apiKey);
             
-            //RunRealWorldTest_SendSms(client: client, msisdn: "45...");
+            RunRealWorldTest_SendSms(client: client, msisdn: "45...");
             RunRealWorldTest_Lists(client: client);
             RunRealWorldTest_Blacklist(client: client);
 
@@ -27,6 +27,10 @@ namespace InMobile.Sms.ApiClient.Demo
             client.SmsOutgoing.SendSmsMessages(new List<OutgoingSmsMessageCreateInfo>() {
                     new OutgoingSmsMessageCreateInfo(to: msisdn, text: "test", from: "1245", statusCallbackUrl: "http://technical.fail", validityPeriod: TimeSpan.FromMinutes(10), sendTime: DateTime.Now.AddMinutes(1))
                 });
+
+            Log("::: CALLING REPORTS ENDPOINT :::");
+            var reports = client.SmsOutgoing.GetStatusReports(limit: 250);
+            Log($"Received {reports.Reports.Count} reports");
         }
 
         private static void RunRealWorldTest_Blacklist(InMobileApiClient client)
