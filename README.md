@@ -3,6 +3,12 @@ Official .NET client for the inMobile V4 API
 
 You can always download the latest release as a NuGet package <a href="https://www.nuget.org/packages/inMobile.NET.API.Client/" >here.</a>
 
+## Create a client
+```c#
+var apiKey = new InMobileApiKey("My secret key");
+var client = new InMobileApiClient(apiKey: apiKey);
+```
+
 ## Sending SMS messages
 
 ### SMS: Send messages
