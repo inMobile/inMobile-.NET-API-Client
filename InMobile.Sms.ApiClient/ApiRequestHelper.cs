@@ -18,7 +18,7 @@ namespace InMobile.Sms.ApiClient
     /// </summary>
     internal class ApiRequestHelper : IApiRequestHelper
     {
-        private readonly InMobileApiKey _apiKey;
+        private readonly string _authenticationHeaderValue;
         private readonly string _baseUrl;
         private readonly string _inmobileClientVersion;
         private readonly InMobileJsonSerializerSettings _serializerSettings;
@@ -29,7 +29,7 @@ namespace InMobile.Sms.ApiClient
                 throw new ArgumentException($"'{nameof(baseUrl)}' cannot be null or empty.", nameof(baseUrl));
             }
 
-            _apiKey = apiKey;
+            _authenticationHeaderValue = "Basic " + Convert.ToBase64String(_encoding.GetBytes("_:" + apiKey.ApiKey));
             _baseUrl = baseUrl;
             _inmobileClientVersion = $"Inmobile .Net Client v{GetType().Assembly.GetName().Version}";
             _serializerSettings = new InMobileJsonSerializerSettings();
@@ -76,9 +76,10 @@ namespace InMobile.Sms.ApiClient
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
             request.Method = method.ToString();
             request.AllowAutoRedirect = false;
-            string encoded = Convert.ToBase64String(_encoding.GetBytes("_:" + _apiKey.ApiKey));
-            request.Headers.Add("Authorization", "Basic " + encoded);
+            
+            request.Headers.Add("Authorization", _authenticationHeaderValue);
             request.Headers.Add("content-type", "application/json");
+            request.Headers.Add("X-InmobileClientVersion", _inmobileClientVersion);
             if (payloadString != null)
             {
                 request.ContentLength = payloadString.Length;
