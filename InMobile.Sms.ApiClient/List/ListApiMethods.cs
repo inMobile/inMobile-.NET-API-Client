@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using RestSharp;
+
 
 namespace InMobile.Sms.ApiClient
 {

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using System.Text;
 using Newtonsoft.Json;
-using RestSharp;
-using RestSharp.Authenticators;
 
 namespace InMobile.Sms.ApiClient
 {
@@ -17,7 +18,7 @@ namespace InMobile.Sms.ApiClient
     /// </summary>
     internal class ApiRequestHelper : IApiRequestHelper
     {
-        private readonly HttpBasicAuthenticator _authenticator;
+        private readonly InMobileApiKey _apiKey;
         private readonly string _baseUrl;
         private readonly string _inmobileClientVersion;
         private readonly InMobileJsonSerializerSettings _serializerSettings;
@@ -28,7 +29,7 @@ namespace InMobile.Sms.ApiClient
                 throw new ArgumentException($"'{nameof(baseUrl)}' cannot be null or empty.", nameof(baseUrl));
             }
 
-            _authenticator = new HttpBasicAuthenticator(username: "_", password: apiKey.ApiKey);
+            _apiKey = apiKey;
             _baseUrl = baseUrl;
             _inmobileClientVersion = $"Inmobile .Net Client v{GetType().Assembly.GetName().Version}";
             _serializerSettings = new InMobileJsonSerializerSettings();
@@ -52,70 +53,65 @@ namespace InMobile.Sms.ApiClient
 
         public void ExecuteWithNoContent(Method method, string resource, object? payload = null)
         {
-            var response = GetClient().Execute(request: GetRequest(method: method, resource: resource, payload: payload));
-            ThrowIfNotSuccessful(response);
+            string? payloadString = payload != null ? JsonConvert.SerializeObject(payload, _serializerSettings) : null;
+            ExecuteInternal(method: method, resource: resource, payloadString: payloadString);
         }
 
+        
         public T Execute<T>(Method method, string resource, object? payload = null) where T : class
         {
-            // By design, we dont use the <T> overload of Execute request because that would trigger a deserialization before verifying that the request was successful and hence before ensuring the content is deserializable.
-            IRestResponse response = GetClient().Execute(request: GetRequest(method: method, resource: resource, payload: payload));
-            ThrowIfNotSuccessful(response);
-            string json = response.Content;
-            T? obj = JsonConvert.DeserializeObject<T>(json, _serializerSettings);
-            if (obj == null)
-                throw new Exception("Unexpected exception. Deserializing [" + json + "] returned NULL.");
-            return (T)obj;
+            string? payloadString = payload != null ? JsonConvert.SerializeObject(payload, _serializerSettings) : null;
+            string responseString = ExecuteInternal(method: method, resource: resource, payloadString: payloadString);
+            T? result = JsonConvert.DeserializeObject<T>(responseString, _serializerSettings);
+            if (result == null)
+                throw new Exception($"Unexpected NULL afer deserializing string {responseString}");
+            return result;
         }
 
-        private void ThrowIfNotSuccessful(IRestResponse response)
+        private static Encoding _encoding = Encoding.GetEncoding("ISO-8859-1");
+        private static Encoding _utf8WithoutBom = new UTF8Encoding(encoderShouldEmitUTF8Identifier: false);
+        private string ExecuteInternal(Method method, string resource, string? payloadString = null)
         {
-            if (response.IsSuccessful)
+            var url = _baseUrl + resource;
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            request.Method = method.ToString();
+            request.AllowAutoRedirect = false;
+            string encoded = Convert.ToBase64String(_encoding.GetBytes("_:" + _apiKey.ApiKey));
+            request.Headers.Add("Authorization", "Basic " + encoded);
+            request.Headers.Add("content-type", "application/json");
+            if (payloadString != null)
             {
-                return;
+                request.ContentLength = payloadString.Length;
+                using (var streamWriter = new StreamWriter(request.GetRequestStream(), _utf8WithoutBom))
+                {
+                    streamWriter.Write(payloadString);
+                }
             }
 
-            if (response.ErrorException != null)
+            try
             {
-                throw response.ErrorException;
-            }
-
-            if (InMobileApiException.TryParse(response, out var apiException))
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                {
+                    using (Stream dataStream = response.GetResponseStream())
+                    {
+                        using (StreamReader reader = new StreamReader(dataStream))
+                        {
+                            string responseFromServer = reader.ReadToEnd();
+                            return responseFromServer;
+                        }
+                    }
+                }
+            }catch(WebException webException)
             {
+                if (InMobileApiException.TryParse(webException, out var apiException))
+                {
 #pragma warning disable CS8597 // Thrown value may be null.
-                throw apiException;
+                    throw apiException;
 #pragma warning restore CS8597 // Thrown value may be null.
+                }
+
+                throw;
             }
-
-            throw new Exception($"Unexpected exception but new exceptions found on IRestResponse, nor could it be deserialized as an InMobileApiException. Raw content: {response.Content}");
-        }
-
-        private RestClient GetClient()
-        {
-            var client = new RestClient(baseUrl: _baseUrl);
-            client.AddDefaultHeader("X-InmobileClientVersion", _inmobileClientVersion);
-            client.UserAgent = _inmobileClientVersion;
-            client.Authenticator = _authenticator;
-            client.UseSerializer(() => new JsonNetSerializer());
-            return client;
-        }
-
-        private RestRequest GetRequest(Method method, string resource, object? payload)
-        {
-            if (string.IsNullOrEmpty(resource))
-            {
-                throw new ArgumentException($"'{nameof(resource)}' cannot be null or empty.", nameof(resource));
-            }
-
-            var request = new RestRequest(resource: resource);
-            request.AddHeader("content-type", "application/json");
-            request.Method = method;
-            if (payload != null)
-            {
-                request.AddJsonBody(payload);
-            }
-
-            return request;
         }
     }
 }
