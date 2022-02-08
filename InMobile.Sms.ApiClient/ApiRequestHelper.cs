@@ -31,6 +31,8 @@ namespace InMobile.Sms.ApiClient
 
             _authenticationHeaderValue = "Basic " + Convert.ToBase64String(_encoding.GetBytes("_:" + apiKey.ApiKey));
             _baseUrl = baseUrl;
+            if (_baseUrl.EndsWith("/"))
+                throw new ArgumentException("BaseUrl must not end with a /");
             _inmobileClientVersion = $"Inmobile .Net Client v{GetType().Assembly.GetName().Version}";
             _serializerSettings = new InMobileJsonSerializerSettings();
         }
@@ -72,6 +74,9 @@ namespace InMobile.Sms.ApiClient
         private static Encoding _utf8WithoutBom = new UTF8Encoding(encoderShouldEmitUTF8Identifier: false);
         private string ExecuteInternal(Method method, string resource, string? payloadString = null)
         {
+            if (!resource.StartsWith("/"))
+                throw new ArgumentException("Resource must start with a /");
+
             // Prepare basic request options
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(_baseUrl + resource);
             request.Method = method.ToString();
