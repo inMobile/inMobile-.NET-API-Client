@@ -18,6 +18,9 @@ namespace InMobile.Sms.ApiClient
     /// </summary>
     internal class ApiRequestHelper : IApiRequestHelper
     {
+        private static readonly Encoding _encoding = Encoding.GetEncoding("ISO-8859-1");
+        private static readonly Encoding _utf8WithoutBom = new UTF8Encoding(encoderShouldEmitUTF8Identifier: false);
+
         private readonly string _authenticationHeaderValue;
         private readonly string _baseUrl;
         private readonly string _inmobileClientVersion;
@@ -59,7 +62,7 @@ namespace InMobile.Sms.ApiClient
             ExecuteInternal(method: method, resource: resource, payloadString: payloadString);
         }
 
-        
+
         public T Execute<T>(Method method, string resource, object? payload = null) where T : class
         {
             string? payloadString = payload != null ? JsonConvert.SerializeObject(payload, _serializerSettings) : null;
@@ -70,8 +73,6 @@ namespace InMobile.Sms.ApiClient
             return result;
         }
 
-        private static Encoding _encoding = Encoding.GetEncoding("ISO-8859-1");
-        private static Encoding _utf8WithoutBom = new UTF8Encoding(encoderShouldEmitUTF8Identifier: false);
         private string ExecuteInternal(Method method, string resource, string? payloadString = null)
         {
             if (!resource.StartsWith("/"))
@@ -89,13 +90,13 @@ namespace InMobile.Sms.ApiClient
             if (payloadString != null)
             {
                 request.ContentLength = payloadString.Length;
-                using(var reqStream = request.GetRequestStream())
+                using (var reqStream = request.GetRequestStream())
                 {
                     using (var streamWriter = new StreamWriter(request.GetRequestStream(), _utf8WithoutBom))
                     {
                         streamWriter.Write(payloadString);
                     }
-                }   
+                }
             }
 
             // Execute and read response
@@ -112,12 +113,13 @@ namespace InMobile.Sms.ApiClient
                         }
                     }
                 }
-            }catch(WebException webException)
+            }
+            catch (WebException webException)
             {
                 var apiException = InMobileApiException.ParseOrNull(webException);
-                if(apiException != null)
+                if (apiException != null)
                     throw apiException;
-                
+
                 throw;
             }
         }
