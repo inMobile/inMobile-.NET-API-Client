@@ -318,17 +318,6 @@
             
             </summary>
         </member>
-        <member name="T:InMobile.Sms.ApiClient.JsonNetSerializer">
-            <summary>
-            Serializer created by https://gist.github.com/alexeyzimarev
-            Repo: https://gist.github.com/alexeyzimarev/c00b79c11c8cce6f6208454f7933ad24
-            </summary>
-        </member>
-        <member name="P:InMobile.Sms.ApiClient.JsonNetSerializer.Settings">
-            <summary>
-            Used to avoid having the client setting up his/her own serializer and then accidentially affecting how this client works.
-            </summary>
-        </member>
         <member name="T:InMobile.Sms.ApiClient.IListApiMethods">
             <summary>
             A collection of list- and recipient-specific api endpoints.
@@ -663,6 +652,11 @@
             <param name="listId">The id of the list in which the recipient belongs.</param>
             <param name="numberInfo">The number information</param>
             <param name="fields">Additional field information (key/value pairs)</param>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.Method">
+            <summary>
+            Http method types
+            </summary>
         </member>
         <member name="T:InMobile.Sms.ApiClient.MessageCancelInfo">
             <summary>

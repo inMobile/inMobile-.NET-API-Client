@@ -1,8 +1,8 @@
 ﻿using System;
+using System.IO;
 using System.Net;
 using System.Text;
 using Newtonsoft.Json;
-using RestSharp;
 
 namespace InMobile.Sms.ApiClient
 {
@@ -20,23 +20,37 @@ namespace InMobile.Sms.ApiClient
             ErrorHttpStatusCode = errorHttpStatusCode;
         }
 
-        internal static bool TryParse(IRestResponse response, out InMobileApiException? exception)
+        internal static InMobileApiException? ParseOrNull(WebException webException)
         {
-            exception = null;
-            if (response.StatusCode == 0)
-                return false;
-            var responseObject = JsonConvert.DeserializeObject<ErrorResponse>(response.Content, new InMobileJsonSerializerSettings());
-            if (responseObject == null)
-                return false;
-            StringBuilder sb = new StringBuilder();
-            sb.Append($"{responseObject.ErrorMessage}.");
-            if(responseObject.Details != null)
+            var response = (HttpWebResponse)webException.Response;
+            if (response != null)
             {
-                sb.Append($" {string.Join("; ", responseObject.Details)}");
-            }
+                if (response.StatusCode == 0)
+                    return null;
+                var responseObject = JsonConvert.DeserializeObject<ErrorResponse>(ReadContent(response), new InMobileJsonSerializerSettings());
+                if (responseObject == null)
+                    return null;
+                StringBuilder sb = new StringBuilder();
+                sb.Append($"{responseObject.ErrorMessage}.");
+                if (responseObject.Details != null)
+                {
+                    sb.Append($" {string.Join("; ", responseObject.Details)}");
+                }
 
-            exception = new InMobileApiException(response.StatusCode, $"{(int)response.StatusCode} {response.StatusCode}: {sb.ToString()}");
-            return true;
+                return new InMobileApiException(response.StatusCode, $"{(int)response.StatusCode} {response.StatusCode}: {sb.ToString()}");
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        private static string ReadContent(HttpWebResponse response)
+        {
+            using(var r = new StreamReader(response.GetResponseStream()))
+            {
+                return r.ReadToEnd();
+            }
         }
     }
 }
