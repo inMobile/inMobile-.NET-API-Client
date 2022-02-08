@@ -72,14 +72,15 @@ namespace InMobile.Sms.ApiClient
         private static Encoding _utf8WithoutBom = new UTF8Encoding(encoderShouldEmitUTF8Identifier: false);
         private string ExecuteInternal(Method method, string resource, string? payloadString = null)
         {
-            var url = _baseUrl + resource;
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            // Prepare basic request options
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(_baseUrl + resource);
             request.Method = method.ToString();
             request.AllowAutoRedirect = false;
-            
             request.Headers.Add("Authorization", _authenticationHeaderValue);
             request.Headers.Add("content-type", "application/json");
             request.Headers.Add("X-InmobileClientVersion", _inmobileClientVersion);
+
+            // Add payload if specified
             if (payloadString != null)
             {
                 request.ContentLength = payloadString.Length;
@@ -92,6 +93,7 @@ namespace InMobile.Sms.ApiClient
                 }   
             }
 
+            // Execute and read response
             try
             {
                 using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
@@ -107,13 +109,10 @@ namespace InMobile.Sms.ApiClient
                 }
             }catch(WebException webException)
             {
-                if (InMobileApiException.TryParse(webException, out var apiException))
-                {
-#pragma warning disable CS8597 // Thrown value may be null.
+                var apiException = InMobileApiException.ParseOrNull(webException);
+                if(apiException != null)
                     throw apiException;
-#pragma warning restore CS8597 // Thrown value may be null.
-                }
-
+                
                 throw;
             }
         }

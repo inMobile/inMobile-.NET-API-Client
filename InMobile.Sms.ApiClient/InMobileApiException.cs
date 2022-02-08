@@ -4,7 +4,6 @@ using System.Net;
 using System.Text;
 using Newtonsoft.Json;
 
-
 namespace InMobile.Sms.ApiClient
 {
     /// <summary>
@@ -21,17 +20,16 @@ namespace InMobile.Sms.ApiClient
             ErrorHttpStatusCode = errorHttpStatusCode;
         }
 
-        internal static bool TryParse(WebException webException, out InMobileApiException? exception)
+        internal static InMobileApiException? ParseOrNull(WebException webException)
         {
             var response = (HttpWebResponse)webException.Response;
             if (response != null)
             {
-                exception = null;
                 if (response.StatusCode == 0)
-                    return false;
+                    return null;
                 var responseObject = JsonConvert.DeserializeObject<ErrorResponse>(ReadContent(response), new InMobileJsonSerializerSettings());
                 if (responseObject == null)
-                    return false;
+                    return null;
                 StringBuilder sb = new StringBuilder();
                 sb.Append($"{responseObject.ErrorMessage}.");
                 if (responseObject.Details != null)
@@ -39,13 +37,11 @@ namespace InMobile.Sms.ApiClient
                     sb.Append($" {string.Join("; ", responseObject.Details)}");
                 }
 
-                exception = new InMobileApiException(response.StatusCode, $"{(int)response.StatusCode} {response.StatusCode}: {sb.ToString()}");
-                return true;
+                return new InMobileApiException(response.StatusCode, $"{(int)response.StatusCode} {response.StatusCode}: {sb.ToString()}");
             }
             else
             {
-                exception = null;
-                return false;
+                return null;
             }
         }
 
