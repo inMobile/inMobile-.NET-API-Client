@@ -82,10 +82,13 @@ namespace InMobile.Sms.ApiClient
             if (payloadString != null)
             {
                 request.ContentLength = payloadString.Length;
-                using (var streamWriter = new StreamWriter(request.GetRequestStream(), _utf8WithoutBom))
+                using(var reqStream = request.GetRequestStream())
                 {
-                    streamWriter.Write(payloadString);
-                }
+                    using (var streamWriter = new StreamWriter(request.GetRequestStream(), _utf8WithoutBom))
+                    {
+                        streamWriter.Write(payloadString);
+                    }
+                }   
             }
 
             try
