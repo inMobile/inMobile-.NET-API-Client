@@ -82,8 +82,8 @@ namespace InMobile.Sms.ApiClient
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(_baseUrl + resource);
             request.Method = method.ToString();
             request.AllowAutoRedirect = false;
+            request.ContentType = "application/json";
             request.Headers.Add("Authorization", _authenticationHeaderValue);
-            request.Headers.Add("content-type", "application/json");
             request.Headers.Add("X-InmobileClientVersion", _inmobileClientVersion);
 
             // Add payload if specified

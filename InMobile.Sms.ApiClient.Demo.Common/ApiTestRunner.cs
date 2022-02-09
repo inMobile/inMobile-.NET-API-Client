@@ -1,26 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net;
 
-namespace InMobile.Sms.ApiClient.Demo
+namespace InMobile.Sms.ApiClient.Demo.Common
 {
-    class Program
+    public class ApiTestRunner
     {
-        static void Main(string[] args)
+        public void RunTest(InMobileApiKey apiKey)
         {
-            var apiKey = new InMobileApiKey(File.ReadAllText("c:\\temp\\DOTNET_API_CLIENT\\apikey.txt"));
             var client = new InMobileApiClient(apiKey: apiKey);
-            
+
             RunRealWorldTest_SendSms(client: client, msisdn: "45...");
             RunRealWorldTest_Lists(client: client);
             RunRealWorldTest_Blacklist(client: client);
-
-            Console.WriteLine("Done");
-            Console.Read();
         }
-
         private static void RunRealWorldTest_SendSms(InMobileApiClient client, string msisdn)
         {
             Log("::: SEND SMS :::");

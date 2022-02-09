@@ -5,14 +5,18 @@ VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InMobile.Sms.ApiClient", "Inmobile.Sms.ApiClient\InMobile.Sms.ApiClient.csproj", "{33E13B89-A82F-4793-B383-B5E791370225}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InMobile.Sms.ApiClient.Demo", "InMobile.Sms.ApiClient.Demo\InMobile.Sms.ApiClient.Demo.csproj", "{BE0CD0D0-3DA5-4D53-A1DA-A371E75630CE}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{33A5AF1F-2E24-4EEC-921D-ED78338B9B47}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InMobile.Sms.ApiClient.Test", "InMobile.Sms.ApiClient.Test\InMobile.Sms.ApiClient.Test.csproj", "{B7DFBDED-56AD-4BD0-BAAD-1B484A2A9F1C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InMobile.Sms.ApiClient.Test", "InMobile.Sms.ApiClient.Test\InMobile.Sms.ApiClient.Test.csproj", "{B7DFBDED-56AD-4BD0-BAAD-1B484A2A9F1C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InMobile.Sms.ApiClient.Demo.Framework", "InMobile.Sms.ApiCLient.Demo.Framework\InMobile.Sms.ApiClient.Demo.Framework.csproj", "{2DDEA075-9F43-4163-889E-47BE14726F0F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InMobile.Sms.ApiClient.Demo.DotnetCore", "InMobile.Sms.ApiClient.Demo.DotnetCore\InMobile.Sms.ApiClient.Demo.DotnetCore.csproj", "{ED22E050-F30D-4FBC-833B-ECFF8B18FF21}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InMobile.Sms.ApiClient.Demo.Common", "InMobile.Sms.ApiClient.Demo.Common\InMobile.Sms.ApiClient.Demo.Common.csproj", "{41A42263-74FB-473A-813D-BBF5CA618736}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,14 +28,22 @@ Global
 		{33E13B89-A82F-4793-B383-B5E791370225}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33E13B89-A82F-4793-B383-B5E791370225}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33E13B89-A82F-4793-B383-B5E791370225}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BE0CD0D0-3DA5-4D53-A1DA-A371E75630CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BE0CD0D0-3DA5-4D53-A1DA-A371E75630CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BE0CD0D0-3DA5-4D53-A1DA-A371E75630CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BE0CD0D0-3DA5-4D53-A1DA-A371E75630CE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B7DFBDED-56AD-4BD0-BAAD-1B484A2A9F1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B7DFBDED-56AD-4BD0-BAAD-1B484A2A9F1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B7DFBDED-56AD-4BD0-BAAD-1B484A2A9F1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B7DFBDED-56AD-4BD0-BAAD-1B484A2A9F1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DDEA075-9F43-4163-889E-47BE14726F0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DDEA075-9F43-4163-889E-47BE14726F0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DDEA075-9F43-4163-889E-47BE14726F0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DDEA075-9F43-4163-889E-47BE14726F0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED22E050-F30D-4FBC-833B-ECFF8B18FF21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED22E050-F30D-4FBC-833B-ECFF8B18FF21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED22E050-F30D-4FBC-833B-ECFF8B18FF21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED22E050-F30D-4FBC-833B-ECFF8B18FF21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41A42263-74FB-473A-813D-BBF5CA618736}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41A42263-74FB-473A-813D-BBF5CA618736}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41A42263-74FB-473A-813D-BBF5CA618736}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41A42263-74FB-473A-813D-BBF5CA618736}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
