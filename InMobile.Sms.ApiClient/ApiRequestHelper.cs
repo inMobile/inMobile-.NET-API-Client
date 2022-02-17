@@ -69,7 +69,7 @@ namespace InMobile.Sms.ApiClient
             string responseString = ExecuteInternal(method: method, resource: resource, payloadString: payloadString);
             T? result = JsonConvert.DeserializeObject<T>(responseString, _serializerSettings);
             if (result == null)
-                throw new Exception($"Unexpected NULL afer deserializing string {responseString}");
+                throw new Exception($"Unexpected NULL after deserializing string {responseString}");
             return result;
         }
 
@@ -104,6 +104,11 @@ namespace InMobile.Sms.ApiClient
             {
                 using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
                 {
+                    if ((int)response.StatusCode < 200 || (int)response.StatusCode > 299)
+                    {
+                        throw new Exception("Unexpected status code received: " + response.StatusCode);
+                    }
+
                     using (Stream dataStream = response.GetResponseStream())
                     {
                         using (StreamReader reader = new StreamReader(dataStream))
