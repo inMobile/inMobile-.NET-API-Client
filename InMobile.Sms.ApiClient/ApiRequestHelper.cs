@@ -89,7 +89,7 @@ namespace InMobile.Sms.ApiClient
             // Add payload if specified
             if (payloadString != null)
             {
-                request.ContentLength = payloadString.Length;
+                request.ContentLength = _utf8WithoutBom.GetBytes(payloadString).Length;
                 using (var reqStream = request.GetRequestStream())
                 {
                     using (var streamWriter = new StreamWriter(request.GetRequestStream(), _utf8WithoutBom))
