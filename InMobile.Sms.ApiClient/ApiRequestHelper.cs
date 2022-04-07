@@ -98,6 +98,7 @@ namespace InMobile.Sms.ApiClient
                     using (var streamWriter = new StreamWriter(request.GetRequestStream(), _utf8WithoutBom))
                     {
                          streamWriter.Write(payloadString);
+                        streamWriter.Flush();
                     }
                 }
             }
