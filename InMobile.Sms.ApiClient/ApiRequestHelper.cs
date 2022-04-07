@@ -24,6 +24,7 @@ namespace InMobile.Sms.ApiClient
         private readonly string _authenticationHeaderValue;
         private readonly string _baseUrl;
         private readonly string _inmobileClientVersion;
+        private readonly string _dotnetVersion;
         private readonly InMobileJsonSerializerSettings _serializerSettings;
         public ApiRequestHelper(InMobileApiKey apiKey, string baseUrl)
         {
@@ -38,6 +39,7 @@ namespace InMobile.Sms.ApiClient
                 throw new ArgumentException("BaseUrl must not end with a /");
             _inmobileClientVersion = $"Inmobile .Net Client v{GetType().Assembly.GetName().Version}";
             _serializerSettings = new InMobileJsonSerializerSettings();
+            _dotnetVersion = System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription;
         }
 
         public List<T> ExecuteGetAndIteratePagedResult<T>(string resource)
@@ -85,6 +87,7 @@ namespace InMobile.Sms.ApiClient
             request.ContentType = "application/json";
             request.Headers.Add("Authorization", _authenticationHeaderValue);
             request.Headers.Add("X-InmobileClientVersion", _inmobileClientVersion);
+            request.Headers.Add("X-DotnetVersion", _dotnetVersion);
 
             // Add payload if specified
             if (payloadString != null)
@@ -94,7 +97,7 @@ namespace InMobile.Sms.ApiClient
                 {
                     using (var streamWriter = new StreamWriter(request.GetRequestStream(), _utf8WithoutBom))
                     {
-                        streamWriter.Write(payloadString);
+                         streamWriter.Write(payloadString);
                     }
                 }
             }
