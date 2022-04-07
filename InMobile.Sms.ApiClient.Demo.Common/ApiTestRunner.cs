@@ -7,11 +7,11 @@ namespace InMobile.Sms.ApiClient.Demo.Common
 {
     public class ApiTestRunner
     {
-        public void RunTest(InMobileApiKey apiKey)
+        public void RunTest(InMobileApiKey apiKey, string msisdn)
         {
             var client = new InMobileApiClient(apiKey: apiKey);
 
-            RunRealWorldTest_SendSms(client: client, msisdn: "45...");
+            RunRealWorldTest_SendSms(client: client, msisdn: msisdn);
             RunRealWorldTest_Lists(client: client);
             RunRealWorldTest_Blacklist(client: client);
         }

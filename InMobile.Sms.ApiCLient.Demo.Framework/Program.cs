@@ -16,7 +16,7 @@ namespace InMobile.Sms.ApiCLient.Demo.Framework
         {
             var apiKey = new InMobileApiKey(File.ReadAllText("c:\\temp\\DOTNET_API_CLIENT\\apikey.txt"));
             var runner = new ApiTestRunner();
-            runner.RunTest(apiKey);
+            runner.RunTest(apiKey: apiKey, msisdn: "45...");
 
             Console.WriteLine("Done");
             Console.Read();
