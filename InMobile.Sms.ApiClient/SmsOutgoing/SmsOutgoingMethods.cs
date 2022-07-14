@@ -22,7 +22,7 @@ namespace InMobile.Sms.ApiClient
         /// <returns></returns>
         ResultsList<CancelMessageResult> CancelMessages(List<OutgoingMessageId> messageIds);
         /// <summary>
-        /// Get 1 or more pending status reports awaiting to be fetched. After calling this method, the returned reports will never be flagged as processed and never returned again.
+        /// Get 1 or more pending status reports awaiting to be fetched. After calling this method, the returned reports will be flagged as processed and never returned again.
         /// </summary>
         /// <param name="limit">The maximum amount of reports to receive. Limit bust be between 1 and 250.</param>
         /// <returns></returns>
