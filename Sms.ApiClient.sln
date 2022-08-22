@@ -7,6 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InMobile.Sms.ApiClient", "I
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{33A5AF1F-2E24-4EEC-921D-ED78338B9B47}"
 	ProjectSection(SolutionItems) = preProject
+		icon.png = icon.png
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -16,7 +17,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InMobile.Sms.ApiClient.Demo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InMobile.Sms.ApiClient.Demo.DotnetCore", "InMobile.Sms.ApiClient.Demo.DotnetCore\InMobile.Sms.ApiClient.Demo.DotnetCore.csproj", "{ED22E050-F30D-4FBC-833B-ECFF8B18FF21}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InMobile.Sms.ApiClient.Demo.Common", "InMobile.Sms.ApiClient.Demo.Common\InMobile.Sms.ApiClient.Demo.Common.csproj", "{41A42263-74FB-473A-813D-BBF5CA618736}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InMobile.Sms.ApiClient.Demo.Common", "InMobile.Sms.ApiClient.Demo.Common\InMobile.Sms.ApiClient.Demo.Common.csproj", "{41A42263-74FB-473A-813D-BBF5CA618736}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
