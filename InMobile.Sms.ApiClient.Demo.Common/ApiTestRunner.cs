@@ -15,12 +15,14 @@ namespace InMobile.Sms.ApiClient.Demo.Common
             RunRealWorldTest_Lists(client: client);
             RunRealWorldTest_Blacklist(client: client);
         }
+
         private static void RunRealWorldTest_SendSms(InMobileApiClient client, string msisdn)
         {
             Log("::: SEND SMS :::");
-            client.SmsOutgoing.SendSmsMessages(new List<OutgoingSmsMessageCreateInfo>() {
-                    new OutgoingSmsMessageCreateInfo(to: msisdn, text: "test", from: "1245", statusCallbackUrl: "http://technical.fail", validityPeriod: TimeSpan.FromMinutes(10))
-                });
+            client.SmsOutgoing.SendSmsMessages(new List<OutgoingSmsMessageCreateInfo>
+            {
+                new OutgoingSmsMessageCreateInfo(to: msisdn, text: "test", from: "1245", statusCallbackUrl: "http://technical.fail", validityPeriod: TimeSpan.FromMinutes(10))
+            });
 
             Log("::: CALLING REPORTS ENDPOINT :::");
             var reports = client.SmsOutgoing.GetStatusReports(limit: 250);

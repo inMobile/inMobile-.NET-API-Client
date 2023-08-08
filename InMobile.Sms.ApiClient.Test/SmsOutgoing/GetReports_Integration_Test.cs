@@ -19,8 +19,10 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
                             ""countryCode"": ""45"",
                             ""phoneNumber"": ""12345678"",
                             ""rawMsisdn"": ""45 12 34 56 78"",
+                            ""msisdn"": ""4512345678"",
                             ""isValidMsisdn"": true,
                             ""isAnonymized"": false,
+                            ""countryHint"": ""DK"",
                             ""future_field_not_yet_known"": ""Hello""
                             },
                         ""deliveryInfo"": {
@@ -55,6 +57,8 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
                 Assert.Equal("45", report.NumberDetails.CountryCode);
                 Assert.Equal("12345678", report.NumberDetails.PhoneNumber);
                 Assert.Equal("45 12 34 56 78", report.NumberDetails.RawMsisdn);
+                Assert.Equal("4512345678", report.NumberDetails.Msisdn);
+                Assert.Equal("DK", report.NumberDetails.CountryHint);
                 Assert.Equal(true, report.NumberDetails.IsValidMsisdn);
                 Assert.Equal(false, report.NumberDetails.IsAnonymized);
 
@@ -81,8 +85,10 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
                             ""countryCode"": ""45"",
                             ""phoneNumber"": ""12345678"",
                             ""rawMsisdn"": ""45 12 34 56 78"",
+                            ""msisdn"": ""4512345678"",
                             ""isValidMsisdn"": true,
                             ""isAnonymized"": false,
+                            ""countryHint"": ""DK"",
                             ""futureFieldToBeIgnored"": false
                             },
                         ""deliveryInfo"": {

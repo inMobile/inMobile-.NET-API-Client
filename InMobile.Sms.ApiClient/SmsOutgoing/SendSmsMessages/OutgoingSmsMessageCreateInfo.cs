@@ -16,11 +16,19 @@ namespace InMobile.Sms.ApiClient
         public string To { get; }
 
         /// <summary>
+        /// For optimal phone number validation, we encourage you to provide us with a country code. This can be the numeric country code (like 44) or the two-letter suffix (like GB). 
+        /// If this field is empty it is important that you add the country code (e.g 44) in front of the phone number in “to”.
+        /// </summary>
+        /// <example>"45"</example>
+        public string? CountryHint { get; }
+
+        /// <summary>
         /// The text message.
         /// If the max length is exceeded (10,000 chars), the message text is truncated and sent.
         /// </summary>
         /// <example>"This is a message text to be sent"</example>
         public string Text { get; }
+
         /// <summary>
         /// The sender. This can either be a 3-11 chars text sender or an up to 14 digit long sender number.
         /// If the max length is exceeded, the string is truncated.
@@ -90,12 +98,12 @@ namespace InMobile.Sms.ApiClient
         /// </summary>
         /// <example>90</example>
         public int? ValidityPeriodInSeconds { get; }
-        
+
         /// <summary>
         /// An optional callback url. If specified, this url is called with a status report when the message has reached its final status (either delivered, failed or cancelled).
         /// NOTE: Callbacks happen in bulks.Reports for message with identical callback urls can happen to be grouped in single callbacks.
         /// </summary>
-        public string? StatusCallbackUrl { get;  }
+        public string? StatusCallbackUrl { get; }
 
         /// <summary>
         /// If specified, this represents the future send time of the message.
@@ -115,7 +123,8 @@ namespace InMobile.Sms.ApiClient
         /// <param name="validityPeriod">The validity period. If the message cannot be delivered within this time frame it is dropped an concidered failed. Minimum is 60 seconds and maximum is 172800 (48 hours). If not specified, the messages is attempted to be delivered in 48 hours.</param>
         /// <param name="statusCallbackUrl">An optional callback url. If specified, this url is called with a status report when the message has reached its final status (either delivered, failed or cancelled).</param>
         /// <param name="sendTime">If specified, this message will be sent at the specified time in the future.</param>
-        public OutgoingSmsMessageCreateInfo(string to, string text, string from, OutgoingMessageId? messageId = null, bool respectBlacklist = true, bool flash = false, MessageEncoding encoding = MessageEncoding.Gsm7, TimeSpan? validityPeriod = null, string? statusCallbackUrl = null, DateTime? sendTime = null)
+        /// <param name="countryHint">For optimal phone number validation, we encourage you to provide us with a country code. This can be the numeric country code (like 44) or the two-letter suffix (like GB). If this field is empty it is important that you add the country code (e.g 44) in front of the phone number in “to”.</param>
+        public OutgoingSmsMessageCreateInfo(string to, string text, string from, OutgoingMessageId? messageId = null, bool respectBlacklist = true, bool flash = false, MessageEncoding encoding = MessageEncoding.Gsm7, TimeSpan? validityPeriod = null, string? statusCallbackUrl = null, DateTime? sendTime = null, string? countryHint = null)
         {
             if (string.IsNullOrEmpty(to))
             {
@@ -133,6 +142,7 @@ namespace InMobile.Sms.ApiClient
             }
 
             To = to;
+            CountryHint = countryHint;
             Text = text;
             From = from;
             MessageId = messageId;
@@ -140,17 +150,17 @@ namespace InMobile.Sms.ApiClient
             Flash = flash;
             Encoding = encoding;
 
-            if(validityPeriod != null)
+            if (validityPeriod != null)
             {
                 ValidityPeriodInSeconds = (int)validityPeriod.Value.TotalSeconds;
             }
-            
+
             StatusCallbackUrl = statusCallbackUrl;
-            if(sendTime != null)
+            if (sendTime != null)
             {
                 SendTime = sendTime.Value.ToUniversalTime().ToString("yyyy-MM-ddTHH':'mm':'ssZ");
             }
-            
+
         }
     }
 }
