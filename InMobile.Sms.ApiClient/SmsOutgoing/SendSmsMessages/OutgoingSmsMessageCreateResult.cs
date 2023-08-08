@@ -12,6 +12,7 @@ namespace InMobile.Sms.ApiClient
         /// </summary>
         [JsonProperty]
         public NumberDetails NumberDetails { get; private set; }
+
         /// <summary>
         /// The text message.
         /// If the max length is exceeded (10,000 chars), the message text is truncated and sent.

@@ -191,6 +191,12 @@
             </summary>
             <example>"45 12 34 56 78"</example>
         </member>
+        <member name="P:InMobile.Sms.ApiClient.NumberDetails.Msisdn">
+            <summary>
+            The final cleaned msisdn.
+            </summary>
+            <example>"4512345678"</example>
+        </member>
         <member name="P:InMobile.Sms.ApiClient.NumberDetails.IsValidMsisdn">
             <summary>
             True if the input msisdn was valid.
@@ -202,6 +208,12 @@
             Specifies whether the message has been anonymized or not.
             </summary>
             <example>false</example>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.NumberDetails.CountryHint">
+            <summary>
+            The country code hint if provided in the request.
+            </summary>
+            <example>"45"</example>
         </member>
         <member name="T:InMobile.Sms.ApiClient.NumberInfo">
             <summary>
@@ -813,6 +825,13 @@
             </summary>
             <example>"4512345678"</example>
         </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingSmsMessageCreateInfo.CountryHint">
+            <summary>
+            For optimal phone number validation, we encourage you to provide us with a country code. This can be the numeric country code (like 44) or the two-letter suffix (like GB). 
+            If this field is empty it is important that you add the country code (e.g 44) in front of the phone number in “to”.
+            </summary>
+            <example>"45"</example>
+        </member>
         <member name="P:InMobile.Sms.ApiClient.OutgoingSmsMessageCreateInfo.Text">
             <summary>
             The text message.
@@ -883,7 +902,7 @@
             If specified, this represents the future send time of the message.
             </summary>
         </member>
-        <member name="M:InMobile.Sms.ApiClient.OutgoingSmsMessageCreateInfo.#ctor(System.String,System.String,System.String,InMobile.Sms.ApiClient.OutgoingMessageId,System.Boolean,System.Boolean,InMobile.Sms.ApiClient.MessageEncoding,System.Nullable{System.TimeSpan},System.String,System.Nullable{System.DateTime})">
+        <member name="M:InMobile.Sms.ApiClient.OutgoingSmsMessageCreateInfo.#ctor(System.String,System.String,System.String,InMobile.Sms.ApiClient.OutgoingMessageId,System.Boolean,System.Boolean,InMobile.Sms.ApiClient.MessageEncoding,System.Nullable{System.TimeSpan},System.String,System.Nullable{System.DateTime},System.String)">
             <summary>
             
             </summary>
@@ -897,6 +916,7 @@
             <param name="validityPeriod">The validity period. If the message cannot be delivered within this time frame it is dropped an concidered failed. Minimum is 60 seconds and maximum is 172800 (48 hours). If not specified, the messages is attempted to be delivered in 48 hours.</param>
             <param name="statusCallbackUrl">An optional callback url. If specified, this url is called with a status report when the message has reached its final status (either delivered, failed or cancelled).</param>
             <param name="sendTime">If specified, this message will be sent at the specified time in the future.</param>
+            <param name="countryHint">For optimal phone number validation, we encourage you to provide us with a country code. This can be the numeric country code (like 44) or the two-letter suffix (like GB). If this field is empty it is important that you add the country code (e.g 44) in front of the phone number in “to”.</param>
         </member>
         <member name="T:InMobile.Sms.ApiClient.OutgoingSmsMessageCreateResult">
             <summary>

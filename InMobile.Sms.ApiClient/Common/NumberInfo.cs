@@ -17,6 +17,7 @@ namespace InMobile.Sms.ApiClient
         /// </summary>
         /// <example>"12345678"</example>
         public string? PhoneNumber { get; set; }
+
         /// <summary>
         /// Create a new NumberInfo object
         /// </summary>
