@@ -7,22 +7,33 @@ namespace InMobile.Sms.ApiClient.Demo.Common
 {
     public class ApiTestRunner
     {
-        public void RunTest(InMobileApiKey apiKey, string msisdn, string statusCallbackUrl)
+        public void RunTest(InMobileApiKey apiKey, string msisdn, string statusCallbackUrl, TemplateId templateId)
         {
             var client = new InMobileApiClient(apiKey: apiKey);
 
-            RunRealWorldTest_SendSms(client: client, msisdn: msisdn, statusCallbackUrl: statusCallbackUrl);
+            RunRealWorldTest_SendSms(client: client, msisdn: msisdn, statusCallbackUrl: statusCallbackUrl, templateId: templateId);
             RunRealWorldTest_Lists(client: client);
             RunRealWorldTest_Blacklist(client: client);
         }
 
-        private static void RunRealWorldTest_SendSms(InMobileApiClient client, string msisdn, string statusCallbackUrl)
+        private static void RunRealWorldTest_SendSms(InMobileApiClient client, string msisdn, string statusCallbackUrl, TemplateId templateId)
         {
             Log("::: SEND SMS :::");
             client.SmsOutgoing.SendSmsMessages(new List<OutgoingSmsMessageCreateInfo>
             {
                 new OutgoingSmsMessageCreateInfo(to: msisdn, text: "test", from: "1245", statusCallbackUrl: statusCallbackUrl, validityPeriod: TimeSpan.FromMinutes(10))
             });
+
+            Log("::: SEND SMS USING TEMPLATE :::");
+            client.SmsOutgoing.SendSmsMessagesUsingTemplate(new OutgoingSmsTemplateCreateInfo(
+                templateId: templateId,
+                new List<OutgoingSmsTemplateMessageCreateInfo>
+                {
+                    new OutgoingSmsTemplateMessageCreateInfo(
+                        placeholders: new Dictionary<string, string>(),
+                        to: msisdn,
+                        statusCallbackUrl: statusCallbackUrl)
+                }));
 
             Log("::: CALLING REPORTS ENDPOINT :::");
             var reports = client.SmsOutgoing.GetStatusReports(limit: 250);

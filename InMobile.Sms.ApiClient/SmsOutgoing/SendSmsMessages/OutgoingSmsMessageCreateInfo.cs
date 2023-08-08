@@ -156,11 +156,11 @@ namespace InMobile.Sms.ApiClient
             }
 
             StatusCallbackUrl = statusCallbackUrl;
+            
             if (sendTime != null)
             {
                 SendTime = sendTime.Value.ToUniversalTime().ToString("yyyy-MM-ddTHH':'mm':'ssZ");
             }
-
         }
     }
 }
