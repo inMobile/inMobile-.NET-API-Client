@@ -7,21 +7,21 @@ namespace InMobile.Sms.ApiClient.Demo.Common
 {
     public class ApiTestRunner
     {
-        public void RunTest(InMobileApiKey apiKey, string msisdn)
+        public void RunTest(InMobileApiKey apiKey, string msisdn, string statusCallbackUrl)
         {
             var client = new InMobileApiClient(apiKey: apiKey);
 
-            RunRealWorldTest_SendSms(client: client, msisdn: msisdn);
+            RunRealWorldTest_SendSms(client: client, msisdn: msisdn, statusCallbackUrl: statusCallbackUrl);
             RunRealWorldTest_Lists(client: client);
             RunRealWorldTest_Blacklist(client: client);
         }
 
-        private static void RunRealWorldTest_SendSms(InMobileApiClient client, string msisdn)
+        private static void RunRealWorldTest_SendSms(InMobileApiClient client, string msisdn, string statusCallbackUrl)
         {
             Log("::: SEND SMS :::");
             client.SmsOutgoing.SendSmsMessages(new List<OutgoingSmsMessageCreateInfo>
             {
-                new OutgoingSmsMessageCreateInfo(to: msisdn, text: "test", from: "1245", statusCallbackUrl: "http://technical.fail", validityPeriod: TimeSpan.FromMinutes(10))
+                new OutgoingSmsMessageCreateInfo(to: msisdn, text: "test", from: "1245", statusCallbackUrl: statusCallbackUrl, validityPeriod: TimeSpan.FromMinutes(10))
             });
 
             Log("::: CALLING REPORTS ENDPOINT :::");
