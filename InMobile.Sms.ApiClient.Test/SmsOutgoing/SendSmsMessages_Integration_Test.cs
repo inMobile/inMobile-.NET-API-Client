@@ -23,7 +23,6 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
         ""rawMsisdn"": ""+45 11111111"",
         ""msisdn"": ""4511111111"",
         ""isValidMsisdn"": true,
-        ""isAnonymized"": false,
         ""countryHint"": """",
         ""future_field_not_yet_known"": ""Hello""
     },
@@ -63,7 +62,6 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
                 Assert.Equal("45", singleResult.NumberDetails.CountryCode);
                 Assert.Equal("11111111", singleResult.NumberDetails.PhoneNumber);
                 Assert.Equal(true, singleResult.NumberDetails.IsValidMsisdn);
-                Assert.Equal(false, singleResult.NumberDetails.IsAnonymized);
                 Assert.Equal("+45 11111111", singleResult.NumberDetails.RawMsisdn);
                 Assert.Equal("4511111111", singleResult.NumberDetails.Msisdn);
                 Assert.Equal("", singleResult.NumberDetails.CountryHint);

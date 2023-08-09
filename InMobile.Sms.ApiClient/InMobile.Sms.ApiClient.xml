@@ -813,6 +813,112 @@
             Charging info about the outgoing message.
             </summary>
         </member>
+        <member name="T:InMobile.Sms.ApiClient.OutgoingSmsTemplateCreateInfo">
+            <summary>
+            Information for creating a new outgoing message using a template.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingSmsTemplateCreateInfo.TemplateId">
+            <summary>
+            The id of the template to use.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingSmsTemplateCreateInfo.Messages">
+            <summary>
+            A list of the sms messages to be sent. Allowed to contain between 1 and 250 elements.
+            </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.OutgoingSmsTemplateCreateInfo.#ctor(InMobile.Sms.ApiClient.TemplateId,System.Collections.Generic.List{InMobile.Sms.ApiClient.OutgoingSmsTemplateMessageCreateInfo})">
+            <summary>
+            </summary>
+            <param name="templateId"></param>
+            <param name="messages"></param>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.OutgoingSmsTemplateCreateResult">
+            <summary>
+            Result info for a created outgoing message using template.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingSmsTemplateCreateResult.UsedPlaceholderKeys">
+            <summary>
+            A list of used used placeholder keys.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingSmsTemplateCreateResult.NotUsedPlaceholderKeys">
+            <summary>
+            A list of not used placeholder keys.
+            </summary>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.OutgoingSmsTemplateMessageCreateInfo">
+            <summary>
+            Create information for message for sending SMS using template.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingSmsTemplateMessageCreateInfo.To">
+            <summary>
+            The msisdn (country code and number) to send to. (Remember to include countrycode in all numbers, e.g. 4512345678).
+            If max length is exceeded, the entire api call will fail.
+            </summary>
+            <example>"4512345678"</example>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingSmsTemplateMessageCreateInfo.CountryHint">
+            <summary>
+            For optimal phone number validation, we encourage you to provide us with a country code. This can be the numeric country code (like 44) or the two-letter suffix (like GB). 
+            If this field is empty it is important that you add the country code (e.g 44) in front of the phone number in “to”.
+            </summary>
+            <example>"45"</example>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingSmsTemplateMessageCreateInfo.MessageId">
+            <summary>
+            An optional message id used to identify the message.
+            If no message id is provided, a new message id is generated and assigned to the message. This id must be unique across all messages created on the same account.
+            (In case a previous message has been deleted according to GDPR deletion rules setup on the specific account, the messageId is allowed to be reused)
+            If max length is exceeded, the entire api call will fail.
+            Max length: 50
+            </summary>
+            <example>PetShop</example>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingSmsTemplateMessageCreateInfo.RespectBlacklist">
+            <summary>
+            If true, this message will be blocked from sending if the target number is on the account's blacklist. If false, the message will be sent no matter blacklist settings.
+            Default: true
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingSmsTemplateMessageCreateInfo.ValidityPeriodInSeconds">
+            <summary>
+            The validity period in seconds. Minimum is 60 seconds and maximum is 172800 (48 hours).
+            If not specified, the messages is attempted to be delivered in 48 hours.
+            </summary>
+            <example>90</example>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingSmsTemplateMessageCreateInfo.StatusCallbackUrl">
+            <summary>
+            An optional callback url. If specified, this url is called with a status report when the message has reached its final status (either delivered, failed or cancelled).
+            NOTE: Callbacks happen in bulks.Reports for message with identical callback urls can happen to be grouped in single callbacks.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingSmsTemplateMessageCreateInfo.SendTime">
+            <summary>
+            If specified, this represents the future send time of the message.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingSmsTemplateMessageCreateInfo.Placeholders">
+            <summary>
+            A key-value list of placeholders to replace in the template text. Keys must be encapsulated with {}. E.g. {NAME}.
+            </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.OutgoingSmsTemplateMessageCreateInfo.#ctor(System.Collections.Generic.Dictionary{System.String,System.String},System.String,System.String,InMobile.Sms.ApiClient.OutgoingMessageId,System.Boolean,System.Nullable{System.TimeSpan},System.String,System.Nullable{System.DateTime})">
+            <summary>
+            </summary>
+            <param name="placeholders"></param>
+            <param name="to"></param>
+            <param name="countryHint"></param>
+            <param name="messageId"></param>
+            <param name="respectBlacklist"></param>
+            <param name="validityPeriod"></param>
+            <param name="statusCallbackUrl"></param>
+            <param name="sendTime"></param>
+        </member>
         <member name="T:InMobile.Sms.ApiClient.OutgoingSmsMessageCreateInfo">
             <summary>
             Information for creating a new outgoing message.
@@ -983,6 +1089,13 @@
             <param name="messageList"></param>
             <returns></returns>
         </member>
+        <member name="M:InMobile.Sms.ApiClient.ISmsOutgoingApiMethod.SendSmsMessagesUsingTemplate(InMobile.Sms.ApiClient.OutgoingSmsTemplateCreateInfo)">
+            <summary>
+            Send sms messages using a template.
+            </summary>
+            <param name="templateCreateInfo"></param>
+            <returns></returns>
+        </member>
         <member name="M:InMobile.Sms.ApiClient.ISmsOutgoingApiMethod.CancelMessages(System.Collections.Generic.List{InMobile.Sms.ApiClient.OutgoingMessageId})">
             <summary>
             Cancel future scheduled messages.
@@ -996,6 +1109,17 @@
             </summary>
             <param name="limit">The maximum amount of reports to receive. Limit bust be between 1 and 250.</param>
             <returns></returns>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.TemplateId">
+            <summary>
+            The id type used for templates.
+            </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.TemplateId.#ctor(System.String)">
+            <summary>
+            Create a new template id.
+            </summary>
+            <param name="value"></param>
         </member>
     </members>
 </doc>
