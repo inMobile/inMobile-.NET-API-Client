@@ -11,14 +11,22 @@ namespace InMobile.Sms.ApiClient
         /// Outgoing message specific operations.
         /// </summary>
         public ISmsOutgoingApiMethod SmsOutgoing { get; private set; }
+
         /// <summary>
         /// Blacklist specific operations.
         /// </summary>
         public IBlacklistApiMethods Blacklist { get; private set; }
+
         /// <summary>
         /// List specific operations.
         /// </summary>
         public IListApiMethods Lists { get; private set; }
+
+        /// <summary>
+        /// Temmplate specific operations.
+        /// </summary>
+        public ISmsTemplateApiMethods SmsTemplates { get; private set; }
+
         /// <summary>
         /// Creates a new api client.
         /// </summary>
@@ -36,6 +44,7 @@ namespace InMobile.Sms.ApiClient
             SmsOutgoing = new SmsOutgoingMethods(requestHelper);
             Blacklist = new BlacklistApiMethods(requestHelper);
             Lists = new ListApiMethods(requestHelper);
+            SmsTemplates = new SmsTemplateApiMethods(requestHelper);
         }
     }
 }

@@ -26,6 +26,7 @@ namespace InMobile.Sms.ApiClient
         private readonly string _inmobileClientVersion;
         private readonly string _dotnetVersion;
         private readonly InMobileJsonSerializerSettings _serializerSettings;
+
         public ApiRequestHelper(InMobileApiKey apiKey, string baseUrl)
         {
             if (string.IsNullOrEmpty(baseUrl))
@@ -63,7 +64,6 @@ namespace InMobile.Sms.ApiClient
             string? payloadString = payload != null ? JsonConvert.SerializeObject(payload, _serializerSettings) : null;
             ExecuteInternal(method: method, resource: resource, payloadString: payloadString);
         }
-
 
         public T Execute<T>(Method method, string resource, object? payload = null) where T : class
         {

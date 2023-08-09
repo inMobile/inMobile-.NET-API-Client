@@ -46,7 +46,7 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
             {
                 var client = new InMobileApiClient(apiKey, baseUrl: $"http://{server.EndPoint.Address}:{server.EndPoint.Port}");
                 var response = client.SmsOutgoing.SendSmsMessagesUsingTemplate(new OutgoingSmsTemplateCreateInfo(
-                    new TemplateId("d33a51b8-13a8-4714-8a96-11347326a4a9"),
+                    new SmsTemplateId("d33a51b8-13a8-4714-8a96-11347326a4a9"),
                     new List<OutgoingSmsTemplateMessageCreateInfo>
                     {
                         new OutgoingSmsTemplateMessageCreateInfo(
@@ -98,7 +98,7 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
             {
                 var client = new InMobileApiClient(apiKey, baseUrl: $"http://{server.EndPoint.Address}:{server.EndPoint.Port}");
                 var ex = Assert.Throws<InMobileApiException>(() => client.SmsOutgoing.SendSmsMessagesUsingTemplate(new OutgoingSmsTemplateCreateInfo(
-                    new TemplateId("d33a51b8-13a8-4714-8a96-11347326a4a9"),
+                    new SmsTemplateId("d33a51b8-13a8-4714-8a96-11347326a4a9"),
                     new List<OutgoingSmsTemplateMessageCreateInfo>
                     {
                         new OutgoingSmsTemplateMessageCreateInfo(

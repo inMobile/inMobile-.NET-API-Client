@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using Xunit;
 using static InMobile.Sms.ApiClient.Test.UnitTestHttpServer;
 
@@ -34,6 +35,7 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
             var responseJson = @"{
                 ""entries"": [
                     {
+                        ""externalCreated"": ""2001-02-30T14:50:23Z"",
                         ""numberInfo"": {
                             ""countryCode"": ""45"",
                             ""phoneNumber"": ""1111""
@@ -76,6 +78,9 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
                 {
                     var entry1 = allEntries[0];
                     Assert.Equal("recId1", entry1.Id.Value);
+                    Assert.True(entry1.ExternalCreated.HasValue);
+                    Assert.Equal(DateTimeKind.Utc, entry1.ExternalCreated.Value.Kind);
+                    Assert.Equal(new DateTime(2001, 02, 30, 14, 50, 23, DateTimeKind.Utc), entry1.ExternalCreated.Value);
                     Assert.Equal("45", entry1.NumberInfo.CountryCode);
                     Assert.Equal("1111", entry1.NumberInfo.PhoneNumber);
                     Assert.Equal("some_list_id", entry1.ListId.Value);
@@ -87,56 +92,57 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
             }
         }
 
-
-
         [Fact]
         public void MultiPage_Test()
         {
             var apiKey = new InMobileApiKey("UnitTestKey123");
-            var pair1 = new RequestResponsePair(new UnitTestRequestInfo(apiKey: apiKey, methodAndPath: "GET /v4/lists/some_LIST_id/recipients?pageLimit=250", jsonOrNull: null),
-                        new UnitTestResponseInfo(@"{
-                            ""entries"": [
-                                {
-                                    ""numberInfo"": {
-                                        ""countryCode"": ""45"",
-                                        ""phoneNumber"": ""1111""
-                                    },
-                                    ""fields"": {
-                                        ""firstname"": ""Mr"",
-                                        ""lastname"": ""Anderson""
-                                    },
-                                    ""id"": ""recId1"",
-                                    ""listId"": ""some_list_id""
-                                },
-                                {
-                                    ""numberInfo"": {
-                                        ""countryCode"": ""33"",
-                                        ""phoneNumber"": ""2222""
-                                    },
-                                    ""fields"": {
-                                        ""firstname"": ""Mrs"",
-                                        ""lastname"": ""Doubtfire""
-                                    },
-                                    ""id"": ""recId2"",
-                                    ""listId"": ""some_list_id""
-                                }
-                            ],
-                            ""_links"": {
-                                ""next"": ""/v4/lists/page/token_page_2"",
-                                ""isLastPage"": false
-                            }
-                        }"));
+            var pair1 = new RequestResponsePair(
+                new UnitTestRequestInfo(apiKey: apiKey, methodAndPath: "GET /v4/lists/some_LIST_id/recipients?pageLimit=250", jsonOrNull: null),
+                new UnitTestResponseInfo(@"{
+                    ""entries"": [
+                        {
+                            ""externalCreated"": ""2001-02-30T14:50:23Z"",
+                            ""numberInfo"": {
+                                ""countryCode"": ""45"",
+                                ""phoneNumber"": ""1111""
+                            },
+                            ""fields"": {
+                                ""firstname"": ""Mr"",
+                                ""lastname"": ""Anderson""
+                            },
+                            ""id"": ""recId1"",
+                            ""listId"": ""some_list_id""
+                        },
+                        {
+                            ""numberInfo"": {
+                                ""countryCode"": ""33"",
+                                ""phoneNumber"": ""2222""
+                            },
+                            ""fields"": {
+                                ""firstname"": ""Mrs"",
+                                ""lastname"": ""Doubtfire""
+                            },
+                            ""id"": ""recId2"",
+                            ""listId"": ""some_list_id""
+                        }
+                    ],
+                    ""_links"": {
+                        ""next"": ""/v4/lists/page/token_page_2"",
+                        ""isLastPage"": false
+                    }
+                }"));
 
             // Testing an empty result in the middle of the flow
-            var pair2 = new RequestResponsePair(new UnitTestRequestInfo(apiKey: apiKey, methodAndPath: "GET /v4/lists/page/token_page_2", jsonOrNull: null),
-                            new UnitTestResponseInfo(@"{
-                                ""entries"": [
-                                ],
-                                ""_links"": {
-                                    ""next"": ""/v4/lists/page/token_page_3"",
-                                    ""isLastPage"": false
-                                }
-                            }"));
+            var pair2 = new RequestResponsePair(
+                new UnitTestRequestInfo(apiKey: apiKey, methodAndPath: "GET /v4/lists/page/token_page_2", jsonOrNull: null),
+                new UnitTestResponseInfo(@"{
+                    ""entries"": [
+                    ],
+                    ""_links"": {
+                        ""next"": ""/v4/lists/page/token_page_3"",
+                        ""isLastPage"": false
+                    }
+                }"));
 
             var pair3 = new RequestResponsePair(new UnitTestRequestInfo(apiKey: apiKey, methodAndPath: "GET /v4/lists/page/token_page_3", jsonOrNull: null),
              new UnitTestResponseInfo(@"{
@@ -181,6 +187,9 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
                 {
                     var entry1 = allEntries[0];
                     Assert.Equal("recId1", entry1.Id.Value);
+                    Assert.True(entry1.ExternalCreated.HasValue);
+                    Assert.Equal(DateTimeKind.Utc, entry1.ExternalCreated.Value.Kind);
+                    Assert.Equal(new DateTime(2001, 02, 30, 14, 50, 23, DateTimeKind.Utc), entry1.ExternalCreated.Value);
                     Assert.Equal("45", entry1.NumberInfo.CountryCode);
                     Assert.Equal("1111", entry1.NumberInfo.PhoneNumber);
                     Assert.Equal("some_list_id", entry1.ListId.Value);
@@ -193,7 +202,6 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
                 Assert.Equal("recId4", allEntries[3].Id.Value);
             }
         }
-
 
         [Fact]
         public void GetAllRecipients_ApiError_FirstPage_Test()
@@ -223,50 +231,52 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
         public void GetAllRecipients_ApiError_MultiPage_Test()
         {
             var apiKey = new InMobileApiKey("UnitTestKey123");
-            var pair1 = new RequestResponsePair(new UnitTestRequestInfo(apiKey: apiKey, methodAndPath: "GET /v4/lists/some_LIST_id/recipients?pageLimit=250", jsonOrNull: null),
-                        new UnitTestResponseInfo(@"{
-                            ""entries"": [
-                                {
-                                    ""numberInfo"": {
-                                        ""countryCode"": ""45"",
-                                        ""phoneNumber"": ""1111""
-                                    },
-                                    ""fields"": {
-                                        ""firstname"": ""Mr"",
-                                        ""lastname"": ""Anderson""
-                                    },
-                                    ""id"": ""recId1"",
-                                    ""listId"": ""some_list_id""
-                                },
-                                {
-                                    ""numberInfo"": {
-                                        ""countryCode"": ""33"",
-                                        ""phoneNumber"": ""2222""
-                                    },
-                                    ""fields"": {
-                                        ""firstname"": ""Mrs"",
-                                        ""lastname"": ""Doubtfire""
-                                    },
-                                    ""id"": ""recId2"",
-                                    ""listId"": ""some_list_id""
-                                }
-                            ],
-                            ""_links"": {
-                                ""next"": ""/v4/lists/page/token_page_2"",
-                                ""isLastPage"": false
-                            }
-                        }"));
+            var pair1 = new RequestResponsePair(
+                new UnitTestRequestInfo(apiKey: apiKey, methodAndPath: "GET /v4/lists/some_LIST_id/recipients?pageLimit=250", jsonOrNull: null),
+                new UnitTestResponseInfo(@"{
+                    ""entries"": [
+                        {
+                            ""numberInfo"": {
+                                ""countryCode"": ""45"",
+                                ""phoneNumber"": ""1111""
+                            },
+                            ""fields"": {
+                                ""firstname"": ""Mr"",
+                                ""lastname"": ""Anderson""
+                            },
+                            ""id"": ""recId1"",
+                            ""listId"": ""some_list_id""
+                        },
+                        {
+                            ""numberInfo"": {
+                                ""countryCode"": ""33"",
+                                ""phoneNumber"": ""2222""
+                            },
+                            ""fields"": {
+                                ""firstname"": ""Mrs"",
+                                ""lastname"": ""Doubtfire""
+                            },
+                            ""id"": ""recId2"",
+                            ""listId"": ""some_list_id""
+                        }
+                    ],
+                    ""_links"": {
+                        ""next"": ""/v4/lists/page/token_page_2"",
+                        ""isLastPage"": false
+                    }
+                }"));
 
             // Testing an empty result in the middle of the flow
-            var pair2 = new RequestResponsePair(new UnitTestRequestInfo(apiKey: apiKey, methodAndPath: "GET /v4/lists/page/token_page_2", jsonOrNull: null),
-                            new UnitTestResponseInfo(@"{
-                                ""entries"": [
-                                ],
-                                ""_links"": {
-                                    ""next"": ""/v4/lists/page/token_page_3"",
-                                    ""isLastPage"": false
-                                }
-                            }"));
+            var pair2 = new RequestResponsePair(
+                new UnitTestRequestInfo(apiKey: apiKey, methodAndPath: "GET /v4/lists/page/token_page_2", jsonOrNull: null),
+                new UnitTestResponseInfo(@"{
+                    ""entries"": [
+                    ],
+                    ""_links"": {
+                        ""next"": ""/v4/lists/page/token_page_3"",
+                        ""isLastPage"": false
+                    }
+                }"));
 
             var pair3 = new RequestResponsePair(new UnitTestRequestInfo(apiKey: apiKey, methodAndPath: "GET /v4/lists/page/token_page_3", jsonOrNull: null),
              new UnitTestResponseInfo(@"{

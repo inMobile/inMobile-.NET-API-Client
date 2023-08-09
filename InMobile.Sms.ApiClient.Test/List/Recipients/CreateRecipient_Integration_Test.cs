@@ -15,10 +15,7 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
             var expectedRequest = new UnitTestRequestInfo(apiKey: apiKey, methodAndPath: "POST /v4/lists/some_list_id/recipients", jsonOrNull: requestJson);
             var responseToSendback = new UnitTestResponseInfo(jsonOrNull:
                 @"{
-                    ""externalCreated"": {
-                        ""utcTime"": ""2019-08-24T14:15:22Z"",
-                        ""localServerTime"": ""2019-08-24T14:15:22Z""
-                    },
+                    ""externalCreated"": ""2019-08-24T14:15:22Z"",
                     ""numberInfo"": {
                         ""countryCode"": ""33"",
                         ""phoneNumber"": ""111111""
@@ -29,10 +26,7 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
                     },
                     ""id"": ""some_new_id"",
                     ""listId"": ""some_list_id"",
-                    ""created"": {
-                        ""utcTime"": ""2019-08-24T14:15:22Z"",
-                        ""localServerTime"": ""2019-08-24T14:15:22Z""
-                    }
+                    ""created"": ""2019-08-24T14:15:22Z""
                 }", statusCodeString: "200 Ok");
 
             using (var server = UnitTestHttpServer.StartOnAnyAvailablePort(new RequestResponsePair(request: expectedRequest, response: responseToSendback)))

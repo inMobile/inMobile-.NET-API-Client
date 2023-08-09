@@ -20,7 +20,7 @@ namespace InMobile.Sms.ApiClient.Demo
                 apiKey: apiKey, 
                 msisdn: TEST_MSISDN, 
                 statusCallbackUrl: TEST_STATUSCALLBACKURL, 
-                templateId: new TemplateId(TEST_TEMPLATEID));
+                templateId: new SmsTemplateId(TEST_TEMPLATEID));
 
             Console.WriteLine("Done");
             Console.Read();

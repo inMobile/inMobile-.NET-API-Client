@@ -12,7 +12,7 @@ namespace InMobile.Sms.ApiClient
         /// <summary>
         /// The external created date. If specified, this value represents the date of which the recipient was created in a given source outside of inMobiles system.
         /// </summary>
-        public DateTime? ExternalCreatedDate { get; private set; }
+        public DateTime? ExternalCreated { get; private set; }
 
         /// <summary>
         /// The id of the recipient.

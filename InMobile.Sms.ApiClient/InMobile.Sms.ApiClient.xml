@@ -281,6 +281,11 @@
             List specific operations.
             </summary>
         </member>
+        <member name="P:InMobile.Sms.ApiClient.InMobileApiClient.SmsTemplates">
+            <summary>
+            Temmplate specific operations.
+            </summary>
+        </member>
         <member name="M:InMobile.Sms.ApiClient.InMobileApiClient.#ctor(InMobile.Sms.ApiClient.InMobileApiKey,System.String)">
             <summary>
             Creates a new api client.
@@ -534,7 +539,7 @@
             A recipient
             </summary>
         </member>
-        <member name="P:InMobile.Sms.ApiClient.Recipient.ExternalCreatedDate">
+        <member name="P:InMobile.Sms.ApiClient.Recipient.ExternalCreated">
             <summary>
             The external created date. If specified, this value represents the date of which the recipient was created in a given source outside of inMobiles system.
             </summary>
@@ -828,7 +833,7 @@
             A list of the sms messages to be sent. Allowed to contain between 1 and 250 elements.
             </summary>
         </member>
-        <member name="M:InMobile.Sms.ApiClient.OutgoingSmsTemplateCreateInfo.#ctor(InMobile.Sms.ApiClient.TemplateId,System.Collections.Generic.List{InMobile.Sms.ApiClient.OutgoingSmsTemplateMessageCreateInfo})">
+        <member name="M:InMobile.Sms.ApiClient.OutgoingSmsTemplateCreateInfo.#ctor(InMobile.Sms.ApiClient.SmsTemplateId,System.Collections.Generic.List{InMobile.Sms.ApiClient.OutgoingSmsTemplateMessageCreateInfo})">
             <summary>
             </summary>
             <param name="templateId"></param>
@@ -1110,14 +1115,78 @@
             <param name="limit">The maximum amount of reports to receive. Limit bust be between 1 and 250.</param>
             <returns></returns>
         </member>
-        <member name="T:InMobile.Sms.ApiClient.TemplateId">
+        <member name="T:InMobile.Sms.ApiClient.SmsTemplate">
             <summary>
-            The id type used for templates.
+            Info about a SMS template.
             </summary>
         </member>
-        <member name="M:InMobile.Sms.ApiClient.TemplateId.#ctor(System.String)">
+        <member name="P:InMobile.Sms.ApiClient.SmsTemplate.Id">
             <summary>
-            Create a new template id.
+            The id of the SMS template
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.SmsTemplate.Name">
+            <summary>
+            The name of the SMS template
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.SmsTemplate.Text">
+            <summary>
+            The SMS template text content.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.SmsTemplate.SenderName">
+            <summary>
+            The sendername of the SMS template.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.SmsTemplate.Encoding">
+            <summary>
+            The encoding of the message. Can be either "gsm7", "ucs2" or "auto".
+            </summary>
+            <example>gsm7</example>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.SmsTemplate.Placeholders">
+            <summary>
+            The placeholders of the SMS template.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.SmsTemplate.Created">
+            <summary>
+            The created date of the SMS template.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.SmsTemplate.LastUpdated">
+            <summary>
+            The last updated date of the SMS template.
+            </summary>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.ISmsTemplateApiMethods">
+            <summary>
+            A collection of SMS template-specific api endpoints.
+            </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.ISmsTemplateApiMethods.GetAllTemplates">
+            <summary>
+            Get all existing SMS templates on account.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.ISmsTemplateApiMethods.GetTemplateById(InMobile.Sms.ApiClient.SmsTemplateId)">
+            <summary>
+            Get a specific SMS template by its id.
+            </summary>
+            <param name="templateId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.SmsTemplateId">
+            <summary>
+            The id type used for SMS templates.
+            </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.SmsTemplateId.#ctor(System.String)">
+            <summary>
+            Create a new SMS template id.
             </summary>
             <param name="value"></param>
         </member>
