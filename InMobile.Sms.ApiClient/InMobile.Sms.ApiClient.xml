@@ -696,9 +696,9 @@
             </summary>
         </member>
         <member name="P:InMobile.Sms.ApiClient.MessageCancelInfo.MessageId">
-            <summary>
+             <summary>
             
-            </summary>
+             </summary>
         </member>
         <member name="M:InMobile.Sms.ApiClient.MessageCancelInfo.#ctor(InMobile.Sms.ApiClient.OutgoingMessageId)">
             <summary>
@@ -792,6 +792,11 @@
             </summary>
         </member>
         <member name="P:InMobile.Sms.ApiClient.DeliveryInfo.StateDescription">
+            <summary>
+            A human readable description of the state.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.DeliveryInfo.SendTime">
             <summary>
             A human readable description of the state.
             </summary>
