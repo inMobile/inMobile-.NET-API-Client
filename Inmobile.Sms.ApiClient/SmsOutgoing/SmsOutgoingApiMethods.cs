@@ -37,13 +37,13 @@ namespace InMobile.Sms.ApiClient
         ReportsList<StatusReport> GetStatusReports(int limit);
     }
 
-    internal class SmsOutgoingMethods : ISmsOutgoingApiMethod
+    internal class SmsOutgoingApiMethods : ISmsOutgoingApiMethod
     {
         private const string V4_sms_outgoing = "/v4/sms/outgoing";
 
         private readonly IApiRequestHelper _requestHelper;
 
-        public SmsOutgoingMethods(IApiRequestHelper requestHelper)
+        public SmsOutgoingApiMethods(IApiRequestHelper requestHelper)
         {
             _requestHelper = requestHelper ?? throw new ArgumentNullException(nameof(requestHelper));
         }

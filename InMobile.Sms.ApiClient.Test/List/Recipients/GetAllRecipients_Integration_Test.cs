@@ -35,7 +35,7 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
             var responseJson = @"{
                 ""entries"": [
                     {
-                        ""externalCreated"": ""2001-02-30T14:50:23Z"",
+                        ""externalCreated"": ""2001-02-10T14:50:23Z"",
                         ""numberInfo"": {
                             ""countryCode"": ""45"",
                             ""phoneNumber"": ""1111""
@@ -57,7 +57,8 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
                             ""lastname"": ""Doubtfire""
                         },
                         ""id"": ""recId2"",
-                        ""listId"": ""some_list_id""
+                        ""listId"": ""some_list_id"",
+                        ""created"": ""2002-02-30T14:50:23Z""
                     }
                 ],
                 ""_links"": {
@@ -80,7 +81,7 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
                     Assert.Equal("recId1", entry1.Id.Value);
                     Assert.True(entry1.ExternalCreated.HasValue);
                     Assert.Equal(DateTimeKind.Utc, entry1.ExternalCreated.Value.Kind);
-                    Assert.Equal(new DateTime(2001, 02, 30, 14, 50, 23, DateTimeKind.Utc), entry1.ExternalCreated.Value);
+                    Assert.Equal(new DateTime(2001, 02, 10, 14, 50, 23, DateTimeKind.Utc), entry1.ExternalCreated.Value);
                     Assert.Equal("45", entry1.NumberInfo.CountryCode);
                     Assert.Equal("1111", entry1.NumberInfo.PhoneNumber);
                     Assert.Equal("some_list_id", entry1.ListId.Value);
@@ -101,7 +102,7 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
                 new UnitTestResponseInfo(@"{
                     ""entries"": [
                         {
-                            ""externalCreated"": ""2001-02-30T14:50:23Z"",
+                            ""externalCreated"": ""2001-02-10T14:50:23Z"",
                             ""numberInfo"": {
                                 ""countryCode"": ""45"",
                                 ""phoneNumber"": ""1111""
@@ -111,9 +112,11 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
                                 ""lastname"": ""Anderson""
                             },
                             ""id"": ""recId1"",
-                            ""listId"": ""some_list_id""
+                            ""listId"": ""some_list_id"",
+                            ""created"": ""2003-02-30T14:50:23Z""
                         },
                         {
+                            ""externalCreated"": null,
                             ""numberInfo"": {
                                 ""countryCode"": ""33"",
                                 ""phoneNumber"": ""2222""
@@ -123,7 +126,8 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
                                 ""lastname"": ""Doubtfire""
                             },
                             ""id"": ""recId2"",
-                            ""listId"": ""some_list_id""
+                            ""listId"": ""some_list_id"",
+                            ""created"": ""2002-02-30T14:50:23Z""
                         }
                     ],
                     ""_links"": {
@@ -148,6 +152,7 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
              new UnitTestResponseInfo(@"{
                 ""entries"": [
                     {
+                        ""externalCreated"": null,
                         ""numberInfo"": {
                             ""countryCode"": ""45"",
                             ""phoneNumber"": ""4444""
@@ -157,9 +162,11 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
                             ""lastname"": ""Anderson""
                         },
                         ""id"": ""recId3"",
-                        ""listId"": ""some_list_id""
+                        ""listId"": ""some_list_id"",
+                        ""created"": ""2002-02-30T14:50:23Z""
                     },
                     {
+                        ""externalCreated"": null,
                         ""numberInfo"": {
                             ""countryCode"": ""33"",
                             ""phoneNumber"": ""5555""
@@ -169,7 +176,8 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
                             ""lastname"": ""Doubtfire""
                         },
                         ""id"": ""recId4"",
-                        ""listId"": ""some_list_id""
+                        ""listId"": ""some_list_id"",
+                        ""created"": ""2003-02-30T14:50:23Z""
                     }
                 ],
                 ""_links"": {
@@ -189,7 +197,7 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
                     Assert.Equal("recId1", entry1.Id.Value);
                     Assert.True(entry1.ExternalCreated.HasValue);
                     Assert.Equal(DateTimeKind.Utc, entry1.ExternalCreated.Value.Kind);
-                    Assert.Equal(new DateTime(2001, 02, 30, 14, 50, 23, DateTimeKind.Utc), entry1.ExternalCreated.Value);
+                    Assert.Equal(new DateTime(2001, 02, 10, 14, 50, 23, DateTimeKind.Utc), entry1.ExternalCreated.Value);
                     Assert.Equal("45", entry1.NumberInfo.CountryCode);
                     Assert.Equal("1111", entry1.NumberInfo.PhoneNumber);
                     Assert.Equal("some_list_id", entry1.ListId.Value);
@@ -236,6 +244,7 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
                 new UnitTestResponseInfo(@"{
                     ""entries"": [
                         {
+                            ""externalCreated"": null,
                             ""numberInfo"": {
                                 ""countryCode"": ""45"",
                                 ""phoneNumber"": ""1111""
@@ -245,9 +254,11 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
                                 ""lastname"": ""Anderson""
                             },
                             ""id"": ""recId1"",
-                            ""listId"": ""some_list_id""
+                            ""listId"": ""some_list_id"",
+                            ""created"": ""2002-02-30T14:50:23Z""
                         },
                         {
+                            ""externalCreated"": null,
                             ""numberInfo"": {
                                 ""countryCode"": ""33"",
                                 ""phoneNumber"": ""2222""
@@ -257,7 +268,8 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
                                 ""lastname"": ""Doubtfire""
                             },
                             ""id"": ""recId2"",
-                            ""listId"": ""some_list_id""
+                            ""listId"": ""some_list_id"",
+                            ""created"": ""2003-02-30T14:50:23Z""
                         }
                     ],
                     ""_links"": {

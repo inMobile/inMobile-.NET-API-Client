@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using Xunit;
 using static InMobile.Sms.ApiClient.Test.UnitTestHttpServer;
 
@@ -39,6 +40,9 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
                 var resultRecipient = client.Lists.CreateRecipient(recipient: recipient);
                 Assert.Equal("some@email.com", resultRecipient.Fields["email"]);
                 Assert.Null(resultRecipient.Fields["firstname"]);
+                Assert.True(resultRecipient.ExternalCreated.HasValue);
+                Assert.Equal(DateTimeKind.Utc, resultRecipient.ExternalCreated.Value.Kind);
+                Assert.Equal(new DateTime(2019, 08, 24, 14, 15, 22, DateTimeKind.Utc), resultRecipient.ExternalCreated.Value);
                 Assert.Equal("33", resultRecipient.NumberInfo.CountryCode);
                 Assert.Equal("111111", resultRecipient.NumberInfo.PhoneNumber);
                 Assert.Equal("some_new_id", resultRecipient.Id.Value);

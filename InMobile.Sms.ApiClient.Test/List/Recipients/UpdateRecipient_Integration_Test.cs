@@ -73,7 +73,7 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
             var expectedRequest = new UnitTestRequestInfo(apiKey: apiKey, methodAndPath: "PUT /v4/lists/some_list_id/recipients/recId1", jsonOrNull: requestJson);
             var responseToSendback = new UnitTestResponseInfo(jsonOrNull:
                 @"{
-                    ""externalCreated"": ""2019-08-24T14:15:22Z"",
+                    ""externalCreated"": null,
                     ""numberInfo"": {
                         ""countryCode"": ""33"",
                         ""phoneNumber"": ""111111""
@@ -97,6 +97,7 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
                 var resultRecipient = client.Lists.UpdateRecipient(recipient: recipient);
                 Assert.Equal("some@email.com", resultRecipient.Fields["email"]);
                 Assert.Null(resultRecipient.Fields["firstname"]);
+                Assert.False(resultRecipient.ExternalCreated.HasValue);
                 Assert.Equal("33", resultRecipient.NumberInfo.CountryCode);
                 Assert.Equal("111111", resultRecipient.NumberInfo.PhoneNumber);
                 Assert.Equal("some_new_id", resultRecipient.Id.Value);
