@@ -1,4 +1,5 @@
 ﻿#pragma warning disable xUnit2003 // Do not use equality check to test for null value
+using System;
 using System.Net;
 using Xunit;
 using static InMobile.Sms.ApiClient.Test.UnitTestHttpServer;
@@ -40,7 +41,8 @@ namespace InMobile.Sms.ApiClient.Test.Blacklist
                             ""phoneNumber"": ""1111""
                         },
                         ""comment"": ""Some text provided when created"",
-                        ""id"": ""111""
+                        ""id"": ""111"",
+                        ""created"": ""2001-02-24T14:50:23Z""
                     },
                     {
                         ""numberInfo"": {
@@ -48,7 +50,8 @@ namespace InMobile.Sms.ApiClient.Test.Blacklist
                             ""phoneNumber"": ""2222""
                         },
                         ""comment"": null,
-                        ""id"": ""222""
+                        ""id"": ""222"",
+                        ""created"": ""2002-02-24T14:50:23Z""
                     }
                 ],
                 ""_links"": {
@@ -71,6 +74,7 @@ namespace InMobile.Sms.ApiClient.Test.Blacklist
                     Assert.Equal("Some text provided when created", entry1.Comment);
                     Assert.Equal("45", entry1.NumberInfo.CountryCode);
                     Assert.Equal("1111", entry1.NumberInfo.PhoneNumber);
+                    Assert.Equal(new DateTime(2001, 02, 24, 14, 50, 23, DateTimeKind.Utc), entry1.Created);
                 }
 
                 {
@@ -79,6 +83,7 @@ namespace InMobile.Sms.ApiClient.Test.Blacklist
                     Assert.Equal(null, entry2.Comment);
                     Assert.Equal("45", entry2.NumberInfo.CountryCode);
                     Assert.Equal("2222", entry2.NumberInfo.PhoneNumber);
+                    Assert.Equal(new DateTime(2002, 02, 24, 14, 50, 23, DateTimeKind.Utc), entry2.Created);
                 }
             }
         }
@@ -96,7 +101,8 @@ namespace InMobile.Sms.ApiClient.Test.Blacklist
                                         ""phoneNumber"": ""1111""
                                     },
                                     ""comment"": ""Some text provided when created"",
-                                    ""id"": ""111""
+                                    ""id"": ""111"",
+                                    ""created"": ""2001-02-24T14:50:23Z""
                                 },
                                 {
                                     ""numberInfo"": {
@@ -104,7 +110,8 @@ namespace InMobile.Sms.ApiClient.Test.Blacklist
                                         ""phoneNumber"": ""2222""
                                     },
                                     ""comment"": null,
-                                    ""id"": ""222""
+                                    ""id"": ""222"",
+                                    ""created"": ""2002-02-24T14:50:23Z""
                                 }
                             ],
                             ""_links"": {
@@ -133,7 +140,8 @@ namespace InMobile.Sms.ApiClient.Test.Blacklist
                             ""phoneNumber"": ""3333""
                         },
                         ""comment"": null,
-                        ""id"": ""333""
+                        ""id"": ""333"",
+                        ""created"": ""2003-02-24T14:50:23Z""
                     },
                     {
                         ""numberInfo"": {
@@ -141,7 +149,8 @@ namespace InMobile.Sms.ApiClient.Test.Blacklist
                             ""phoneNumber"": ""4444""
                         },
                         ""comment"": null,
-                        ""id"": ""444""
+                        ""id"": ""444"",
+                        ""created"": ""2004-02-24T14:50:23Z""
                     }
                 ],
                 ""_links"": {
@@ -161,6 +170,7 @@ namespace InMobile.Sms.ApiClient.Test.Blacklist
                     Assert.Equal("Some text provided when created", entry1.Comment);
                     Assert.Equal("45", entry1.NumberInfo.CountryCode);
                     Assert.Equal("1111", entry1.NumberInfo.PhoneNumber);
+                    Assert.Equal(new DateTime(2001, 02, 24, 14, 50, 23, DateTimeKind.Utc), entry1.Created);
                 }
 
                 {
@@ -170,6 +180,7 @@ namespace InMobile.Sms.ApiClient.Test.Blacklist
                     Assert.Equal(null, entry2.Comment);
                     Assert.Equal("45", entry2.NumberInfo.CountryCode);
                     Assert.Equal("2222", entry2.NumberInfo.PhoneNumber);
+                    Assert.Equal(new DateTime(2002, 02, 24, 14, 50, 23, DateTimeKind.Utc), entry2.Created);
                 }
 
                 {
@@ -178,6 +189,7 @@ namespace InMobile.Sms.ApiClient.Test.Blacklist
                     Assert.Equal(null, entry3.Comment);
                     Assert.Equal("45", entry3.NumberInfo.CountryCode);
                     Assert.Equal("3333", entry3.NumberInfo.PhoneNumber);
+                    Assert.Equal(new DateTime(2003, 02, 24, 14, 50, 23, DateTimeKind.Utc), entry3.Created);
                 }
 
                 {
@@ -186,6 +198,7 @@ namespace InMobile.Sms.ApiClient.Test.Blacklist
                     Assert.Equal(null, entry4.Comment);
                     Assert.Equal("45", entry4.NumberInfo.CountryCode);
                     Assert.Equal("4444", entry4.NumberInfo.PhoneNumber);
+                    Assert.Equal(new DateTime(2004, 02, 24, 14, 50, 23, DateTimeKind.Utc), entry4.Created);
                 }
             }
         }

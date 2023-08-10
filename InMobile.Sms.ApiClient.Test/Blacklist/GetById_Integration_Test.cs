@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using Xunit;
 using static InMobile.Sms.ApiClient.Test.UnitTestHttpServer;
 
@@ -16,6 +17,7 @@ namespace InMobile.Sms.ApiClient.Test.Blacklist
                 },
                 ""comment"": ""Some text provided when created"",
                 ""id"": ""some_blacklist_id"",
+                ""created"": ""2001-02-24T14:50:23Z"",
                 ""future_field_not_yet_known"": ""Hello""
             }";
 
@@ -30,6 +32,7 @@ namespace InMobile.Sms.ApiClient.Test.Blacklist
                 Assert.Equal("12345678", entry.NumberInfo.PhoneNumber);
                 Assert.Equal("Some text provided when created", entry.Comment);
                 Assert.Equal("some_blacklist_id", entry.Id.Value);
+                Assert.Equal(new DateTime(2001, 02, 24, 14, 50, 23, DateTimeKind.Utc), entry.Created);
             }
         }
 

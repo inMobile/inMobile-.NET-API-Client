@@ -80,6 +80,11 @@
             An optional comment
             </summary>
         </member>
+        <member name="P:InMobile.Sms.ApiClient.BlacklistEntry.Created">
+            <summary>
+            The creation date of the blacklist entry (in UTC time).
+            </summary>
+        </member>
         <member name="T:InMobile.Sms.ApiClient.BlacklistEntryCreateInfo">
             <summary>
             Represents info for creating a blacklist entry
