@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using Newtonsoft.Json;
 using Xunit;
 using static InMobile.Sms.ApiClient.Test.UnitTestHttpServer;
@@ -27,7 +28,7 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
                     },
                     ""id"": ""some_new_id"",
                     ""listId"": ""some_list_id"",
-                    ""created"": ""2019-08-24T14:15:22Z""
+                    ""created"": ""2020-08-20T11:15:22Z""
                 }", statusCodeString: "200 Ok");
 
             using (var server = UnitTestHttpServer.StartOnAnyAvailablePort(new RequestResponsePair(request: expectedRequest, response: responseToSendback)))
@@ -60,6 +61,11 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
                 Assert.Equal("111111", resultRecipient.NumberInfo.PhoneNumber);
                 Assert.Equal("some_new_id", resultRecipient.Id.Value);
                 Assert.Equal("some_list_id", resultRecipient.ListId.Value);
+                Assert.True(resultRecipient.ExternalCreated.HasValue);
+                Assert.Equal(DateTimeKind.Utc, resultRecipient.ExternalCreated.Value.Kind);
+                Assert.Equal(new DateTime(2019, 08, 24, 14, 15, 22, DateTimeKind.Utc), resultRecipient.ExternalCreated.Value);
+                Assert.Equal(new DateTime(2020, 08, 20, 11, 15, 22, DateTimeKind.Utc), resultRecipient.Created);
+
                 server.AssertNoAwaitingRequestsLeft();
             }
         }
@@ -102,6 +108,9 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
                 Assert.Equal("111111", resultRecipient.NumberInfo.PhoneNumber);
                 Assert.Equal("some_new_id", resultRecipient.Id.Value);
                 Assert.Equal("some_list_id", resultRecipient.ListId.Value);
+                Assert.False(resultRecipient.ExternalCreated.HasValue);
+                Assert.Equal(new DateTime(2019, 08, 24, 14, 15, 22, DateTimeKind.Utc), resultRecipient.Created);
+
                 server.AssertNoAwaitingRequestsLeft();
             }
         }

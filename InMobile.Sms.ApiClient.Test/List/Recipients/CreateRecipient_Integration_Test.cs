@@ -27,7 +27,7 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
                     },
                     ""id"": ""some_new_id"",
                     ""listId"": ""some_list_id"",
-                    ""created"": ""2019-08-24T14:15:22Z""
+                    ""created"": ""2019-08-20T11:15:22Z""
                 }", statusCodeString: "200 Ok");
 
             using (var server = UnitTestHttpServer.StartOnAnyAvailablePort(new RequestResponsePair(request: expectedRequest, response: responseToSendback)))
@@ -43,6 +43,7 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
                 Assert.True(resultRecipient.ExternalCreated.HasValue);
                 Assert.Equal(DateTimeKind.Utc, resultRecipient.ExternalCreated.Value.Kind);
                 Assert.Equal(new DateTime(2019, 08, 24, 14, 15, 22, DateTimeKind.Utc), resultRecipient.ExternalCreated.Value);
+                Assert.Equal(new DateTime(2019, 08, 20, 11, 15, 22, DateTimeKind.Utc), resultRecipient.Created);
                 Assert.Equal("33", resultRecipient.NumberInfo.CountryCode);
                 Assert.Equal("111111", resultRecipient.NumberInfo.PhoneNumber);
                 Assert.Equal("some_new_id", resultRecipient.Id.Value);

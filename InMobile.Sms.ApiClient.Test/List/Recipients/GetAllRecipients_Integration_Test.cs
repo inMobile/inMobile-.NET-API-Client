@@ -58,7 +58,7 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
                         },
                         ""id"": ""recId2"",
                         ""listId"": ""some_list_id"",
-                        ""created"": ""2002-02-30T14:50:23Z""
+                        ""created"": ""2002-02-25T14:50:23Z""
                     }
                 ],
                 ""_links"": {
@@ -113,7 +113,7 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
                             },
                             ""id"": ""recId1"",
                             ""listId"": ""some_list_id"",
-                            ""created"": ""2003-02-30T14:50:23Z""
+                            ""created"": ""2003-02-25T14:50:23Z""
                         },
                         {
                             ""externalCreated"": null,
@@ -127,7 +127,7 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
                             },
                             ""id"": ""recId2"",
                             ""listId"": ""some_list_id"",
-                            ""created"": ""2002-02-30T14:50:23Z""
+                            ""created"": ""2002-02-25T14:50:23Z""
                         }
                     ],
                     ""_links"": {
@@ -163,7 +163,7 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
                         },
                         ""id"": ""recId3"",
                         ""listId"": ""some_list_id"",
-                        ""created"": ""2002-02-30T14:50:23Z""
+                        ""created"": ""2002-02-25T14:50:23Z""
                     },
                     {
                         ""externalCreated"": null,
@@ -177,7 +177,7 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
                         },
                         ""id"": ""recId4"",
                         ""listId"": ""some_list_id"",
-                        ""created"": ""2003-02-30T14:50:23Z""
+                        ""created"": ""2003-02-25T14:50:23Z""
                     }
                 ],
                 ""_links"": {
@@ -198,6 +198,7 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
                     Assert.True(entry1.ExternalCreated.HasValue);
                     Assert.Equal(DateTimeKind.Utc, entry1.ExternalCreated.Value.Kind);
                     Assert.Equal(new DateTime(2001, 02, 10, 14, 50, 23, DateTimeKind.Utc), entry1.ExternalCreated.Value);
+                    Assert.Equal(new DateTime(2003, 02, 25, 14, 50, 23, DateTimeKind.Utc), entry1.Created);
                     Assert.Equal("45", entry1.NumberInfo.CountryCode);
                     Assert.Equal("1111", entry1.NumberInfo.PhoneNumber);
                     Assert.Equal("some_list_id", entry1.ListId.Value);
@@ -234,7 +235,6 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
             }
         }
 
-
         [Fact]
         public void GetAllRecipients_ApiError_MultiPage_Test()
         {
@@ -255,7 +255,7 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
                             },
                             ""id"": ""recId1"",
                             ""listId"": ""some_list_id"",
-                            ""created"": ""2002-02-30T14:50:23Z""
+                            ""created"": ""2002-02-25T14:50:23Z""
                         },
                         {
                             ""externalCreated"": null,
@@ -269,7 +269,7 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
                             },
                             ""id"": ""recId2"",
                             ""listId"": ""some_list_id"",
-                            ""created"": ""2003-02-30T14:50:23Z""
+                            ""created"": ""2003-02-25T14:50:23Z""
                         }
                     ],
                     ""_links"": {

@@ -539,9 +539,14 @@
             A recipient
             </summary>
         </member>
+        <member name="P:InMobile.Sms.ApiClient.Recipient.Created">
+            <summary>
+            The creation date of the recipient (in UTC time).
+            </summary>
+        </member>
         <member name="P:InMobile.Sms.ApiClient.Recipient.ExternalCreated">
             <summary>
-            The external created date. If specified, this value represents the date of which the recipient was created in a given source outside of inMobiles system.
+            The external created date (in UTC time). If specified, this value represents the date of which the recipient was created in a given source outside of inMobiles system.
             </summary>
         </member>
         <member name="P:InMobile.Sms.ApiClient.Recipient.Id">

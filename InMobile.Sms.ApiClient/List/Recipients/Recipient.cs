@@ -10,8 +10,15 @@ namespace InMobile.Sms.ApiClient
     public class Recipient : IRecipientUpdateInfo
     {
         /// <summary>
-        /// The external created date. If specified, this value represents the date of which the recipient was created in a given source outside of inMobiles system.
+        /// The creation date of the recipient (in UTC time).
         /// </summary>
+        [JsonProperty]
+        public DateTime Created { get; private set; }
+
+        /// <summary>
+        /// The external created date (in UTC time). If specified, this value represents the date of which the recipient was created in a given source outside of inMobiles system.
+        /// </summary>
+        [JsonProperty]
         public DateTime? ExternalCreated { get; private set; }
 
         /// <summary>

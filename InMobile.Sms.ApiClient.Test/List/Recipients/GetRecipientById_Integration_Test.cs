@@ -22,7 +22,7 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
                                     },
                                     ""id"": ""recId1"",
                                     ""listId"": ""some_list_id"",
-                                    ""created"": ""2002-02-30T14:50:23Z"",
+                                    ""created"": ""2002-02-25T14:50:23Z"",
                                     ""future_field_not_yet_known"": ""Hello""
                                 }";
 
@@ -37,6 +37,7 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
                 Assert.True(recipient.ExternalCreated.HasValue);
                 Assert.Equal(DateTimeKind.Utc, recipient.ExternalCreated.Value.Kind);
                 Assert.Equal(new DateTime(2001, 02, 10, 14, 50, 23, DateTimeKind.Utc), recipient.ExternalCreated.Value);
+                Assert.Equal(new DateTime(2002, 02, 25, 14, 50, 23, DateTimeKind.Utc), recipient.Created);
                 Assert.Equal("45", recipient.NumberInfo.CountryCode);
                 Assert.Equal("1111", recipient.NumberInfo.PhoneNumber);
                 Assert.Equal("some_list_id", recipient.ListId.Value);
