@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using Xunit;
 using static InMobile.Sms.ApiClient.Test.UnitTestHttpServer;
 
@@ -35,11 +36,13 @@ namespace InMobile.Sms.ApiClient.Test.Lists
                 ""entries"": [
                     {
                         ""id"":""id1"",
-                        ""name"": ""name1""
+                        ""name"": ""name1"",
+                        ""created"": ""2001-02-24T14:50:23Z""
                     },
                     {
                         ""id"":""id2"",
-                        ""name"": ""name2""
+                        ""name"": ""name2"",
+                        ""created"": ""2002-03-25T16:50:23Z""
                     }
                 ],
                 ""_links"": {
@@ -60,12 +63,14 @@ namespace InMobile.Sms.ApiClient.Test.Lists
                     var entry1 = allEntries[0];
                     Assert.Equal("id1", entry1.Id.Value);
                     Assert.Equal("name1", entry1.Name);
+                    Assert.Equal(new DateTime(2001, 02, 24, 14, 50, 23, DateTimeKind.Utc), entry1.Created);
                 }
 
                 {
                     var entry2 = allEntries[1];
                     Assert.Equal("id2", entry2.Id.Value);
                     Assert.Equal("name2", entry2.Name);
+                    Assert.Equal(new DateTime(2002, 03, 25, 16, 50, 23, DateTimeKind.Utc), entry2.Created);
                 }
             }
         }
@@ -78,13 +83,15 @@ namespace InMobile.Sms.ApiClient.Test.Lists
                         new UnitTestResponseInfo(@"{
                             ""entries"": [
                                 {
-                                ""id"":""id1"",
-                                ""name"": ""name1""
-                            },
-                            {
-                                ""id"":""id2"",
-                                ""name"": ""name2""
-                            }
+                                    ""id"":""id1"",
+                                    ""name"": ""name1"",
+                                    ""created"": ""2001-02-24T14:50:23Z""
+                                },
+                                {
+                                    ""id"":""id2"",
+                                    ""name"": ""name2"",
+                                    ""created"": ""2002-03-25T16:50:23Z""
+                                }
                             ],
                             ""_links"": {
                                 ""next"": ""/v4/lists/page/token_page_2"",
@@ -108,11 +115,13 @@ namespace InMobile.Sms.ApiClient.Test.Lists
                 ""entries"": [
                     {
                         ""id"":""id3"",
-                        ""name"": ""name3""
+                        ""name"": ""name3"",
+                        ""created"": ""2003-04-26T16:50:23Z""
                     },
                     {
                         ""id"":""id4"",
-                        ""name"": ""name4""
+                        ""name"": ""name4"",
+                        ""created"": ""2004-05-27T16:50:23Z""
                     }
                 ],
                 ""_links"": {
@@ -130,24 +139,28 @@ namespace InMobile.Sms.ApiClient.Test.Lists
                     var entry1 = allEntries[0];
                     Assert.Equal("id1", entry1.Id.Value);
                     Assert.Equal("name1", entry1.Name);
+                    Assert.Equal(new DateTime(2001, 02, 24, 14, 50, 23, DateTimeKind.Utc), entry1.Created);
                 }
 
                 {
                     var entry2 = allEntries[1];
                     Assert.Equal("id2", entry2.Id.Value);
                     Assert.Equal("name2", entry2.Name);
+                    Assert.Equal(new DateTime(2002, 03, 25, 16, 50, 23, DateTimeKind.Utc), entry2.Created);
                 }
 
                 {
                     var entry3 = allEntries[2];
                     Assert.Equal("id3", entry3.Id.Value);
                     Assert.Equal("name3", entry3.Name);
+                    Assert.Equal(new DateTime(2003, 04, 26, 16, 50, 23, DateTimeKind.Utc), entry3.Created);
                 }
 
                 {
                     var entry4 = allEntries[3];
                     Assert.Equal("id4", entry4.Id.Value);
                     Assert.Equal("name4", entry4.Name);
+                    Assert.Equal(new DateTime(2004, 05, 27, 16, 50, 23, DateTimeKind.Utc), entry4.Created);
                 }
             }
         }

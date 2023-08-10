@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using Xunit;
 using static InMobile.Sms.ApiClient.Test.UnitTestHttpServer;
 
@@ -12,6 +13,7 @@ namespace InMobile.Sms.ApiClient.Test.List
             var responseJson = @"{                
                 ""name"": ""Some list name"",
                 ""Id"": ""some_list_id"",
+                ""created"": ""2001-02-24T14:50:23Z"",
                 ""future_field_not_yet_known"": ""Hello""
             }";
 
@@ -24,6 +26,7 @@ namespace InMobile.Sms.ApiClient.Test.List
                 var entry = client.Lists.GetListById(listId: new RecipientListId("some_list_id"));
                 Assert.Equal("Some list name", entry.Name);
                 Assert.Equal("some_list_id", entry.Id.Value);
+                Assert.Equal(new DateTime(2001, 02, 24, 14, 50, 23, DateTimeKind.Utc), entry.Created);
             }
         }
 

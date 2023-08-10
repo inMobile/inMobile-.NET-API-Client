@@ -460,6 +460,11 @@
             The name of the list
             </summary>
         </member>
+        <member name="P:InMobile.Sms.ApiClient.RecipientList.Created">
+            <summary>
+            The creation date of the list (in UTC time)
+            </summary>
+        </member>
         <member name="T:InMobile.Sms.ApiClient.RecipientListCreateInfo">
             <summary>
             Information needed to create a new list.

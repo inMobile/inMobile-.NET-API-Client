@@ -9,6 +9,7 @@
         /// The name of the list.
         /// </summary>
         public string Name { get; }
+
         /// <summary>
         /// Create a new create-object.
         /// </summary>

@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using Newtonsoft.Json;
 using Xunit;
 using static InMobile.Sms.ApiClient.Test.UnitTestHttpServer;
@@ -12,7 +13,8 @@ namespace InMobile.Sms.ApiClient.Test
         {
             var responseJson = @"{                
                 ""name"": ""New name"",
-                ""id"": ""some_list_id""
+                ""id"": ""some_list_id"",
+                ""created"": ""2001-02-24T14:50:23Z""
             }";
 
             var apiKey = new InMobileApiKey("UnitTestKey123");
@@ -32,6 +34,7 @@ namespace InMobile.Sms.ApiClient.Test
                 var entry = client.Lists.UpdateList(list: list);
                 Assert.Equal("New name", entry.Name);
                 Assert.Equal("some_list_id", entry.Id.Value);
+                Assert.Equal(new DateTime(2001, 02, 24, 14, 50, 23, DateTimeKind.Utc), entry.Created);
             }
         }
 
@@ -40,7 +43,8 @@ namespace InMobile.Sms.ApiClient.Test
         {
             var responseJson = @"{                
                 ""name"": ""New name"",
-                ""id"": ""some_list_id""
+                ""id"": ""some_list_id"",
+                ""created"": ""2001-02-24T14:50:23Z""
             }";
 
             var apiKey = new InMobileApiKey("UnitTestKey123");
@@ -52,6 +56,7 @@ namespace InMobile.Sms.ApiClient.Test
                 var entry = client.Lists.UpdateList(list: new RecipientListUpdateInfo(listId: new RecipientListId("some_list_id"), name: "New name"));
                 Assert.Equal("New name", entry.Name);
                 Assert.Equal("some_list_id", entry.Id.Value);
+                Assert.Equal(new DateTime(2001, 02, 24, 14, 50, 23, DateTimeKind.Utc), entry.Created);
             }
         }
 
