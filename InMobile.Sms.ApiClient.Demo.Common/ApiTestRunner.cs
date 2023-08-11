@@ -171,8 +171,11 @@ namespace InMobile.Sms.ApiClient.Demo.Common
                 throw new Exception("No id on recipient");
             if (rec1.Id == null)
                 throw new Exception("No listId recipient");
-            Log("Create recipient");
-            var rec2 = client.Lists.CreateRecipient(new RecipientCreateInfo(listId: list.Id, new NumberInfo(countryCode: "45", phoneNumber: "222222")));
+            Log("Create recipient with ExternalCreated");
+            var externalCreatedForRec2 = new DateTime(2023, 01, 12, 14, 30, 00);
+            var rec2 = client.Lists.CreateRecipient(new RecipientCreateInfo(listId: list.Id, new NumberInfo(countryCode: "45", phoneNumber: "222222"), externalCreated: externalCreatedForRec2));
+            var reloadedRec2 = client.Lists.GetRecipientById(rec2.ListId, rec2.Id);
+            AssertEquals(externalCreatedForRec2, rec2.ExternalCreated);
             Log("Create recipient");
             var rec3 = client.Lists.CreateRecipient(new RecipientCreateInfo(listId: list.Id, new NumberInfo(countryCode: "45", phoneNumber: "333333")));
 

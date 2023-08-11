@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 
-
 namespace InMobile.Sms.ApiClient
 {
     /// <summary>
@@ -155,7 +154,7 @@ namespace InMobile.Sms.ApiClient
         public Recipient CreateRecipient(RecipientCreateInfo recipient)
         {
             EnsureNonEmptyOrThrow(parameterName: nameof(RecipientCreateInfo), value: recipient);
-            return _requestHelper.Execute<Recipient>(method: Method.POST, resource: $"{V4_lists}/{recipient.ListId}/recipients", payload: new { NumberInfo = recipient.NumberInfo, Fields = recipient.Fields, ExternalCreated = recipient.ExternalCreated });
+            return _requestHelper.Execute<Recipient>(method: Method.POST, resource: $"{V4_lists}/{recipient.ListId}/recipients", payload: new { NumberInfo = recipient.NumberInfo, Fields = recipient.Fields, ExternalCreated = recipient.ExternalCreated?.ToUniversalTime() });
         }
 
         public List<Recipient> GetAllRecipientsInList(RecipientListId listId)

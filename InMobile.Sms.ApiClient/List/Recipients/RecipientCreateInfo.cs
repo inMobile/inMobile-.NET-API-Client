@@ -40,6 +40,10 @@ namespace InMobile.Sms.ApiClient
             ListId = listId ?? throw new ArgumentNullException(nameof(listId));
             NumberInfo = numberInfo ?? throw new ArgumentNullException(nameof(numberInfo));
             Fields = fields ?? throw new ArgumentNullException(nameof(fields));
+
+            if (externalCreated.HasValue && externalCreated.Value.Kind == DateTimeKind.Unspecified)
+                throw new ArgumentException("DateTimes with Unspecified Kind is not allowed", nameof(externalCreated));
+
             ExternalCreated = externalCreated;
         }
 
