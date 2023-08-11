@@ -102,6 +102,34 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
         }
 
         [Fact]
+        public void CreateRecipient_WithExternalCreatedUnspecifiedDateTimeKind_Test()
+        {
+            var apiKey = new InMobileApiKey("UnitTestKey123");
+            
+            using (var server = UnitTestHttpServer.StartOnAnyAvailablePort())
+            {
+                var client = new InMobileApiClient(apiKey, baseUrl: $"http://{server.EndPoint.Address}:{server.EndPoint.Port}");
+
+                try
+                {
+                    var recipient = new RecipientCreateInfo(
+                        listId: new RecipientListId("some_list_id"),
+                        numberInfo: new NumberInfo(countryCode: "33", phoneNumber: "111111"),
+                        externalCreated: new DateTime(2019, 08, 24, 14, 15, 22, DateTimeKind.Unspecified)); // Unspecified is the default behavior on a new DateTime
+
+                    client.Lists.CreateRecipient(recipient: recipient);
+                }
+                catch (ArgumentException aex)
+                {
+                    Assert.Equal("externalCreated", aex.ParamName);
+                    Assert.StartsWith("DateTimes with Unspecified Kind is not allowed", aex.Message);
+                }
+
+                server.AssertNoAwaitingRequestsLeft();
+            }
+        }
+
+        [Fact]
         public void CreateRecipient_ApiError_Test()
         {
             var requestJson = @"{""NumberInfo"":{""CountryCode"":""33"",""PhoneNumber"":""111111""},""Fields"":{""Email"":""some@email.com""}}";
