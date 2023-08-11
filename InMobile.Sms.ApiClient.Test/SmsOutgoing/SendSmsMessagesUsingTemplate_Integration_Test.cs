@@ -72,7 +72,7 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
                 Assert.Equal("PetShop", singleResult.From);
                 Assert.Equal("45", singleResult.NumberDetails.CountryCode);
                 Assert.Equal("11111111", singleResult.NumberDetails.PhoneNumber);
-                Assert.Equal(true, singleResult.NumberDetails.IsValidMsisdn);
+                Assert.True(singleResult.NumberDetails.IsValidMsisdn);
                 Assert.Equal("+45 11111111", singleResult.NumberDetails.RawMsisdn);
                 Assert.Equal("4511111111", singleResult.NumberDetails.Msisdn);
                 Assert.Equal("DK", singleResult.NumberDetails.CountryHint);

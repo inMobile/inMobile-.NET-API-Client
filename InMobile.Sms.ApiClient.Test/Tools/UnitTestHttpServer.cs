@@ -93,7 +93,7 @@ namespace InMobile.Sms.ApiClient.Test
                         if (_requestPairsQueue.Count == 0)
                         {
                             _excections.Add(new NoMoreRequestsExceptionException($"Got unexpected request: {request}"));
-                            Assert.True(false, $"Got unexpected request: {request}");
+                            Assert.Fail($"Got unexpected request: {request}");
                             return;
                         }
 

@@ -17,7 +17,7 @@ namespace InMobile.Sms.ApiClient.Test
                 if (type.Name.ToLower().Contains("inmobile")
                         && !type.Name.Contains("InMobile"))
                 {
-                    Assert.False(true, "The type " + type.FullName + " does not have InMobile spelled with correct casing");
+                    Assert.Fail($"The type {type.FullName} does not have InMobile spelled with correct casing");
                 }
             }
         }
@@ -35,7 +35,7 @@ namespace InMobile.Sms.ApiClient.Test
                     continue;
                 if (type.Namespace != "InMobile.Sms.ApiClient")
                 {
-                    Assert.False(true, $"The type {type.FullName} does not have expected namespace");
+                    Assert.Fail($"The type {type.FullName} does not have expected namespace");
                 }
             }
         }
