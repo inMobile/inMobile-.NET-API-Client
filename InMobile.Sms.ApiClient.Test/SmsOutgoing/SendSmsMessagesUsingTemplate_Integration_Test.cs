@@ -60,7 +60,7 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
                             respectBlacklist: true,
                             validityPeriod: TimeSpan.FromSeconds(55),
                             statusCallbackUrl: null,
-                            sendTime: new DateTime(2001,02,03,14,05,06))
+                            sendTime: new DateTime(2001,02,03,14,05,06, DateTimeKind.Utc))
                     }));
 
                 Assert.NotNull(response);
@@ -112,7 +112,7 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
                             respectBlacklist: true,
                             validityPeriod: TimeSpan.FromSeconds(55),
                             statusCallbackUrl: null,
-                            sendTime: new DateTime(2001,02,03,14,05,06))
+                            sendTime: new DateTime(2001,02,03,14,05,06, DateTimeKind.Utc))
                     })));
 
                 Assert.Equal(HttpStatusCode.InternalServerError, ex.ErrorHttpStatusCode);

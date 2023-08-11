@@ -73,6 +73,7 @@ namespace InMobile.Sms.ApiClient
             T? result = JsonConvert.DeserializeObject<T>(responseString, _serializerSettings);
             if (result == null)
                 throw new Exception($"Unexpected NULL after deserializing string {responseString}");
+
             return result;
         }
 
@@ -111,7 +112,7 @@ namespace InMobile.Sms.ApiClient
                 {
                     if ((int)response.StatusCode < 200 || (int)response.StatusCode > 299)
                     {
-                        throw new Exception("Unexpected status code received: " + response.StatusCode);
+                        throw new Exception($"Unexpected status code received: {response.StatusCode}");
                     }
 
                     using (Stream dataStream = response.GetResponseStream())

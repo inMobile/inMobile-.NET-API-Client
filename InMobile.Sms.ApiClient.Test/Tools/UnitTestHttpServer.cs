@@ -8,16 +8,18 @@ using Xunit;
 
 namespace InMobile.Sms.ApiClient.Test
 {
+#pragma warning disable S3881 // "IDisposable" should be implemented correctly
     public class UnitTestHttpServer : IDisposable
+#pragma warning restore S3881 // "IDisposable" should be implemented correctly
     {
-        public IPEndPoint EndPoint => ((IPEndPoint) _tcpListener.LocalEndpoint);
+        public IPEndPoint EndPoint => ((IPEndPoint)_tcpListener.LocalEndpoint);
         public TcpListener _tcpListener;
 
-        private List<IDisposable> Disposables = new List<IDisposable>();
+        private readonly List<IDisposable> Disposables = new List<IDisposable>();
+        private readonly List<Exception> _exceptions = new List<Exception>();
+        private readonly Queue<RequestResponsePair> _requestPairsQueue;
 
-        private List<Exception> _excections = new List<Exception>();
         public string Host => $"{EndPoint.Address}:{EndPoint.Port}";
-        private Queue<RequestResponsePair> _requestPairsQueue;
 
         private UnitTestHttpServer(RequestResponsePair[] requests)
         {
@@ -50,12 +52,17 @@ namespace InMobile.Sms.ApiClient.Test
                 {
                     d?.Dispose();
                 }
-                catch { }
+                catch 
+                {
+                    // Ignore this
+                }
             }
 
+#pragma warning disable S3877 // Exceptions should not be thrown from unexpected methods
             // Check if server did not receive expected http data
-            if (_excections.Any())
-                throw _excections.First();
+            if (_exceptions.Any())
+                throw _exceptions[0];
+#pragma warning restore S3877 // Exceptions should not be thrown from unexpected methods
         }
 
         // Process the client connection.
@@ -70,7 +77,8 @@ namespace InMobile.Sms.ApiClient.Test
                 HandleSocket(socket);
 
                 _tcpListener.BeginAcceptSocket(DoAcceptSocketCallback, _tcpListener);
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 // A vast amount of different exception can occur here as a result of tests disposing before this accept call is actually done. Of this reason, any exceptions here are ignored.
                 ex.ToString();
@@ -90,9 +98,9 @@ namespace InMobile.Sms.ApiClient.Test
                     {
                         var requestTextLines = request.Split("\r\n");
 
-                        if (_requestPairsQueue.Count == 0)
+                        if (!_requestPairsQueue.Any())
                         {
-                            _excections.Add(new NoMoreRequestsExceptionException($"Got unexpected request: {request}"));
+                            _exceptions.Add(new NoMoreRequestsExceptionException($"Got unexpected request: {request}"));
                             Assert.Fail($"Got unexpected request: {request}");
                             return;
                         }
@@ -103,7 +111,7 @@ namespace InMobile.Sms.ApiClient.Test
                         var authLine = requestTextLines.SingleOrDefault(line => line.StartsWith("Authorization: Basic "));
                         if (authLine == null)
                         {
-                            _excections.Add(new UnexpectedAuthorizationException("No auth line found. Request: " + request));
+                            _exceptions.Add(new UnexpectedAuthorizationException("No auth line found. Request: " + request));
                         }
                         else
                         {
@@ -113,14 +121,14 @@ namespace InMobile.Sms.ApiClient.Test
                             var apiKey = usernameAndPassword.Substring(usernameAndPassword.IndexOf(":") + 1);
                             if (apiKey != nextPair.Request.ApiKey.ApiKey)
                             {
-                                _excections.Add(new UnexpectedAuthorizationException("Expected apikey " + nextPair.Request.ApiKey.ApiKey + " but got " + apiKey));
+                                _exceptions.Add(new UnexpectedAuthorizationException("Expected apikey " + nextPair.Request.ApiKey.ApiKey + " but got " + apiKey));
                             }
                         }
 
                         // Ensure expected method
                         if (!request.StartsWith(nextPair.Request.MethodAndPath))
                         {
-                            _excections.Add(new UnexpectedMethodAndPathException("Expected request to start with: " + Environment.NewLine + nextPair.Request.MethodAndPath + Environment.NewLine + "Request received: " + Environment.NewLine + request));
+                            _exceptions.Add(new UnexpectedMethodAndPathException("Expected request to start with: " + Environment.NewLine + nextPair.Request.MethodAndPath + Environment.NewLine + "Request received: " + Environment.NewLine + request));
                         }
 
                         // Ensure expected json
@@ -133,7 +141,7 @@ namespace InMobile.Sms.ApiClient.Test
 
                         if (!request.EndsWith(expectedEndOfRequest))
                         {
-                            _excections.Add(new UnexpectedPayloadException("Request was expected to end with '" + expectedEndOfRequest + "'\n\nbut did not. Request: " + request));
+                            _exceptions.Add(new UnexpectedPayloadException("Request was expected to end with '" + expectedEndOfRequest + "'\n\nbut did not. Request: " + request));
                         }
 
                         var response = $@"HTTP/1.1 {nextPair.Response.StatusCodeString}
@@ -148,7 +156,7 @@ Connection: Closed
                         if (nextPair.Response.JsonOrNull != null)
                         {
                             response += $@"{nextPair.Response.JsonOrNull}";
-                        };
+                        }
 
                         Send(socket, response);
                     }
@@ -178,7 +186,7 @@ Connection: Closed
             socket.Send(Encoding.ASCII.GetBytes(data));
         }
 
-        private static object _syncLock = new object();
+        private static readonly object _syncLock = new object();
         public static UnitTestHttpServer StartOnAnyAvailablePort(params RequestResponsePair[] requests)
         {
             lock (_syncLock) // Ensures no race conditions ending up having multiple test server listening on the same port at the same time

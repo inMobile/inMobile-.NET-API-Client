@@ -50,7 +50,7 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
                         flash: false,
                         encoding: MessageEncoding.Auto,
                         validityPeriod: TimeSpan.FromSeconds(55),
-                        sendTime: new DateTime(2001,02,03,14,05,06))
+                        sendTime: new DateTime(2001,02,03,14,05,06, DateTimeKind.Utc))
                 });
                 Assert.NotNull(response);
                 Assert.Single(response.Results);
@@ -110,7 +110,7 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
                         flash: false,
                         encoding: MessageEncoding.Auto,
                         validityPeriod: TimeSpan.FromSeconds(55),
-                        sendTime: new DateTime(2001,02,03,14,05,06),
+                        sendTime: new DateTime(2001,02,03,14,05,06, DateTimeKind.Utc),
                         countryHint: "DK")
                 });
                 Assert.NotNull(response);
@@ -208,7 +208,7 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
                         flash: false,
                         encoding: MessageEncoding.Auto,
                         validityPeriod: TimeSpan.FromSeconds(55),
-                        sendTime: new DateTime(2001,02,03,14,05,06))
+                        sendTime: new DateTime(2001,02,03,14,05,06, DateTimeKind.Utc))
                 }));
                 Assert.Equal(HttpStatusCode.InternalServerError, ex.ErrorHttpStatusCode);
             }
