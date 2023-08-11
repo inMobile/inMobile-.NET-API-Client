@@ -12,7 +12,7 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
         [Fact]
         public void SendSmsMessagesUsingTemplate_Success_Test()
         {
-            var expectedRequestJson = @"{""TemplateId"":""d33a51b8-13a8-4714-8a96-11347326a4a9"",""Messages"":[{""To"":""+45 11111111"",""CountryHint"":""DK"",""MessageId"":""someMessageId"",""RespectBlacklist"":true,""ValidityPeriodInSeconds"":55,""SendTime"":""2001-02-03T13:05:06Z"",""Placeholders"":{""{name}"":""Clark Kent""}}]}";
+            var expectedRequestJson = @"{""TemplateId"":""d33a51b8-13a8-4714-8a96-11347326a4a9"",""Messages"":[{""To"":""+45 11111111"",""CountryHint"":""DK"",""MessageId"":""someMessageId"",""RespectBlacklist"":true,""ValidityPeriodInSeconds"":55,""SendTime"":""2001-02-03T14:05:06Z"",""Placeholders"":{""{name}"":""Clark Kent""}}]}";
 
             var responseJson = @"{
   ""usedPlaceholderKeys"": [
@@ -82,7 +82,7 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
         [Fact]
         public void SendSmsMessagesUsingTemplate_ApiError_Test()
         {
-            var expectedRequestJson = @"{""TemplateId"":""d33a51b8-13a8-4714-8a96-11347326a4a9"",""Messages"":[{""To"":""4511111111"",""CountryHint"":""DK"",""MessageId"":""someMessageId"",""RespectBlacklist"":true,""ValidityPeriodInSeconds"":55,""SendTime"":""2001-02-03T13:05:06Z"",""Placeholders"":{""{name}"":""Clark Kent""}}]}";
+            var expectedRequestJson = @"{""TemplateId"":""d33a51b8-13a8-4714-8a96-11347326a4a9"",""Messages"":[{""To"":""4511111111"",""CountryHint"":""DK"",""MessageId"":""someMessageId"",""RespectBlacklist"":true,""ValidityPeriodInSeconds"":55,""SendTime"":""2001-02-03T14:05:06Z"",""Placeholders"":{""{name}"":""Clark Kent""}}]}";
 
             var responseJson = @"{
 ""errorMessage"": ""Forbidden thing"",

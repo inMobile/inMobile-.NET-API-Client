@@ -15,7 +15,7 @@ namespace InMobile.Sms.ApiClient.Test
         public IPEndPoint EndPoint => ((IPEndPoint)_tcpListener.LocalEndpoint);
         public TcpListener _tcpListener;
 
-        private readonly List<IDisposable> Disposables = new List<IDisposable>();
+        private readonly List<IDisposable> _disposables = new List<IDisposable>();
         private readonly List<Exception> _exceptions = new List<Exception>();
         private readonly Queue<RequestResponsePair> _requestPairsQueue;
 
@@ -46,7 +46,7 @@ namespace InMobile.Sms.ApiClient.Test
                 ex.ToString();
             }
 
-            foreach (var d in Disposables)
+            foreach (var d in _disposables)
             {
                 try
                 {
