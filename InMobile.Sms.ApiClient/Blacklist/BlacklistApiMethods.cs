@@ -61,7 +61,7 @@ namespace InMobile.Sms.ApiClient
 
         public BlacklistEntry Create(BlacklistEntryCreateInfo createInfo)
         {
-            EnsureNotNullOrThrow(parameterName: nameof(createInfo), value: createInfo);
+            GuardHelper.EnsureNotNullOrThrow(parameterName: nameof(createInfo), value: createInfo);
             return _requestHelper.Execute<BlacklistEntry>(
                                     method: Method.POST,
                                     resource: $"{V4_blacklist}",
@@ -84,32 +84,26 @@ namespace InMobile.Sms.ApiClient
 
         public BlacklistEntry GetById(BlacklistEntryId blacklistEntryId)
         {
-            EnsureNotNullOrThrow(parameterName: nameof(blacklistEntryId), value: blacklistEntryId);
+            GuardHelper.EnsureNotNullOrThrow(parameterName: nameof(blacklistEntryId), value: blacklistEntryId);
             return _requestHelper.Execute<BlacklistEntry>(method: Method.GET, resource: $"{V4_blacklist}/{blacklistEntryId}");
         }
 
         public BlacklistEntry GetByNumber(NumberInfo numberInfo)
         {
-            EnsureNotNullOrThrow(parameterName: nameof(numberInfo), value: numberInfo);
+            GuardHelper.EnsureNotNullOrThrow(parameterName: nameof(numberInfo), value: numberInfo);
             return _requestHelper.Execute<BlacklistEntry>(method: Method.GET, resource: $"{V4_blacklist}/bynumber?countryCode={numberInfo.CountryCode}&phoneNumber={numberInfo.PhoneNumber}");
         }
 
         public void DeleteById(BlacklistEntryId blacklistEntryId)
         {
-            EnsureNotNullOrThrow(parameterName: nameof(blacklistEntryId), value: blacklistEntryId);
+            GuardHelper.EnsureNotNullOrThrow(parameterName: nameof(blacklistEntryId), value: blacklistEntryId);
             _requestHelper.ExecuteWithNoContent(method: Method.DELETE, resource: $"{V4_blacklist}/{blacklistEntryId}");
         }
 
         public void DeleteByNumber(NumberInfo numberInfo)
         {
-            EnsureNotNullOrThrow(parameterName: nameof(numberInfo), value: numberInfo);
+            GuardHelper.EnsureNotNullOrThrow(parameterName: nameof(numberInfo), value: numberInfo);
             _requestHelper.ExecuteWithNoContent(method: Method.DELETE, resource: $"{V4_blacklist}/bynumber?countryCode={numberInfo.CountryCode}&phoneNumber={numberInfo.PhoneNumber}");
-        }
-
-        private void EnsureNotNullOrThrow(string parameterName, object? value)
-        {
-            if (value == null)
-                throw new ArgumentException($"'{parameterName}' cannot be null.", nameof(value));
         }
     }
 }

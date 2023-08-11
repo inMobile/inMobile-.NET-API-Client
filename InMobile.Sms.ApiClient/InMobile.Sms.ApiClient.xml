@@ -135,6 +135,19 @@
             The entries in the list.
             </summary>
         </member>
+        <member name="T:InMobile.Sms.ApiClient.GuardHelper">
+            <summary>
+            Helper for guarding against invalid inputs
+            </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.GuardHelper.EnsureNotNullOrThrow(System.String,System.Object)">
+            <summary>
+            Checks that value is not null - throws if it is
+            </summary>
+            <param name="parameterName"></param>
+            <param name="value"></param>
+            <exception cref="T:System.ArgumentException"></exception>
+        </member>
         <member name="T:InMobile.Sms.ApiClient.MessageEncoding">
             <summary>
             Outgoing message encoding.

@@ -35,12 +35,13 @@ namespace InMobile.Sms.ApiClient
 
         public List<SmsTemplate> GetAllTemplates()
         {
-            throw new NotImplementedException();
+            return _requestHelper.ExecuteGetAndIteratePagedResult<SmsTemplate>(resource: $"{V4_sms_templates}?pageLimit=250");
         }
 
         public SmsTemplate GetTemplateById(SmsTemplateId templateId)
         {
-            throw new NotImplementedException();
+            GuardHelper.EnsureNotNullOrThrow(parameterName: nameof(templateId), value: templateId);
+            return _requestHelper.Execute<SmsTemplate>(method: Method.GET, resource: $"{V4_sms_templates}/{templateId}");
         }
     }
 }
