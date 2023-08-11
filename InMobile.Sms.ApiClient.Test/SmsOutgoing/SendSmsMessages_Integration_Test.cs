@@ -12,7 +12,7 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
         [Fact]
         public void SendSmsMessages_Success_Test()
         {
-            var expectedRequestJson = @"{""Messages"":[{""To"":""4511111111"",""CountryHint"":null,""Text"":""Hello world"",""From"":""1245"",""MessageId"":""someMessageId"",""RespectBlacklist"":true,""Flash"":false,""Encoding"":""auto"",""ValidityPeriodInSeconds"":55,""StatusCallbackUrl"":null,""SendTime"":""2001-02-03T13:05:06Z""}]}";
+            var expectedRequestJson = @"{""Messages"":[{""To"":""4511111111"",""Text"":""Hello world"",""From"":""1245"",""MessageId"":""someMessageId"",""RespectBlacklist"":true,""Flash"":false,""Encoding"":""auto"",""ValidityPeriodInSeconds"":55,""SendTime"":""2001-02-03T13:05:06Z""}]}";
 
             var responseJson = @"{
 ""results"": [
@@ -71,7 +71,7 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
         [Fact]
         public void SendSmsMessages_WithCountryHint_Success_Test()
         {
-            var expectedRequestJson = @"{""Messages"":[{""To"":""4511111111"",""CountryHint"":""DK"",""Text"":""Hello world"",""From"":""1245"",""MessageId"":""someMessageId"",""RespectBlacklist"":true,""Flash"":false,""Encoding"":""auto"",""ValidityPeriodInSeconds"":55,""StatusCallbackUrl"":null,""SendTime"":""2001-02-03T13:05:06Z""}]}";
+            var expectedRequestJson = @"{""Messages"":[{""To"":""4511111111"",""CountryHint"":""DK"",""Text"":""Hello world"",""From"":""1245"",""MessageId"":""someMessageId"",""RespectBlacklist"":true,""Flash"":false,""Encoding"":""auto"",""ValidityPeriodInSeconds"":55,""SendTime"":""2001-02-03T13:05:06Z""}]}";
 
             var responseJson = @"{
 ""results"": [
@@ -133,7 +133,7 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
         [Fact]
         public void SendSmsMessages_EnsureNotBreakingOfFutureEncodingsAreReceived_Test()
         {
-            var expectedRequestJson = @"{""Messages"":[{""To"":""+45 11111111"",""CountryHint"":null,""Text"":""Hello world"",""From"":""1245"",""MessageId"":""someMessageId"",""RespectBlacklist"":true,""Flash"":false,""Encoding"":""auto"",""ValidityPeriodInSeconds"":55,""StatusCallbackUrl"":null,""SendTime"":null}]}";
+            var expectedRequestJson = @"{""Messages"":[{""To"":""+45 11111111"",""Text"":""Hello world"",""From"":""1245"",""MessageId"":""someMessageId"",""RespectBlacklist"":true,""Flash"":false,""Encoding"":""auto"",""ValidityPeriodInSeconds"":55}]}";
 
             var responseJson = @"{
 ""results"": [
@@ -183,7 +183,7 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
         [Fact]
         public void SendSmsMessages_ApiError_Test()
         {
-            var expectedRequestJson = @"{""Messages"":[{""To"":""4511111111"",""CountryHint"":null,""Text"":""Hello world"",""From"":""1245"",""MessageId"":""someMessageId"",""RespectBlacklist"":true,""Flash"":false,""Encoding"":""auto"",""ValidityPeriodInSeconds"":55,""StatusCallbackUrl"":null,""SendTime"":""2001-02-03T13:05:06Z""}]}";
+            var expectedRequestJson = @"{""Messages"":[{""To"":""4511111111"",""Text"":""Hello world"",""From"":""1245"",""MessageId"":""someMessageId"",""RespectBlacklist"":true,""Flash"":false,""Encoding"":""auto"",""ValidityPeriodInSeconds"":55,""SendTime"":""2001-02-03T13:05:06Z""}]}";
 
             var responseJson = @"{
 ""errorMessage"": ""Forbidden thing"",

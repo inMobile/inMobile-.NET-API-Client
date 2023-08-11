@@ -18,7 +18,7 @@ namespace InMobile.Sms.ApiClient
         /// </summary>
         public InMobileJsonSerializerSettings()
         {
-            // DateFormatString = "yyyy-MM-ddTHH':'mm':'ssZ";
+            NullValueHandling = NullValueHandling.Ignore;
             Converters.Add(new EnumConverter<MessageEncoding>());
         }
     }

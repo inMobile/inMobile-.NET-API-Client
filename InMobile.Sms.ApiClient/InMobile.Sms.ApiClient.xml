@@ -599,20 +599,27 @@
             Additional fields.
             </summary>
         </member>
-        <member name="M:InMobile.Sms.ApiClient.RecipientCreateInfo.#ctor(InMobile.Sms.ApiClient.RecipientListId,InMobile.Sms.ApiClient.NumberInfo,System.Collections.Generic.Dictionary{System.String,System.String})">
+        <member name="P:InMobile.Sms.ApiClient.RecipientCreateInfo.ExternalCreated">
+            <summary>
+            When the recipient was created in an external system e.g. 2001-02-24T14:50:23Z (UTC time).
+            </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.RecipientCreateInfo.#ctor(InMobile.Sms.ApiClient.RecipientListId,InMobile.Sms.ApiClient.NumberInfo,System.Collections.Generic.Dictionary{System.String,System.String},System.Nullable{System.DateTime})">
             <summary>
             Create a new create-object with additional fields information.
             </summary>
             <param name="listId">The id which the new recipient should be created in.</param>
             <param name="numberInfo">The number information.</param>
             <param name="fields">Additional fields.</param>
+            <param name="externalCreated">Optional: When the recipient was created in an external system e.g. 2001-02-24T14:50:23Z (UTC time).</param>
         </member>
-        <member name="M:InMobile.Sms.ApiClient.RecipientCreateInfo.#ctor(InMobile.Sms.ApiClient.RecipientListId,InMobile.Sms.ApiClient.NumberInfo)">
+        <member name="M:InMobile.Sms.ApiClient.RecipientCreateInfo.#ctor(InMobile.Sms.ApiClient.RecipientListId,InMobile.Sms.ApiClient.NumberInfo,System.Nullable{System.DateTime})">
             <summary>
             Create a new create-object without any additional field information.
             </summary>
             <param name="listId">The id which the new recipient should be created in.</param>
             <param name="numberInfo">The number information.</param>
+            <param name="externalCreated">Optional: When the recipient was created in an external system e.g. 2001-02-24T14:50:23Z (UTC time).</param>
         </member>
         <member name="T:InMobile.Sms.ApiClient.RecipientId">
             <summary>
