@@ -12,6 +12,7 @@ namespace InMobile.Sms.ApiClient.Demo.Common
             var client = new InMobileApiClient(apiKey: apiKey);
 
             RunRealWorldTest_SendSms(client: client, msisdn: msisdn, statusCallbackUrl: statusCallbackUrl, templateId: templateId);
+            RunRealWorldTest_SmsTemplates(client: client, templateId: templateId);
             RunRealWorldTest_Lists(client: client);
             RunRealWorldTest_Blacklist(client: client);
         }
@@ -38,6 +39,25 @@ namespace InMobile.Sms.ApiClient.Demo.Common
             Log("::: CALLING REPORTS ENDPOINT :::");
             var reports = client.SmsOutgoing.GetStatusReports(limit: 250);
             Log($"Received {reports.Reports.Count} reports");
+        }
+
+        private static void RunRealWorldTest_SmsTemplates(InMobileApiClient client, SmsTemplateId templateId)
+        {
+            Log("::: SMS TEMPLATES :::");
+            var startTime = DateTime.Now;
+
+            Log("Get all");
+            var all = client.SmsTemplates.GetAll();
+            if (!all.Any())
+                throw new Exception("Expected at least 1 SMS Template");
+            if (!all.Exists(x => x.Id == templateId))
+                throw new Exception($"Expected SMS template with ID: {templateId}");
+
+            Log("Get by id");
+            var reload = client.SmsTemplates.GetById(templateId);
+            AssertEquals(templateId, reload.Id);
+
+            Log($"Done in {DateTime.Now.Subtract(startTime).TotalSeconds} seconds");
         }
 
         private static void RunRealWorldTest_Blacklist(InMobileApiClient client)
@@ -135,11 +155,11 @@ namespace InMobile.Sms.ApiClient.Demo.Common
             Log("List: GetAll");
             var listCountAfterCreate = client.Lists.GetAllLists().Count;
             if (listCountBeforeCreate != listCountAfterCreate - 1)
-                throw new Exception("Before create: " + listCountBeforeCreate + ", after create: " + listCountAfterCreate);
+                throw new Exception($"Before create: {listCountBeforeCreate}, after create: {listCountAfterCreate}");
 
             // List: Update
             {
-                var newName = "Auto-create-list_" + Guid.NewGuid();
+                var newName = $"Auto-create-list_{Guid.NewGuid()}";
                 list.Name = newName;
                 Log("List: Update with list object");
                 client.Lists.UpdateList(list);
@@ -150,7 +170,7 @@ namespace InMobile.Sms.ApiClient.Demo.Common
 
             {
                 Log("List: Update with ListUpdateObject");
-                var newName = "Auto-create-list_" + Guid.NewGuid();
+                var newName = $"Auto-create-list_{Guid.NewGuid()}";
                 client.Lists.UpdateList(new RecipientListUpdateInfo(listId: list.Id, name: newName));
                 var oldId = list.Id;
                 list = client.Lists.GetListById(list.Id);
@@ -172,7 +192,7 @@ namespace InMobile.Sms.ApiClient.Demo.Common
             if (rec1.Id == null)
                 throw new Exception("No listId recipient");
             Log("Create recipient with ExternalCreated");
-            var externalCreatedForRec2 = new DateTime(2023, 01, 12, 14, 30, 00);
+            var externalCreatedForRec2 = new DateTime(2023, 01, 12, 14, 30, 00, kind: DateTimeKind.Utc);
             var rec2 = client.Lists.CreateRecipient(new RecipientCreateInfo(listId: list.Id, new NumberInfo(countryCode: "45", phoneNumber: "222222"), externalCreated: externalCreatedForRec2));
             var reloadedRec2 = client.Lists.GetRecipientById(rec2.ListId, rec2.Id);
             AssertEquals(externalCreatedForRec2, rec2.ExternalCreated);

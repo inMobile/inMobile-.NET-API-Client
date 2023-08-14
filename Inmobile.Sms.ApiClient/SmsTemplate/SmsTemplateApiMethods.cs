@@ -12,14 +12,14 @@ namespace InMobile.Sms.ApiClient
         /// Get all existing SMS templates on account.
         /// </summary>
         /// <returns></returns>
-        List<SmsTemplate> GetAllTemplates();
+        List<SmsTemplate> GetAll();
 
         /// <summary>
         /// Get a specific SMS template by its id.
         /// </summary>
         /// <param name="templateId"></param>
         /// <returns></returns>
-        SmsTemplate GetTemplateById(SmsTemplateId templateId);
+        SmsTemplate GetById(SmsTemplateId templateId);
     }
 
     internal class SmsTemplateApiMethods : ISmsTemplateApiMethods
@@ -33,12 +33,12 @@ namespace InMobile.Sms.ApiClient
             _requestHelper = requestHelper ?? throw new ArgumentNullException(nameof(requestHelper));
         }
 
-        public List<SmsTemplate> GetAllTemplates()
+        public List<SmsTemplate> GetAll()
         {
             return _requestHelper.ExecuteGetAndIteratePagedResult<SmsTemplate>(resource: $"{V4_sms_templates}?pageLimit=250");
         }
 
-        public SmsTemplate GetTemplateById(SmsTemplateId templateId)
+        public SmsTemplate GetById(SmsTemplateId templateId)
         {
             GuardHelper.EnsureNotNullOrThrow(parameterName: nameof(templateId), value: templateId);
             return _requestHelper.Execute<SmsTemplate>(method: Method.GET, resource: $"{V4_sms_templates}/{templateId}");

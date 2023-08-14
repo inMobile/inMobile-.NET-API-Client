@@ -22,7 +22,7 @@ namespace InMobile.Sms.ApiClient.Demo
                 statusCallbackUrl: TEST_STATUSCALLBACKURL, 
                 templateId: new SmsTemplateId(TEST_TEMPLATEID));
 
-            Console.WriteLine("Done");
+            Console.WriteLine("\nDone");
             Console.Read();
         }
     }

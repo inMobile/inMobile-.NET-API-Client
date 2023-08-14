@@ -1206,13 +1206,13 @@
             A collection of SMS template-specific api endpoints.
             </summary>
         </member>
-        <member name="M:InMobile.Sms.ApiClient.ISmsTemplateApiMethods.GetAllTemplates">
+        <member name="M:InMobile.Sms.ApiClient.ISmsTemplateApiMethods.GetAll">
             <summary>
             Get all existing SMS templates on account.
             </summary>
             <returns></returns>
         </member>
-        <member name="M:InMobile.Sms.ApiClient.ISmsTemplateApiMethods.GetTemplateById(InMobile.Sms.ApiClient.SmsTemplateId)">
+        <member name="M:InMobile.Sms.ApiClient.ISmsTemplateApiMethods.GetById(InMobile.Sms.ApiClient.SmsTemplateId)">
             <summary>
             Get a specific SMS template by its id.
             </summary>
