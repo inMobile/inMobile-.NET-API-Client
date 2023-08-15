@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using Xunit;
 using static InMobile.Sms.ApiClient.Test.UnitTestHttpServer;
 
@@ -22,15 +23,23 @@ namespace InMobile.Sms.ApiClient.Test.Blacklist
         }
 
         [Fact]
-        public void DeleteById_ApiError_Test()
+        public void DeleteById_ApiError_NotFound_Test()
+        {
+            // TODO: What to do in NotFound case?
+            throw new NotImplementedException();
+        }
+
+        [Fact]
+        public void DeleteById_ApiError_InternalServerError_Test()
         {
             var responseJson = @"{
-""errorMessage"": ""Forbidden thing"",
-""details"": [
-""You shall not pass"",
-""Go away""
-]
-}";
+                ""errorMessage"": ""Forbidden thing"",
+                ""details"": [
+                    ""You shall not pass"",
+                    ""Go away""
+                ]
+            }";
+
             var apiKey = new InMobileApiKey("UnitTestKey123");
             var expectedRequest = new UnitTestRequestInfo(apiKey: apiKey, methodAndPath: "DELETE /v4/blacklist/some_blacklist_id", jsonOrNull: null);
             var responseToSendback = new UnitTestResponseInfo(jsonOrNull: responseJson, statusCodeString: "500 ServerError");

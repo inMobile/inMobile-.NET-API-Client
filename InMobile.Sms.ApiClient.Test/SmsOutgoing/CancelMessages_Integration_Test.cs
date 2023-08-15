@@ -67,12 +67,12 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
         {
             var expectedRequestJson = @"{""MessageIds"":[""id1"",""id2"",""id3""]}";
             var responseJson = @"{
-""errorMessage"": ""Forbidden thing"",
-""details"": [
-""You shall not pass"",
-""Go away""
-]
-}";
+                ""errorMessage"": ""Forbidden thing"",
+                ""details"": [
+                    ""You shall not pass"",
+                    ""Go away""
+                ]
+            }";
 
             var apiKey = new InMobileApiKey("UnitTestKey123");
             var expectedRequest = new UnitTestRequestInfo(apiKey: apiKey, methodAndPath: "POST /v4/sms/outgoing/cancel", jsonOrNull: expectedRequestJson);

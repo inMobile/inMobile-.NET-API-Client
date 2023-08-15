@@ -31,15 +31,22 @@ namespace InMobile.Sms.ApiClient.Test.List
         }
 
         [Fact]
-        public void GetListById_ApiError_Test()
+        public void GetListById_ApiError_NotFound_Test()
+        {
+            // TODO: What to do in NotFound case?
+            throw new NotImplementedException();
+        }
+
+        [Fact]
+        public void GetListById_ApiError_InternalServerError_Test()
         {
             var responseJson = @"{
-""errorMessage"": ""Forbidden thing"",
-""details"": [
-""You shall not pass"",
-""Go away""
-]
-}";
+                ""errorMessage"": ""Forbidden thing"",
+                ""details"": [
+                    ""You shall not pass"",
+                    ""Go away""
+                ]
+            }";
 
             var apiKey = new InMobileApiKey("UnitTestKey123");
             var expectedRequest = new UnitTestRequestInfo(apiKey: apiKey, methodAndPath: "GET /v4/lists/some_list_id", jsonOrNull: null);

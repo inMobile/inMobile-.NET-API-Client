@@ -36,15 +36,22 @@ namespace InMobile.Sms.ApiClient.Test.Blacklist
         }
 
         [Fact]
-        public void GetByNumber_ApiError_Test()
+        public void GetByNumber_ApiError_NotFound_Test()
+        {
+            // TODO: What to do in NotFound case?
+            throw new NotImplementedException();
+        }
+
+        [Fact]
+        public void GetByNumber_ApiError_InternalServerError_Test()
         {
             var responseJson = @"{
-""errorMessage"": ""Forbidden thing"",
-""details"": [
-""You shall not pass"",
-""Go away""
-]
-}";
+                ""errorMessage"": ""Forbidden thing"",
+                ""details"": [
+                    ""You shall not pass"",
+                    ""Go away""
+                ]
+            }";
 
             var apiKey = new InMobileApiKey("UnitTestKey123");
             var expectedRequest = new UnitTestRequestInfo(apiKey: apiKey, methodAndPath: "GET /v4/blacklist/bynumber?countryCode=47&phoneNumber=11223344", jsonOrNull: null);

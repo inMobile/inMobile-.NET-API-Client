@@ -24,7 +24,7 @@ namespace InMobile.Sms.ApiClient
         /// A human readable description of the state.
         /// </summary>
         [JsonProperty]
-        public DateTime SendTime { get; private set; }
+        public DateTime? SendTime { get; private set; }
 
         /// <summary>
         /// A code  describing the type of error.
