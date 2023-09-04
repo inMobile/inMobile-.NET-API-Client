@@ -122,7 +122,7 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
                 catch (ArgumentException aex)
                 {
                     Assert.Equal("externalCreated", aex.ParamName);
-                    Assert.StartsWith("DateTimes with Unspecified Kind is not allowed", aex.Message);
+                    Assert.StartsWith("DateTimes with Kind other than Utc is not allowed", aex.Message);
                 }
 
                 server.AssertNoAwaitingRequestsLeft();
