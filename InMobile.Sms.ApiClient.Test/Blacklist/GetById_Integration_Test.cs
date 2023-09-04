@@ -39,8 +39,21 @@ namespace InMobile.Sms.ApiClient.Test.Blacklist
         [Fact]
         public void GetById_ApiError_NotFound_Test()
         {
-            // TODO: What to do in NotFound case?
-            throw new NotImplementedException();
+            var responseJson = @"{
+                ""errorMessage"": ""Could not find: ..."",
+                ""details"": []
+            }";
+
+            var apiKey = new InMobileApiKey("UnitTestKey123");
+            var expectedRequest = new UnitTestRequestInfo(apiKey: apiKey, methodAndPath: "GET /v4/blacklist/some_blacklist_id", jsonOrNull: null);
+            var responseToSendback = new UnitTestResponseInfo(jsonOrNull: responseJson, statusCodeString: "404 Not Found");
+            using (var server = UnitTestHttpServer.StartOnAnyAvailablePort(new RequestResponsePair(request: expectedRequest, response: responseToSendback)))
+            {
+                var client = new InMobileApiClient(apiKey, baseUrl: $"http://{server.EndPoint.Address}:{server.EndPoint.Port}");
+
+                var ex = Assert.Throws<InMobileApiException>(() => client.Blacklist.GetById(new BlacklistEntryId("some_blacklist_id")));
+                Assert.Equal(HttpStatusCode.NotFound, ex.ErrorHttpStatusCode);
+            }
         }
 
         [Fact]

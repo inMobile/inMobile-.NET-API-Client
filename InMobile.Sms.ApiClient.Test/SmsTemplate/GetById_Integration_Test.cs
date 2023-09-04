@@ -51,24 +51,21 @@ namespace InMobile.Sms.ApiClient.Test.SmsTemplate
         [Fact]
         public void GetById_ApiError_NotFound_Test()
         {
-            // TODO: What to do in NotFound case?
-            throw new NotImplementedException();
-
-            // var responseJson = @"{
-            //     ""errorMessage"": ""Could not find template: some_template_id"",
-            //     ""details"": []
-            // }";
-               
-            // var apiKey = new InMobileApiKey("UnitTestKey123");
-            // var expectedRequest = new UnitTestRequestInfo(apiKey: apiKey, methodAndPath: "GET /v4/sms/templates/some_template_id", jsonOrNull: null);
-            // var responseToSendback = new UnitTestResponseInfo(jsonOrNull: responseJson, statusCodeString: "404 NotFound");
-            // using (var server = UnitTestHttpServer.StartOnAnyAvailablePort(new RequestResponsePair(request: expectedRequest, response: responseToSendback)))
-            // {
-            //     var client = new InMobileApiClient(apiKey, baseUrl: $"http://{server.EndPoint.Address}:{server.EndPoint.Port}");
-               
-            //     var ex = Assert.Throws<InMobileApiException>(() => client.SmsTemplates.GetById(new SmsTemplateId("some_template_id")));
-            //     Assert.Equal(HttpStatusCode.NotFound, ex.ErrorHttpStatusCode);
-            // }
+             var responseJson = @"{
+                 ""errorMessage"": ""Could not find template: some_template_id"",
+                 ""details"": []
+             }";
+             
+             var apiKey = new InMobileApiKey("UnitTestKey123");
+             var expectedRequest = new UnitTestRequestInfo(apiKey: apiKey, methodAndPath: "GET /v4/sms/templates/some_template_id", jsonOrNull: null);
+             var responseToSendback = new UnitTestResponseInfo(jsonOrNull: responseJson, statusCodeString: "404 Not Found");
+             using (var server = UnitTestHttpServer.StartOnAnyAvailablePort(new RequestResponsePair(request: expectedRequest, response: responseToSendback)))
+             {
+                 var client = new InMobileApiClient(apiKey, baseUrl: $"http://{server.EndPoint.Address}:{server.EndPoint.Port}");
+             
+                 var ex = Assert.Throws<InMobileApiException>(() => client.SmsTemplates.GetById(new SmsTemplateId("some_template_id")));
+                 Assert.Equal(HttpStatusCode.NotFound, ex.ErrorHttpStatusCode);
+             }
         }
 
         [Fact]

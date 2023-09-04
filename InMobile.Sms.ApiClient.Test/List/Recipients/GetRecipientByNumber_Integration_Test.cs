@@ -50,8 +50,21 @@ namespace InMobile.Sms.ApiClient.Test.List.Recipients
         [Fact]
         public void GetRecipientByNumber_ApiError_NotFound_Test()
         {
-            // TODO: What to do in NotFound case?
-            throw new NotImplementedException();
+            var responseJson = @"{
+                ""errorMessage"": ""Could not find recipient: ..."",
+                ""details"": []
+            }";
+
+            var apiKey = new InMobileApiKey("UnitTestKey123");
+            var expectedRequest = new UnitTestRequestInfo(apiKey: apiKey, methodAndPath: "GET /v4/lists/some_list_id/recipients/bynumber?countryCode=45&phoneNumber=1111", jsonOrNull: null);
+            var responseToSendback = new UnitTestResponseInfo(jsonOrNull: responseJson, statusCodeString: "404 Not Found");
+            using (var server = UnitTestHttpServer.StartOnAnyAvailablePort(new RequestResponsePair(request: expectedRequest, response: responseToSendback)))
+            {
+                var client = new InMobileApiClient(apiKey, baseUrl: $"http://{server.EndPoint.Address}:{server.EndPoint.Port}");
+                var ex = Assert.Throws<InMobileApiException>(() => client.Lists.GetRecipientByNumber(listId: new RecipientListId("some_list_id"), numberInfo: new NumberInfo(countryCode: "45", phoneNumber: "1111")));
+
+                Assert.Equal(HttpStatusCode.NotFound, ex.ErrorHttpStatusCode);
+            }
         }
 
         [Fact]

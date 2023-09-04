@@ -38,8 +38,21 @@ namespace InMobile.Sms.ApiClient.Test.Blacklist
         [Fact]
         public void GetByNumber_ApiError_NotFound_Test()
         {
-            // TODO: What to do in NotFound case?
-            throw new NotImplementedException();
+            var responseJson = @"{
+                ""errorMessage"": ""Could not find: ..."",
+                ""details"": []
+            }";
+
+            var apiKey = new InMobileApiKey("UnitTestKey123");
+            var expectedRequest = new UnitTestRequestInfo(apiKey: apiKey, methodAndPath: "GET /v4/blacklist/bynumber?countryCode=47&phoneNumber=11223344", jsonOrNull: null);
+            var responseToSendback = new UnitTestResponseInfo(jsonOrNull: responseJson, statusCodeString: "404 Not Found");
+            using (var server = UnitTestHttpServer.StartOnAnyAvailablePort(new RequestResponsePair(request: expectedRequest, response: responseToSendback)))
+            {
+                var client = new InMobileApiClient(apiKey, baseUrl: $"http://{server.EndPoint.Address}:{server.EndPoint.Port}");
+                var ex = Assert.Throws<InMobileApiException>(() => client.Blacklist.GetByNumber(new NumberInfo(countryCode: "47", phoneNumber: "11223344")));
+
+                Assert.Equal(HttpStatusCode.NotFound, ex.ErrorHttpStatusCode);
+            }
         }
 
         [Fact]
