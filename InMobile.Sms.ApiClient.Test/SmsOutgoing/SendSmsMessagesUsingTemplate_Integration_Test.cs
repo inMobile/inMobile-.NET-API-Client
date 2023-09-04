@@ -12,7 +12,7 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
         [Fact]
         public void SendSmsMessagesUsingTemplate_Success_Test()
         {
-            var expectedRequestJson = @"{""TemplateId"":""d33a51b8-13a8-4714-8a96-11347326a4a9"",""Messages"":[{""To"":""+45 11111111"",""CountryHint"":""DK"",""MessageId"":""someMessageId"",""RespectBlacklist"":true,""ValidityPeriodInSeconds"":55,""StatusCallbackUrl"":null,""SendTime"":""2001-02-03T13:05:06Z"",""Placeholders"":{""{name}"":""Clark Kent""}}]}";
+            var expectedRequestJson = @"{""TemplateId"":""d33a51b8-13a8-4714-8a96-11347326a4a9"",""Messages"":[{""To"":""+45 11111111"",""CountryHint"":""DK"",""MessageId"":""someMessageId"",""RespectBlacklist"":true,""ValidityPeriodInSeconds"":55,""SendTime"":""2001-02-03T14:05:06Z"",""Placeholders"":{""{name}"":""Clark Kent""}}]}";
 
             var responseJson = @"{
   ""usedPlaceholderKeys"": [
@@ -46,7 +46,7 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
             {
                 var client = new InMobileApiClient(apiKey, baseUrl: $"http://{server.EndPoint.Address}:{server.EndPoint.Port}");
                 var response = client.SmsOutgoing.SendSmsMessagesUsingTemplate(new OutgoingSmsTemplateCreateInfo(
-                    new TemplateId("d33a51b8-13a8-4714-8a96-11347326a4a9"),
+                    new SmsTemplateId("d33a51b8-13a8-4714-8a96-11347326a4a9"),
                     new List<OutgoingSmsTemplateMessageCreateInfo>
                     {
                         new OutgoingSmsTemplateMessageCreateInfo(
@@ -60,7 +60,7 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
                             respectBlacklist: true,
                             validityPeriod: TimeSpan.FromSeconds(55),
                             statusCallbackUrl: null,
-                            sendTime: new DateTime(2001,02,03,14,05,06))
+                            sendTime: new DateTime(2001,02,03,14,05,06, DateTimeKind.Utc))
                     }));
 
                 Assert.NotNull(response);
@@ -72,7 +72,7 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
                 Assert.Equal("PetShop", singleResult.From);
                 Assert.Equal("45", singleResult.NumberDetails.CountryCode);
                 Assert.Equal("11111111", singleResult.NumberDetails.PhoneNumber);
-                Assert.Equal(true, singleResult.NumberDetails.IsValidMsisdn);
+                Assert.True(singleResult.NumberDetails.IsValidMsisdn);
                 Assert.Equal("+45 11111111", singleResult.NumberDetails.RawMsisdn);
                 Assert.Equal("4511111111", singleResult.NumberDetails.Msisdn);
                 Assert.Equal("DK", singleResult.NumberDetails.CountryHint);
@@ -82,7 +82,7 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
         [Fact]
         public void SendSmsMessagesUsingTemplate_ApiError_Test()
         {
-            var expectedRequestJson = @"{""TemplateId"":""d33a51b8-13a8-4714-8a96-11347326a4a9"",""Messages"":[{""To"":""4511111111"",""CountryHint"":""DK"",""MessageId"":""someMessageId"",""RespectBlacklist"":true,""ValidityPeriodInSeconds"":55,""StatusCallbackUrl"":null,""SendTime"":""2001-02-03T13:05:06Z"",""Placeholders"":{""{name}"":""Clark Kent""}}]}";
+            var expectedRequestJson = @"{""TemplateId"":""d33a51b8-13a8-4714-8a96-11347326a4a9"",""Messages"":[{""To"":""4511111111"",""CountryHint"":""DK"",""MessageId"":""someMessageId"",""RespectBlacklist"":true,""ValidityPeriodInSeconds"":55,""SendTime"":""2001-02-03T14:05:06Z"",""Placeholders"":{""{name}"":""Clark Kent""}}]}";
 
             var responseJson = @"{
 ""errorMessage"": ""Forbidden thing"",
@@ -98,7 +98,7 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
             {
                 var client = new InMobileApiClient(apiKey, baseUrl: $"http://{server.EndPoint.Address}:{server.EndPoint.Port}");
                 var ex = Assert.Throws<InMobileApiException>(() => client.SmsOutgoing.SendSmsMessagesUsingTemplate(new OutgoingSmsTemplateCreateInfo(
-                    new TemplateId("d33a51b8-13a8-4714-8a96-11347326a4a9"),
+                    new SmsTemplateId("d33a51b8-13a8-4714-8a96-11347326a4a9"),
                     new List<OutgoingSmsTemplateMessageCreateInfo>
                     {
                         new OutgoingSmsTemplateMessageCreateInfo(
@@ -112,7 +112,7 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
                             respectBlacklist: true,
                             validityPeriod: TimeSpan.FromSeconds(55),
                             statusCallbackUrl: null,
-                            sendTime: new DateTime(2001,02,03,14,05,06))
+                            sendTime: new DateTime(2001,02,03,14,05,06, DateTimeKind.Utc))
                     })));
 
                 Assert.Equal(HttpStatusCode.InternalServerError, ex.ErrorHttpStatusCode);

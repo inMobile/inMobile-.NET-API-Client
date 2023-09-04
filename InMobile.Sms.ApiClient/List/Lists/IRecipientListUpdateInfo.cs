@@ -9,6 +9,7 @@
         /// The id of the list.
         /// </summary>
         RecipientListId Id { get; }
+
         /// <summary>
         /// The name of list.
         /// </summary>

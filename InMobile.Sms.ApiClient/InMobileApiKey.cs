@@ -11,6 +11,7 @@ namespace InMobile.Sms.ApiClient
         /// The key value
         /// </summary>
         public string ApiKey { get; }
+
         /// <summary>
         /// Create a new api key
         /// </summary>

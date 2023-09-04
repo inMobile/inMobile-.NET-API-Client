@@ -13,6 +13,7 @@ namespace InMobile.Sms.ApiClient
         void ExecuteWithNoContent(Method method, string resource, object? payload = null);
         List<T> ExecuteGetAndIteratePagedResult<T>(string resource);
     }
+
     /// <summary>
     /// A general help for rest requests
     /// </summary>
@@ -26,6 +27,7 @@ namespace InMobile.Sms.ApiClient
         private readonly string _inmobileClientVersion;
         private readonly string _dotnetVersion;
         private readonly InMobileJsonSerializerSettings _serializerSettings;
+
         public ApiRequestHelper(InMobileApiKey apiKey, string baseUrl)
         {
             if (string.IsNullOrEmpty(baseUrl))
@@ -64,7 +66,6 @@ namespace InMobile.Sms.ApiClient
             ExecuteInternal(method: method, resource: resource, payloadString: payloadString);
         }
 
-
         public T Execute<T>(Method method, string resource, object? payload = null) where T : class
         {
             string? payloadString = payload != null ? JsonConvert.SerializeObject(payload, _serializerSettings) : null;
@@ -72,6 +73,7 @@ namespace InMobile.Sms.ApiClient
             T? result = JsonConvert.DeserializeObject<T>(responseString, _serializerSettings);
             if (result == null)
                 throw new Exception($"Unexpected NULL after deserializing string {responseString}");
+
             return result;
         }
 
@@ -110,7 +112,7 @@ namespace InMobile.Sms.ApiClient
                 {
                     if ((int)response.StatusCode < 200 || (int)response.StatusCode > 299)
                     {
-                        throw new Exception("Unexpected status code received: " + response.StatusCode);
+                        throw new Exception($"Unexpected status code received: {response.StatusCode}");
                     }
 
                     using (Stream dataStream = response.GetResponseStream())

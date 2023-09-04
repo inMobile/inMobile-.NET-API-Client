@@ -12,7 +12,7 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
         [Fact]
         public void SendSmsMessages_Success_Test()
         {
-            var expectedRequestJson = @"{""Messages"":[{""To"":""4511111111"",""CountryHint"":null,""Text"":""Hello world"",""From"":""1245"",""MessageId"":""someMessageId"",""RespectBlacklist"":true,""Flash"":false,""Encoding"":""auto"",""ValidityPeriodInSeconds"":55,""StatusCallbackUrl"":null,""SendTime"":""2001-02-03T13:05:06Z""}]}";
+            var expectedRequestJson = @"{""Messages"":[{""To"":""4511111111"",""Text"":""Hello world"",""From"":""1245"",""MessageId"":""someMessageId"",""RespectBlacklist"":true,""Flash"":false,""Encoding"":""auto"",""ValidityPeriodInSeconds"":55,""SendTime"":""2001-02-03T14:05:06Z""}]}";
 
             var responseJson = @"{
 ""results"": [
@@ -50,7 +50,7 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
                         flash: false,
                         encoding: MessageEncoding.Auto,
                         validityPeriod: TimeSpan.FromSeconds(55),
-                        sendTime: new DateTime(2001,02,03,14,05,06))
+                        sendTime: new DateTime(2001,02,03,14,05,06, DateTimeKind.Utc))
                 });
                 Assert.NotNull(response);
                 Assert.Single(response.Results);
@@ -71,7 +71,7 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
         [Fact]
         public void SendSmsMessages_WithCountryHint_Success_Test()
         {
-            var expectedRequestJson = @"{""Messages"":[{""To"":""4511111111"",""CountryHint"":""DK"",""Text"":""Hello world"",""From"":""1245"",""MessageId"":""someMessageId"",""RespectBlacklist"":true,""Flash"":false,""Encoding"":""auto"",""ValidityPeriodInSeconds"":55,""StatusCallbackUrl"":null,""SendTime"":""2001-02-03T13:05:06Z""}]}";
+            var expectedRequestJson = @"{""Messages"":[{""To"":""4511111111"",""CountryHint"":""DK"",""Text"":""Hello world"",""From"":""1245"",""MessageId"":""someMessageId"",""RespectBlacklist"":true,""Flash"":false,""Encoding"":""auto"",""ValidityPeriodInSeconds"":55,""SendTime"":""2001-02-03T14:05:06Z""}]}";
 
             var responseJson = @"{
 ""results"": [
@@ -110,7 +110,7 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
                         flash: false,
                         encoding: MessageEncoding.Auto,
                         validityPeriod: TimeSpan.FromSeconds(55),
-                        sendTime: new DateTime(2001,02,03,14,05,06),
+                        sendTime: new DateTime(2001,02,03,14,05,06, DateTimeKind.Utc),
                         countryHint: "DK")
                 });
                 Assert.NotNull(response);
@@ -122,8 +122,8 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
                 Assert.Equal("PetShop", singleResult.From);
                 Assert.Equal("45", singleResult.NumberDetails.CountryCode);
                 Assert.Equal("11111111", singleResult.NumberDetails.PhoneNumber);
-                Assert.Equal(true, singleResult.NumberDetails.IsValidMsisdn);
-                Assert.Equal(false, singleResult.NumberDetails.IsAnonymized);
+                Assert.True(singleResult.NumberDetails.IsValidMsisdn);
+                Assert.False(singleResult.NumberDetails.IsAnonymized);
                 Assert.Equal("+45 11111111", singleResult.NumberDetails.RawMsisdn);
                 Assert.Equal("4511111111", singleResult.NumberDetails.Msisdn);
                 Assert.Equal("DK", singleResult.NumberDetails.CountryHint);
@@ -133,7 +133,7 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
         [Fact]
         public void SendSmsMessages_EnsureNotBreakingOfFutureEncodingsAreReceived_Test()
         {
-            var expectedRequestJson = @"{""Messages"":[{""To"":""+45 11111111"",""CountryHint"":null,""Text"":""Hello world"",""From"":""1245"",""MessageId"":""someMessageId"",""RespectBlacklist"":true,""Flash"":false,""Encoding"":""auto"",""ValidityPeriodInSeconds"":55,""StatusCallbackUrl"":null,""SendTime"":null}]}";
+            var expectedRequestJson = @"{""Messages"":[{""To"":""+45 11111111"",""Text"":""Hello world"",""From"":""1245"",""MessageId"":""someMessageId"",""RespectBlacklist"":true,""Flash"":false,""Encoding"":""auto"",""ValidityPeriodInSeconds"":55}]}";
 
             var responseJson = @"{
 ""results"": [
@@ -183,7 +183,7 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
         [Fact]
         public void SendSmsMessages_ApiError_Test()
         {
-            var expectedRequestJson = @"{""Messages"":[{""To"":""4511111111"",""CountryHint"":null,""Text"":""Hello world"",""From"":""1245"",""MessageId"":""someMessageId"",""RespectBlacklist"":true,""Flash"":false,""Encoding"":""auto"",""ValidityPeriodInSeconds"":55,""StatusCallbackUrl"":null,""SendTime"":""2001-02-03T13:05:06Z""}]}";
+            var expectedRequestJson = @"{""Messages"":[{""To"":""4511111111"",""Text"":""Hello world"",""From"":""1245"",""MessageId"":""someMessageId"",""RespectBlacklist"":true,""Flash"":false,""Encoding"":""auto"",""ValidityPeriodInSeconds"":55,""SendTime"":""2001-02-03T14:05:06Z""}]}";
 
             var responseJson = @"{
 ""errorMessage"": ""Forbidden thing"",
@@ -208,7 +208,7 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
                         flash: false,
                         encoding: MessageEncoding.Auto,
                         validityPeriod: TimeSpan.FromSeconds(55),
-                        sendTime: new DateTime(2001,02,03,14,05,06))
+                        sendTime: new DateTime(2001,02,03,14,05,06, DateTimeKind.Utc))
                 }));
                 Assert.Equal(HttpStatusCode.InternalServerError, ex.ErrorHttpStatusCode);
             }

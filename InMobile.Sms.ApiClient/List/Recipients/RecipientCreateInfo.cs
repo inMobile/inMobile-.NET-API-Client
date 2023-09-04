@@ -24,16 +24,27 @@ namespace InMobile.Sms.ApiClient
         public Dictionary<string, string> Fields { get; }
 
         /// <summary>
+        /// When the recipient was created in an external system e.g. 2001-02-24T14:50:23Z (UTC time).
+        /// </summary>
+        public DateTime? ExternalCreated { get; private set; }
+
+        /// <summary>
         /// Create a new create-object with additional fields information.
         /// </summary>
         /// <param name="listId">The id which the new recipient should be created in.</param>
         /// <param name="numberInfo">The number information.</param>
         /// <param name="fields">Additional fields.</param>
-        public RecipientCreateInfo(RecipientListId listId, NumberInfo numberInfo, Dictionary<string, string> fields)
+        /// <param name="externalCreated">Optional: When the recipient was created in an external system e.g. 2001-02-24T14:50:23Z (UTC time).</param>
+        public RecipientCreateInfo(RecipientListId listId, NumberInfo numberInfo, Dictionary<string, string> fields, DateTime? externalCreated = null)
         {
             ListId = listId ?? throw new ArgumentNullException(nameof(listId));
             NumberInfo = numberInfo ?? throw new ArgumentNullException(nameof(numberInfo));
             Fields = fields ?? throw new ArgumentNullException(nameof(fields));
+
+            if (externalCreated.HasValue && externalCreated.Value.Kind != DateTimeKind.Utc)
+                throw new ArgumentException("DateTimes with Kind other than Utc is not allowed", nameof(externalCreated));
+
+            ExternalCreated = externalCreated;
         }
 
         /// <summary>
@@ -41,7 +52,9 @@ namespace InMobile.Sms.ApiClient
         /// </summary>
         /// <param name="listId">The id which the new recipient should be created in.</param>
         /// <param name="numberInfo">The number information.</param>
-        public RecipientCreateInfo(RecipientListId listId, NumberInfo numberInfo) : this(listId: listId, numberInfo: numberInfo, fields: new Dictionary<string, string>())
+        /// <param name="externalCreated">Optional: When the recipient was created in an external system e.g. 2001-02-24T14:50:23Z (UTC time).</param>
+        public RecipientCreateInfo(RecipientListId listId, NumberInfo numberInfo, DateTime? externalCreated = null) 
+            : this(listId: listId, numberInfo: numberInfo, fields: new Dictionary<string, string>(), externalCreated: externalCreated)
         {
         }
     }

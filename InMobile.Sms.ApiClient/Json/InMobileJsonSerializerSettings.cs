@@ -12,14 +12,14 @@ namespace InMobile.Sms.ApiClient
         /// Used to avoid having the client setting up his/her own serializer and then accidentially affecting how this client works.
         /// </summary>
         public static JsonSerializerSettings Settings { get; } = new JsonSerializerSettings();
+
         /// <summary>
         /// 
         /// </summary>
         public InMobileJsonSerializerSettings()
         {
+            NullValueHandling = NullValueHandling.Ignore;
             Converters.Add(new EnumConverter<MessageEncoding>());
         }
     }
-
-
 }

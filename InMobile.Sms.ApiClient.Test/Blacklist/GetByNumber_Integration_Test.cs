@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using Xunit;
 using static InMobile.Sms.ApiClient.Test.UnitTestHttpServer;
 
@@ -15,7 +16,8 @@ namespace InMobile.Sms.ApiClient.Test.Blacklist
                     ""phoneNumber"": ""12345678""
                 },
                 ""comment"": ""Some text provided when created"",
-                ""id"": ""some_blacklist_id""
+                ""id"": ""some_blacklist_id"",
+                ""created"": ""2001-02-24T14:50:23Z""
             }";
 
             var apiKey = new InMobileApiKey("UnitTestKey123");
@@ -29,19 +31,40 @@ namespace InMobile.Sms.ApiClient.Test.Blacklist
                 Assert.Equal("12345678", entry.NumberInfo.PhoneNumber);
                 Assert.Equal("Some text provided when created", entry.Comment);
                 Assert.Equal("some_blacklist_id", entry.Id.Value);
+                Assert.Equal(new DateTime(2001, 02, 24, 14, 50, 23, DateTimeKind.Utc), entry.Created);
             }
         }
 
         [Fact]
-        public void GetByNumber_ApiError_Test()
+        public void GetByNumber_ApiError_NotFound_Test()
         {
             var responseJson = @"{
-""errorMessage"": ""Forbidden thing"",
-""details"": [
-""You shall not pass"",
-""Go away""
-]
-}";
+                ""errorMessage"": ""Could not find: ..."",
+                ""details"": []
+            }";
+
+            var apiKey = new InMobileApiKey("UnitTestKey123");
+            var expectedRequest = new UnitTestRequestInfo(apiKey: apiKey, methodAndPath: "GET /v4/blacklist/bynumber?countryCode=47&phoneNumber=11223344", jsonOrNull: null);
+            var responseToSendback = new UnitTestResponseInfo(jsonOrNull: responseJson, statusCodeString: "404 Not Found");
+            using (var server = UnitTestHttpServer.StartOnAnyAvailablePort(new RequestResponsePair(request: expectedRequest, response: responseToSendback)))
+            {
+                var client = new InMobileApiClient(apiKey, baseUrl: $"http://{server.EndPoint.Address}:{server.EndPoint.Port}");
+                var ex = Assert.Throws<InMobileApiException>(() => client.Blacklist.GetByNumber(new NumberInfo(countryCode: "47", phoneNumber: "11223344")));
+
+                Assert.Equal(HttpStatusCode.NotFound, ex.ErrorHttpStatusCode);
+            }
+        }
+
+        [Fact]
+        public void GetByNumber_ApiError_InternalServerError_Test()
+        {
+            var responseJson = @"{
+                ""errorMessage"": ""Forbidden thing"",
+                ""details"": [
+                    ""You shall not pass"",
+                    ""Go away""
+                ]
+            }";
 
             var apiKey = new InMobileApiKey("UnitTestKey123");
             var expectedRequest = new UnitTestRequestInfo(apiKey: apiKey, methodAndPath: "GET /v4/blacklist/bynumber?countryCode=47&phoneNumber=11223344", jsonOrNull: null);

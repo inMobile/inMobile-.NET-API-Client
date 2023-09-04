@@ -10,6 +10,7 @@
         /// </summary>
         /// <example>true</example>
         public bool IsCharged { get; set; }
+
         /// <summary>
         /// The total sms count in the message. If IsCharged is true, this is the number of sms'es that will be charged.
         /// </summary>

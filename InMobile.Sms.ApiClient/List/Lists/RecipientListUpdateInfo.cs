@@ -11,10 +11,12 @@ namespace InMobile.Sms.ApiClient
         /// The id of the recipient.
         /// </summary>
         public RecipientListId Id { get; }
+        
         /// <summary>
         /// The name of the list.
         /// </summary>
         public string Name { get; }
+
         /// <summary>
         /// Create a new update-object.
         /// </summary>

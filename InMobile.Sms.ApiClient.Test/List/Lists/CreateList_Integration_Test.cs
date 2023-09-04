@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using Xunit;
 using static InMobile.Sms.ApiClient.Test.UnitTestHttpServer;
 
@@ -11,8 +12,9 @@ namespace InMobile.Sms.ApiClient.Test.Blacklist
         {
             var requestJson = @"{""Name"":""New list name""}";
             var responseJson = @"{                
-                ""Name"": ""New list name"",
-                ""Id"": ""SomeId123""
+                ""id"": ""SomeId123"",
+                ""name"": ""New list name"",
+                ""created"": ""2001-02-24T14:50:23Z""
             }";
 
             var apiKey = new InMobileApiKey("UnitTestKey123");
@@ -24,6 +26,7 @@ namespace InMobile.Sms.ApiClient.Test.Blacklist
                 var entry = client.Lists.CreateList(new RecipientListCreateInfo(name: "New list name"));
                 Assert.Equal("New list name", entry.Name);
                 Assert.Equal("SomeId123", entry.Id.Value);
+                Assert.Equal(new DateTime(2001, 02, 24, 14, 50, 23, DateTimeKind.Utc), entry.Created);
             }
         }
 

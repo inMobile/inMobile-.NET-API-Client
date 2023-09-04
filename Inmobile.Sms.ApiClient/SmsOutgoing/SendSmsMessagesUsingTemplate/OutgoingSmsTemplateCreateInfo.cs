@@ -10,7 +10,7 @@ namespace InMobile.Sms.ApiClient
         /// <summary>
         /// The id of the template to use.
         /// </summary>
-        public TemplateId TemplateId { get; }
+        public SmsTemplateId TemplateId { get; }
 
         /// <summary>
         /// A list of the sms messages to be sent. Allowed to contain between 1 and 250 elements.
@@ -21,7 +21,7 @@ namespace InMobile.Sms.ApiClient
         /// </summary>
         /// <param name="templateId"></param>
         /// <param name="messages"></param>
-        public OutgoingSmsTemplateCreateInfo(TemplateId templateId, List<OutgoingSmsTemplateMessageCreateInfo> messages)
+        public OutgoingSmsTemplateCreateInfo(SmsTemplateId templateId, List<OutgoingSmsTemplateMessageCreateInfo> messages)
         {
             TemplateId = templateId;
             Messages = messages;

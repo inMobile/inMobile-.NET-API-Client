@@ -18,18 +18,19 @@ namespace InMobile.Sms.ApiClient
         /// </summary>
         [JsonProperty]
         public CancelResultCode ResultCode { get; private set; }
+
         /// <summary>
         /// A readable description of the result.
         /// </summary>
         [JsonProperty]
         public string? ResultDescription { get; private set; }
+
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         [JsonConstructor]
         private CancelMessageResult()
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         {
         }
-
     }
 
     /// <summary>

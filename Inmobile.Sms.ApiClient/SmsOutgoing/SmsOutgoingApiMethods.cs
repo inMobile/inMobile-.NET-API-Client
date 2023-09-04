@@ -37,21 +37,20 @@ namespace InMobile.Sms.ApiClient
         ReportsList<StatusReport> GetStatusReports(int limit);
     }
 
-    internal class SmsOutgoingMethods : ISmsOutgoingApiMethod
+    internal class SmsOutgoingApiMethods : ISmsOutgoingApiMethod
     {
         private const string V4_sms_outgoing = "/v4/sms/outgoing";
 
         private readonly IApiRequestHelper _requestHelper;
 
-        public SmsOutgoingMethods(IApiRequestHelper requestHelper)
+        public SmsOutgoingApiMethods(IApiRequestHelper requestHelper)
         {
             _requestHelper = requestHelper ?? throw new ArgumentNullException(nameof(requestHelper));
         }
 
         public ResultsList<CancelMessageResult> CancelMessages(List<OutgoingMessageId> messageIds)
         {
-            if (messageIds is null)
-                throw new ArgumentNullException(nameof(messageIds));
+            GuardHelper.EnsureNotNullOrThrow(nameof(messageIds), messageIds);
 
             return _requestHelper.Execute<ResultsList<CancelMessageResult>>(
                 method: Method.POST,
@@ -74,8 +73,7 @@ namespace InMobile.Sms.ApiClient
 
         public ResultsList<OutgoingSmsMessageCreateResult> SendSmsMessages(List<OutgoingSmsMessageCreateInfo> messageList)
         {
-            if (messageList is null)
-                throw new ArgumentNullException(nameof(messageList));
+            GuardHelper.EnsureNotNullOrThrow(nameof(messageList), messageList);
 
             return _requestHelper.Execute<ResultsList<OutgoingSmsMessageCreateResult>>(
                 method: Method.POST,
@@ -88,8 +86,7 @@ namespace InMobile.Sms.ApiClient
 
         public OutgoingSmsTemplateCreateResult SendSmsMessagesUsingTemplate(OutgoingSmsTemplateCreateInfo templateCreateInfo)
         {
-            if (templateCreateInfo is null)
-                throw new ArgumentNullException(nameof(templateCreateInfo));
+            GuardHelper.EnsureNotNullOrThrow(nameof(templateCreateInfo), templateCreateInfo);
 
             return _requestHelper.Execute<OutgoingSmsTemplateCreateResult>(
                 method: Method.POST,

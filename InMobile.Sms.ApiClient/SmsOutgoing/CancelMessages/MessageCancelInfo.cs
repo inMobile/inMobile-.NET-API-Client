@@ -6,9 +6,10 @@
     public class MessageCancelInfo
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public OutgoingMessageId MessageId { get; set; }
+
         /// <summary>
         /// Create a new cancel-object
         /// </summary>

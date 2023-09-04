@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 
 namespace InMobile.Sms.ApiClient
 {
@@ -12,11 +13,18 @@ namespace InMobile.Sms.ApiClient
         /// </summary>
         [JsonProperty]
         public MessageStateCode StateCode { get; private set; }
+
         /// <summary>
         /// A human readable description of the state.
         /// </summary>
         [JsonProperty]
         public string StateDescription { get; private set; }
+
+        /// <summary>
+        /// A human readable description of the state.
+        /// </summary>
+        [JsonProperty]
+        public DateTime? SendTime { get; private set; }
 
         /// <summary>
         /// A code  describing the type of error.
@@ -36,9 +44,6 @@ namespace InMobile.Sms.ApiClient
         private DeliveryInfo()
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         {
-            
         }
     }
-
-    
 }

@@ -12,18 +12,22 @@ namespace InMobile.Sms.ApiClient
         /// The id of the recipient.
         /// </summary>
         public RecipientId Id { get; }
+
         /// <summary>
         /// The id of the list
         /// </summary>
         public RecipientListId ListId { get; }
+
         /// <summary>
         /// If not specified, the number is just left intact.
         /// </summary>
         public NumberInfo? NumberInfo { get; }
+
         /// <summary>
         /// Additional fields to update. Fields not included here are not overwridden, just ignored.
         /// </summary>
         public Dictionary<string, string> Fields { get; }
+
         /// <summary>
         /// 
         /// </summary>
@@ -49,9 +53,7 @@ namespace InMobile.Sms.ApiClient
         public RecipientUpdateInfo(RecipientId recipientId, RecipientListId listId, NumberInfo numberInfo) : this(internalConstructor: true, recipientId: recipientId, listId: listId, numberInfo: numberInfo, fields: new Dictionary<string, string>())
         {
             if (numberInfo is null)
-            {
                 throw new ArgumentNullException(nameof(numberInfo));
-            }
         }
 
         /// <summary>
@@ -62,7 +64,6 @@ namespace InMobile.Sms.ApiClient
         /// <param name="fields">Additional field information (key/value pairs)</param>
         public RecipientUpdateInfo(RecipientId recipientId, RecipientListId listId, Dictionary<string, string> fields) : this(internalConstructor: true, recipientId: recipientId, listId: listId, numberInfo: null, fields: fields)
         {
-            
         }
 
         /// <summary>
