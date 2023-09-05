@@ -28,6 +28,11 @@ namespace InMobile.Sms.ApiClient
         public ISmsTemplateApiMethods SmsTemplates { get; private set; }
 
         /// <summary>
+        /// GDPR specific operations.
+        /// </summary>
+        public ISmsGdprApiMethods SmsGdpr { get; private set; }
+
+        /// <summary>
         /// Creates a new api client.
         /// </summary>
         /// <param name="apiKey">The api key to be used.</param>
@@ -45,6 +50,7 @@ namespace InMobile.Sms.ApiClient
             Blacklist = new BlacklistApiMethods(requestHelper);
             Lists = new ListApiMethods(requestHelper);
             SmsTemplates = new SmsTemplateApiMethods(requestHelper);
+            SmsGdpr = new SmsGdprApiMethods(requestHelper);
         }
     }
 }

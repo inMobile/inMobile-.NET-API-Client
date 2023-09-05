@@ -15,6 +15,7 @@ namespace InMobile.Sms.ApiClient.Demo.Common
             RunRealWorldTest_SmsTemplates(client: client, templateId: templateId);
             RunRealWorldTest_Lists(client: client);
             RunRealWorldTest_Blacklist(client: client);
+            RunRealWorldTest_SmsGdpr(client: client);
         }
 
         private static void RunRealWorldTest_SendSms(InMobileApiClient client, string msisdn, string statusCallbackUrl, SmsTemplateId templateId)
@@ -278,6 +279,19 @@ namespace InMobile.Sms.ApiClient.Demo.Common
 
             Log("Verify lists is gone");
             AssertThrows(HttpStatusCode.NotFound, () => client.Lists.GetAllRecipientsInList(listId: list.Id));
+
+            Log($"Done in {DateTime.Now.Subtract(startTime).TotalSeconds} seconds");
+        }
+
+        private static void RunRealWorldTest_SmsGdpr(InMobileApiClient client)
+        {
+            Log("::: SMS GDPR :::");
+            var startTime = DateTime.Now;
+
+            Log("Create Deletion Request");
+            var result = client.SmsGdpr.CreateDeletionRequest(new NumberInfo("45", "11223344"));
+            if (result?.Id == null)
+                throw new Exception("Expected to return ID");
 
             Log($"Done in {DateTime.Now.Subtract(startTime).TotalSeconds} seconds");
         }

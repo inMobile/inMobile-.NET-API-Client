@@ -304,6 +304,11 @@
             Temmplate specific operations.
             </summary>
         </member>
+        <member name="P:InMobile.Sms.ApiClient.InMobileApiClient.SmsGdpr">
+            <summary>
+            GDPR specific operations.
+            </summary>
+        </member>
         <member name="M:InMobile.Sms.ApiClient.InMobileApiClient.#ctor(InMobile.Sms.ApiClient.InMobileApiKey,System.String)">
             <summary>
             Creates a new api client.
@@ -709,6 +714,54 @@
             <summary>
             Http method types
             </summary>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.ISmsGdprApiMethods">
+            <summary>
+            A collection of GDPR-specific api endpoints.
+            </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.ISmsGdprApiMethods.CreateDeletionRequest(InMobile.Sms.ApiClient.NumberInfo)">
+            <summary>
+            Create information Deletion Request
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.SmsGdprDeletionRequestCreateInfo">
+            <summary>
+            Information for creating a new GDPR deletion request.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.SmsGdprDeletionRequestCreateInfo.NumberInfo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.SmsGdprDeletionRequestCreateInfo.#ctor(InMobile.Sms.ApiClient.NumberInfo)">
+            <summary>
+            
+            </summary>
+            <param name="numberInfo"></param>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.SmsGdprDeletionRequestCreateResult">
+            <summary>
+            Result info for a created GDPR deletion request.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.SmsGdprDeletionRequestCreateResult.Id">
+            <summary>
+            The Id of the GDPR deletion request
+            </summary>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.SmsGdprDeletionRequestId">
+            <summary>
+            The id type used for GDPR deletion request.
+            </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.SmsGdprDeletionRequestId.#ctor(System.String)">
+            <summary>
+            Create a new GDPR deletion request id.
+            </summary>
+            <param name="value"></param>
         </member>
         <member name="T:InMobile.Sms.ApiClient.MessageCancelInfo">
             <summary>
