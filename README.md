@@ -29,6 +29,31 @@ catch (InMobileApiException ex)
 
 ```
 
+### SMS: Send messages using template
+
+```c#
+var result = client.SmsOutgoing.SendSmsMessagesUsingTemplate(new OutgoingSmsTemplateCreateInfo(
+    templateId: new SmsTemplateId("MY-TEMPLATE-ID"),
+    new List<OutgoingSmsTemplateMessageCreateInfo>
+    {
+        new OutgoingSmsTemplateMessageCreateInfo(
+            placeholders: new Dictionary<string, string>(),
+            to: "4511223344",
+            statusCallbackUrl: null)
+    }));
+// statusCallbackUrl: Specify a url if you want report callbacks
+```
+
+### SMS: Cancel messages
+
+```c#
+var result = client.SmsOutgoing.CancelMessages(new List<OutgoingMessageId> 
+{ 
+    new OutgoingMessageId("MESSAGE-ID-1"),
+    new OutgoingMessageId("MESSAGE-ID-2")
+});
+```
+
 ### SMS: Pull message statuses
 
 Note that this is the PULL version of getting statuses.
@@ -36,7 +61,6 @@ Note that this is the PULL version of getting statuses.
 ```c#
 var reports = client.SmsOutgoing.GetStatusReports(limit: 10); // Limit must be between 1 and 250.
 ```
-
 
 
 ## Blacklist
@@ -76,7 +100,6 @@ client.Blacklist.RemoveById(blacklistEntryId: new BlacklistEntryId("f0d0767b-5f9
 ```c#
 client.Blacklist.RemoveByNumber(new NumberInfo(countryCode: "45", phoneNumber: "12345678"));
 ```
-
 
 
 ## Lists and recipients
@@ -200,3 +223,38 @@ client.Lists.DeleteRecipientByNumber(listId: new RecipientListId("8b481e37-8709-
                                         phoneNumber: "12345678"));
 ```
 
+
+# SMS Templates
+
+## SMS Templates: Get all
+
+```c#
+var allSmsTemplates = client.SmsTemplates.GetAll();
+```
+
+## SMS Templates: Get by id
+
+```c#
+var smsTemplate = client.SmsTemplates.GetById(new SmsTemplateId("MY-TEMPLATE-ID"));
+```
+
+
+# SMS GDPR
+
+## SMS GDPR: Create deletion request
+
+```c#
+var result = client.SmsGdpr.CreateDeletionRequest(new NumberInfo("45", "11223344"));
+```
+
+
+# Tools
+
+## Tools: Parse mobile numbers
+
+```c#
+var result = client.Tools.ParsePhoneNumbers(new List<ParsePhoneNumberInfo> 
+{ 
+    new ParsePhoneNumberInfo("DK", "+45 11 22 33 44") 
+});
+```
