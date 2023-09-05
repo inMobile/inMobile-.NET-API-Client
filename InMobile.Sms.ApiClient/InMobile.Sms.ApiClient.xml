@@ -309,6 +309,11 @@
             GDPR specific operations.
             </summary>
         </member>
+        <member name="P:InMobile.Sms.ApiClient.InMobileApiClient.Tools">
+            <summary>
+            Tools specific operations.
+            </summary>
+        </member>
         <member name="M:InMobile.Sms.ApiClient.InMobileApiClient.#ctor(InMobile.Sms.ApiClient.InMobileApiKey,System.String)">
             <summary>
             Creates a new api client.
@@ -1282,6 +1287,39 @@
             Create a new SMS template id.
             </summary>
             <param name="value"></param>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.ParsePhoneNumberInfo">
+            <summary>
+            Parse Phone Number Info
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.ParsePhoneNumberInfo.CountryHint">
+            <summary>
+            The country part of the msisdn, e.g. 45 or DK.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.ParsePhoneNumberInfo.RawMsisdn">
+            <summary>
+            The input msisdn in its unaltered format. This is the value provided when sending the text message.
+            </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.ParsePhoneNumberInfo.#ctor(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="countryHint"></param>
+            <param name="rawMsisdn"></param>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.IToolsApiMethods">
+            <summary>
+            A collection of Tools-specific api endpoints.
+            </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.IToolsApiMethods.ParsePhoneNumbers(System.Collections.Generic.List{InMobile.Sms.ApiClient.ParsePhoneNumberInfo})">
+            <summary>
+            Parse phone numbers
+            </summary>
+            <returns></returns>
         </member>
     </members>
 </doc>

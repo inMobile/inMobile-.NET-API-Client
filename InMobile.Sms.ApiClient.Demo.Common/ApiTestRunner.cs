@@ -16,6 +16,7 @@ namespace InMobile.Sms.ApiClient.Demo.Common
             RunRealWorldTest_Lists(client: client);
             RunRealWorldTest_Blacklist(client: client);
             RunRealWorldTest_SmsGdpr(client: client);
+            RunRealWorldTest_Tools(client: client);
         }
 
         private static void RunRealWorldTest_SendSms(InMobileApiClient client, string msisdn, string statusCallbackUrl, SmsTemplateId templateId)
@@ -292,6 +293,25 @@ namespace InMobile.Sms.ApiClient.Demo.Common
             var result = client.SmsGdpr.CreateDeletionRequest(new NumberInfo("45", "11223344"));
             if (result?.Id == null)
                 throw new Exception("Expected to return ID");
+
+            Log($"Done in {DateTime.Now.Subtract(startTime).TotalSeconds} seconds");
+        }
+
+        private static void RunRealWorldTest_Tools(InMobileApiClient client)
+        {
+            Log("::: TOOLS :::");
+            var startTime = DateTime.Now;
+
+            Log("Parse Phone Numbers");
+            var result = client.Tools.ParsePhoneNumbers(new List<ParsePhoneNumberInfo> { new ParsePhoneNumberInfo("DK", "+45 12 34 56 78") });
+            var singleResult = result.Results.Single();
+
+            AssertEquals(true, singleResult.IsValidMsisdn);
+            AssertEquals("4512345678", singleResult.Msisdn);
+            AssertEquals("45", singleResult.CountryCode);
+            AssertEquals("12345678", singleResult.PhoneNumber);
+            AssertEquals("DK", singleResult.CountryHint);
+            AssertEquals("+45 12 34 56 78", singleResult.RawMsisdn);
 
             Log($"Done in {DateTime.Now.Subtract(startTime).TotalSeconds} seconds");
         }
