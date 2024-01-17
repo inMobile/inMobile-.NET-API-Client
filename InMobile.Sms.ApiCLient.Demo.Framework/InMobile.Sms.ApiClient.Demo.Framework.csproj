@@ -54,7 +54,7 @@
       <Project>{41A42263-74FB-473A-813D-BBF5CA618736}</Project>
       <Name>InMobile.Sms.ApiClient.Demo.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Inmobile.Sms.ApiClient\InMobile.Sms.ApiClient.csproj">
+    <ProjectReference Include="..\InMobile.Sms.ApiClient\InMobile.Sms.ApiClient.csproj">
       <Project>{33E13B89-A82F-4793-B383-B5E791370225}</Project>
       <Name>InMobile.Sms.ApiClient</Name>
     </ProjectReference>
