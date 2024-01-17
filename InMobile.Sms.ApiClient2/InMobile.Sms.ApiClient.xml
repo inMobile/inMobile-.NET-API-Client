@@ -1,0 +1,1325 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>InMobile.Sms.ApiClient</name>
+    </assembly>
+    <members>
+        <member name="T:InMobile.Sms.ApiClient.ApiRequestHelper">
+            <summary>
+            A general help for rest requests
+            </summary>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.IBlacklistApiMethods">
+            <summary>
+            Blacklist specific operations.
+            </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.IBlacklistApiMethods.Create(InMobile.Sms.ApiClient.BlacklistEntryCreateInfo)">
+            <summary>
+            Create new entry in the blacklist.
+            </summary>
+            <param name="createInfo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.IBlacklistApiMethods.GetById(InMobile.Sms.ApiClient.BlacklistEntryId)">
+            <summary>
+            Get a blacklist entry by its id.
+            </summary>
+            <param name="blacklistEntryId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.IBlacklistApiMethods.GetByNumber(InMobile.Sms.ApiClient.NumberInfo)">
+            <summary>
+            Get a blacklist entry by its number.
+            </summary>
+            <param name="numberInfo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.IBlacklistApiMethods.DeleteById(InMobile.Sms.ApiClient.BlacklistEntryId)">
+            <summary>
+            Delete a blacklist entry by its id.
+            </summary>
+            <param name="blacklistEntryId"></param>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.IBlacklistApiMethods.DeleteByNumber(InMobile.Sms.ApiClient.NumberInfo)">
+            <summary>
+            Delete a blacklist entry by its number.
+            </summary>
+            <param name="numberInfo"></param>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.IBlacklistApiMethods.GetAll">
+            <summary>
+            Gets all blacklist entries.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.BlacklistApiMethods.GetAll">
+            <summary>
+            Gets all blacklist entries. This call is using a paged api and will do the api calls during the iteration of the returned enumerable.
+            This allowes for client to not allocate memory for holding the entire list of entries.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.BlacklistEntry">
+            <summary>
+            Represents and entry in the blacklist
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.BlacklistEntry.Id">
+            <summary>
+            The id of the blacklist entry
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.BlacklistEntry.NumberInfo">
+            <summary>
+            The number information
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.BlacklistEntry.Comment">
+            <summary>
+            An optional comment
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.BlacklistEntry.Created">
+            <summary>
+            The creation date of the blacklist entry (in UTC time).
+            </summary>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.BlacklistEntryCreateInfo">
+            <summary>
+            Represents info for creating a blacklist entry
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.BlacklistEntryCreateInfo.NumberInfo">
+            <summary>
+            The number information
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.BlacklistEntryCreateInfo.Comment">
+            <summary>
+             An optional comment
+            </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.BlacklistEntryCreateInfo.#ctor(InMobile.Sms.ApiClient.NumberInfo,System.String)">
+            <summary>
+            Creates a new Create-object.
+            </summary>
+            <param name="numberInfo">The number information</param>
+            <param name="comment">An optional comment</param>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.BlacklistEntryId">
+            <summary>
+            The id type of a blacklist entry
+            </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.BlacklistEntryId.#ctor(System.String)">
+            <summary>
+            Creates a new BlacklistId
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.CustomDataTypeBase`2.#ctor(`0)">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.EntriesList`1">
+            <summary>
+            A list of entries.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.EntriesList`1.Entries">
+            <summary>
+            The entries in the list.
+            </summary>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.GuardHelper">
+            <summary>
+            Helper for guarding against invalid inputs
+            </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.GuardHelper.EnsureNotNullOrThrow(System.String,System.Object)">
+            <summary>
+            Checks that value is not null - throws if it is
+            </summary>
+            <param name="parameterName"></param>
+            <param name="value"></param>
+            <exception cref="T:System.ArgumentException"></exception>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.MessageEncoding">
+            <summary>
+            Outgoing message encoding.
+            </summary>
+        </member>
+        <member name="F:InMobile.Sms.ApiClient.MessageEncoding.Unknown">
+            <summary>
+            Unknown encoding
+            </summary>
+        </member>
+        <member name="F:InMobile.Sms.ApiClient.MessageEncoding.Gsm7">
+            <summary>
+            "gsm7" is the default alfabet for text messages and when using gsm7, a single sms message can contain 160 characters. If the length exceeeds 160 characters, the message is actually split up into parts of 153 characters and charged according to this. Please note, that a few, specific characters fill up 2 bytes and count for 2 letters. Ref: https://en.wikipedia.org/wiki/GSM_03.38
+            </summary>
+        </member>
+        <member name="F:InMobile.Sms.ApiClient.MessageEncoding.Ucs2">
+            <summary>
+            "ucs2"" allows for more non-roman characters to be used along with smileys. When using this encoding, a single message can consist of 70 characters. If the message exceeds 70 characters, the final message is actually split into parts of 67 characters.
+            </summary>
+        </member>
+        <member name="F:InMobile.Sms.ApiClient.MessageEncoding.Auto">
+            <summary>
+            "auto" can be used in case the sender wishes to support non-roman characters but wants to save the expenses on all the trafic that only contains gsm characters anyway.
+            </summary>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.MessageStateCode">
+            <summary>
+            Message state code
+            </summary>
+        </member>
+        <member name="F:InMobile.Sms.ApiClient.MessageStateCode.Unknown">
+            <summary>
+            Unknown
+            </summary>
+        </member>
+        <member name="F:InMobile.Sms.ApiClient.MessageStateCode.Delivered">
+            <summary>
+            The sms message was delivered to the device.
+            </summary>
+        </member>
+        <member name="F:InMobile.Sms.ApiClient.MessageStateCode.Failed">
+            <summary>
+            Delivering failed for some reason.
+            </summary>
+        </member>
+        <member name="F:InMobile.Sms.ApiClient.MessageStateCode.Cancelled">
+            <summary>
+            The message was cancelled before sent to the device.
+            </summary>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.NumberDetails">
+            <summary>
+            Number details
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.NumberDetails.RawMsisdn">
+            <summary>
+            The input msisdn in its unaltered format. This is the value provided when sending the text message.
+            </summary>
+            <example>"45 12 34 56 78"</example>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.NumberDetails.Msisdn">
+            <summary>
+            The final cleaned msisdn.
+            </summary>
+            <example>"4512345678"</example>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.NumberDetails.IsValidMsisdn">
+            <summary>
+            True if the input msisdn was valid.
+            </summary>
+            <example>true</example>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.NumberDetails.IsAnonymized">
+            <summary>
+            Specifies whether the message has been anonymized or not.
+            </summary>
+            <example>false</example>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.NumberDetails.CountryHint">
+            <summary>
+            The country code hint if provided in the request.
+            </summary>
+            <example>"45"</example>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.NumberInfo">
+            <summary>
+            Number info
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.NumberInfo.CountryCode">
+            <summary>
+            The country code part of the msisdn, e.g. 45.
+            </summary>
+            <example>"45"</example>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.NumberInfo.PhoneNumber">
+            <summary>
+            The phone number part of the msisdn, e.g. 12345678.
+            </summary>
+            <example>"12345678"</example>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.NumberInfo.#ctor(System.String,System.String)">
+            <summary>
+            Create a new NumberInfo object
+            </summary>
+            <param name="countryCode">The country code part of the msisdn, e.g. 45.</param>
+            <param name="phoneNumber">The phone number part of the msisdn, e.g. 12345678.</param>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.ReportsList`1">
+            <summary>
+            A list of reports.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.ReportsList`1.Reports">
+            <summary>
+            The reports in the list
+            </summary>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.ResultsList`1">
+            <summary>
+            A list of results.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.ResultsList`1.Results">
+            <summary>
+            The results in the list
+            </summary>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.InMobileApiClient">
+            <summary>
+            Official InMobile API client
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.InMobileApiClient.SmsOutgoing">
+            <summary>
+            Outgoing message specific operations.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.InMobileApiClient.Blacklist">
+            <summary>
+            Blacklist specific operations.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.InMobileApiClient.Lists">
+            <summary>
+            List specific operations.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.InMobileApiClient.SmsTemplates">
+            <summary>
+            Temmplate specific operations.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.InMobileApiClient.SmsGdpr">
+            <summary>
+            GDPR specific operations.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.InMobileApiClient.Tools">
+            <summary>
+            Tools specific operations.
+            </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.InMobileApiClient.#ctor(InMobile.Sms.ApiClient.InMobileApiKey,System.String)">
+            <summary>
+            Creates a new api client.
+            </summary>
+            <param name="apiKey">The api key to be used.</param>
+            <param name="baseUrl">The base url of the api. This can be changed in case an internal proxy is in use.</param>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.InMobileApiException">
+            <summary>
+            Exception based on an AIP error
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.InMobileApiException.ErrorHttpStatusCode">
+            <summary>
+            The http status code
+            </summary>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.InMobileApiKey">
+            <summary>
+            InMobile account api key
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.InMobileApiKey.ApiKey">
+            <summary>
+            The key value
+            </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.InMobileApiKey.#ctor(System.String)">
+            <summary>
+            Create a new api key
+            </summary>
+            <param name="apiKey"></param>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.InMobileJsonSerializerSettings">
+            <summary>
+            Serializer created by https://gist.github.com/alexeyzimarev
+            Repo: https://gist.github.com/alexeyzimarev/c00b79c11c8cce6f6208454f7933ad24
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.InMobileJsonSerializerSettings.Settings">
+            <summary>
+            Used to avoid having the client setting up his/her own serializer and then accidentially affecting how this client works.
+            </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.InMobileJsonSerializerSettings.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.IListApiMethods">
+            <summary>
+            A collection of list- and recipient-specific api endpoints.
+            </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.IListApiMethods.CreateList(InMobile.Sms.ApiClient.RecipientListCreateInfo)">
+            <summary>
+            Create a new list.
+            </summary>
+            <param name="createInfo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.IListApiMethods.GetAllLists">
+            <summary>
+            Get all existing list on account.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.IListApiMethods.GetListById(InMobile.Sms.ApiClient.RecipientListId)">
+            <summary>
+            Get a specific list by its id.
+            </summary>
+            <param name="listId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.IListApiMethods.UpdateList(InMobile.Sms.ApiClient.IRecipientListUpdateInfo)">
+            <summary>
+            Updates the given list. This call both allows for the client to retrieve a listEntry, update it and pass it to UpdateList. It also allows for updating a list without retrieving it first simply by calling UpdateList(new RecipientListUpdateInfo(...) });
+            </summary>
+            <param name="list"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.IListApiMethods.DeleteListById(InMobile.Sms.ApiClient.RecipientListId)">
+            <summary>
+            Deletes a list including all of its recipients.
+            </summary>
+            <param name="listId"></param>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.IListApiMethods.CreateRecipient(InMobile.Sms.ApiClient.RecipientCreateInfo)">
+            <summary>
+            Create a new recipient in a given list.
+            </summary>
+            <param name="recipient"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.IListApiMethods.GetAllRecipientsInList(InMobile.Sms.ApiClient.RecipientListId)">
+            <summary>
+            Get all recipients in a given list.
+            </summary>
+            <param name="listId">The id of the list of which all recipients should be returned.</param>
+            <returns></returns>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.IListApiMethods.GetRecipientById(InMobile.Sms.ApiClient.RecipientListId,InMobile.Sms.ApiClient.RecipientId)">
+            <summary>
+            Get a recipient by its id.
+            </summary>
+            <param name="listId">The id of the list.</param>
+            <param name="recipientId">The id of the recipient.</param>
+            <returns></returns>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.IListApiMethods.GetRecipientByNumber(InMobile.Sms.ApiClient.RecipientListId,InMobile.Sms.ApiClient.NumberInfo)">
+            <summary>
+            Get a recipient by its number.
+            </summary>
+            <param name="listId">The id of the list.</param>
+            <param name="numberInfo">The number information.</param>
+            <returns></returns>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.IListApiMethods.UpdateRecipient(InMobile.Sms.ApiClient.IRecipientUpdateInfo)">
+            <summary>
+            Update a recipient. It is possible to return a previously fetched recipient object here or make an update without loading the recipient first by calling UpdateRecipient(new RecipientUpdateInfo(...))
+            </summary>
+            <param name="recipient"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.IListApiMethods.DeleteRecipientById(InMobile.Sms.ApiClient.RecipientListId,InMobile.Sms.ApiClient.RecipientId)">
+            <summary>
+            Delet a recipient by its id.
+            </summary>
+            <param name="listId">The id of the list in which the recipient belongs.</param>
+            <param name="recipientId"></param>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.IListApiMethods.DeleteRecipientByNumber(InMobile.Sms.ApiClient.RecipientListId,InMobile.Sms.ApiClient.NumberInfo)">
+            <summary>
+            Deletes a recipient by its number information.
+            </summary>
+            <param name="listId">The id of the list in which the recipient belongs.</param>
+            <param name="numberInfo">The number information.</param>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.IListApiMethods.DeleteAllRecipientsInList(InMobile.Sms.ApiClient.RecipientListId)">
+            <summary>
+            Deletes all recipients in a given list.
+            </summary>
+            <param name="listId"></param>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.IRecipientListUpdateInfo">
+            <summary>
+            Information required for updating a list.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.IRecipientListUpdateInfo.Id">
+            <summary>
+            The id of the list.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.IRecipientListUpdateInfo.Name">
+            <summary>
+            The name of list.
+            </summary>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.RecipientList">
+            <summary>
+            Info about a list
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.RecipientList.Id">
+            <summary>
+            The id of the list
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.RecipientList.Name">
+            <summary>
+            The name of the list
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.RecipientList.Created">
+            <summary>
+            The creation date of the list (in UTC time)
+            </summary>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.RecipientListCreateInfo">
+            <summary>
+            Information needed to create a new list.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.RecipientListCreateInfo.Name">
+            <summary>
+            The name of the list.
+            </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.RecipientListCreateInfo.#ctor(System.String)">
+            <summary>
+            Create a new create-object.
+            </summary>
+            <param name="name">The desired name of the list.</param>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.RecipientListId">
+            <summary>
+            The id type for a recipient list
+            </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.RecipientListId.#ctor(System.String)">
+            <summary>
+            Create a new recipient list id
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.RecipientListUpdateInfo">
+            <summary>
+            Information required to update a recipient.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.RecipientListUpdateInfo.Id">
+            <summary>
+            The id of the recipient.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.RecipientListUpdateInfo.Name">
+            <summary>
+            The name of the list.
+            </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.RecipientListUpdateInfo.#ctor(InMobile.Sms.ApiClient.RecipientListId,System.String)">
+            <summary>
+            Create a new update-object.
+            </summary>
+            <param name="listId">The id of the desired list to update.</param>
+            <param name="name">The desired name.</param>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.IRecipientUpdateInfo">
+            <summary>
+            Information needed for updating a recipient.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.IRecipientUpdateInfo.Id">
+            <summary>
+            The id of the recipient.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.IRecipientUpdateInfo.ListId">
+            <summary>
+            The id of the list where the recipient belongs.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.IRecipientUpdateInfo.NumberInfo">
+            <summary>
+            Optional. If not specified, the number is just ignored on the API side.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.IRecipientUpdateInfo.Fields">
+            <summary>
+            Additional fields on the recipient.
+            </summary>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.Recipient">
+            <summary>
+            A recipient
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.Recipient.Created">
+            <summary>
+            The creation date of the recipient (in UTC time).
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.Recipient.ExternalCreated">
+            <summary>
+            The external created date (in UTC time). If specified, this value represents the date of which the recipient was created in a given source outside of inMobiles system.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.Recipient.Id">
+            <summary>
+            The id of the recipient.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.Recipient.ListId">
+            <summary>
+            The id of the list of which the recipient belongs.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.Recipient.NumberInfo">
+            <summary>
+            The number information.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.Recipient.Fields">
+            <summary>
+            Additional fields.
+            </summary>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.RecipientCreateInfo">
+            <summary>
+            Information required for creating a new recipient.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.RecipientCreateInfo.ListId">
+            <summary>
+            The id which the new recipient should be created in.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.RecipientCreateInfo.NumberInfo">
+            <summary>
+            The number information.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.RecipientCreateInfo.Fields">
+            <summary>
+            Additional fields.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.RecipientCreateInfo.ExternalCreated">
+            <summary>
+            When the recipient was created in an external system e.g. 2001-02-24T14:50:23Z (UTC time).
+            </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.RecipientCreateInfo.#ctor(InMobile.Sms.ApiClient.RecipientListId,InMobile.Sms.ApiClient.NumberInfo,System.Collections.Generic.Dictionary{System.String,System.String},System.Nullable{System.DateTime})">
+            <summary>
+            Create a new create-object with additional fields information.
+            </summary>
+            <param name="listId">The id which the new recipient should be created in.</param>
+            <param name="numberInfo">The number information.</param>
+            <param name="fields">Additional fields.</param>
+            <param name="externalCreated">Optional: When the recipient was created in an external system e.g. 2001-02-24T14:50:23Z (UTC time).</param>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.RecipientCreateInfo.#ctor(InMobile.Sms.ApiClient.RecipientListId,InMobile.Sms.ApiClient.NumberInfo,System.Nullable{System.DateTime})">
+            <summary>
+            Create a new create-object without any additional field information.
+            </summary>
+            <param name="listId">The id which the new recipient should be created in.</param>
+            <param name="numberInfo">The number information.</param>
+            <param name="externalCreated">Optional: When the recipient was created in an external system e.g. 2001-02-24T14:50:23Z (UTC time).</param>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.RecipientId">
+            <summary>
+            The id type for a recipient
+            </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.RecipientId.#ctor(System.String)">
+            <summary>
+            Create a new recipient id
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.RecipientUpdateInfo">
+            <summary>
+            Value holder for updates performed without retrieving a recipient object from the API first.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.RecipientUpdateInfo.Id">
+            <summary>
+            The id of the recipient.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.RecipientUpdateInfo.ListId">
+            <summary>
+            The id of the list
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.RecipientUpdateInfo.NumberInfo">
+            <summary>
+            If not specified, the number is just left intact.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.RecipientUpdateInfo.Fields">
+            <summary>
+            Additional fields to update. Fields not included here are not overwridden, just ignored.
+            </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.RecipientUpdateInfo.#ctor(System.Boolean,InMobile.Sms.ApiClient.RecipientId,InMobile.Sms.ApiClient.RecipientListId,InMobile.Sms.ApiClient.NumberInfo,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            
+            </summary>
+            <param name="internalConstructor">Used to allow having a constructor overload with same parameter count but with numberInfo not specified.</param>
+            <param name="recipientId"></param>
+            <param name="listId"></param>
+            <param name="numberInfo"></param>
+            <param name="fields"></param>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.RecipientUpdateInfo.#ctor(InMobile.Sms.ApiClient.RecipientId,InMobile.Sms.ApiClient.RecipientListId,InMobile.Sms.ApiClient.NumberInfo)">
+            <summary>
+            Used for updating a recipients numberInfo only.
+            </summary>
+            <param name="recipientId">The id of the target recipient.</param>
+            <param name="listId">The id of the list in which the recipient belongs.</param>
+            <param name="numberInfo">The number information</param>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.RecipientUpdateInfo.#ctor(InMobile.Sms.ApiClient.RecipientId,InMobile.Sms.ApiClient.RecipientListId,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            Used for updating a recipients fields only. Fields names not included in the fields-object are left untouched.
+            </summary>
+            <param name="recipientId">The id of the target recipient.</param>
+            <param name="listId">The id of the list in which the recipient belongs.</param>
+            <param name="fields">Additional field information (key/value pairs)</param>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.RecipientUpdateInfo.#ctor(InMobile.Sms.ApiClient.RecipientId,InMobile.Sms.ApiClient.RecipientListId,InMobile.Sms.ApiClient.NumberInfo,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            Used for updating both numberInfo and field information of a recipient.
+            </summary>
+            <param name="recipientId">The id of the target recipient.</param>
+            <param name="listId">The id of the list in which the recipient belongs.</param>
+            <param name="numberInfo">The number information</param>
+            <param name="fields">Additional field information (key/value pairs)</param>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.Method">
+            <summary>
+            Http method types
+            </summary>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.ISmsGdprApiMethods">
+            <summary>
+            A collection of GDPR-specific api endpoints.
+            </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.ISmsGdprApiMethods.CreateDeletionRequest(InMobile.Sms.ApiClient.NumberInfo)">
+            <summary>
+            Create information Deletion Request
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.SmsGdprDeletionRequestCreateInfo">
+            <summary>
+            Information for creating a new GDPR deletion request.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.SmsGdprDeletionRequestCreateInfo.NumberInfo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.SmsGdprDeletionRequestCreateInfo.#ctor(InMobile.Sms.ApiClient.NumberInfo)">
+            <summary>
+            
+            </summary>
+            <param name="numberInfo"></param>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.SmsGdprDeletionRequestCreateResult">
+            <summary>
+            Result info for a created GDPR deletion request.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.SmsGdprDeletionRequestCreateResult.Id">
+            <summary>
+            The Id of the GDPR deletion request
+            </summary>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.SmsGdprDeletionRequestId">
+            <summary>
+            The id type used for GDPR deletion request.
+            </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.SmsGdprDeletionRequestId.#ctor(System.String)">
+            <summary>
+            Create a new GDPR deletion request id.
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.MessageCancelInfo">
+            <summary>
+            Information needed to cancel an outgoing text message.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.MessageCancelInfo.MessageId">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.MessageCancelInfo.#ctor(InMobile.Sms.ApiClient.OutgoingMessageId)">
+            <summary>
+            Create a new cancel-object
+            </summary>
+            <param name="messageId">The id of the message to cancel</param>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.CancelMessageResult">
+            <summary>
+            Represents the result of a cancel attempt.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.CancelMessageResult.MessageId">
+            <summary>
+            The id of the outgoing message.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.CancelMessageResult.ResultCode">
+            <summary>
+            The code specifying whether the cancel was a success or not.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.CancelMessageResult.ResultDescription">
+            <summary>
+            A readable description of the result.
+            </summary>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.CancelResultCode">
+            <summary>
+            Cancel result code
+            </summary>
+        </member>
+        <member name="F:InMobile.Sms.ApiClient.CancelResultCode.Unknown">
+            <summary>
+            Unknown
+            </summary>
+        </member>
+        <member name="F:InMobile.Sms.ApiClient.CancelResultCode.Success">
+            <summary>
+            The message was successfully cancelled.
+            </summary>
+        </member>
+        <member name="F:InMobile.Sms.ApiClient.CancelResultCode.NotCancelled">
+            <summary>
+            The message was found but not cancelled. This can happen if the message has already been sent.
+            </summary>
+        </member>
+        <member name="F:InMobile.Sms.ApiClient.CancelResultCode.MessageNotFound">
+            <summary>
+            The message id specified did not match any messages in the database. This can happen if the id was not valid or if the message was deleted in the system.
+            </summary>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.ChargeInfo">
+            <summary>
+            Information related to charging of an outgoing message.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.ChargeInfo.IsCharged">
+            <summary>
+            True if the message will be charged.
+            </summary>
+            <example>true</example>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.ChargeInfo.SmsCount">
+            <summary>
+            The total sms count in the message. If IsCharged is true, this is the number of sms'es that will be charged.
+            </summary>
+            <example>2</example>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.ChargeInfo.Network">
+            <summary>
+            The network of which the message belongs.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.ChargeInfo.Encoding">
+            <summary>
+            The encoding of the message. Can be either "gsm7" or "ucs2". In case the message was submitted with encoding "auto", this report will reveal the final encoding based on the characters in the message text.
+            "gsm7" is the default alfabet for text messages and when using gsm7, a single sms message can contain 160 characters. If the length exceeeds 160 characters, the message is actually split up into parts of 153 characters and charged according to this. Please note, that a few, specific characters fill up 2 bytes and count for 2 letters. Ref: https://en.wikipedia.org/wiki/GSM_03.38
+            "ucs2"" allows for more non-roman characters to be used along with smileys. When using this encoding, a single message can consist of 70 characters. If the message exceeds 70 characters, the final message is actually split into parts of 67 characters.
+            </summary>
+            <example>gsm7</example>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.DeliveryInfo">
+            <summary>
+            Information related to the delivery of an outgoing message.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.DeliveryInfo.StateCode">
+            <summary>
+            Specification of the delivery state
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.DeliveryInfo.StateDescription">
+            <summary>
+            A human readable description of the state.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.DeliveryInfo.SendTime">
+            <summary>
+            A human readable description of the state.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.DeliveryInfo.ErrorCode">
+            <summary>
+            A code  describing the type of error.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.DeliveryInfo.ErrorDescription">
+            <summary>
+            A description describing the error if the state is not "DELIVERED". This property will be absent in case the state is "DELIVERED".
+            </summary>
+            <example>Undeliverable message</example>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.StatusReport">
+            <summary>
+            A status report for an outgoing message.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.StatusReport.MessageId">
+            <summary>
+            The id of the message.
+            </summary>
+            <example>id1</example>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.StatusReport.NumberDetails">
+            <summary>
+            The detailed number information.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.StatusReport.DeliveryInfo">
+            <summary>
+            Information about the delivery state of the outgoing message.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.StatusReport.ChargeInfo">
+            <summary>
+            Charging info about the outgoing message.
+            </summary>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.OutgoingSmsTemplateCreateInfo">
+            <summary>
+            Information for creating a new outgoing message using a template.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingSmsTemplateCreateInfo.TemplateId">
+            <summary>
+            The id of the template to use.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingSmsTemplateCreateInfo.Messages">
+            <summary>
+            A list of the sms messages to be sent. Allowed to contain between 1 and 250 elements.
+            </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.OutgoingSmsTemplateCreateInfo.#ctor(InMobile.Sms.ApiClient.SmsTemplateId,System.Collections.Generic.List{InMobile.Sms.ApiClient.OutgoingSmsTemplateMessageCreateInfo})">
+            <summary>
+            </summary>
+            <param name="templateId"></param>
+            <param name="messages"></param>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.OutgoingSmsTemplateCreateResult">
+            <summary>
+            Result info for a created outgoing message using template.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingSmsTemplateCreateResult.UsedPlaceholderKeys">
+            <summary>
+            A list of used used placeholder keys.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingSmsTemplateCreateResult.NotUsedPlaceholderKeys">
+            <summary>
+            A list of not used placeholder keys.
+            </summary>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.OutgoingSmsTemplateMessageCreateInfo">
+            <summary>
+            Create information for message for sending SMS using template.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingSmsTemplateMessageCreateInfo.To">
+            <summary>
+            The msisdn (country code and number) to send to. (Remember to include countrycode in all numbers, e.g. 4512345678).
+            If max length is exceeded, the entire api call will fail.
+            </summary>
+            <example>"4512345678"</example>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingSmsTemplateMessageCreateInfo.CountryHint">
+            <summary>
+            For optimal phone number validation, we encourage you to provide us with a country code. This can be the numeric country code (like 44) or the two-letter suffix (like GB). 
+            If this field is empty it is important that you add the country code (e.g 44) in front of the phone number in “to”.
+            </summary>
+            <example>"45"</example>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingSmsTemplateMessageCreateInfo.MessageId">
+            <summary>
+            An optional message id used to identify the message.
+            If no message id is provided, a new message id is generated and assigned to the message. This id must be unique across all messages created on the same account.
+            (In case a previous message has been deleted according to GDPR deletion rules setup on the specific account, the messageId is allowed to be reused)
+            If max length is exceeded, the entire api call will fail.
+            Max length: 50
+            </summary>
+            <example>PetShop</example>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingSmsTemplateMessageCreateInfo.RespectBlacklist">
+            <summary>
+            If true, this message will be blocked from sending if the target number is on the account's blacklist. If false, the message will be sent no matter blacklist settings.
+            Default: true
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingSmsTemplateMessageCreateInfo.ValidityPeriodInSeconds">
+            <summary>
+            The validity period in seconds. Minimum is 60 seconds and maximum is 172800 (48 hours).
+            If not specified, the messages is attempted to be delivered in 48 hours.
+            </summary>
+            <example>90</example>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingSmsTemplateMessageCreateInfo.StatusCallbackUrl">
+            <summary>
+            An optional callback url. If specified, this url is called with a status report when the message has reached its final status (either delivered, failed or cancelled).
+            NOTE: Callbacks happen in bulks.Reports for message with identical callback urls can happen to be grouped in single callbacks.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingSmsTemplateMessageCreateInfo.SendTime">
+            <summary>
+            If specified, this represents the future send time of the message.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingSmsTemplateMessageCreateInfo.Placeholders">
+            <summary>
+            A key-value list of placeholders to replace in the template text. Keys must be encapsulated with {}. E.g. {NAME}.
+            </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.OutgoingSmsTemplateMessageCreateInfo.#ctor(System.Collections.Generic.Dictionary{System.String,System.String},System.String,System.String,InMobile.Sms.ApiClient.OutgoingMessageId,System.Boolean,System.Nullable{System.TimeSpan},System.String,System.Nullable{System.DateTime})">
+            <summary>
+            </summary>
+            <param name="placeholders"></param>
+            <param name="to"></param>
+            <param name="countryHint"></param>
+            <param name="messageId"></param>
+            <param name="respectBlacklist"></param>
+            <param name="validityPeriod"></param>
+            <param name="statusCallbackUrl"></param>
+            <param name="sendTime"></param>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.OutgoingSmsMessageCreateInfo">
+            <summary>
+            Information for creating a new outgoing message.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingSmsMessageCreateInfo.To">
+            <summary>
+            The msisdn (country code and number) to send to. (Remember to include countrycode in all numbers, e.g. 4512345678).
+            If max length is exceeded, the entire api call will fail.
+            </summary>
+            <example>"4512345678"</example>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingSmsMessageCreateInfo.CountryHint">
+            <summary>
+            For optimal phone number validation, we encourage you to provide us with a country code. This can be the numeric country code (like 44) or the two-letter suffix (like GB). 
+            If this field is empty it is important that you add the country code (e.g 44) in front of the phone number in “to”.
+            </summary>
+            <example>"45"</example>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingSmsMessageCreateInfo.Text">
+            <summary>
+            The text message.
+            If the max length is exceeded (10,000 chars), the message text is truncated and sent.
+            </summary>
+            <example>"This is a message text to be sent"</example>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingSmsMessageCreateInfo.From">
+            <summary>
+            The sender. This can either be a 3-11 chars text sender or an up to 14 digit long sender number.
+            If the max length is exceeded, the string is truncated.
+            </summary>
+            <example>PetShop</example>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingSmsMessageCreateInfo.MessageId">
+            <summary>
+            An optional message id used to identify the message.
+            If no message id is provided, a new message id is generated and assigned to the message. This id must be unique across all messages created on the same account.
+            (In case a previous message has been deleted according to GDPR deletion rules setup on the specific account, the messageId is allowed to be reused)
+            If max length is exceeded, the entire api call will fail.
+            Max length: 50
+            </summary>
+            <example>PetShop</example>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingSmsMessageCreateInfo.RespectBlacklist">
+            <summary>
+            If true, this message will be blocked from sending if the target number is on the account's blacklist. If false, the message will be sent no matter blacklist settings.
+            Default: true
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingSmsMessageCreateInfo.Flash">
+            <summary>
+            If true, the message will be shown as a flash message (also known as a class0 message) on the target phone. If false, it will be received as a standard text message.
+            Default: false
+            </summary>
+            <example>false</example>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingSmsMessageCreateInfo.Encoding">
+            <summary>
+            The encoding of the message. Can be either "gsm7", "ucs2" or "auto".
+            "gsm7" is the default alfabet for text messages and when using gsm7, a single sms message can contain 160 characters. If the length exceeeds 160 characters, the message is actually split up into parts of 153 characters and charged according to this. Please note, that a few, specific characters fill up 2 bytes and count for 2 letters. Ref: https://en.wikipedia.org/wiki/GSM_03.38
+            "ucs2"" allows for more non-roman characters to be used along with smileys. When using this encoding, a single message can consist of 70 characters. If the message exceeds 70 characters, the final message is actually split into parts of 67 characters.
+            "auto" can be used in case the sender wishes to support non-roman characters but wants to save the expenses on all the trafic that only contains gsm characters anyway.
+            Default: "gsm7"
+            </summary>
+            <example>gsm7</example>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingSmsMessageCreateInfo.RawEncoding">
+            <summary>
+            The actual string value of the encoding that will be sent over the API.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingSmsMessageCreateInfo.ValidityPeriodInSeconds">
+            <summary>
+            The validity period in seconds. Minimum is 60 seconds and maximum is 172800 (48 hours).
+            If not specified, the messages is attempted to be delivered in 48 hours.
+            </summary>
+            <example>90</example>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingSmsMessageCreateInfo.StatusCallbackUrl">
+            <summary>
+            An optional callback url. If specified, this url is called with a status report when the message has reached its final status (either delivered, failed or cancelled).
+            NOTE: Callbacks happen in bulks.Reports for message with identical callback urls can happen to be grouped in single callbacks.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingSmsMessageCreateInfo.SendTime">
+            <summary>
+            If specified, this represents the future send time of the message.
+            </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.OutgoingSmsMessageCreateInfo.#ctor(System.String,System.String,System.String,InMobile.Sms.ApiClient.OutgoingMessageId,System.Boolean,System.Boolean,InMobile.Sms.ApiClient.MessageEncoding,System.Nullable{System.TimeSpan},System.String,System.Nullable{System.DateTime},System.String)">
+            <summary>
+            
+            </summary>
+            <param name="to">The msisdn (country code and number) to send to. (Remember to include countrycode in all numbers, e.g. 4512345678). If max length is exceeded, the entire api call will fail.</param>
+            <param name="text">The text message. If the max length is exceeded (10,000 chars), the message text is truncated and sent.</param>
+            <param name="from">The sender. This can either be a 3-11 chars text sender or an up to 14 digit long sender number. If the max length is exceeded, the string is truncated.</param>
+            <param name="messageId">/// An optional message id used to identify the message. If no message id is provided, a new message id is generated and assigned to the message. This id must be unique across all messages created on the same account.         (In case a previous message has been deleted according to GDPR deletion rules setup on the specific account, the messageId is allowed to be reused). If max length is exceeded, the entire api call will fail. Max length: 50</param>
+            <param name="respectBlacklist">If true, this message will be blocked from sending if the target number is on the account's blacklist. If false, the message will be sent no matter blacklist settings.</param>
+            <param name="flash">If true, the message will be shown as a flash message (also known as a class0 message) on the target phone. If false, it will be received as a standard text message.</param>
+            <param name="encoding">The encoding of the message.</param>
+            <param name="validityPeriod">The validity period. If the message cannot be delivered within this time frame it is dropped an concidered failed. Minimum is 60 seconds and maximum is 172800 (48 hours). If not specified, the messages is attempted to be delivered in 48 hours.</param>
+            <param name="statusCallbackUrl">An optional callback url. If specified, this url is called with a status report when the message has reached its final status (either delivered, failed or cancelled).</param>
+            <param name="sendTime">If specified, this message will be sent at the specified time in the future.</param>
+            <param name="countryHint">For optimal phone number validation, we encourage you to provide us with a country code. This can be the numeric country code (like 44) or the two-letter suffix (like GB). If this field is empty it is important that you add the country code (e.g 44) in front of the phone number in “to”.</param>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.OutgoingSmsMessageCreateResult">
+            <summary>
+            Result info for a created outgoing message.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingSmsMessageCreateResult.NumberDetails">
+            <summary>
+            The parsed details about the msisdn provided in the to-field of the request (msisdn is a number with a countrycode e.g. 4512345678)
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingSmsMessageCreateResult.Text">
+            <summary>
+            The text message.
+            If the max length is exceeded (10,000 chars), the message text is truncated and sent.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingSmsMessageCreateResult.From">
+            <summary>
+            The sender. This can either be a 3-11 chars text sender or an up to 14 digit long sender number.
+            If the max length is exceeded, the string is truncated.
+            </summary>
+            <example>PetShop</example>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingSmsMessageCreateResult.SmsCount">
+            <summary>
+            The number of sms messages this message will be split into when sent to the operator. Charging will also be done according to this number.
+            </summary>
+            <example>1</example>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingSmsMessageCreateResult.MessageId">
+            <summary>
+            An optional message id used to identify the message.
+            If no message id was provided when sending the message, a new message id has been generated and assigned to the message. This id is unique across all messages created on the same account.
+            </summary>
+            <example>PetShop</example>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingSmsMessageCreateResult.Encoding">
+            <summary>
+            The encoding of the message. Can be either "gsm7", "ucs2" or "auto".
+            </summary>
+            <example>gsm7</example>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.OutgoingMessageId">
+            <summary>
+            The id type used for outgoing messages.
+            </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.OutgoingMessageId.#ctor(System.String)">
+            <summary>
+            Create a new outgoing message id.
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.ISmsOutgoingApiMethod">
+            <summary>
+            Outgoing message specific operations.
+            </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.ISmsOutgoingApiMethod.SendSmsMessages(System.Collections.Generic.List{InMobile.Sms.ApiClient.OutgoingSmsMessageCreateInfo})">
+            <summary>
+            Send sms messages to one or more recipients.
+            </summary>
+            <param name="messageList"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.ISmsOutgoingApiMethod.SendSmsMessagesUsingTemplate(InMobile.Sms.ApiClient.OutgoingSmsTemplateCreateInfo)">
+            <summary>
+            Send sms messages using a template.
+            </summary>
+            <param name="templateCreateInfo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.ISmsOutgoingApiMethod.CancelMessages(System.Collections.Generic.List{InMobile.Sms.ApiClient.OutgoingMessageId})">
+            <summary>
+            Cancel future scheduled messages.
+            </summary>
+            <param name="messageIds"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.ISmsOutgoingApiMethod.GetStatusReports(System.Int32)">
+            <summary>
+            Get 1 or more pending status reports awaiting to be fetched. After calling this method, the returned reports will be flagged as processed and never returned again.
+            </summary>
+            <param name="limit">The maximum amount of reports to receive. Limit bust be between 1 and 250.</param>
+            <returns></returns>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.SmsTemplate">
+            <summary>
+            Info about a SMS template.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.SmsTemplate.Id">
+            <summary>
+            The id of the SMS template
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.SmsTemplate.Name">
+            <summary>
+            The name of the SMS template
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.SmsTemplate.Text">
+            <summary>
+            The SMS template text content.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.SmsTemplate.SenderName">
+            <summary>
+            The sendername of the SMS template.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.SmsTemplate.Encoding">
+            <summary>
+            The encoding of the message. Can be either "gsm7", "ucs2" or "auto".
+            </summary>
+            <example>gsm7</example>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.SmsTemplate.Placeholders">
+            <summary>
+            The placeholders of the SMS template.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.SmsTemplate.Created">
+            <summary>
+            The created date of the SMS template.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.SmsTemplate.LastUpdated">
+            <summary>
+            The last updated date of the SMS template.
+            </summary>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.ISmsTemplateApiMethods">
+            <summary>
+            A collection of SMS template-specific api endpoints.
+            </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.ISmsTemplateApiMethods.GetAll">
+            <summary>
+            Get all existing SMS templates on account.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.ISmsTemplateApiMethods.GetById(InMobile.Sms.ApiClient.SmsTemplateId)">
+            <summary>
+            Get a specific SMS template by its id.
+            </summary>
+            <param name="templateId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.SmsTemplateId">
+            <summary>
+            The id type used for SMS templates.
+            </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.SmsTemplateId.#ctor(System.String)">
+            <summary>
+            Create a new SMS template id.
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.ParsePhoneNumberInfo">
+            <summary>
+            Parse Phone Number Info
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.ParsePhoneNumberInfo.CountryHint">
+            <summary>
+            The country part of the msisdn, e.g. 45 or DK.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.ParsePhoneNumberInfo.RawMsisdn">
+            <summary>
+            The input msisdn in its unaltered format. This is the value provided when sending the text message.
+            </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.ParsePhoneNumberInfo.#ctor(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="countryHint"></param>
+            <param name="rawMsisdn"></param>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.IToolsApiMethods">
+            <summary>
+            A collection of Tools-specific api endpoints.
+            </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.IToolsApiMethods.ParsePhoneNumbers(System.Collections.Generic.List{InMobile.Sms.ApiClient.ParsePhoneNumberInfo})">
+            <summary>
+            Parse phone numbers
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
