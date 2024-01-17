@@ -11,15 +11,21 @@ namespace InMobile.Sms.ApiClient.Demo.Common
         {
             var client = new InMobileApiClient(apiKey: apiKey);
 
-            RunRealWorldTest_SendSms(client: client, msisdn: msisdn, statusCallbackUrl: statusCallbackUrl, templateId: templateId);
+            // SMS
+            RunRealWorldTest_SmsOutgoing(client: client, msisdn: msisdn, statusCallbackUrl: statusCallbackUrl, templateId: templateId);
             RunRealWorldTest_SmsTemplates(client: client, templateId: templateId);
             RunRealWorldTest_Lists(client: client);
             RunRealWorldTest_Blacklist(client: client);
             RunRealWorldTest_SmsGdpr(client: client);
+
+            // Email
+            RunRealWorldTest_EmailOutgoing(client: client);
+
+            // Other
             RunRealWorldTest_Tools(client: client);
         }
 
-        private static void RunRealWorldTest_SendSms(InMobileApiClient client, string msisdn, string statusCallbackUrl, SmsTemplateId templateId)
+        private static void RunRealWorldTest_SmsOutgoing(InMobileApiClient client, string msisdn, string statusCallbackUrl, SmsTemplateId templateId)
         {
             Log("::: SEND SMS :::");
             client.SmsOutgoing.SendSmsMessages(new List<OutgoingSmsMessageCreateInfo>
@@ -295,6 +301,11 @@ namespace InMobile.Sms.ApiClient.Demo.Common
                 throw new Exception("Expected to return ID");
 
             Log($"Done in {DateTime.Now.Subtract(startTime).TotalSeconds} seconds");
+        }
+
+        private static void RunRealWorldTest_EmailOutgoing(InMobileApiClient client)
+        {
+            throw new NotImplementedException();
         }
 
         private static void RunRealWorldTest_Tools(InMobileApiClient client)

@@ -279,6 +279,54 @@
             The results in the list
             </summary>
         </member>
+        <member name="T:InMobile.Sms.ApiClient.IEmailOutgoingApiMethods">
+            <summary>
+            Outgoing email specific operations.
+            </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.IEmailOutgoingApiMethods.SendEmail(InMobile.Sms.ApiClient.OutgoingEmailCreateInfo)">
+            <summary>
+            Send email to one or more recipients.
+            </summary>
+            <param name="createInfo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.IEmailOutgoingApiMethods.SendEmailUsingTemplate(InMobile.Sms.ApiClient.OutgoingEmailTemplateCreateInfo)">
+            <summary>
+            Send email using a template.
+            </summary>
+            <param name="templateCreateInfo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.IEmailOutgoingApiMethods.GetEmailEvents(System.Int32)">
+            <summary>
+            Each event will only be returned once. Once called, the event has been removed from our side and cannot be retrieved again using this method.
+            </summary>
+            <param name="limit">The maximum amount of events to receive. Limit bust be between 1 and 250.</param>
+            <returns></returns>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.EmailEventsList`1">
+            <summary>
+            A list of email events.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.EmailEventsList`1.Events">
+            <summary>
+            The events in the list
+            </summary>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.OutgoingEmailId">
+            <summary>
+            The id type used for outgoing emails.
+            </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.OutgoingEmailId.#ctor(System.String)">
+            <summary>
+            Create a new outgoing email id.
+            </summary>
+            <param name="value"></param>
+        </member>
         <member name="T:InMobile.Sms.ApiClient.InMobileApiClient">
             <summary>
             Official InMobile API client
