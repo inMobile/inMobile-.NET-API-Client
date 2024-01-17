@@ -3,7 +3,7 @@ using System.IO;
 using InMobile.Sms.ApiClient;
 using InMobile.Sms.ApiClient.Demo.Common;
 
-namespace InMobile.Sms.ApiCLient.Demo.Framework
+namespace InMobile.Sms.ApiClient.Demo.Framework
 {
     static class Program
     {

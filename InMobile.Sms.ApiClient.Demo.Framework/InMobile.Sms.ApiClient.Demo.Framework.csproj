@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{2DDEA075-9F43-4163-889E-47BE14726F0F}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>InMobile.Sms.ApiCLient.Demo.Framework</RootNamespace>
-    <AssemblyName>InMobile.Sms.ApiCLient.Demo.Framework</AssemblyName>
+    <RootNamespace>InMobile.Sms.ApiClient.Demo.Framework</RootNamespace>
+    <AssemblyName>InMobile.Sms.ApiClient.Demo.Framework</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -54,7 +54,7 @@
       <Project>{41A42263-74FB-473A-813D-BBF5CA618736}</Project>
       <Name>InMobile.Sms.ApiClient.Demo.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Inmobile.Sms.ApiClient\InMobile.Sms.ApiClient.csproj">
+    <ProjectReference Include="..\InMobile.Sms.ApiClient\InMobile.Sms.ApiClient.csproj">
       <Project>{33E13B89-A82F-4793-B383-B5E791370225}</Project>
       <Name>InMobile.Sms.ApiClient</Name>
     </ProjectReference>
