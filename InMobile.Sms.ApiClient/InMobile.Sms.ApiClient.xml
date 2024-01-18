@@ -305,6 +305,31 @@
             <param name="limit">The maximum amount of events to receive. Limit bust be between 1 and 250.</param>
             <returns></returns>
         </member>
+        <member name="T:InMobile.Sms.ApiClient.EmailEvent">
+            <summary>
+            An email event for an outgoing email.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.EmailEvent.MessageId">
+            <summary>
+            The id of the message.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.EmailEvent.EventType">
+            <summary>
+            Contains a code for what event type the event is.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.EmailEvent.EventTypeDescription">
+            <summary>
+            A human readable description of the state.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.EmailEvent.EventTimestamp">
+            <summary>
+            When the event happened.
+            </summary>
+        </member>
         <member name="T:InMobile.Sms.ApiClient.EmailEventsList`1">
             <summary>
             A list of email events.
@@ -316,6 +341,255 @@
             The events in the list
             </summary>
         </member>
+        <member name="T:InMobile.Sms.ApiClient.EmailEventType">
+            <summary>
+            The email event type
+            </summary>
+        </member>
+        <member name="F:InMobile.Sms.ApiClient.EmailEventType.Undefined">
+            <summary>
+            Undefined
+            </summary>
+        </member>
+        <member name="F:InMobile.Sms.ApiClient.EmailEventType.Clicked">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InMobile.Sms.ApiClient.EmailEventType.Complained">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InMobile.Sms.ApiClient.EmailEventType.Delivered">
+            <summary>
+            Delivered = 3,
+            </summary>
+        </member>
+        <member name="F:InMobile.Sms.ApiClient.EmailEventType.Opened">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InMobile.Sms.ApiClient.EmailEventType.PermanentFail">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InMobile.Sms.ApiClient.EmailEventType.TemporaryFail">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InMobile.Sms.ApiClient.EmailEventType.Unsubscribed">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InMobile.Sms.ApiClient.EmailEventType.Queued">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:InMobile.Sms.ApiClient.EmailEventType.Attempt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.OutgoingEmailTemplateCreateInfo">
+            <summary>
+            Information for creating an new email with template.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingEmailTemplateCreateInfo.From">
+            <summary>
+            The from info of the email.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingEmailTemplateCreateInfo.To">
+            <summary>
+            A list of recipients. Allowed to contain between 1 and 100 elements.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingEmailTemplateCreateInfo.ReplyTo">
+            <summary>
+            A list of optional Reply To objects.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingEmailTemplateCreateInfo.MessageId">
+            <summary>
+            An optional message id used to identify the message. If no message id is provided, a new message id is generated and assigned to the message. This id must be unique across all messages created on the same account.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingEmailTemplateCreateInfo.SendTime">
+            <summary>
+            If specified, this represents the future send time of the email.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingEmailTemplateCreateInfo.Tracking">
+            <summary>
+            If true, this will add Open and Click tracking to your email. Default: true.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingEmailTemplateCreateInfo.TemplateId">
+            <summary>
+            The id of the template to use.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingEmailTemplateCreateInfo.Placeholders">
+            <summary>
+            A key-value list of placeholders to replace in the template text. Keys must be encapsulated with {}. E.g. {NAME}.
+            </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.OutgoingEmailTemplateCreateInfo.#ctor(InMobile.Sms.ApiClient.EmailTemplateId,InMobile.Sms.ApiClient.EmailSender,System.Collections.Generic.List{InMobile.Sms.ApiClient.EmailRecipient},System.Collections.Generic.List{InMobile.Sms.ApiClient.EmailRecipient},System.Nullable{System.DateTime},System.Boolean,InMobile.Sms.ApiClient.OutgoingEmailId,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            </summary>
+            <param name="templateId">The id of the template to use.</param>
+            <param name="from">The from info of the email.</param>
+            <param name="to">A list of recipients. Allowed to contain between 1 and 100 elements.</param>
+            <param name="replyTo">A list of optional Reply To objects.</param>
+            <param name="sendTime">If specified, this represents the future send time of the email.</param>
+            <param name="tracking">If true, this will add Open and Click tracking to your email. Default: true.</param>
+            <param name="messageId">An optional message id used to identify the message. If no message id is provided, a new message id is generated and assigned to the message.</param>
+            <param name="placeholders">A key-value list of placeholders to replace in the template text. Keys must be encapsulated with {}. E.g. {NAME}.</param>
+            <exception cref="T:System.ArgumentException"></exception>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.OutgoingEmailTemplateCreateResult">
+            <summary>
+            Result info for an created email using template.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingEmailTemplateCreateResult.UsedPlaceholderKeys">
+            <summary>
+            A list of used used placeholder keys.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingEmailTemplateCreateResult.NotUsedPlaceholderKeys">
+            <summary>
+            A list of not used placeholder keys.
+            </summary>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.EmailRecipient">
+            <summary>
+            Information about the email recipient.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.EmailRecipient.EmailAddress">
+            <summary>
+            The email address of the recipient.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.EmailRecipient.DisplayName">
+            <summary>
+            The display name to use for the recipient.
+            </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.EmailRecipient.#ctor(System.String,System.String)">
+            <summary>
+            </summary>
+            <param name="emailAddress">The email address of the recipient</param>
+            <param name="displayName">The display name to use for the recipient</param>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.EmailSender">
+            <summary>
+            Information about the email sender.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.EmailSender.EmailAddress">
+            <summary>
+            The email address of the sender.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.EmailSender.DisplayName">
+            <summary>
+            The display name to use for the sender.
+            </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.EmailSender.#ctor(System.String,System.String)">
+            <summary>
+            </summary>
+            <param name="emailAddress">The email address of the sender</param>
+            <param name="displayName">The display name to use for the sender</param>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.OutgoingEmailCreateInfo">
+            <summary>
+            Information for creating an new email.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingEmailCreateInfo.From">
+            <summary>
+            The from info of the email.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingEmailCreateInfo.To">
+            <summary>
+            A list of recipients. Allowed to contain between 1 and 100 elements.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingEmailCreateInfo.ReplyTo">
+            <summary>
+            A list of optional Reply To objects.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingEmailCreateInfo.MessageId">
+            <summary>
+            An optional message id used to identify the message. If no message id is provided, a new message id is generated and assigned to the message. This id must be unique across all messages created on the same account.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingEmailCreateInfo.SendTime">
+            <summary>
+            If specified, this represents the future send time of the email.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingEmailCreateInfo.Tracking">
+            <summary>
+            If true, this will add Open and Click tracking to your email. Default: true.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingEmailCreateInfo.Subject">
+            <summary>
+            The subject of the email. If max length is exceeded, the entire call will fail. Max length is 255 chars.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingEmailCreateInfo.Html">
+            <summary>
+            The HTML body of the email. Max size of 2 MB. If max size is exceeded, the entire call will fail.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingEmailCreateInfo.Text">
+            <summary>
+            The text body of the email. If none is provided this will be generated from the HTML. Max size of 2 MB. If max size is exceeded, the entire call will fail.
+            </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.OutgoingEmailCreateInfo.#ctor(System.String,System.String,InMobile.Sms.ApiClient.EmailSender,System.Collections.Generic.List{InMobile.Sms.ApiClient.EmailRecipient},System.Collections.Generic.List{InMobile.Sms.ApiClient.EmailRecipient},System.String,System.Nullable{System.DateTime},System.Boolean,InMobile.Sms.ApiClient.OutgoingEmailId)">
+            <summary>
+            </summary>
+            <param name="subject">The subject of the email. If max length is exceeded, the entire call will fail. Max length is 255 chars.</param>
+            <param name="html">The HTML body of the email. Max size of 2 MB. If max size is exceeded, the entire call will fail.</param>
+            <param name="from">The from info of the email.</param>
+            <param name="to">A list of recipients. Allowed to contain between 1 and 100 elements.</param>
+            <param name="replyTo">A list of optional Reply To objects.</param>
+            <param name="text">The text body of the email. If none is provided this will be generated from the HTML. Max size of 2 MB. If max size is exceeded, the entire call will fail.</param>
+            <param name="sendTime">If specified, this represents the future send time of the email.</param>
+            <param name="tracking">If true, this will add Open and Click tracking to your email. Default: true.</param>
+            <param name="messageId">An optional message id used to identify the message. If no message id is provided, a new message id is generated and assigned to the message.</param>
+            <exception cref="T:System.ArgumentException"></exception>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.OutgoingEmailCreateResult">
+            <summary>
+            Result info for an created email.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingEmailCreateResult.MessageId">
+            <summary>
+            An optional message id used to identify the message. If no message id is provided, a new message id is generated and assigned to the message.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingEmailCreateResult.To">
+            <summary>
+            The list of created email recipients.
+            </summary>
+        </member>
         <member name="T:InMobile.Sms.ApiClient.OutgoingEmailId">
             <summary>
             The id type used for outgoing emails.
@@ -324,6 +598,17 @@
         <member name="M:InMobile.Sms.ApiClient.OutgoingEmailId.#ctor(System.String)">
             <summary>
             Create a new outgoing email id.
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.EmailTemplateId">
+            <summary>
+            The id type used for email templates.
+            </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.EmailTemplateId.#ctor(System.String)">
+            <summary>
+            Create a new email template id.
             </summary>
             <param name="value"></param>
         </member>
