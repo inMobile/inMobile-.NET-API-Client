@@ -459,6 +459,16 @@
             Result info for an created email using template.
             </summary>
         </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingEmailTemplateCreateResult.MessageId">
+            <summary>
+            An optional message id used to identify the message. If no message id is provided, a new message id is generated and assigned to the message.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingEmailTemplateCreateResult.To">
+            <summary>
+            The list of created email recipients.
+            </summary>
+        </member>
         <member name="P:InMobile.Sms.ApiClient.OutgoingEmailTemplateCreateResult.UsedPlaceholderKeys">
             <summary>
             A list of used used placeholder keys.
@@ -640,6 +650,11 @@
         <member name="P:InMobile.Sms.ApiClient.InMobileApiClient.SmsGdpr">
             <summary>
             GDPR specific operations.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.InMobileApiClient.EmailOutgoing">
+            <summary>
+            Outgoing email specific operations.
             </summary>
         </member>
         <member name="P:InMobile.Sms.ApiClient.InMobileApiClient.Tools">

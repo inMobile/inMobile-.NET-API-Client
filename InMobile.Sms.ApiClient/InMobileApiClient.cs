@@ -33,6 +33,11 @@ namespace InMobile.Sms.ApiClient
         public ISmsGdprApiMethods SmsGdpr { get; private set; }
 
         /// <summary>
+        /// Outgoing email specific operations.
+        /// </summary>
+        public IEmailOutgoingApiMethods EmailOutgoing { get; private set; }
+
+        /// <summary>
         /// Tools specific operations.
         /// </summary>
         public IToolsApiMethods Tools { get; private set; }
@@ -50,12 +55,13 @@ namespace InMobile.Sms.ApiClient
             }
 
             var requestHelper = new ApiRequestHelper(apiKey: apiKey, baseUrl: baseUrl);
-            
+
             SmsOutgoing = new SmsOutgoingApiMethods(requestHelper);
             Blacklist = new BlacklistApiMethods(requestHelper);
             Lists = new ListApiMethods(requestHelper);
             SmsTemplates = new SmsTemplateApiMethods(requestHelper);
             SmsGdpr = new SmsGdprApiMethods(requestHelper);
+            EmailOutgoing = new EmailOutgoingApiMethods(requestHelper);
             Tools = new ToolsApiMethods(requestHelper);
         }
     }
