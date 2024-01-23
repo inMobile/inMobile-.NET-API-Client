@@ -26,6 +26,7 @@ namespace InMobile.Sms.ApiClient.Demo.Common
 
             // Email
             RunRealWorldTest_EmailOutgoing(client: client, toEmail: toEmail, templateId: emailTemplateId);
+            RunRealWorldTest_EmailTemplates(client: client, templateId: emailTemplateId);
 
             // Other
             RunRealWorldTest_Tools(client: client);
@@ -333,6 +334,25 @@ namespace InMobile.Sms.ApiClient.Demo.Common
             Log("::: CALLING EMAIL EVENTS ENDPOINT :::");
             var events = client.EmailOutgoing.GetEmailEvents(limit: 250);
             Log($"Received {events.Events.Count} events");
+        }
+
+        private static void RunRealWorldTest_EmailTemplates(InMobileApiClient client, EmailTemplateId templateId)
+        {
+            Log("::: EMAIL TEMPLATES :::");
+            var startTime = DateTime.Now;
+
+            Log("Get all");
+            var all = client.EmailTemplates.GetAll();
+            if (!all.Any())
+                throw new Exception("Expected at least 1 email Template");
+            if (!all.Exists(x => x.Id == templateId))
+                throw new Exception($"Expected email template with ID: {templateId}");
+
+            Log("Get by id");
+            var reload = client.EmailTemplates.GetById(templateId);
+            AssertEquals(templateId, reload.Id);
+
+            Log($"Done in {DateTime.Now.Subtract(startTime).TotalSeconds} seconds");
         }
 
         private static void RunRealWorldTest_Tools(InMobileApiClient client)
