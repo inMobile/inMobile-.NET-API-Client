@@ -313,8 +313,8 @@ namespace InMobile.Sms.ApiClient.Demo.Common
         {
             Log("::: SEND SMS :::");
             client.EmailOutgoing.SendEmail(new OutgoingEmailCreateInfo(
-                subject: "",
-                html: "",
+                subject: "inMobile API Client - Test run",
+                html: "<!DOCTYPE html><html><head></head><body><p>This is my HTML</p></body></html>",
                 from: new EmailSender(emailAddress: "support@inmobile.com", displayName: "inMobile Support"),
                 to: new List<EmailRecipient>
                 {
