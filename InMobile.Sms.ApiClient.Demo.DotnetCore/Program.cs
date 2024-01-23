@@ -9,7 +9,9 @@ namespace InMobile.Sms.ApiClient.Demo
         // REPLACE VALUES BEFORE RUN
         const string TEST_MSISDN = "45...";
         const string TEST_STATUSCALLBACKURL = null;
-        const string TEST_TEMPLATEID = "";
+        const string TEST_SMS_TEMPLATEID = "";
+        const string TEST_TOEMAIL = "...@...";
+        const string TEST_EMAIL_TEMPLATEID = "";
 
         static void Main(string[] args)
         {
@@ -17,10 +19,12 @@ namespace InMobile.Sms.ApiClient.Demo
 
             var runner = new ApiTestRunner();
             runner.RunTest(
-                apiKey: apiKey, 
-                msisdn: TEST_MSISDN, 
-                statusCallbackUrl: TEST_STATUSCALLBACKURL, 
-                templateId: new SmsTemplateId(TEST_TEMPLATEID));
+                apiKey: apiKey,
+                msisdn: TEST_MSISDN,
+                statusCallbackUrl: TEST_STATUSCALLBACKURL,
+                smsTemplateId: new SmsTemplateId(TEST_SMS_TEMPLATEID),
+                toEmail: TEST_TOEMAIL,
+                emailTemplateId: new EmailTemplateId(TEST_EMAIL_TEMPLATEID));
 
             Console.WriteLine("\nDone");
             Console.Read();

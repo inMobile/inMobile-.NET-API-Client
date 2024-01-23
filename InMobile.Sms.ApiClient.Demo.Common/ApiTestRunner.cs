@@ -7,19 +7,25 @@ namespace InMobile.Sms.ApiClient.Demo.Common
 {
     public class ApiTestRunner
     {
-        public void RunTest(InMobileApiKey apiKey, string msisdn, string statusCallbackUrl, SmsTemplateId templateId)
+        public void RunTest(
+            InMobileApiKey apiKey,
+            string msisdn,
+            string statusCallbackUrl,
+            SmsTemplateId smsTemplateId,
+            string toEmail,
+            EmailTemplateId emailTemplateId)
         {
             var client = new InMobileApiClient(apiKey: apiKey);
 
             // SMS
-            RunRealWorldTest_SmsOutgoing(client: client, msisdn: msisdn, statusCallbackUrl: statusCallbackUrl, templateId: templateId);
-            RunRealWorldTest_SmsTemplates(client: client, templateId: templateId);
+            RunRealWorldTest_SmsOutgoing(client: client, msisdn: msisdn, statusCallbackUrl: statusCallbackUrl, templateId: smsTemplateId);
+            RunRealWorldTest_SmsTemplates(client: client, templateId: smsTemplateId);
             RunRealWorldTest_Lists(client: client);
             RunRealWorldTest_Blacklist(client: client);
             RunRealWorldTest_SmsGdpr(client: client);
 
             // Email
-            RunRealWorldTest_EmailOutgoing(client: client);
+            RunRealWorldTest_EmailOutgoing(client: client, toEmail: toEmail, templateId: emailTemplateId);
 
             // Other
             RunRealWorldTest_Tools(client: client);
@@ -303,9 +309,30 @@ namespace InMobile.Sms.ApiClient.Demo.Common
             Log($"Done in {DateTime.Now.Subtract(startTime).TotalSeconds} seconds");
         }
 
-        private static void RunRealWorldTest_EmailOutgoing(InMobileApiClient client)
+        private static void RunRealWorldTest_EmailOutgoing(InMobileApiClient client, string toEmail, EmailTemplateId templateId)
         {
-            throw new NotImplementedException();
+            Log("::: SEND SMS :::");
+            client.EmailOutgoing.SendEmail(new OutgoingEmailCreateInfo(
+                subject: "",
+                html: "",
+                from: new EmailSender(emailAddress: "support@inmobile.com", displayName: "inMobile Support"),
+                to: new List<EmailRecipient>
+                {
+                    new EmailRecipient(emailAddress: toEmail, displayName: toEmail)
+                }));
+
+            Log("::: SEND SMS USING TEMPLATE :::");
+            client.EmailOutgoing.SendEmailUsingTemplate(new OutgoingEmailTemplateCreateInfo(
+                templateId: templateId,
+                from: new EmailSender(emailAddress: "support@inmobile.com", displayName: "inMobile Support"),
+                to: new List<EmailRecipient>
+                {
+                    new EmailRecipient(emailAddress: toEmail, displayName: toEmail)
+                }));
+
+            Log("::: CALLING REPORTS ENDPOINT :::");
+            var events = client.EmailOutgoing.GetEmailEvents(limit: 250);
+            Log($"Received {events.Events.Count} events");
         }
 
         private static void RunRealWorldTest_Tools(InMobileApiClient client)
