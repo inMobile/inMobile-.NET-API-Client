@@ -40,7 +40,7 @@ namespace InMobile.Sms.ApiClient
         /// If no message id was provided when sending the message, a new message id has been generated and assigned to the message. This id is unique across all messages created on the same account.
         /// </summary>
         /// <example>PetShop</example>
-
+        [JsonProperty]
         public OutgoingMessageId MessageId { get; private set; }
 
         /// <summary>
