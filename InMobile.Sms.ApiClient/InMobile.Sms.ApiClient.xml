@@ -611,6 +611,74 @@
             </summary>
             <param name="value"></param>
         </member>
+        <member name="T:InMobile.Sms.ApiClient.EmailTemplate">
+            <summary>
+            Info about a email template.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.EmailTemplate.Id">
+            <summary>
+            The id of the email template
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.EmailTemplate.Name">
+            <summary>
+            The name of the email template
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.EmailTemplate.Html">
+            <summary>
+            The email template HTML content.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.EmailTemplate.Text">
+            <summary>
+            The email template text content.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.EmailTemplate.Subject">
+            <summary>
+            The subject of the email template.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.EmailTemplate.Preheader">
+            <summary>
+            The preheader of the email template.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.EmailTemplate.Placeholders">
+            <summary>
+            The placeholders of the SMS template.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.EmailTemplate.Created">
+            <summary>
+            The created date of the SMS template.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.EmailTemplate.LastUpdated">
+            <summary>
+            The last updated date of the SMS template.
+            </summary>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.IEmailTemplateApiMethods">
+            <summary>
+            A collection of email template-specific api endpoints.
+            </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.IEmailTemplateApiMethods.GetAll">
+            <summary>
+            Get all existing email templates on account.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.IEmailTemplateApiMethods.GetById(InMobile.Sms.ApiClient.EmailTemplateId)">
+            <summary>
+            Get a specific email template by its id.
+            </summary>
+            <param name="templateId"></param>
+            <returns></returns>
+        </member>
         <member name="T:InMobile.Sms.ApiClient.EmailTemplateId">
             <summary>
             The id type used for email templates.
@@ -655,6 +723,11 @@
         <member name="P:InMobile.Sms.ApiClient.InMobileApiClient.EmailOutgoing">
             <summary>
             Outgoing email specific operations.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.InMobileApiClient.EmailTemplates">
+            <summary>
+            Email templates specific operations.
             </summary>
         </member>
         <member name="P:InMobile.Sms.ApiClient.InMobileApiClient.Tools">

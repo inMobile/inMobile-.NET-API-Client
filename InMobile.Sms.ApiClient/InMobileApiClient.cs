@@ -38,6 +38,11 @@ namespace InMobile.Sms.ApiClient
         public IEmailOutgoingApiMethods EmailOutgoing { get; private set; }
 
         /// <summary>
+        /// Email templates specific operations.
+        /// </summary>
+        public IEmailTemplateApiMethods EmailTemplates { get; private set; }
+
+        /// <summary>
         /// Tools specific operations.
         /// </summary>
         public IToolsApiMethods Tools { get; private set; }
@@ -62,6 +67,7 @@ namespace InMobile.Sms.ApiClient
             SmsTemplates = new SmsTemplateApiMethods(requestHelper);
             SmsGdpr = new SmsGdprApiMethods(requestHelper);
             EmailOutgoing = new EmailOutgoingApiMethods(requestHelper);
+            EmailTemplates = new EmailTemplateApiMethods(requestHelper);
             Tools = new ToolsApiMethods(requestHelper);
         }
     }
