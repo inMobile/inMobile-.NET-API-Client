@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace InMobile.Sms.ApiClient
 {
@@ -11,6 +12,7 @@ namespace InMobile.Sms.ApiClient
         /// <summary>
         /// The events in the list
         /// </summary>
-        public List<T>? Events { get; }
+        [JsonProperty]
+        public List<T> Events { get; private set; } = new List<T>();
     }
 }

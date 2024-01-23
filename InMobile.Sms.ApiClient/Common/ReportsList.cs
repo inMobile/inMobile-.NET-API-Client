@@ -13,6 +13,6 @@ namespace InMobile.Sms.ApiClient
         /// The reports in the list
         /// </summary>
         [JsonProperty]
-        public List<T>? Reports { get; private set; }
+        public List<T> Reports { get; private set; } = new List<T>();
     }
 }
