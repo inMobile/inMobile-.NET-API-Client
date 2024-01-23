@@ -311,7 +311,7 @@ namespace InMobile.Sms.ApiClient.Demo.Common
 
         private static void RunRealWorldTest_EmailOutgoing(InMobileApiClient client, string toEmail, EmailTemplateId templateId)
         {
-            Log("::: SEND SMS :::");
+            Log("::: SEND EMAIL :::");
             client.EmailOutgoing.SendEmail(new OutgoingEmailCreateInfo(
                 subject: "inMobile API Client - Test run",
                 html: "<!DOCTYPE html><html><head></head><body><p>This is my HTML</p></body></html>",
@@ -321,7 +321,7 @@ namespace InMobile.Sms.ApiClient.Demo.Common
                     new EmailRecipient(emailAddress: toEmail, displayName: toEmail)
                 }));
 
-            Log("::: SEND SMS USING TEMPLATE :::");
+            Log("::: SEND EMAIL USING TEMPLATE :::");
             client.EmailOutgoing.SendEmailUsingTemplate(new OutgoingEmailTemplateCreateInfo(
                 templateId: templateId,
                 from: new EmailSender(emailAddress: "support@inmobile.com", displayName: "inMobile Support"),
@@ -330,7 +330,7 @@ namespace InMobile.Sms.ApiClient.Demo.Common
                     new EmailRecipient(emailAddress: toEmail, displayName: toEmail)
                 }));
 
-            Log("::: CALLING REPORTS ENDPOINT :::");
+            Log("::: CALLING EMAIL EVENTS ENDPOINT :::");
             var events = client.EmailOutgoing.GetEmailEvents(limit: 250);
             Log($"Received {events.Events.Count} events");
         }
