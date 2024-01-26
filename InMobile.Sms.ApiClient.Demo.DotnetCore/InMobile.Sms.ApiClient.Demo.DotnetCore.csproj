@@ -7,7 +7,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\InMobile.Sms.ApiClient.Demo.Common\InMobile.Sms.ApiClient.Demo.Common.csproj" />
-    <ProjectReference Include="..\InMobile.Sms.ApiClient\InMobile.Sms.ApiClient.csproj" />
   </ItemGroup>
 
 </Project>
