@@ -22,6 +22,7 @@ namespace InMobile.Sms.ApiClient
         OutgoingEmailTemplateCreateResult SendEmailUsingTemplate(OutgoingEmailTemplateCreateInfo templateCreateInfo);
 
         /// <summary>
+        /// Returns events about the email, eg. Delivered, Clicked or PermanentFail.
         /// Each event will only be returned once. Once called, the event has been removed from our side and cannot be retrieved again using this method.
         /// </summary>
         /// <param name="limit">The maximum amount of events to receive. Limit bust be between 1 and 250.</param>

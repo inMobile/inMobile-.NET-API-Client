@@ -18,7 +18,7 @@
         /// </summary>
         Complained = 2,
         /// <summary>
-        /// Delivered = 3,
+        /// 
         /// </summary>
         Delivered = 3,
         /// <summary>
