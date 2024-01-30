@@ -46,6 +46,13 @@ namespace InMobile.Sms.ApiClient
         public int? ValidityPeriodInSeconds { get; }
 
         /// <summary>
+        /// If set, the message will be cancelled if the same mobile number already have received a SMS within this specified time period. Fx. used to prevent spamming a mobile number.
+        /// Minimum 60 minutes (1 hour) and maximum is 43200 minutes (30 days).
+        /// </summary>
+        /// <example>60</example>
+        public int? MsisdnCooldownInMinutes { get; }
+
+        /// <summary>
         /// An optional callback url. If specified, this url is called with a status report when the message has reached its final status (either delivered, failed or cancelled).
         /// NOTE: Callbacks happen in bulks.Reports for message with identical callback urls can happen to be grouped in single callbacks.
         /// </summary>
@@ -71,7 +78,8 @@ namespace InMobile.Sms.ApiClient
         /// <param name="validityPeriod"></param>
         /// <param name="statusCallbackUrl"></param>
         /// <param name="sendTime"></param>
-        public OutgoingSmsTemplateMessageCreateInfo(Dictionary<string, string> placeholders, string to, string? countryHint = null, OutgoingMessageId? messageId = null, bool respectBlacklist = true, TimeSpan? validityPeriod = null, string? statusCallbackUrl = null, DateTime? sendTime = null)
+        /// <param name="msisdnCooldown">The msisdn cooldown period. Minimum 60 minutes (1 hour) and maximum is 43200 minutes (30 days).</param>
+        public OutgoingSmsTemplateMessageCreateInfo(Dictionary<string, string> placeholders, string to, string? countryHint = null, OutgoingMessageId? messageId = null, bool respectBlacklist = true, TimeSpan? validityPeriod = null, string? statusCallbackUrl = null, DateTime? sendTime = null, TimeSpan? msisdnCooldown = null)
         {
             Placeholders = placeholders;
             To = to;
@@ -82,6 +90,10 @@ namespace InMobile.Sms.ApiClient
             if (validityPeriod != null)
             {
                 ValidityPeriodInSeconds = (int)validityPeriod.Value.TotalSeconds;
+            }
+            if (msisdnCooldown != null)
+            {
+                MsisdnCooldownInMinutes = (int)msisdnCooldown.Value.TotalMinutes;
             }
 
             StatusCallbackUrl = statusCallbackUrl;

@@ -1416,6 +1416,13 @@
             </summary>
             <example>90</example>
         </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingSmsTemplateMessageCreateInfo.MsisdnCooldownInMinutes">
+            <summary>
+            If set, the message will be cancelled if the same mobile number already have received a SMS within this specified time period. Fx. used to prevent spamming a mobile number.
+            Minimum 60 minutes (1 hour) and maximum is 43200 minutes (30 days).
+            </summary>
+            <example>60</example>
+        </member>
         <member name="P:InMobile.Sms.ApiClient.OutgoingSmsTemplateMessageCreateInfo.StatusCallbackUrl">
             <summary>
             An optional callback url. If specified, this url is called with a status report when the message has reached its final status (either delivered, failed or cancelled).
@@ -1432,7 +1439,7 @@
             A key-value list of placeholders to replace in the template text. Keys must be encapsulated with {}. E.g. {NAME}.
             </summary>
         </member>
-        <member name="M:InMobile.Sms.ApiClient.OutgoingSmsTemplateMessageCreateInfo.#ctor(System.Collections.Generic.Dictionary{System.String,System.String},System.String,System.String,InMobile.Sms.ApiClient.OutgoingMessageId,System.Boolean,System.Nullable{System.TimeSpan},System.String,System.Nullable{System.DateTime})">
+        <member name="M:InMobile.Sms.ApiClient.OutgoingSmsTemplateMessageCreateInfo.#ctor(System.Collections.Generic.Dictionary{System.String,System.String},System.String,System.String,InMobile.Sms.ApiClient.OutgoingMessageId,System.Boolean,System.Nullable{System.TimeSpan},System.String,System.Nullable{System.DateTime},System.Nullable{System.TimeSpan})">
             <summary>
             </summary>
             <param name="placeholders"></param>
@@ -1443,6 +1450,7 @@
             <param name="validityPeriod"></param>
             <param name="statusCallbackUrl"></param>
             <param name="sendTime"></param>
+            <param name="msisdnCooldown">The msisdn cooldown period. Minimum 60 minutes (1 hour) and maximum is 43200 minutes (30 days).</param>
         </member>
         <member name="T:InMobile.Sms.ApiClient.OutgoingSmsMessageCreateInfo">
             <summary>
@@ -1522,6 +1530,13 @@
             </summary>
             <example>90</example>
         </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingSmsMessageCreateInfo.MsisdnCooldownInMinutes">
+            <summary>
+            If set, the message will be cancelled if the same mobile number already have received a SMS within this specified time period. Fx. used to prevent spamming a mobile number.
+            Minimum 60 minutes (1 hour) and maximum is 43200 minutes (30 days).
+            </summary>
+            <example>60</example>
+        </member>
         <member name="P:InMobile.Sms.ApiClient.OutgoingSmsMessageCreateInfo.StatusCallbackUrl">
             <summary>
             An optional callback url. If specified, this url is called with a status report when the message has reached its final status (either delivered, failed or cancelled).
@@ -1533,7 +1548,7 @@
             If specified, this represents the future send time of the message.
             </summary>
         </member>
-        <member name="M:InMobile.Sms.ApiClient.OutgoingSmsMessageCreateInfo.#ctor(System.String,System.String,System.String,InMobile.Sms.ApiClient.OutgoingMessageId,System.Boolean,System.Boolean,InMobile.Sms.ApiClient.MessageEncoding,System.Nullable{System.TimeSpan},System.String,System.Nullable{System.DateTime},System.String)">
+        <member name="M:InMobile.Sms.ApiClient.OutgoingSmsMessageCreateInfo.#ctor(System.String,System.String,System.String,InMobile.Sms.ApiClient.OutgoingMessageId,System.Boolean,System.Boolean,InMobile.Sms.ApiClient.MessageEncoding,System.Nullable{System.TimeSpan},System.String,System.Nullable{System.DateTime},System.String,System.Nullable{System.TimeSpan})">
             <summary>
             
             </summary>
@@ -1548,6 +1563,7 @@
             <param name="statusCallbackUrl">An optional callback url. If specified, this url is called with a status report when the message has reached its final status (either delivered, failed or cancelled).</param>
             <param name="sendTime">If specified, this message will be sent at the specified time in the future.</param>
             <param name="countryHint">For optimal phone number validation, we encourage you to provide us with a country code. This can be the numeric country code (like 44) or the two-letter suffix (like GB). If this field is empty it is important that you add the country code (e.g 44) in front of the phone number in “to”.</param>
+            <param name="msisdnCooldown">The msisdn cooldown period. Minimum 60 minutes (1 hour) and maximum is 43200 minutes (30 days).</param>
         </member>
         <member name="T:InMobile.Sms.ApiClient.OutgoingSmsMessageCreateResult">
             <summary>
