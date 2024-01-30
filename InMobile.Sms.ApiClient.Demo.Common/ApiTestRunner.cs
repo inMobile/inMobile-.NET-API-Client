@@ -7,19 +7,32 @@ namespace InMobile.Sms.ApiClient.Demo.Common
 {
     public class ApiTestRunner
     {
-        public void RunTest(InMobileApiKey apiKey, string msisdn, string statusCallbackUrl, SmsTemplateId templateId)
+        public void RunTest(
+            InMobileApiKey apiKey,
+            string msisdn,
+            string statusCallbackUrl,
+            SmsTemplateId smsTemplateId,
+            string toEmail,
+            EmailTemplateId emailTemplateId)
         {
             var client = new InMobileApiClient(apiKey: apiKey);
 
-            RunRealWorldTest_SendSms(client: client, msisdn: msisdn, statusCallbackUrl: statusCallbackUrl, templateId: templateId);
-            RunRealWorldTest_SmsTemplates(client: client, templateId: templateId);
+            // SMS
+            RunRealWorldTest_SmsOutgoing(client: client, msisdn: msisdn, statusCallbackUrl: statusCallbackUrl, templateId: smsTemplateId);
+            RunRealWorldTest_SmsTemplates(client: client, templateId: smsTemplateId);
             RunRealWorldTest_Lists(client: client);
             RunRealWorldTest_Blacklist(client: client);
             RunRealWorldTest_SmsGdpr(client: client);
+
+            // Email
+            RunRealWorldTest_EmailOutgoing(client: client, toEmail: toEmail, templateId: emailTemplateId);
+            RunRealWorldTest_EmailTemplates(client: client, templateId: emailTemplateId);
+
+            // Other
             RunRealWorldTest_Tools(client: client);
         }
 
-        private static void RunRealWorldTest_SendSms(InMobileApiClient client, string msisdn, string statusCallbackUrl, SmsTemplateId templateId)
+        private static void RunRealWorldTest_SmsOutgoing(InMobileApiClient client, string msisdn, string statusCallbackUrl, SmsTemplateId templateId)
         {
             Log("::: SEND SMS :::");
             client.SmsOutgoing.SendSmsMessages(new List<OutgoingSmsMessageCreateInfo>
@@ -293,6 +306,51 @@ namespace InMobile.Sms.ApiClient.Demo.Common
             var result = client.SmsGdpr.CreateDeletionRequest(new NumberInfo("45", "11223344"));
             if (result?.Id == null)
                 throw new Exception("Expected to return ID");
+
+            Log($"Done in {DateTime.Now.Subtract(startTime).TotalSeconds} seconds");
+        }
+
+        private static void RunRealWorldTest_EmailOutgoing(InMobileApiClient client, string toEmail, EmailTemplateId templateId)
+        {
+            Log("::: SEND EMAIL :::");
+            client.EmailOutgoing.SendEmail(new OutgoingEmailCreateInfo(
+                subject: "inMobile API Client - Test run",
+                html: "<!DOCTYPE html><html><head></head><body><p>This is my HTML</p></body></html>",
+                from: new EmailSender(emailAddress: "support@inmobile.com", displayName: "inMobile Support"),
+                to: new List<EmailRecipient>
+                {
+                    new EmailRecipient(emailAddress: toEmail, displayName: toEmail)
+                }));
+
+            Log("::: SEND EMAIL USING TEMPLATE :::");
+            client.EmailOutgoing.SendEmailUsingTemplate(new OutgoingEmailTemplateCreateInfo(
+                templateId: templateId,
+                from: new EmailSender(emailAddress: "support@inmobile.com", displayName: "inMobile Support"),
+                to: new List<EmailRecipient>
+                {
+                    new EmailRecipient(emailAddress: toEmail, displayName: toEmail)
+                }));
+
+            Log("::: CALLING EMAIL EVENTS ENDPOINT :::");
+            var events = client.EmailOutgoing.GetEmailEvents(limit: 250);
+            Log($"Received {events.Events.Count} events");
+        }
+
+        private static void RunRealWorldTest_EmailTemplates(InMobileApiClient client, EmailTemplateId templateId)
+        {
+            Log("::: EMAIL TEMPLATES :::");
+            var startTime = DateTime.Now;
+
+            Log("Get all");
+            var all = client.EmailTemplates.GetAll();
+            if (!all.Any())
+                throw new Exception("Expected at least 1 email Template");
+            if (!all.Exists(x => x.Id == templateId))
+                throw new Exception($"Expected email template with ID: {templateId}");
+
+            Log("Get by id");
+            var reload = client.EmailTemplates.GetById(templateId);
+            AssertEquals(templateId, reload.Id);
 
             Log($"Done in {DateTime.Now.Subtract(startTime).TotalSeconds} seconds");
         }
