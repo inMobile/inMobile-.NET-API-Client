@@ -33,7 +33,6 @@ namespace InMobile.Sms.ApiClient
         /// Get 1 or more pending status reports awaiting to be fetched. After calling this method, the returned reports will be flagged as processed and never returned again.
         /// </summary>
         /// <param name="limit">The maximum amount of reports to receive. Limit bust be between 1 and 250.</param>
-        /// <returns></returns>
         ReportsList<StatusReport> GetStatusReports(int limit);
     }
 

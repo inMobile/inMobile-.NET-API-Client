@@ -701,6 +701,11 @@
             Outgoing message specific operations.
             </summary>
         </member>
+        <member name="P:InMobile.Sms.ApiClient.InMobileApiClient.SmsIncoming">
+            <summary>
+            Incoming message specific operations.
+            </summary>
+        </member>
         <member name="P:InMobile.Sms.ApiClient.InMobileApiClient.Blacklist">
             <summary>
             Blacklist specific operations.
@@ -1190,6 +1195,97 @@
             </summary>
             <param name="value"></param>
         </member>
+        <member name="T:InMobile.Sms.ApiClient.SmsIncoming.GetMessages.IncomingMessage">
+            <summary>
+            An incoming message
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.SmsIncoming.GetMessages.IncomingMessage.From">
+            <summary>
+            Who the message is from
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.SmsIncoming.GetMessages.IncomingMessage.To">
+            <summary>
+            Who the message is to
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.SmsIncoming.GetMessages.IncomingMessage.Text">
+            <summary>
+            The content of the message
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.SmsIncoming.GetMessages.IncomingMessage.ReceivedAt">
+            <summary>
+            When the message was received
+            </summary>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.SmsIncoming.GetMessages.IncomingMessageList">
+            <summary>
+            A list of incoming messages
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.SmsIncoming.GetMessages.IncomingMessageList.Messages">
+            <summary>
+            The incoming messages
+            </summary>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.SmsIncoming.GetMessages.IncomingMessageSender">
+            <summary>
+            Details of the sender of the incoming message
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.SmsIncoming.GetMessages.IncomingMessageSender.CountryCode">
+            <summary>
+            Country code of the sender. Null if not available.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.SmsIncoming.GetMessages.IncomingMessageSender.PhoneNumber">
+            <summary>
+            Phone number of the sender. Null if not available.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.SmsIncoming.GetMessages.IncomingMessageSender.RawSource">
+            <summary>
+            The raw details of the sender. This is the raw source of the sender, as it was received from the operator.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.SmsIncoming.GetMessages.IncomingMessageSender.IsValidMsisdn">
+            <summary>
+            True if the source of the message is a valid msisdn, false otherwise.
+            </summary>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.SmsIncoming.GetMessages.IncomingMessageTarget">
+            <summary>
+            Details of the recipient of the incoming message
+            </summary> 
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.SmsIncoming.GetMessages.IncomingMessageTarget.CountryCode">
+            <summary>
+            Country code of the recipient
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.SmsIncoming.GetMessages.IncomingMessageTarget.PhoneNumber">
+            <summary>
+            Phone number of the recipient
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.SmsIncoming.GetMessages.IncomingMessageTarget.Msisdn">
+            <summary>
+            Msisdn of the recipient
+            </summary>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.SmsIncoming.ISmsIncomingApiMethods">
+            <summary>
+            Incoming message specific operations.
+            </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.SmsIncoming.ISmsIncomingApiMethods.GetMessages(System.Int32)">
+            <summary>
+            Get 1 or more incoming messages awaiting to be fetched. After calling this method, the returned messages will be flagged as processed and never returned again.
+            </summary>
+            <param name="limit">The maximum amount of messages to receive. Limit bust be between 1 and 250.</param>
+        </member>
         <member name="T:InMobile.Sms.ApiClient.MessageCancelInfo">
             <summary>
             Information needed to cancel an outgoing text message.
@@ -1649,7 +1745,6 @@
             Get 1 or more pending status reports awaiting to be fetched. After calling this method, the returned reports will be flagged as processed and never returned again.
             </summary>
             <param name="limit">The maximum amount of reports to receive. Limit bust be between 1 and 250.</param>
-            <returns></returns>
         </member>
         <member name="T:InMobile.Sms.ApiClient.SmsTemplate">
             <summary>
