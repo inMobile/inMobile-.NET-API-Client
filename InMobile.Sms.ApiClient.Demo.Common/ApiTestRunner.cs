@@ -19,6 +19,7 @@ namespace InMobile.Sms.ApiClient.Demo.Common
 
             // SMS
             RunRealWorldTest_SmsOutgoing(client: client, msisdn: msisdn, statusCallbackUrl: statusCallbackUrl, templateId: smsTemplateId);
+            RunRealWorldTest_SmsIncoming(client: client);
             RunRealWorldTest_SmsTemplates(client: client, templateId: smsTemplateId);
             RunRealWorldTest_Lists(client: client);
             RunRealWorldTest_Blacklist(client: client);
@@ -54,6 +55,14 @@ namespace InMobile.Sms.ApiClient.Demo.Common
             Log("::: CALLING REPORTS ENDPOINT :::");
             var reports = client.SmsOutgoing.GetStatusReports(limit: 250);
             Log($"Received {reports.Reports.Count} reports");
+        }
+        
+        private static void RunRealWorldTest_SmsIncoming(InMobileApiClient client)
+        {
+            Log("::: GET INCOMING SMS :::");
+            var messages = client.SmsIncoming.GetMessages(limit: 10);
+
+            Log($"Received {messages.Messages?.Count} reports");
         }
 
         private static void RunRealWorldTest_SmsTemplates(InMobileApiClient client, SmsTemplateId templateId)
