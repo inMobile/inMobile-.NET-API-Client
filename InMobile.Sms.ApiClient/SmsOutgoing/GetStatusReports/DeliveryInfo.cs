@@ -21,10 +21,17 @@ namespace InMobile.Sms.ApiClient
         public string StateDescription { get; private set; }
 
         /// <summary>
-        /// A human readable description of the state.
+        /// When the message was sent
         /// </summary>
         [JsonProperty]
         public DateTime? SendTime { get; private set; }
+        
+        /// <summary>
+        /// When the delivery of the message fails, is cancelled, or is delivered. If the operator does not support reporting the actual delivery time, this will be the time when the delivery report is received from the operator.
+        /// In some cases where the message is not sent, this value can be null.
+        /// </summary>
+        [JsonProperty]
+        public DateTime? DoneTime { get; private set; }
 
         /// <summary>
         /// A code  describing the type of error.

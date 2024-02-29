@@ -29,6 +29,7 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
                             ""stateCode"": -1,
                             ""stateDescription"": ""Failed"",
                             ""sendTime"": ""2001-02-24T14:50:23Z"",
+                            ""doneTime"": ""2001-02-24T16:50:23Z"",
                             ""errorCode"": -1,
                             ""errorDescription"": ""Undeliverable message"",
                             ""future_field_not_yet_known"": ""Hello""
@@ -66,6 +67,7 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
                 Assert.Equal(MessageStateCode.Failed, report.DeliveryInfo.StateCode);
                 Assert.Equal("Failed", report.DeliveryInfo.StateDescription);
                 Assert.Equal(new DateTime(2001, 02, 24, 14, 50, 23, DateTimeKind.Utc), report.DeliveryInfo.SendTime);
+                Assert.Equal(new DateTime(2001, 02, 24, 16, 50, 23, DateTimeKind.Utc), report.DeliveryInfo.DoneTime);
                 Assert.Equal(-1, report.DeliveryInfo.ErrorCode);
                 Assert.Equal("Undeliverable message", report.DeliveryInfo.ErrorDescription);
 
@@ -97,6 +99,7 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
                             ""stateCode"": 8,
                             ""stateDescription"": ""FutureState"",
                             ""sendTime"": ""2001-02-24T14:50:23Z"",
+                            ""doneTime"": null,
                             ""futureFieldToBeIgnored"": false
                             },
                         ""chargeInfo"": {
@@ -122,6 +125,7 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
                 Assert.NotNull(report);
                 Assert.Equal(8, (int)report.DeliveryInfo.StateCode);
                 Assert.Equal(new DateTime(2001, 02, 24, 14, 50, 23, DateTimeKind.Utc), report.DeliveryInfo.SendTime);
+                Assert.Null(report.DeliveryInfo.DoneTime);
                 Assert.Equal(null, report.DeliveryInfo.ErrorCode);
                 Assert.Equal(null, report.DeliveryInfo.ErrorDescription);
                 Assert.Equal(MessageEncoding.Unknown, report.ChargeInfo.Encoding);
