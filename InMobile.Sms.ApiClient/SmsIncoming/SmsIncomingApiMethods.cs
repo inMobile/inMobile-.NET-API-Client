@@ -1,7 +1,6 @@
 ﻿using System;
-using InMobile.Sms.ApiClient.SmsIncoming.GetMessages;
 
-namespace InMobile.Sms.ApiClient.SmsIncoming
+namespace InMobile.Sms.ApiClient
 {
     /// <summary>
     /// Incoming message specific operations.

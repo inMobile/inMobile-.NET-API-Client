@@ -1,5 +1,4 @@
 ﻿using System;
-using InMobile.Sms.ApiClient.SmsIncoming;
 
 namespace InMobile.Sms.ApiClient
 {

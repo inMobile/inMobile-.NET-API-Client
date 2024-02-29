@@ -1,26 +1,26 @@
 using Newtonsoft.Json;
 
-namespace InMobile.Sms.ApiClient.SmsIncoming.GetMessages
+namespace InMobile.Sms.ApiClient
 {
     /// <summary>
-    /// Details of the recipient of the incoming message
+    /// Details of the target recipient of the incoming message
     /// </summary> 
     public sealed class IncomingMessageTarget
     {
         /// <summary>
-        /// Country code of the recipient
+        /// Country code of the target recipient
         /// </summary>
         [JsonProperty]
         public string CountryCode { get; private set; }
         
         /// <summary>
-        /// Phone number of the recipient
+        /// Phone number of the target recipient
         /// </summary>
         [JsonProperty]
         public string PhoneNumber { get; private set;}
         
         /// <summary>
-        /// Msisdn of the recipient
+        /// Msisdn of the target recipient
         /// </summary>
         [JsonProperty]
         public string Msisdn { get; private set;}

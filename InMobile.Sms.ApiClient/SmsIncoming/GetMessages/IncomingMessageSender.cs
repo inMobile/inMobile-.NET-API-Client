@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace InMobile.Sms.ApiClient.SmsIncoming.GetMessages
+namespace InMobile.Sms.ApiClient
 {
     /// <summary>
     /// Details of the sender of the incoming message

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace InMobile.Sms.ApiClient.SmsIncoming.GetMessages
+namespace InMobile.Sms.ApiClient
 {
     /// <summary>
     /// A list of incoming messages
@@ -12,6 +12,6 @@ namespace InMobile.Sms.ApiClient.SmsIncoming.GetMessages
         /// The incoming messages
         /// </summary>
         [JsonProperty]
-        public List<IncomingMessage>? Messages { get; private set; }
+        public List<IncomingMessage> Messages { get; private set; } = new List<IncomingMessage>();
     }
 }

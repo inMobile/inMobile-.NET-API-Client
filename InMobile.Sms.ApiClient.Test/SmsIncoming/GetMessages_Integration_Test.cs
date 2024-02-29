@@ -126,7 +126,7 @@ public class GetMessages_Integration_Test
     [InlineData(10)]
     [InlineData(249)]
     [InlineData(250)]
-    public void GetReports_Limit_ValidLimitsTest(int limit)
+    public void GetMessages_Limit_ValidLimitsTest(int limit)
     {
         var emptyResponseJson = @"{
                     ""messages"": [
@@ -150,7 +150,7 @@ public class GetMessages_Integration_Test
     [InlineData(0)]
     [InlineData(251)]
     [InlineData(1000)]
-    public void GetReports_Limit_InvalidLimits_Test(int limit)
+    public void GetMessages_Limit_InvalidLimits_Test(int limit)
     {
         var apiKey = new InMobileApiKey("UnitTestKey123");
         var expectedRequest = new UnitTestRequestInfo(apiKey: apiKey, methodAndPath: $"GET /v4/sms/incoming/messages?limit={limit}", jsonOrNull: null);
