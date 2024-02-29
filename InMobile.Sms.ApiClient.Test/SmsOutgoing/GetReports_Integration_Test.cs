@@ -89,7 +89,7 @@ namespace InMobile.Sms.ApiClient.Test.SmsOutgoing
                             ""countryCode"": ""45"",
                             ""phoneNumber"": ""12345678"",
                             ""rawMsisdn"": ""45 12 34 56 78"",
-                            ""msisdn"": ""45123456  78"",
+                            ""msisdn"": ""4512345678"",
                             ""isValidMsisdn"": true,
                             ""isAnonymized"": false,
                             ""countryHint"": ""DK"",
