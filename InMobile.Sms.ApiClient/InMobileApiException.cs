@@ -17,7 +17,7 @@ namespace InMobile.Sms.ApiClient
         /// </summary>
         public HttpStatusCode ErrorHttpStatusCode { get; }
 
-        internal InMobileApiException(HttpStatusCode errorHttpStatusCode, string message) : base(message)
+        private InMobileApiException(HttpStatusCode errorHttpStatusCode, string message) : base(message)
         {
             ErrorHttpStatusCode = errorHttpStatusCode;
         }
@@ -46,8 +46,7 @@ namespace InMobile.Sms.ApiClient
             
             var stringBuilder = new StringBuilder();
             stringBuilder.Append($"{responseObject.ErrorMessage}.");
-            if (responseObject.Details != null)
-                stringBuilder.Append($" {string.Join("; ", responseObject.Details)}");
+            stringBuilder.Append($" {string.Join("; ", responseObject.Details)}");
 
             return new InMobileApiException(response.StatusCode, $"{(int)response.StatusCode} {response.StatusCode}: {stringBuilder}");
         }
