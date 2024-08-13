@@ -326,7 +326,7 @@ namespace InMobile.Sms.ApiClient.Demo.Common
             await client.EmailOutgoing.SendEmailAsync(new OutgoingEmailCreateInfo(
                 subject: "inMobile API Client - Test run",
                 html: "<!DOCTYPE html><html><head></head><body><p>This is my HTML</p></body></html>",
-                from: new EmailSender(emailAddress: "support@inmobile.com", displayName: "inMobile Support"),
+                from: new EmailSender(emailAddress: "apitest@apitest.inmobile.com", displayName: "inMobile Support"),
                 to: new List<EmailRecipient>
                 {
                     new EmailRecipient(emailAddress: toEmail, displayName: toEmail)
@@ -335,7 +335,7 @@ namespace InMobile.Sms.ApiClient.Demo.Common
             Log("::: SEND EMAIL USING TEMPLATE :::");
             await client.EmailOutgoing.SendEmailUsingTemplateAsync(new OutgoingEmailTemplateCreateInfo(
                 templateId: templateId,
-                from: new EmailSender(emailAddress: "support@inmobile.com", displayName: "inMobile Support"),
+                from: new EmailSender(emailAddress: "apitest@apitest.inmobile.com", displayName: "inMobile Support"),
                 to: new List<EmailRecipient>
                 {
                     new EmailRecipient(emailAddress: toEmail, displayName: toEmail)

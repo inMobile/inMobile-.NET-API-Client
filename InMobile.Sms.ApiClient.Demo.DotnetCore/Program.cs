@@ -20,7 +20,7 @@ static class Program
     static void Main(string[] args)
     {
         var apiKey = new InMobileApiKey(File.ReadAllText("c:\\temp\\DOTNET_API_CLIENT\\apikey.txt"));
-
+    
         var runner = new ApiTestRunner();
         runner.RunTest(
             apiKey: apiKey,
@@ -29,7 +29,7 @@ static class Program
             smsTemplateId: new SmsTemplateId(TEST_SMS_TEMPLATEID),
             toEmail: TEST_TOEMAIL,
             emailTemplateId: new EmailTemplateId(TEST_EMAIL_TEMPLATEID));
-
+    
         Console.WriteLine("\nDone");
         Console.Read();
     }
@@ -39,7 +39,7 @@ static class Program
     /// </summary>
     // static async Task Main(string[] args)
     // {
-    //     var apiKey = new InMobileApiKey(File.ReadAllText("c:\\temp\\DOTNET_API_CLIENT\\apikey.txt"));
+    //     var apiKey = new InMobileApiKey(await File.ReadAllTextAsync("c:\\temp\\DOTNET_API_CLIENT\\apikey.txt"));
     //
     //     var runner = new ApiTestRunnerAsync();
     //     await runner.RunTestAsync(
