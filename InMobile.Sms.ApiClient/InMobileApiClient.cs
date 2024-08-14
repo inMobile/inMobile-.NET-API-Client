@@ -10,8 +10,8 @@ namespace InMobile.Sms.ApiClient
         /// <summary>
         /// Outgoing message specific operations.
         /// </summary>
-        public ISmsOutgoingApiMethod SmsOutgoing { get; private set; }
-        
+        public ISmsOutgoingApiMethods SmsOutgoing { get; private set; }
+
         /// <summary>
         /// Incoming message specific operations.
         /// </summary>

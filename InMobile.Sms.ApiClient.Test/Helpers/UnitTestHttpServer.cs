@@ -6,145 +6,145 @@ using System.Net.Sockets;
 using System.Text;
 using Xunit;
 
-namespace InMobile.Sms.ApiClient.Test
-{
+namespace InMobile.Sms.ApiClient.Test;
+
 #pragma warning disable S3881 // "IDisposable" should be implemented correctly
-    public class UnitTestHttpServer : IDisposable
+public class UnitTestHttpServer : IDisposable
 #pragma warning restore S3881 // "IDisposable" should be implemented correctly
+{
+    public IPEndPoint EndPoint => ((IPEndPoint)_tcpListener.LocalEndpoint);
+    private TcpListener _tcpListener;
+
+    private readonly List<IDisposable> _disposables = new();
+    private readonly List<Exception> _exceptions = new();
+    private readonly Queue<RequestResponsePair> _requestPairsQueue;
+
+    public string Host => $"{EndPoint.Address}:{EndPoint.Port}";
+
+    private UnitTestHttpServer(RequestResponsePair[] requests)
     {
-        public IPEndPoint EndPoint => ((IPEndPoint)_tcpListener.LocalEndpoint);
-        public TcpListener _tcpListener;
+        _requestPairsQueue = new Queue<RequestResponsePair>(requests);
+    }
 
-        private readonly List<IDisposable> _disposables = new List<IDisposable>();
-        private readonly List<Exception> _exceptions = new List<Exception>();
-        private readonly Queue<RequestResponsePair> _requestPairsQueue;
+    private void StartListening()
+    {
+        if (_tcpListener != null)
+            throw new Exception("Already listening");
+        _tcpListener = new TcpListener(localaddr: IPAddress.Loopback, port: 0);
+        _tcpListener.Start();
+        _tcpListener.BeginAcceptSocket(DoAcceptSocketCallback, _tcpListener);
+    }
 
-        public string Host => $"{EndPoint.Address}:{EndPoint.Port}";
-
-        private UnitTestHttpServer(RequestResponsePair[] requests)
+    public void Dispose()
+    {
+        try
         {
-            _requestPairsQueue = new Queue<RequestResponsePair>(requests);
+            _tcpListener?.Stop();
+        }
+        catch (Exception ex)
+        {
+            _ = ex.ToString();
         }
 
-        private void StartListening()
-        {
-            if (_tcpListener != null)
-                throw new Exception("Already listening");
-            _tcpListener = new TcpListener(localaddr: IPAddress.Loopback, port: 0);
-            _tcpListener.Start();
-            _tcpListener.BeginAcceptSocket(DoAcceptSocketCallback, _tcpListener);
-        }
-
-        public void Dispose()
+        foreach (var d in _disposables)
         {
             try
             {
-                _tcpListener?.Stop();
+                d?.Dispose();
             }
-            catch (Exception ex)
+            catch
             {
-                ex.ToString();
+                // Ignore this
             }
-
-            foreach (var d in _disposables)
-            {
-                try
-                {
-                    d?.Dispose();
-                }
-                catch 
-                {
-                    // Ignore this
-                }
-            }
+        }
 
 #pragma warning disable S3877 // Exceptions should not be thrown from unexpected methods
-            // Check if server did not receive expected http data
-            if (_exceptions.Any())
-                throw _exceptions[0];
+        // Check if server did not receive expected http data
+        if (_exceptions.Any())
+            throw _exceptions[0];
 #pragma warning restore S3877 // Exceptions should not be thrown from unexpected methods
-        }
+    }
 
-        // Process the client connection.
-        public void DoAcceptSocketCallback(IAsyncResult ar)
+    // Process the client connection.
+    private void DoAcceptSocketCallback(IAsyncResult ar)
+    {
+        try
         {
-            try
-            {
-                // End the operation and display the received data on
-                // the console.
-                var socket = _tcpListener.EndAcceptSocket(ar);
+            // End the operation and display the received data on
+            // the console.
+            var socket = _tcpListener.EndAcceptSocket(ar);
 
-                HandleSocket(socket);
+            HandleSocket(socket);
 
-                _tcpListener.BeginAcceptSocket(DoAcceptSocketCallback, _tcpListener);
-            }
-            catch (Exception ex)
-            {
-                // A vast amount of different exception can occur here as a result of tests disposing before this accept call is actually done. Of this reason, any exceptions here are ignored.
-                ex.ToString();
-            }
+            _tcpListener.BeginAcceptSocket(DoAcceptSocketCallback, _tcpListener);
         }
-
-        private void HandleSocket(Socket socket)
+        catch (Exception ex)
         {
-            try
+            // A vast amount of different exception can occur here as a result of tests disposing before this accept call is actually done. Of this reason, any exceptions here are ignored.
+            _ = ex.ToString();
+        }
+    }
+
+    private void HandleSocket(Socket socket)
+    {
+        try
+        {
+            var keepRunning = true;
+            while (keepRunning)
             {
-                bool keepRunning = true;
-                while (keepRunning)
+                // Read input
+                var request = Receive(socket);
+                if (!string.IsNullOrEmpty(request))
                 {
-                    // Read input
-                    var request = Receive(socket);
-                    if (!string.IsNullOrEmpty(request))
+                    var requestTextLines = request.Split("\r\n");
+
+                    if (!_requestPairsQueue.Any())
                     {
-                        var requestTextLines = request.Split("\r\n");
+                        _exceptions.Add(new NoMoreRequestsExceptionException($"Got unexpected request: {request}"));
+                        Assert.Fail($"Got unexpected request: {request}");
+                        return;
+                    }
 
-                        if (!_requestPairsQueue.Any())
+                    var nextPair = _requestPairsQueue.Dequeue();
+
+                    // Find authorization header line
+                    var authLine = requestTextLines.SingleOrDefault(line => line.StartsWith("Authorization: Basic "));
+                    if (authLine == null)
+                    {
+                        _exceptions.Add(new UnexpectedAuthorizationException("No auth line found. Request: " + request));
+                    }
+                    else
+                    {
+                        var base64EncodedToken = authLine.Substring("Authorization: Basic ".Length);
+                        var tokenBytes = Convert.FromBase64String(base64EncodedToken);
+                        var usernameAndPassword = Encoding.ASCII.GetString(tokenBytes);
+                        var apiKey = usernameAndPassword.Substring(usernameAndPassword.IndexOf(":") + 1);
+                        if (apiKey != nextPair.Request.ApiKey.ApiKey)
                         {
-                            _exceptions.Add(new NoMoreRequestsExceptionException($"Got unexpected request: {request}"));
-                            Assert.Fail($"Got unexpected request: {request}");
-                            return;
+                            _exceptions.Add(new UnexpectedAuthorizationException("Expected apikey " + nextPair.Request.ApiKey.ApiKey + " but got " + apiKey));
                         }
+                    }
 
-                        var nextPair = _requestPairsQueue.Dequeue();
+                    // Ensure expected method
+                    if (!request.StartsWith(nextPair.Request.MethodAndPath))
+                    {
+                        _exceptions.Add(new UnexpectedMethodAndPathException("Expected request to start with: " + Environment.NewLine + nextPair.Request.MethodAndPath + Environment.NewLine + "Request received: " + Environment.NewLine + request));
+                    }
 
-                        // Find authorization header line
-                        var authLine = requestTextLines.SingleOrDefault(line => line.StartsWith("Authorization: Basic "));
-                        if (authLine == null)
-                        {
-                            _exceptions.Add(new UnexpectedAuthorizationException("No auth line found. Request: " + request));
-                        }
-                        else
-                        {
-                            var base64EncodedToken = authLine.Substring("Authorization: Basic ".Length);
-                            var tokenBytes = Convert.FromBase64String(base64EncodedToken);
-                            var usernameAndPassword = Encoding.ASCII.GetString(tokenBytes);
-                            var apiKey = usernameAndPassword.Substring(usernameAndPassword.IndexOf(":") + 1);
-                            if (apiKey != nextPair.Request.ApiKey.ApiKey)
-                            {
-                                _exceptions.Add(new UnexpectedAuthorizationException("Expected apikey " + nextPair.Request.ApiKey.ApiKey + " but got " + apiKey));
-                            }
-                        }
+                    // Ensure expected json
+                    var expectedEndOfRequest = "\r\n\r\n";
+                    if (nextPair.Request.JsonOrNull != null)
+                    {
+                        // Expect no payload
+                        expectedEndOfRequest += nextPair.Request.JsonOrNull;
+                    }
 
-                        // Ensure expected method
-                        if (!request.StartsWith(nextPair.Request.MethodAndPath))
-                        {
-                            _exceptions.Add(new UnexpectedMethodAndPathException("Expected request to start with: " + Environment.NewLine + nextPair.Request.MethodAndPath + Environment.NewLine + "Request received: " + Environment.NewLine + request));
-                        }
+                    if (!request.EndsWith(expectedEndOfRequest))
+                    {
+                        _exceptions.Add(new UnexpectedPayloadException("Request was expected to end with '" + expectedEndOfRequest + "'\n\nbut did not. Request: " + request));
+                    }
 
-                        // Ensure expected json
-                        var expectedEndOfRequest = "\r\n\r\n";
-                        if (nextPair.Request.JsonOrNull != null)
-                        {
-                            // Expect no payload
-                            expectedEndOfRequest += nextPair.Request.JsonOrNull;
-                        }
-
-                        if (!request.EndsWith(expectedEndOfRequest))
-                        {
-                            _exceptions.Add(new UnexpectedPayloadException("Request was expected to end with '" + expectedEndOfRequest + "'\n\nbut did not. Request: " + request));
-                        }
-
-                        var response = $@"HTTP/1.1 {nextPair.Response.StatusCodeString}
+                    var response = $@"HTTP/1.1 {nextPair.Response.StatusCodeString}
 Date: Sun, 18 Oct 2012 10:36:20 GMT
 Server: Apache/2.2.14 (Win32)
 Content-Length: {nextPair.Response.JsonOrNull?.Length}
@@ -153,97 +153,93 @@ Connection: Closed
 
 ";
 
-                        if (nextPair.Response.JsonOrNull != null)
-                        {
-                            response += $@"{nextPair.Response.JsonOrNull}";
-                        }
-
-                        Send(socket, response);
-                    }
-                    else
+                    if (nextPair.Response.JsonOrNull != null)
                     {
-                        keepRunning = false;
+                        response += $"{nextPair.Response.JsonOrNull}";
                     }
+
+                    Send(socket, response);
+                }
+                else
+                {
+                    keepRunning = false;
                 }
             }
-            catch (Exception ex)
-            {
-                ex.ToString();
-            }
         }
-
-        private static string Receive(Socket socket)
+        catch (Exception ex)
         {
-            var buffer = new byte[10000];
-            var receivedByteCount = socket.Receive(buffer: buffer);
-            var request = Encoding.ASCII.GetString(bytes: buffer, index: 0, count: receivedByteCount);
-            return request;
+            _ = ex.ToString();
         }
+    }
 
-        private static void Send(Socket socket, string data)
+    private static string Receive(Socket socket)
+    {
+        var buffer = new byte[10000];
+        var receivedByteCount = socket.Receive(buffer: buffer);
+        var request = Encoding.ASCII.GetString(bytes: buffer, index: 0, count: receivedByteCount);
+        return request;
+    }
+
+    private static void Send(Socket socket, string data)
+    {
+        socket.NoDelay = true; // This will disable the Nagle algorthm and hereby prevent buffering and instead sending right away. https://docs.microsoft.com/en-us/dotnet/api/system.net.sockets.socket.nodelay?view=net-5.0
+        socket.Send(Encoding.ASCII.GetBytes(data));
+    }
+
+    private static readonly object _syncLock = new object();
+
+    public static UnitTestHttpServer StartOnAnyAvailablePort(params RequestResponsePair[] requests)
+    {
+        lock (_syncLock) // Ensures no race conditions ending up having multiple test server listening on the same port at the same time
         {
-            socket.NoDelay = true; // This will disable the Nagle algorthm and hereby prevent buffering and instead sending right away. https://docs.microsoft.com/en-us/dotnet/api/system.net.sockets.socket.nodelay?view=net-5.0
-            socket.Send(Encoding.ASCII.GetBytes(data));
+            var server = new UnitTestHttpServer(requests: requests);
+            server.StartListening();
+            return server;
         }
+    }
 
-        private static readonly object _syncLock = new object();
-        public static UnitTestHttpServer StartOnAnyAvailablePort(params RequestResponsePair[] requests)
+    public void AssertNoAwaitingRequestsLeft()
+    {
+        Assert.Empty(_requestPairsQueue);
+    }
+
+    public class RequestResponsePair
+    {
+        public UnitTestRequestInfo Request { get; }
+        public UnitTestResponseInfo Response { get; }
+
+        public RequestResponsePair(UnitTestRequestInfo request, UnitTestResponseInfo response)
         {
-            lock (_syncLock) // Ensures no race conditions ending up having multiple test server listening on the same port at the same time
-            {
-                var server = new UnitTestHttpServer(requests: requests);
-                server.StartListening();
-                return server;
-            }
+            Request = request ?? throw new ArgumentNullException(nameof(request));
+            Response = response ?? throw new ArgumentNullException(nameof(response));
         }
+    }
 
-        public void AssertNoAwaitingRequestsLeft()
+    private class UnexpectedAuthorizationException : Exception
+    {
+        public UnexpectedAuthorizationException(string message) : base(message)
         {
-            Assert.Empty(_requestPairsQueue);
         }
-        public class RequestResponsePair
-        {
-            public UnitTestRequestInfo Request { get; }
-            public UnitTestResponseInfo Response { get; }
+    }
 
-            public RequestResponsePair(UnitTestRequestInfo request, UnitTestResponseInfo response)
-            {
-                Request = request ?? throw new ArgumentNullException(nameof(request));
-                Response = response ?? throw new ArgumentNullException(nameof(response));
-            }
+    private class NoMoreRequestsExceptionException : Exception
+    {
+        public NoMoreRequestsExceptionException(string message) : base(message)
+        {
         }
+    }
 
-        public class UnexpectedRequestDataException : Exception
+    private class UnexpectedMethodAndPathException : Exception
+    {
+        public UnexpectedMethodAndPathException(string message) : base(message)
         {
-            public UnexpectedRequestDataException(string msg) : base(msg) { }
         }
+    }
 
-        public class UnexpectedAuthorizationException : Exception
+    private class UnexpectedPayloadException : Exception
+    {
+        public UnexpectedPayloadException(string message) : base(message)
         {
-            public UnexpectedAuthorizationException(string message) : base(message)
-            {
-            }
-        }
-
-        public class NoMoreRequestsExceptionException : Exception
-        {
-            public NoMoreRequestsExceptionException(string message) : base(message)
-            {
-            }
-        }
-
-        public class UnexpectedMethodAndPathException : Exception
-        {
-            public UnexpectedMethodAndPathException(string message) : base(message)
-            {
-            }
-        }
-
-        public class UnexpectedPayloadException : Exception
-        {
-            public UnexpectedPayloadException(string message) : base(message)
-            {
-            }
         }
     }
 }

@@ -21,9 +21,23 @@
             <param name="createInfo"></param>
             <returns></returns>
         </member>
+        <member name="M:InMobile.Sms.ApiClient.IBlacklistApiMethods.CreateAsync(InMobile.Sms.ApiClient.BlacklistEntryCreateInfo)">
+            <summary>
+            Create new entry in the blacklist (async).
+            </summary>
+            <param name="createInfo"></param>
+            <returns></returns>
+        </member>
         <member name="M:InMobile.Sms.ApiClient.IBlacklistApiMethods.GetById(InMobile.Sms.ApiClient.BlacklistEntryId)">
             <summary>
             Get a blacklist entry by its id.
+            </summary>
+            <param name="blacklistEntryId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.IBlacklistApiMethods.GetByIdAsync(InMobile.Sms.ApiClient.BlacklistEntryId)">
+            <summary>
+            Get a blacklist entry by its id (async).
             </summary>
             <param name="blacklistEntryId"></param>
             <returns></returns>
@@ -35,9 +49,22 @@
             <param name="numberInfo"></param>
             <returns></returns>
         </member>
+        <member name="M:InMobile.Sms.ApiClient.IBlacklistApiMethods.GetByNumberAsync(InMobile.Sms.ApiClient.NumberInfo)">
+            <summary>
+            Get a blacklist entry by its number (async).
+            </summary>
+            <param name="numberInfo"></param>
+            <returns></returns>
+        </member>
         <member name="M:InMobile.Sms.ApiClient.IBlacklistApiMethods.DeleteById(InMobile.Sms.ApiClient.BlacklistEntryId)">
             <summary>
             Delete a blacklist entry by its id.
+            </summary>
+            <param name="blacklistEntryId"></param>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.IBlacklistApiMethods.DeleteByIdAsync(InMobile.Sms.ApiClient.BlacklistEntryId)">
+            <summary>
+            Delete a blacklist entry by its id (async).
             </summary>
             <param name="blacklistEntryId"></param>
         </member>
@@ -47,16 +74,21 @@
             </summary>
             <param name="numberInfo"></param>
         </member>
+        <member name="M:InMobile.Sms.ApiClient.IBlacklistApiMethods.DeleteByNumberAsync(InMobile.Sms.ApiClient.NumberInfo)">
+            <summary>
+            Delete a blacklist entry by its number (async).
+            </summary>
+            <param name="numberInfo"></param>
+        </member>
         <member name="M:InMobile.Sms.ApiClient.IBlacklistApiMethods.GetAll">
             <summary>
             Gets all blacklist entries.
             </summary>
             <returns></returns>
         </member>
-        <member name="M:InMobile.Sms.ApiClient.BlacklistApiMethods.GetAll">
+        <member name="M:InMobile.Sms.ApiClient.IBlacklistApiMethods.GetAllAsync">
             <summary>
-            Gets all blacklist entries. This call is using a paged api and will do the api calls during the iteration of the returned enumerable.
-            This allowes for client to not allocate memory for holding the entire list of entries.
+            Gets all blacklist entries (async).
             </summary>
             <returns></returns>
         </member>
@@ -291,6 +323,13 @@
             <param name="createInfo"></param>
             <returns></returns>
         </member>
+        <member name="M:InMobile.Sms.ApiClient.IEmailOutgoingApiMethods.SendEmailAsync(InMobile.Sms.ApiClient.OutgoingEmailCreateInfo)">
+            <summary>
+            Send email to one or more recipients (async).
+            </summary>
+            <param name="createInfo"></param>
+            <returns></returns>
+        </member>
         <member name="M:InMobile.Sms.ApiClient.IEmailOutgoingApiMethods.SendEmailUsingTemplate(InMobile.Sms.ApiClient.OutgoingEmailTemplateCreateInfo)">
             <summary>
             Send email using a template.
@@ -298,10 +337,25 @@
             <param name="templateCreateInfo"></param>
             <returns></returns>
         </member>
+        <member name="M:InMobile.Sms.ApiClient.IEmailOutgoingApiMethods.SendEmailUsingTemplateAsync(InMobile.Sms.ApiClient.OutgoingEmailTemplateCreateInfo)">
+            <summary>
+            Send email using a template (async).
+            </summary>
+            <param name="templateCreateInfo"></param>
+            <returns></returns>
+        </member>
         <member name="M:InMobile.Sms.ApiClient.IEmailOutgoingApiMethods.GetEmailEvents(System.Int32)">
             <summary>
-            Returns events about the email, eg. Delivered, Clicked or PermanentFail.
+            Returns events about the email, e.g. Delivered, Clicked or PermanentFail.
             Each event will only be returned once. Once called, the event has been removed from our side and cannot be retrieved again using this method.
+            </summary>
+            <param name="limit">The maximum amount of events to receive. Limit bust be between 1 and 250.</param>
+            <returns></returns>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.IEmailOutgoingApiMethods.GetEmailEventsAsync(System.Int32)">
+            <summary>
+            Returns events about the email, e.g. Delivered, Clicked or PermanentFail.
+            Each event will only be returned once. Once called, the event has been removed from our side and cannot be retrieved again using this method (async).
             </summary>
             <param name="limit">The maximum amount of events to receive. Limit bust be between 1 and 250.</param>
             <returns></returns>
@@ -673,9 +727,22 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:InMobile.Sms.ApiClient.IEmailTemplateApiMethods.GetAllAsync">
+            <summary>
+            Get all existing email templates on account (async).
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:InMobile.Sms.ApiClient.IEmailTemplateApiMethods.GetById(InMobile.Sms.ApiClient.EmailTemplateId)">
             <summary>
             Get a specific email template by its id.
+            </summary>
+            <param name="templateId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.IEmailTemplateApiMethods.GetByIdAsync(InMobile.Sms.ApiClient.EmailTemplateId)">
+            <summary>
+            Get a specific email template by its id (async).
             </summary>
             <param name="templateId"></param>
             <returns></returns>
@@ -802,9 +869,22 @@
             <param name="createInfo"></param>
             <returns></returns>
         </member>
+        <member name="M:InMobile.Sms.ApiClient.IListApiMethods.CreateListAsync(InMobile.Sms.ApiClient.RecipientListCreateInfo)">
+            <summary>
+            Create a new list (async).
+            </summary>
+            <param name="createInfo"></param>
+            <returns></returns>
+        </member>
         <member name="M:InMobile.Sms.ApiClient.IListApiMethods.GetAllLists">
             <summary>
             Get all existing list on account.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.IListApiMethods.GetAllListsAsync">
+            <summary>
+            Get all existing list on account (async).
             </summary>
             <returns></returns>
         </member>
@@ -815,9 +895,25 @@
             <param name="listId"></param>
             <returns></returns>
         </member>
+        <member name="M:InMobile.Sms.ApiClient.IListApiMethods.GetListByIdAsync(InMobile.Sms.ApiClient.RecipientListId)">
+            <summary>
+            Get a specific list by its id (async).
+            </summary>
+            <param name="listId"></param>
+            <returns></returns>
+        </member>
         <member name="M:InMobile.Sms.ApiClient.IListApiMethods.UpdateList(InMobile.Sms.ApiClient.IRecipientListUpdateInfo)">
             <summary>
-            Updates the given list. This call both allows for the client to retrieve a listEntry, update it and pass it to UpdateList. It also allows for updating a list without retrieving it first simply by calling UpdateList(new RecipientListUpdateInfo(...) });
+            Updates the given list. This call both allows for the client to retrieve a listEntry, update it and pass it to UpdateList.
+            It also allows for updating a list without retrieving it first simply by calling UpdateList(new RecipientListUpdateInfo(...) });
+            </summary>
+            <param name="list"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.IListApiMethods.UpdateListAsync(InMobile.Sms.ApiClient.IRecipientListUpdateInfo)">
+            <summary>
+            Updates the given list. This call both allows for the client to retrieve a listEntry, update it and pass it to UpdateList.
+            It also allows for updating a list without retrieving it first simply by calling UpdateList(new RecipientListUpdateInfo(...) }) (async);
             </summary>
             <param name="list"></param>
             <returns></returns>
@@ -828,9 +924,22 @@
             </summary>
             <param name="listId"></param>
         </member>
+        <member name="M:InMobile.Sms.ApiClient.IListApiMethods.DeleteListByIdAsync(InMobile.Sms.ApiClient.RecipientListId)">
+            <summary>
+            Deletes a list including all of its recipients (async).
+            </summary>
+            <param name="listId"></param>
+        </member>
         <member name="M:InMobile.Sms.ApiClient.IListApiMethods.CreateRecipient(InMobile.Sms.ApiClient.RecipientCreateInfo)">
             <summary>
             Create a new recipient in a given list.
+            </summary>
+            <param name="recipient"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.IListApiMethods.CreateRecipientAsync(InMobile.Sms.ApiClient.RecipientCreateInfo)">
+            <summary>
+            Create a new recipient in a given list (async).
             </summary>
             <param name="recipient"></param>
             <returns></returns>
@@ -842,9 +951,24 @@
             <param name="listId">The id of the list of which all recipients should be returned.</param>
             <returns></returns>
         </member>
+        <member name="M:InMobile.Sms.ApiClient.IListApiMethods.GetAllRecipientsInListAsync(InMobile.Sms.ApiClient.RecipientListId)">
+            <summary>
+            Get all recipients in a given list (async).
+            </summary>
+            <param name="listId">The id of the list of which all recipients should be returned.</param>
+            <returns></returns>
+        </member>
         <member name="M:InMobile.Sms.ApiClient.IListApiMethods.GetRecipientById(InMobile.Sms.ApiClient.RecipientListId,InMobile.Sms.ApiClient.RecipientId)">
             <summary>
             Get a recipient by its id.
+            </summary>
+            <param name="listId">The id of the list.</param>
+            <param name="recipientId">The id of the recipient.</param>
+            <returns></returns>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.IListApiMethods.GetRecipientByIdAsync(InMobile.Sms.ApiClient.RecipientListId,InMobile.Sms.ApiClient.RecipientId)">
+            <summary>
+            Get a recipient by its id (async).
             </summary>
             <param name="listId">The id of the list.</param>
             <param name="recipientId">The id of the recipient.</param>
@@ -858,16 +982,38 @@
             <param name="numberInfo">The number information.</param>
             <returns></returns>
         </member>
+        <member name="M:InMobile.Sms.ApiClient.IListApiMethods.GetRecipientByNumberAsync(InMobile.Sms.ApiClient.RecipientListId,InMobile.Sms.ApiClient.NumberInfo)">
+            <summary>
+            Get a recipient by its number (async).
+            </summary>
+            <param name="listId">The id of the list.</param>
+            <param name="numberInfo">The number information.</param>
+            <returns></returns>
+        </member>
         <member name="M:InMobile.Sms.ApiClient.IListApiMethods.UpdateRecipient(InMobile.Sms.ApiClient.IRecipientUpdateInfo)">
             <summary>
-            Update a recipient. It is possible to return a previously fetched recipient object here or make an update without loading the recipient first by calling UpdateRecipient(new RecipientUpdateInfo(...))
+            Update a recipient. It is possible to return a previously fetched recipient object here or make an update without loading the recipient first by calling UpdateRecipient(new RecipientUpdateInfo(...)).
+            </summary>
+            <param name="recipient"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.IListApiMethods.UpdateRecipientAsync(InMobile.Sms.ApiClient.IRecipientUpdateInfo)">
+            <summary>
+            Update a recipient. It is possible to return a previously fetched recipient object here or make an update without loading the recipient first by calling UpdateRecipient(new RecipientUpdateInfo(...)) (async).
             </summary>
             <param name="recipient"></param>
             <returns></returns>
         </member>
         <member name="M:InMobile.Sms.ApiClient.IListApiMethods.DeleteRecipientById(InMobile.Sms.ApiClient.RecipientListId,InMobile.Sms.ApiClient.RecipientId)">
             <summary>
-            Delet a recipient by its id.
+            Deletes a recipient by its id.
+            </summary>
+            <param name="listId">The id of the list in which the recipient belongs.</param>
+            <param name="recipientId"></param>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.IListApiMethods.DeleteRecipientByIdAsync(InMobile.Sms.ApiClient.RecipientListId,InMobile.Sms.ApiClient.RecipientId)">
+            <summary>
+            Deletes a recipient by its id (async).
             </summary>
             <param name="listId">The id of the list in which the recipient belongs.</param>
             <param name="recipientId"></param>
@@ -879,9 +1025,22 @@
             <param name="listId">The id of the list in which the recipient belongs.</param>
             <param name="numberInfo">The number information.</param>
         </member>
+        <member name="M:InMobile.Sms.ApiClient.IListApiMethods.DeleteRecipientByNumberAsync(InMobile.Sms.ApiClient.RecipientListId,InMobile.Sms.ApiClient.NumberInfo)">
+            <summary>
+            Deletes a recipient by its number information (async).
+            </summary>
+            <param name="listId">The id of the list in which the recipient belongs.</param>
+            <param name="numberInfo">The number information.</param>
+        </member>
         <member name="M:InMobile.Sms.ApiClient.IListApiMethods.DeleteAllRecipientsInList(InMobile.Sms.ApiClient.RecipientListId)">
             <summary>
             Deletes all recipients in a given list.
+            </summary>
+            <param name="listId"></param>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.IListApiMethods.DeleteAllRecipientsInListAsync(InMobile.Sms.ApiClient.RecipientListId)">
+            <summary>
+            Deletes all recipients in a given list (async).
             </summary>
             <param name="listId"></param>
         </member>
@@ -1154,7 +1313,13 @@
         </member>
         <member name="M:InMobile.Sms.ApiClient.ISmsGdprApiMethods.CreateDeletionRequest(InMobile.Sms.ApiClient.NumberInfo)">
             <summary>
-            Create information Deletion Request
+            Create information Deletion Request.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.ISmsGdprApiMethods.CreateDeletionRequestAsync(InMobile.Sms.ApiClient.NumberInfo)">
+            <summary>
+            Create information Deletion Request (async).
             </summary>
             <returns></returns>
         </member>
@@ -1283,6 +1448,12 @@
         <member name="M:InMobile.Sms.ApiClient.ISmsIncomingApiMethods.GetMessages(System.Int32)">
             <summary>
             Get 1 or more incoming messages awaiting to be fetched. After calling this method, the returned messages will be flagged as processed and never returned again.
+            </summary>
+            <param name="limit">The maximum amount of messages to receive. Limit bust be between 1 and 250.</param>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.ISmsIncomingApiMethods.GetMessagesAsync(System.Int32)">
+            <summary>
+            Get 1 or more incoming messages awaiting to be fetched. After calling this method, the returned messages will be flagged as processed and never returned again (async).
             </summary>
             <param name="limit">The maximum amount of messages to receive. Limit bust be between 1 and 250.</param>
         </member>
@@ -1720,35 +1891,62 @@
             </summary>
             <param name="value"></param>
         </member>
-        <member name="T:InMobile.Sms.ApiClient.ISmsOutgoingApiMethod">
+        <member name="T:InMobile.Sms.ApiClient.ISmsOutgoingApiMethods">
             <summary>
             Outgoing message specific operations.
             </summary>
         </member>
-        <member name="M:InMobile.Sms.ApiClient.ISmsOutgoingApiMethod.SendSmsMessages(System.Collections.Generic.List{InMobile.Sms.ApiClient.OutgoingSmsMessageCreateInfo})">
+        <member name="M:InMobile.Sms.ApiClient.ISmsOutgoingApiMethods.SendSmsMessages(System.Collections.Generic.List{InMobile.Sms.ApiClient.OutgoingSmsMessageCreateInfo})">
             <summary>
             Send sms messages to one or more recipients.
             </summary>
             <param name="messageList"></param>
             <returns></returns>
         </member>
-        <member name="M:InMobile.Sms.ApiClient.ISmsOutgoingApiMethod.SendSmsMessagesUsingTemplate(InMobile.Sms.ApiClient.OutgoingSmsTemplateCreateInfo)">
+        <member name="M:InMobile.Sms.ApiClient.ISmsOutgoingApiMethods.SendSmsMessagesAsync(System.Collections.Generic.List{InMobile.Sms.ApiClient.OutgoingSmsMessageCreateInfo})">
+            <summary>
+            Send sms messages to one or more recipients (async).
+            </summary>
+            <param name="messageList"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.ISmsOutgoingApiMethods.SendSmsMessagesUsingTemplate(InMobile.Sms.ApiClient.OutgoingSmsTemplateCreateInfo)">
             <summary>
             Send sms messages using a template.
             </summary>
             <param name="templateCreateInfo"></param>
             <returns></returns>
         </member>
-        <member name="M:InMobile.Sms.ApiClient.ISmsOutgoingApiMethod.CancelMessages(System.Collections.Generic.List{InMobile.Sms.ApiClient.OutgoingMessageId})">
+        <member name="M:InMobile.Sms.ApiClient.ISmsOutgoingApiMethods.SendSmsMessagesUsingTemplateAsync(InMobile.Sms.ApiClient.OutgoingSmsTemplateCreateInfo)">
+            <summary>
+            Send sms messages using a template (async).
+            </summary>
+            <param name="templateCreateInfo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.ISmsOutgoingApiMethods.CancelMessages(System.Collections.Generic.List{InMobile.Sms.ApiClient.OutgoingMessageId})">
             <summary>
             Cancel future scheduled messages.
             </summary>
             <param name="messageIds"></param>
             <returns></returns>
         </member>
-        <member name="M:InMobile.Sms.ApiClient.ISmsOutgoingApiMethod.GetStatusReports(System.Int32)">
+        <member name="M:InMobile.Sms.ApiClient.ISmsOutgoingApiMethods.CancelMessagesAsync(System.Collections.Generic.List{InMobile.Sms.ApiClient.OutgoingMessageId})">
+            <summary>
+            Cancel future scheduled messages (async).
+            </summary>
+            <param name="messageIds"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.ISmsOutgoingApiMethods.GetStatusReports(System.Int32)">
             <summary>
             Get 1 or more pending status reports awaiting to be fetched. After calling this method, the returned reports will be flagged as processed and never returned again.
+            </summary>
+            <param name="limit">The maximum amount of reports to receive. Limit bust be between 1 and 250.</param>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.ISmsOutgoingApiMethods.GetStatusReportsAsync(System.Int32)">
+            <summary>
+            Get 1 or more pending status reports awaiting to be fetched. After calling this method, the returned reports will be flagged as processed and never returned again (async).
             </summary>
             <param name="limit">The maximum amount of reports to receive. Limit bust be between 1 and 250.</param>
         </member>
@@ -1809,9 +2007,22 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:InMobile.Sms.ApiClient.ISmsTemplateApiMethods.GetAllAsync">
+            <summary>
+            Get all existing SMS templates on account (async).
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:InMobile.Sms.ApiClient.ISmsTemplateApiMethods.GetById(InMobile.Sms.ApiClient.SmsTemplateId)">
             <summary>
             Get a specific SMS template by its id.
+            </summary>
+            <param name="templateId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.ISmsTemplateApiMethods.GetByIdAsync(InMobile.Sms.ApiClient.SmsTemplateId)">
+            <summary>
+            Get a specific SMS template by its id (async).
             </summary>
             <param name="templateId"></param>
             <returns></returns>
@@ -1856,7 +2067,13 @@
         </member>
         <member name="M:InMobile.Sms.ApiClient.IToolsApiMethods.ParsePhoneNumbers(System.Collections.Generic.List{InMobile.Sms.ApiClient.ParsePhoneNumberInfo})">
             <summary>
-            Parse phone numbers
+            Parse phone numbers.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.IToolsApiMethods.ParsePhoneNumbersAsync(System.Collections.Generic.List{InMobile.Sms.ApiClient.ParsePhoneNumberInfo})">
+            <summary>
+            Parse phone numbers (async).
             </summary>
             <returns></returns>
         </member>

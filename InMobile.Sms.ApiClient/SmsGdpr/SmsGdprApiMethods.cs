@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace InMobile.Sms.ApiClient
 {
@@ -8,10 +9,16 @@ namespace InMobile.Sms.ApiClient
     public interface ISmsGdprApiMethods
     {
         /// <summary>
-        /// Create information Deletion Request
+        /// Create information Deletion Request.
         /// </summary>
         /// <returns></returns>
         SmsGdprDeletionRequestCreateResult CreateDeletionRequest(NumberInfo numberInfo);
+
+        /// <summary>
+        /// Create information Deletion Request (async).
+        /// </summary>
+        /// <returns></returns>
+        Task<SmsGdprDeletionRequestCreateResult> CreateDeletionRequestAsync(NumberInfo numberInfo);
     }
 
     internal class SmsGdprApiMethods : ISmsGdprApiMethods
@@ -26,13 +33,22 @@ namespace InMobile.Sms.ApiClient
         }
 
         public SmsGdprDeletionRequestCreateResult CreateDeletionRequest(NumberInfo numberInfo)
+            => CreateDeletionRequestInternal(numberInfo: numberInfo, mode: SyncMode.Sync).GetAwaiter().GetResult();
+
+        public Task<SmsGdprDeletionRequestCreateResult> CreateDeletionRequestAsync(NumberInfo numberInfo)
+            => CreateDeletionRequestInternal(numberInfo: numberInfo, mode: SyncMode.Async);
+
+        private async Task<SmsGdprDeletionRequestCreateResult> CreateDeletionRequestInternal(NumberInfo numberInfo, SyncMode mode)
         {
             GuardHelper.EnsureNotNullOrThrow(parameterName: nameof(numberInfo), value: numberInfo);
 
-            return _requestHelper.Execute<SmsGdprDeletionRequestCreateResult>(
-                method: Method.POST, 
-                resource: $"{V4_sms_gdpr}/deletionrequests",
-                payload: new SmsGdprDeletionRequestCreateInfo(numberInfo: numberInfo));
+            const Method method = Method.POST;
+            var resource = $"{V4_sms_gdpr}/deletionrequests";
+            var payload = new SmsGdprDeletionRequestCreateInfo(numberInfo: numberInfo);
+
+            return mode == SyncMode.Sync
+                ? _requestHelper.Execute<SmsGdprDeletionRequestCreateResult>(method: method, resource: resource, payload: payload)
+                : await _requestHelper.ExecuteAsync<SmsGdprDeletionRequestCreateResult>(method: method, resource: resource, payload: payload);
         }
     }
 }
