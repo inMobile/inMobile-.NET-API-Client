@@ -2,9 +2,10 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <IsPackable>false</IsPackable>
-
+    <IsTestProject>true</IsTestProject>
     <Nullable>disable</Nullable>
   </PropertyGroup>
 
@@ -20,7 +21,5 @@
   <ItemGroup>
     <ProjectReference Include="..\InMobile.Sms.ApiClient\InMobile.Sms.ApiClient.csproj" />
   </ItemGroup>
-
-  <ProjectExtensions><VisualStudio><UserProperties xunit_1runner_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>
