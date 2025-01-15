@@ -89,7 +89,7 @@ public class SendEmailUsingTemplate_Integration_Test
     [Fact]
     public void SendEmailUsingTemplate_WithAllFields_Success_Test()
     {
-        var expectedRequestJson = @"{""From"":{""EmailAddress"":""noreply@inmobile.com"",""DisplayName"":""X from inMobile""},""To"":[{""EmailAddress"":""test@inmobile.com"",""DisplayName"":""Test""}],""ReplyTo"":[{""EmailAddress"":""support@inmobile.com"",""DisplayName"":""Y from inMobile""}],""MessageId"":""02a7ec4b-9056-4228-bd6e-6d9af385716d"",""SendTime"":""2020-10-10T16:13:00Z"",""Tracking"":false,""TemplateId"":""d8311715-3566-46df-81a5-dfd4dc61fb5b"",""Placeholders"":{""{firstname}"":""TestABC""}}";
+        var expectedRequestJson = @"{""From"":{""EmailAddress"":""noreply@inmobile.com"",""DisplayName"":""X from inMobile""},""To"":[{""EmailAddress"":""test@inmobile.com"",""DisplayName"":""Test""}],""ReplyTo"":[{""EmailAddress"":""support@inmobile.com""}],""MessageId"":""02a7ec4b-9056-4228-bd6e-6d9af385716d"",""SendTime"":""2020-10-10T16:13:00Z"",""Tracking"":false,""TemplateId"":""d8311715-3566-46df-81a5-dfd4dc61fb5b"",""Placeholders"":{""{firstname}"":""TestABC""}}";
         var responseJson = @"{
     ""usedPlaceholderKeys"": [
         ""{firstname}""
@@ -113,7 +113,7 @@ public class SendEmailUsingTemplate_Integration_Test
                 templateId: new EmailTemplateId("d8311715-3566-46df-81a5-dfd4dc61fb5b"),
                 from: new EmailSender(emailAddress: "noreply@inmobile.com", displayName: "X from inMobile"),
                 to: new List<EmailRecipient> { new EmailRecipient(emailAddress: "test@inmobile.com", displayName: "Test") },
-                replyTo: new List<EmailRecipient> { new EmailRecipient(emailAddress: "support@inmobile.com", displayName: "Y from inMobile") },
+                replyTo: new List<EmailReplyToRecipient> { new EmailReplyToRecipient(emailAddress: "support@inmobile.com") },
                 sendTime: new DateTime(2020, 10, 10, 16, 13, 0, kind: DateTimeKind.Utc),
                 tracking: false,
                 messageId: new OutgoingEmailId("02a7ec4b-9056-4228-bd6e-6d9af385716d"),
@@ -133,7 +133,7 @@ public class SendEmailUsingTemplate_Integration_Test
     [Fact]
     public async Task SendEmailUsingTemplateAsync_WithAllFields_Success_Test()
     {
-        var expectedRequestJson = @"{""From"":{""EmailAddress"":""noreply@inmobile.com"",""DisplayName"":""X from inMobile""},""To"":[{""EmailAddress"":""test@inmobile.com"",""DisplayName"":""Test""}],""ReplyTo"":[{""EmailAddress"":""support@inmobile.com"",""DisplayName"":""Y from inMobile""}],""MessageId"":""02a7ec4b-9056-4228-bd6e-6d9af385716d"",""SendTime"":""2020-10-10T16:13:00Z"",""Tracking"":false,""TemplateId"":""d8311715-3566-46df-81a5-dfd4dc61fb5b"",""Placeholders"":{""{firstname}"":""TestABC""}}";
+        var expectedRequestJson = @"{""From"":{""EmailAddress"":""noreply@inmobile.com"",""DisplayName"":""X from inMobile""},""To"":[{""EmailAddress"":""test@inmobile.com"",""DisplayName"":""Test""}],""ReplyTo"":[{""EmailAddress"":""support@inmobile.com""}],""MessageId"":""02a7ec4b-9056-4228-bd6e-6d9af385716d"",""SendTime"":""2020-10-10T16:13:00Z"",""Tracking"":false,""TemplateId"":""d8311715-3566-46df-81a5-dfd4dc61fb5b"",""Placeholders"":{""{firstname}"":""TestABC""}}";
         var responseJson = @"{
     ""usedPlaceholderKeys"": [
         ""{firstname}""
@@ -157,7 +157,7 @@ public class SendEmailUsingTemplate_Integration_Test
                 templateId: new EmailTemplateId("d8311715-3566-46df-81a5-dfd4dc61fb5b"),
                 from: new EmailSender(emailAddress: "noreply@inmobile.com", displayName: "X from inMobile"),
                 to: new List<EmailRecipient> { new EmailRecipient(emailAddress: "test@inmobile.com", displayName: "Test") },
-                replyTo: new List<EmailRecipient> { new EmailRecipient(emailAddress: "support@inmobile.com", displayName: "Y from inMobile") },
+                replyTo: new List<EmailReplyToRecipient> { new EmailReplyToRecipient(emailAddress: "support@inmobile.com") },
                 sendTime: new DateTime(2020, 10, 10, 16, 13, 0, kind: DateTimeKind.Utc),
                 tracking: false,
                 messageId: new OutgoingEmailId("02a7ec4b-9056-4228-bd6e-6d9af385716d"),
