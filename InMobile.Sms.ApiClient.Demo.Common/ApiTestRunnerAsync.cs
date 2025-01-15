@@ -331,6 +331,17 @@ namespace InMobile.Sms.ApiClient.Demo.Common
                 {
                     new EmailRecipient(emailAddress: toEmail, displayName: toEmail)
                 }));
+            
+            Log("::: SEND EMAIL (WITH REPLYTO) :::");
+            await client.EmailOutgoing.SendEmailAsync(new OutgoingEmailCreateInfo(
+                subject: "inMobile API Client - Test run",
+                html: "<!DOCTYPE html><html><head></head><body><p>This is my HTML</p></body></html>",
+                from: new EmailSender(emailAddress: "noreply@apitest.inmobile.com", displayName: "inMobile Support"),
+                to: new List<EmailRecipient>
+                {
+                    new EmailRecipient(emailAddress: toEmail, displayName: toEmail)
+                },
+                replyTo: new List<EmailReplyToRecipient> { new EmailReplyToRecipient(emailAddress: "apitest@apitest.inmobile.com") }));
 
             Log("::: SEND EMAIL USING TEMPLATE :::");
             await client.EmailOutgoing.SendEmailUsingTemplateAsync(new OutgoingEmailTemplateCreateInfo(
@@ -340,6 +351,16 @@ namespace InMobile.Sms.ApiClient.Demo.Common
                 {
                     new EmailRecipient(emailAddress: toEmail, displayName: toEmail)
                 }));
+            
+            Log("::: SEND EMAIL USING TEMPLATE (WITH REPLYTO) :::");
+            await client.EmailOutgoing.SendEmailUsingTemplateAsync(new OutgoingEmailTemplateCreateInfo(
+                templateId: templateId,
+                from: new EmailSender(emailAddress: "noreply@apitest.inmobile.com", displayName: "inMobile Support"),
+                to: new List<EmailRecipient>
+                {
+                    new EmailRecipient(emailAddress: toEmail, displayName: toEmail)
+                },
+                replyTo: new List<EmailReplyToRecipient> { new EmailReplyToRecipient(emailAddress: "apitest@apitest.inmobile.com") }));
 
             Log("::: CALLING EMAIL EVENTS ENDPOINT :::");
             var events = await client.EmailOutgoing.GetEmailEventsAsync(limit: 250);
