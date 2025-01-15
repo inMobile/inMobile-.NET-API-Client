@@ -496,7 +496,7 @@
             A key-value list of placeholders to replace in the template text. Keys must be encapsulated with {}. E.g. {NAME}.
             </summary>
         </member>
-        <member name="M:InMobile.Sms.ApiClient.OutgoingEmailTemplateCreateInfo.#ctor(InMobile.Sms.ApiClient.EmailTemplateId,InMobile.Sms.ApiClient.EmailSender,System.Collections.Generic.List{InMobile.Sms.ApiClient.EmailRecipient},System.Collections.Generic.List{InMobile.Sms.ApiClient.EmailRecipient},System.Nullable{System.DateTime},System.Boolean,InMobile.Sms.ApiClient.OutgoingEmailId,System.Collections.Generic.Dictionary{System.String,System.String})">
+        <member name="M:InMobile.Sms.ApiClient.OutgoingEmailTemplateCreateInfo.#ctor(InMobile.Sms.ApiClient.EmailTemplateId,InMobile.Sms.ApiClient.EmailSender,System.Collections.Generic.List{InMobile.Sms.ApiClient.EmailRecipient},System.Collections.Generic.List{InMobile.Sms.ApiClient.EmailReplyToRecipient},System.Nullable{System.DateTime},System.Boolean,InMobile.Sms.ApiClient.OutgoingEmailId,System.Collections.Generic.Dictionary{System.String,System.String})">
             <summary>
             </summary>
             <param name="templateId">The id of the template to use.</param>
@@ -554,6 +554,21 @@
             </summary>
             <param name="emailAddress">The email address of the recipient</param>
             <param name="displayName">The display name to use for the recipient</param>
+        </member>
+        <member name="T:InMobile.Sms.ApiClient.EmailReplyToRecipient">
+            <summary>
+            Information about the email replyto recipient.
+            </summary>
+        </member>
+        <member name="P:InMobile.Sms.ApiClient.EmailReplyToRecipient.EmailAddress">
+            <summary>
+            The email address of the recipient.
+            </summary>
+        </member>
+        <member name="M:InMobile.Sms.ApiClient.EmailReplyToRecipient.#ctor(System.String)">
+            <summary>
+            </summary>
+            <param name="emailAddress">The email address of the recipient</param>
         </member>
         <member name="T:InMobile.Sms.ApiClient.EmailSender">
             <summary>
@@ -626,7 +641,7 @@
             The text body of the email. If none is provided this will be generated from the HTML. Max size of 2 MB. If max size is exceeded, the entire call will fail.
             </summary>
         </member>
-        <member name="M:InMobile.Sms.ApiClient.OutgoingEmailCreateInfo.#ctor(System.String,System.String,InMobile.Sms.ApiClient.EmailSender,System.Collections.Generic.List{InMobile.Sms.ApiClient.EmailRecipient},System.Collections.Generic.List{InMobile.Sms.ApiClient.EmailRecipient},System.String,System.Nullable{System.DateTime},System.Boolean,InMobile.Sms.ApiClient.OutgoingEmailId)">
+        <member name="M:InMobile.Sms.ApiClient.OutgoingEmailCreateInfo.#ctor(System.String,System.String,InMobile.Sms.ApiClient.EmailSender,System.Collections.Generic.List{InMobile.Sms.ApiClient.EmailRecipient},System.Collections.Generic.List{InMobile.Sms.ApiClient.EmailReplyToRecipient},System.String,System.Nullable{System.DateTime},System.Boolean,InMobile.Sms.ApiClient.OutgoingEmailId)">
             <summary>
             </summary>
             <param name="subject">The subject of the email. If max length is exceeded, the entire call will fail. Max length is 255 chars.</param>
