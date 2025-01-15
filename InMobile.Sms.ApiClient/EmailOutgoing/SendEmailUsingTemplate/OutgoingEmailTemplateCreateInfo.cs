@@ -21,7 +21,7 @@ namespace InMobile.Sms.ApiClient
         /// <summary>
         /// A list of optional Reply To objects.
         /// </summary>
-        public List<EmailRecipient>? ReplyTo { get; }
+        public List<EmailReplyToRecipient>? ReplyTo { get; }
 
         /// <summary>
         /// An optional message id used to identify the message. If no message id is provided, a new message id is generated and assigned to the message. This id must be unique across all messages created on the same account.
@@ -59,7 +59,7 @@ namespace InMobile.Sms.ApiClient
         /// <param name="messageId">An optional message id used to identify the message. If no message id is provided, a new message id is generated and assigned to the message.</param>
         /// <param name="placeholders">A key-value list of placeholders to replace in the template text. Keys must be encapsulated with {}. E.g. {NAME}.</param>
         /// <exception cref="ArgumentException"></exception>
-        public OutgoingEmailTemplateCreateInfo(EmailTemplateId templateId, EmailSender from, List<EmailRecipient> to, List<EmailRecipient>? replyTo = null, DateTime? sendTime = null, bool tracking = true, OutgoingEmailId? messageId = null, Dictionary<string, string>? placeholders = null)
+        public OutgoingEmailTemplateCreateInfo(EmailTemplateId templateId, EmailSender from, List<EmailRecipient> to, List<EmailReplyToRecipient>? replyTo = null, DateTime? sendTime = null, bool tracking = true, OutgoingEmailId? messageId = null, Dictionary<string, string>? placeholders = null)
         {
             if (templateId is null)
             {

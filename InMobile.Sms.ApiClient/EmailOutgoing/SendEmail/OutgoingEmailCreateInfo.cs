@@ -21,7 +21,7 @@ namespace InMobile.Sms.ApiClient
         /// <summary>
         /// A list of optional Reply To objects.
         /// </summary>
-        public List<EmailRecipient>? ReplyTo { get; }
+        public List<EmailReplyToRecipient>? ReplyTo { get; }
 
         /// <summary>
         /// An optional message id used to identify the message. If no message id is provided, a new message id is generated and assigned to the message. This id must be unique across all messages created on the same account.
@@ -65,7 +65,7 @@ namespace InMobile.Sms.ApiClient
         /// <param name="tracking">If true, this will add Open and Click tracking to your email. Default: true.</param>
         /// <param name="messageId">An optional message id used to identify the message. If no message id is provided, a new message id is generated and assigned to the message.</param>
         /// <exception cref="ArgumentException"></exception>
-        public OutgoingEmailCreateInfo(string subject, string html, EmailSender from, List<EmailRecipient> to, List<EmailRecipient>? replyTo = null, string? text = null, DateTime? sendTime = null, bool tracking = true, OutgoingEmailId? messageId = null)
+        public OutgoingEmailCreateInfo(string subject, string html, EmailSender from, List<EmailRecipient> to, List<EmailReplyToRecipient>? replyTo = null, string? text = null, DateTime? sendTime = null, bool tracking = true, OutgoingEmailId? messageId = null)
         {
             if (string.IsNullOrEmpty(subject))
             {
