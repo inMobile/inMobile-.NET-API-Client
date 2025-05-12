@@ -37,6 +37,11 @@ namespace InMobile.Sms.ApiClient
         /// If true, this will add Open and Click tracking to your email. Default: true.
         /// </summary>
         public bool Tracking { get; }
+        
+        /// <summary>
+        /// If true, this will add a List-Unsubscribe header to your email. If a subscriber unsubscribes using this method, an event will be created. Please note that it is your responsibility to unsubscribe the email address in your system, as we do not add the email address to an unsubscribe list in inMobile. Default: false.
+        /// </summary>
+        public bool ListUnsubscribe { get; }
 
         /// <summary>
         /// The subject of the email. If max length is exceeded, the entire call will fail. Max length is 255 chars.
@@ -63,9 +68,10 @@ namespace InMobile.Sms.ApiClient
         /// <param name="text">The text body of the email. If none is provided this will be generated from the HTML. Max size of 2 MB. If max size is exceeded, the entire call will fail.</param>
         /// <param name="sendTime">If specified, this represents the future send time of the email.</param>
         /// <param name="tracking">If true, this will add Open and Click tracking to your email. Default: true.</param>
+        /// <param name="listUnsubscribe">If true, this will add a List-Unsubscribe header to your email. If a subscriber unsubscribes using this method, an event will be created. Please note that it is your responsibility to unsubscribe the email address in your system, as we do not add the email address to an unsubscribe list in inMobile. Default: false.</param>
         /// <param name="messageId">An optional message id used to identify the message. If no message id is provided, a new message id is generated and assigned to the message.</param>
         /// <exception cref="ArgumentException"></exception>
-        public OutgoingEmailCreateInfo(string subject, string html, EmailSender from, List<EmailRecipient> to, List<EmailReplyToRecipient>? replyTo = null, string? text = null, DateTime? sendTime = null, bool tracking = true, OutgoingEmailId? messageId = null)
+        public OutgoingEmailCreateInfo(string subject, string html, EmailSender from, List<EmailRecipient> to, List<EmailReplyToRecipient>? replyTo = null, string? text = null, DateTime? sendTime = null, bool tracking = true, bool listUnsubscribe = false, OutgoingEmailId? messageId = null)
         {
             if (string.IsNullOrEmpty(subject))
             {
@@ -97,6 +103,7 @@ namespace InMobile.Sms.ApiClient
             }
 
             Tracking = tracking;
+            ListUnsubscribe = listUnsubscribe;
             MessageId = messageId;
         }
     }

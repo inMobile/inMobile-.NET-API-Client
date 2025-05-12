@@ -486,6 +486,11 @@
             If true, this will add Open and Click tracking to your email. Default: true.
             </summary>
         </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingEmailTemplateCreateInfo.ListUnsubscribe">
+            <summary>
+            If true, this will add a List-Unsubscribe header to your email. If a subscriber unsubscribes using this method, an event will be created. Please note that it is your responsibility to unsubscribe the email address in your system, as we do not add the email address to an unsubscribe list in inMobile. Default: false.
+            </summary>
+        </member>
         <member name="P:InMobile.Sms.ApiClient.OutgoingEmailTemplateCreateInfo.TemplateId">
             <summary>
             The id of the template to use.
@@ -496,7 +501,7 @@
             A key-value list of placeholders to replace in the template text. Keys must be encapsulated with {}. E.g. {NAME}.
             </summary>
         </member>
-        <member name="M:InMobile.Sms.ApiClient.OutgoingEmailTemplateCreateInfo.#ctor(InMobile.Sms.ApiClient.EmailTemplateId,InMobile.Sms.ApiClient.EmailSender,System.Collections.Generic.List{InMobile.Sms.ApiClient.EmailRecipient},System.Collections.Generic.List{InMobile.Sms.ApiClient.EmailReplyToRecipient},System.Nullable{System.DateTime},System.Boolean,InMobile.Sms.ApiClient.OutgoingEmailId,System.Collections.Generic.Dictionary{System.String,System.String})">
+        <member name="M:InMobile.Sms.ApiClient.OutgoingEmailTemplateCreateInfo.#ctor(InMobile.Sms.ApiClient.EmailTemplateId,InMobile.Sms.ApiClient.EmailSender,System.Collections.Generic.List{InMobile.Sms.ApiClient.EmailRecipient},System.Collections.Generic.List{InMobile.Sms.ApiClient.EmailReplyToRecipient},System.Nullable{System.DateTime},System.Boolean,System.Boolean,InMobile.Sms.ApiClient.OutgoingEmailId,System.Collections.Generic.Dictionary{System.String,System.String})">
             <summary>
             </summary>
             <param name="templateId">The id of the template to use.</param>
@@ -505,6 +510,7 @@
             <param name="replyTo">A list of optional Reply To objects.</param>
             <param name="sendTime">If specified, this represents the future send time of the email.</param>
             <param name="tracking">If true, this will add Open and Click tracking to your email. Default: true.</param>
+            <param name="listUnsubscribe">If true, this will add a List-Unsubscribe header to your email. If a subscriber unsubscribes using this method, an event will be created. Please note that it is your responsibility to unsubscribe the email address in your system, as we do not add the email address to an unsubscribe list in inMobile. Default: false.</param>
             <param name="messageId">An optional message id used to identify the message. If no message id is provided, a new message id is generated and assigned to the message.</param>
             <param name="placeholders">A key-value list of placeholders to replace in the template text. Keys must be encapsulated with {}. E.g. {NAME}.</param>
             <exception cref="T:System.ArgumentException"></exception>
@@ -626,6 +632,11 @@
             If true, this will add Open and Click tracking to your email. Default: true.
             </summary>
         </member>
+        <member name="P:InMobile.Sms.ApiClient.OutgoingEmailCreateInfo.ListUnsubscribe">
+            <summary>
+            If true, this will add a List-Unsubscribe header to your email. If a subscriber unsubscribes using this method, an event will be created. Please note that it is your responsibility to unsubscribe the email address in your system, as we do not add the email address to an unsubscribe list in inMobile. Default: false.
+            </summary>
+        </member>
         <member name="P:InMobile.Sms.ApiClient.OutgoingEmailCreateInfo.Subject">
             <summary>
             The subject of the email. If max length is exceeded, the entire call will fail. Max length is 255 chars.
@@ -641,7 +652,7 @@
             The text body of the email. If none is provided this will be generated from the HTML. Max size of 2 MB. If max size is exceeded, the entire call will fail.
             </summary>
         </member>
-        <member name="M:InMobile.Sms.ApiClient.OutgoingEmailCreateInfo.#ctor(System.String,System.String,InMobile.Sms.ApiClient.EmailSender,System.Collections.Generic.List{InMobile.Sms.ApiClient.EmailRecipient},System.Collections.Generic.List{InMobile.Sms.ApiClient.EmailReplyToRecipient},System.String,System.Nullable{System.DateTime},System.Boolean,InMobile.Sms.ApiClient.OutgoingEmailId)">
+        <member name="M:InMobile.Sms.ApiClient.OutgoingEmailCreateInfo.#ctor(System.String,System.String,InMobile.Sms.ApiClient.EmailSender,System.Collections.Generic.List{InMobile.Sms.ApiClient.EmailRecipient},System.Collections.Generic.List{InMobile.Sms.ApiClient.EmailReplyToRecipient},System.String,System.Nullable{System.DateTime},System.Boolean,System.Boolean,InMobile.Sms.ApiClient.OutgoingEmailId)">
             <summary>
             </summary>
             <param name="subject">The subject of the email. If max length is exceeded, the entire call will fail. Max length is 255 chars.</param>
@@ -652,6 +663,7 @@
             <param name="text">The text body of the email. If none is provided this will be generated from the HTML. Max size of 2 MB. If max size is exceeded, the entire call will fail.</param>
             <param name="sendTime">If specified, this represents the future send time of the email.</param>
             <param name="tracking">If true, this will add Open and Click tracking to your email. Default: true.</param>
+            <param name="listUnsubscribe">If true, this will add a List-Unsubscribe header to your email. If a subscriber unsubscribes using this method, an event will be created. Please note that it is your responsibility to unsubscribe the email address in your system, as we do not add the email address to an unsubscribe list in inMobile. Default: false.</param>
             <param name="messageId">An optional message id used to identify the message. If no message id is provided, a new message id is generated and assigned to the message.</param>
             <exception cref="T:System.ArgumentException"></exception>
         </member>

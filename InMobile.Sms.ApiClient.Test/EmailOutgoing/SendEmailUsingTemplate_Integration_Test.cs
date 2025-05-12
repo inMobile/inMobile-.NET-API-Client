@@ -13,7 +13,7 @@ public class SendEmailUsingTemplate_Integration_Test
     [Fact]
     public void SendEmailUsingTemplate_WithOnlyRequiredFields_Success_Test()
     {
-        var expectedRequestJson = @"{""From"":{""EmailAddress"":""support@inmobile.com"",""DisplayName"":""X from inMobile""},""To"":[{""EmailAddress"":""test@inmobile.com"",""DisplayName"":""Test""}],""Tracking"":true,""TemplateId"":""d8311715-3566-46df-81a5-dfd4dc61fb5b""}";
+        var expectedRequestJson = @"{""From"":{""EmailAddress"":""support@inmobile.com"",""DisplayName"":""X from inMobile""},""To"":[{""EmailAddress"":""test@inmobile.com"",""DisplayName"":""Test""}],""Tracking"":true,""ListUnsubscribe"":false,""TemplateId"":""d8311715-3566-46df-81a5-dfd4dc61fb5b""}";
         var responseJson = @"{
     ""usedPlaceholderKeys"": [],
     ""notUsedPlaceholderKeys"": [],
@@ -51,7 +51,7 @@ public class SendEmailUsingTemplate_Integration_Test
     [Fact]
     public async Task SendEmailUsingTemplateAsync_WithOnlyRequiredFields_Success_Test()
     {
-        var expectedRequestJson = @"{""From"":{""EmailAddress"":""support@inmobile.com"",""DisplayName"":""X from inMobile""},""To"":[{""EmailAddress"":""test@inmobile.com"",""DisplayName"":""Test""}],""Tracking"":true,""TemplateId"":""d8311715-3566-46df-81a5-dfd4dc61fb5b""}";
+        var expectedRequestJson = @"{""From"":{""EmailAddress"":""support@inmobile.com"",""DisplayName"":""X from inMobile""},""To"":[{""EmailAddress"":""test@inmobile.com"",""DisplayName"":""Test""}],""Tracking"":true,""ListUnsubscribe"":false,""TemplateId"":""d8311715-3566-46df-81a5-dfd4dc61fb5b""}";
         var responseJson = @"{
     ""usedPlaceholderKeys"": [],
     ""notUsedPlaceholderKeys"": [],
@@ -89,7 +89,7 @@ public class SendEmailUsingTemplate_Integration_Test
     [Fact]
     public void SendEmailUsingTemplate_WithAllFields_Success_Test()
     {
-        var expectedRequestJson = @"{""From"":{""EmailAddress"":""noreply@inmobile.com"",""DisplayName"":""X from inMobile""},""To"":[{""EmailAddress"":""test@inmobile.com"",""DisplayName"":""Test""}],""ReplyTo"":[{""EmailAddress"":""support@inmobile.com""}],""MessageId"":""02a7ec4b-9056-4228-bd6e-6d9af385716d"",""SendTime"":""2020-10-10T16:13:00Z"",""Tracking"":false,""TemplateId"":""d8311715-3566-46df-81a5-dfd4dc61fb5b"",""Placeholders"":{""{firstname}"":""TestABC""}}";
+        var expectedRequestJson = @"{""From"":{""EmailAddress"":""noreply@inmobile.com"",""DisplayName"":""X from inMobile""},""To"":[{""EmailAddress"":""test@inmobile.com"",""DisplayName"":""Test""}],""ReplyTo"":[{""EmailAddress"":""support@inmobile.com""}],""MessageId"":""02a7ec4b-9056-4228-bd6e-6d9af385716d"",""SendTime"":""2020-10-10T16:13:00Z"",""Tracking"":false,""ListUnsubscribe"":true,""TemplateId"":""d8311715-3566-46df-81a5-dfd4dc61fb5b"",""Placeholders"":{""{firstname}"":""TestABC""}}";
         var responseJson = @"{
     ""usedPlaceholderKeys"": [
         ""{firstname}""
@@ -116,6 +116,7 @@ public class SendEmailUsingTemplate_Integration_Test
                 replyTo: new List<EmailReplyToRecipient> { new EmailReplyToRecipient(emailAddress: "support@inmobile.com") },
                 sendTime: new DateTime(2020, 10, 10, 16, 13, 0, kind: DateTimeKind.Utc),
                 tracking: false,
+                listUnsubscribe: true,
                 messageId: new OutgoingEmailId("02a7ec4b-9056-4228-bd6e-6d9af385716d"),
                 placeholders: new Dictionary<string, string> { { "{firstname}", "TestABC" } }));
 
@@ -133,7 +134,7 @@ public class SendEmailUsingTemplate_Integration_Test
     [Fact]
     public async Task SendEmailUsingTemplateAsync_WithAllFields_Success_Test()
     {
-        var expectedRequestJson = @"{""From"":{""EmailAddress"":""noreply@inmobile.com"",""DisplayName"":""X from inMobile""},""To"":[{""EmailAddress"":""test@inmobile.com"",""DisplayName"":""Test""}],""ReplyTo"":[{""EmailAddress"":""support@inmobile.com""}],""MessageId"":""02a7ec4b-9056-4228-bd6e-6d9af385716d"",""SendTime"":""2020-10-10T16:13:00Z"",""Tracking"":false,""TemplateId"":""d8311715-3566-46df-81a5-dfd4dc61fb5b"",""Placeholders"":{""{firstname}"":""TestABC""}}";
+        var expectedRequestJson = @"{""From"":{""EmailAddress"":""noreply@inmobile.com"",""DisplayName"":""X from inMobile""},""To"":[{""EmailAddress"":""test@inmobile.com"",""DisplayName"":""Test""}],""ReplyTo"":[{""EmailAddress"":""support@inmobile.com""}],""MessageId"":""02a7ec4b-9056-4228-bd6e-6d9af385716d"",""SendTime"":""2020-10-10T16:13:00Z"",""Tracking"":false,""ListUnsubscribe"":true,""TemplateId"":""d8311715-3566-46df-81a5-dfd4dc61fb5b"",""Placeholders"":{""{firstname}"":""TestABC""}}";
         var responseJson = @"{
     ""usedPlaceholderKeys"": [
         ""{firstname}""
@@ -160,6 +161,7 @@ public class SendEmailUsingTemplate_Integration_Test
                 replyTo: new List<EmailReplyToRecipient> { new EmailReplyToRecipient(emailAddress: "support@inmobile.com") },
                 sendTime: new DateTime(2020, 10, 10, 16, 13, 0, kind: DateTimeKind.Utc),
                 tracking: false,
+                listUnsubscribe: true,
                 messageId: new OutgoingEmailId("02a7ec4b-9056-4228-bd6e-6d9af385716d"),
                 placeholders: new Dictionary<string, string> { { "{firstname}", "TestABC" } }));
 
@@ -177,7 +179,7 @@ public class SendEmailUsingTemplate_Integration_Test
     [Fact]
     public void SendEmailUsingTemplate_ApiError_Test()
     {
-        var expectedRequestJson = @"{""From"":{""EmailAddress"":""support@inmobile.com"",""DisplayName"":""X from inMobile""},""To"":[{""EmailAddress"":""test@inmobile.com"",""DisplayName"":""Test""}],""Tracking"":true,""TemplateId"":""bf6e3dee-92b3-482a-b45a-991ae61bba1c""}";
+        var expectedRequestJson = @"{""From"":{""EmailAddress"":""support@inmobile.com"",""DisplayName"":""X from inMobile""},""To"":[{""EmailAddress"":""test@inmobile.com"",""DisplayName"":""Test""}],""Tracking"":true,""ListUnsubscribe"":false,""TemplateId"":""bf6e3dee-92b3-482a-b45a-991ae61bba1c""}";
         var responseJson = @"{
     ""errorMessage"": ""Domain not validated"",
     ""details"": []
@@ -201,7 +203,7 @@ public class SendEmailUsingTemplate_Integration_Test
     [Fact]
     public async Task SendEmailUsingTemplateAsync_ApiError_Test()
     {
-        var expectedRequestJson = @"{""From"":{""EmailAddress"":""support@inmobile.com"",""DisplayName"":""X from inMobile""},""To"":[{""EmailAddress"":""test@inmobile.com"",""DisplayName"":""Test""}],""Tracking"":true,""TemplateId"":""bf6e3dee-92b3-482a-b45a-991ae61bba1c""}";
+        var expectedRequestJson = @"{""From"":{""EmailAddress"":""support@inmobile.com"",""DisplayName"":""X from inMobile""},""To"":[{""EmailAddress"":""test@inmobile.com"",""DisplayName"":""Test""}],""Tracking"":true,""ListUnsubscribe"":false,""TemplateId"":""bf6e3dee-92b3-482a-b45a-991ae61bba1c""}";
         var responseJson = @"{
     ""errorMessage"": ""Domain not validated"",
     ""details"": []
