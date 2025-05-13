@@ -37,6 +37,11 @@ namespace InMobile.Sms.ApiClient
         /// If true, this will add Open and Click tracking to your email. Default: true.
         /// </summary>
         public bool Tracking { get; }
+        
+        /// <summary>
+        /// If true, this will add a List-Unsubscribe header to your email. If a subscriber unsubscribes using this method, an event will be created. Please note that it is your responsibility to unsubscribe the email address in your system, as we do not add the email address to an unsubscribe list in inMobile. Default: false.
+        /// </summary>
+        public bool ListUnsubscribe { get; }
 
         /// <summary>
         /// The id of the template to use.
@@ -56,10 +61,11 @@ namespace InMobile.Sms.ApiClient
         /// <param name="replyTo">A list of optional Reply To objects.</param>
         /// <param name="sendTime">If specified, this represents the future send time of the email.</param>
         /// <param name="tracking">If true, this will add Open and Click tracking to your email. Default: true.</param>
+        /// <param name="listUnsubscribe">If true, this will add a List-Unsubscribe header to your email. If a subscriber unsubscribes using this method, an event will be created. Please note that it is your responsibility to unsubscribe the email address in your system, as we do not add the email address to an unsubscribe list in inMobile. Default: false.</param>
         /// <param name="messageId">An optional message id used to identify the message. If no message id is provided, a new message id is generated and assigned to the message.</param>
         /// <param name="placeholders">A key-value list of placeholders to replace in the template text. Keys must be encapsulated with {}. E.g. {NAME}.</param>
         /// <exception cref="ArgumentException"></exception>
-        public OutgoingEmailTemplateCreateInfo(EmailTemplateId templateId, EmailSender from, List<EmailRecipient> to, List<EmailReplyToRecipient>? replyTo = null, DateTime? sendTime = null, bool tracking = true, OutgoingEmailId? messageId = null, Dictionary<string, string>? placeholders = null)
+        public OutgoingEmailTemplateCreateInfo(EmailTemplateId templateId, EmailSender from, List<EmailRecipient> to, List<EmailReplyToRecipient>? replyTo = null, DateTime? sendTime = null, bool tracking = true, bool listUnsubscribe = false, OutgoingEmailId? messageId = null, Dictionary<string, string>? placeholders = null)
         {
             if (templateId is null)
             {
@@ -85,6 +91,7 @@ namespace InMobile.Sms.ApiClient
             }
 
             Tracking = tracking;
+            ListUnsubscribe = listUnsubscribe;
             MessageId = messageId;
             Placeholders = placeholders;
         }
